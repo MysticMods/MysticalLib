@@ -1,0 +1,16 @@
+[
+{
+  "modid": "elulib",
+  "name": "EluLib",
+  "description": "Miscellaneous utility mod.",
+  "version": "0.1.13",
+  "mcversion": "1.12.1",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Elucent"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
