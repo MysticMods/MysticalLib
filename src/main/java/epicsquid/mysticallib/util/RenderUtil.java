@@ -2,11 +2,9 @@ package epicsquid.mysticallib.util;
 
 import epicsquid.mysticallib.LibEvents;
 import epicsquid.mysticallib.MysticalLib;
-import epicsquid.mysticallib.asm.ItemRenderRegistry;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -529,11 +527,5 @@ public class RenderUtil {
 
   public static void setTransformGUI() {
     itemTransformType = TransformType.GUI;
-  }
-
-  public static void renderItem(ItemStack stack) {
-    if (ItemRenderRegistry.itemRenderMap.containsKey(stack.getItem())) {
-      ItemRenderRegistry.itemRenderMap.get(stack.getItem()).render(stack, itemTransformType);
-    }
   }
 }

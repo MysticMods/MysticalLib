@@ -60,14 +60,6 @@ processResources {
     }
 }
 
-minecraft.coreMod = "epicsquid.mysticallib.asm.FMLPlugin"
-
-jar {
-	manifest {
-		attributes 'FMLCorePlugin': "epicsquid.mysticallib.asm.FMLPlugin", 'FMLCorePluginContainsFMLMod': true
-	}
-}
-
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
