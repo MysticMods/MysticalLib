@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.block.multiblock;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.block.BlockTEBase;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -21,9 +23,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMultiblockSlave extends BlockTEBase {
+
   public static final PropertyBool SHADOW = PropertyBool.create("shadow");
 
-  public BlockMultiblockSlave(Material mat, SoundType type, float hardness, String name, Class<? extends TileEntity> teClass) {
+  public BlockMultiblockSlave(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name,
+      @Nonnull Class<? extends TileEntity> teClass) {
     super(mat, type, hardness, name, teClass);
     setModelCustom(true);
     setHasItem(false);
@@ -32,27 +36,31 @@ public class BlockMultiblockSlave extends BlockTEBase {
   }
 
   @Override
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(@Nonnull IBlockState state) {
     return state.getValue(SHADOW);
   }
 
   @Override
+  @Nonnull
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, SHADOW);
   }
 
   @Override
+  @Nonnull
   public IBlockState getStateFromMeta(int meta) {
     return getDefaultState().withProperty(SHADOW, meta == 1);
   }
 
   @Override
-  public int getMetaFromState(IBlockState state) {
+  public int getMetaFromState(@Nonnull IBlockState state) {
     return state.getValue(SHADOW) ? 1 : 0;
   }
 
   @Override
-  public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+  @Nonnull
+  public ItemStack getPickBlock(@Nonnull IBlockState state, @Nonnull RayTraceResult target, @Nonnull World world, @Nonnull BlockPos pos,
+      @Nonnull EntityPlayer player) {
     TileEntity tile = world.getTileEntity(pos);
     if (tile instanceof ISlave) {
       BlockPos p = ((ISlave) tile).getMaster();
