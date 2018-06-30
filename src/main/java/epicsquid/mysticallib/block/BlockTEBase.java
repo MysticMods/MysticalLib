@@ -3,6 +3,9 @@ package epicsquid.mysticallib.block;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.util.Util;
@@ -21,15 +24,15 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   protected Class<? extends TileEntity> teClass;
-  static Set<Class<? extends TileEntity>> classes = new HashSet<>();
+  public static Set<Class<? extends TileEntity>> classes = new HashSet<>();
 
-  public BlockTEBase(Material mat, SoundType type, float hardness, String name, Class<? extends TileEntity> teClass) {
+  public BlockTEBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
     super(mat, type, hardness, name);
     this.teClass = teClass;
     attemptRegistry(teClass);
   }
 
-  public static void attemptRegistry(Class<? extends TileEntity> c) {
+  public static void attemptRegistry(@Nonnull Class<? extends TileEntity> c) {
     if (!classes.contains(c)) {
       String[] nameParts = c.getTypeName().split("\\.");
       String className = nameParts[nameParts.length - 1];
@@ -39,8 +42,8 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY,
-      float hitZ) {
+  public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       return ((ITile) t).activate(world, pos, state, player, hand, face, hitX, hitY, hitZ);
@@ -49,7 +52,7 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   }
 
   @Override
-  public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+  public void onBlockHarvested(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, state, player);
@@ -57,7 +60,7 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   }
 
   @Override
-  public void onBlockExploded(World world, BlockPos pos, Explosion e) {
+  public void onBlockExploded(@Nonnull World world, @Nonnull BlockPos pos, Explosion e) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, world.getBlockState(pos), null);
@@ -65,7 +68,8 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   }
 
   @Override
-  public TileEntity createNewTileEntity(World worldIn, int meta) {
+  @Nullable
+  public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
     try {
       return teClass.newInstance();
     } catch (InstantiationException e) {

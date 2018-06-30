@@ -2,6 +2,8 @@ package epicsquid.mysticallib.block;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
@@ -25,19 +27,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject, ICustomModeledObject {
-  Item itemBlock = null;
+  private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
-  boolean isOpaque = false;
+  protected boolean isOpaque = false;
   protected boolean hasCustomModel = false;
-  BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  protected BlockRenderLayer layer = BlockRenderLayer.SOLID;
   protected Block parent;
   public String name = "";
 
-  public BlockFenceBase(Block base, SoundType type, float hardness, String name) {
-    super(Material.WOOD, MapColor.AIR);
-    this.setCreativeTab(null);
+  public BlockFenceBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
+    super(base.getDefaultState().getMaterial(), MapColor.AIR);
     this.parent = base;
     this.name = name;
+    setCreativeTab(null);
     setUnlocalizedName(name);
     setRegistryName(name);
     setSoundType(type);
@@ -48,28 +50,32 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
+  @Nonnull
   public BlockFenceBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
+  @Nonnull
   public BlockFenceBase setHarvestReqs(String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
+  @Nonnull
   public BlockFenceBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
-  public BlockFenceBase setLayer(BlockRenderLayer layer) {
+  @Nonnull
+  public BlockFenceBase setLayer( @Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
 
   @Override
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull IBlockState state) {
     return isOpaque;
   }
 
@@ -78,7 +84,7 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
   }
 
   @Override
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
   }
 
@@ -96,7 +102,7 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
   }
 
   @Override
-  public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+  public boolean canPlaceTorchOnTop(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     return true;
   }
 
@@ -114,11 +120,13 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
 
   @Override
   @SideOnly(Side.CLIENT)
+  @Nonnull
   public BlockRenderLayer getBlockLayer() {
     return this.layer;
   }
 
   @Override
+  @Nonnull
   public Item getItemBlock() {
     return itemBlock;
   }

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.block.BakedModelInnerCorner;
@@ -29,13 +32,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockCornerBase extends BlockBase {
   public static Map<Integer, List<AxisAlignedBB>> boxes = new HashMap<>();
+
   public static final PropertyBool UP = PropertyBool.create("up");
   public static final PropertyInteger DIR = PropertyInteger.create("dir", 0, 3); //NXNZ -> PXNZ -> PXPZ -> NXPZ corner
   public static final PropertyBool INNER = PropertyBool.create("inner");
-  public boolean inner = false;
-  protected IBlockState parent = null;
 
-  public BlockCornerBase(Material mat, SoundType type, float hardness, String name, boolean inner) {
+  public boolean inner = false;
+  protected @Nullable IBlockState parent = null;
+
+  public BlockCornerBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, boolean inner) {
     super(mat, type, hardness, name);
     setLightOpacity(0);
     setOpacity(false);
@@ -44,40 +49,38 @@ public class BlockCornerBase extends BlockBase {
     this.inner = inner;
   }
 
-  public BlockCornerBase(IBlockState parent, SoundType type, float hardness, String name, boolean inner) {
-    super(parent.getMaterial(), type, hardness, name);
-    setLightOpacity(0);
-    setOpacity(false);
-    this.fullBlock = false;
+  public BlockCornerBase(@Nonnull IBlockState parent, @Nonnull SoundType type, float hardness, @Nonnull String name, boolean inner) {
+    this(parent.getMaterial(), type, hardness, name, inner);
     this.parent = parent;
-    setModelCustom(true);
-    this.inner = inner;
   }
 
   @Override
+  @Nonnull
   public BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, INNER, UP, DIR);
   }
 
   @Override
+  @Nonnull
   public IBlockState getStateFromMeta(int meta) {
     return getDefaultState().withProperty(INNER, inner).withProperty(UP, (int) (meta / 4) > 0).withProperty(DIR, meta % 4);
   }
 
   @Override
-  public int getMetaFromState(IBlockState state) {
+  public int getMetaFromState(@Nonnull IBlockState state) {
     return (state.getValue(UP) ? 1 : 0) * 4 + state.getValue(DIR);
   }
 
   @Override
-  public IBlockState withRotation(IBlockState state, Rotation rot) {
+  @Nonnull
+  public IBlockState withRotation(@Nonnull IBlockState state, @Nonnull Rotation rot) {
     int newDir = (state.getValue(DIR) + rot.ordinal()) % 4;
     return state.withProperty(DIR, newDir);
   }
 
   @Override
-  public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity,
-      boolean advanced) {
+  public void addCollisionBoxToList(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox,
+      @Nonnull List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean advanced) {
     float box_precision = BlockSlantBase.box_precision;
     List<AxisAlignedBB> temp = new ArrayList<>();
     boolean up = state.getValue(UP);
@@ -209,7 +212,9 @@ public class BlockCornerBase extends BlockBase {
   }
 
   @Override
-  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+  @Nonnull
+  public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing face, float hitX, float hitY, float hitZ, int meta,
+      @Nonnull EntityLivingBase placer) {
     boolean up = (hitY > 0.5f);
     if (hitY == 1) {
       up = false;
@@ -268,15 +273,16 @@ public class BlockCornerBase extends BlockBase {
   }
 
   @Override
-  public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+  public boolean shouldSideBeRendered(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
     return true;
   }
 
   @Override
-  public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+  public boolean doesSideBlockRendering(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
     return false;
   }
 
+  // TODO: Look for a better way of doing this
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {

@@ -2,6 +2,9 @@ package epicsquid.mysticallib.block;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -27,15 +30,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, ICustomModeledObject {
-  Item itemBlock = null;
+  private final Item itemBlock;
   public List<ItemStack> drops = null;
-  boolean isOpaque = false;
+  private boolean isOpaque = false;
   protected boolean hasCustomModel = false;
-  BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   protected Block parent;
   public String name = "";
 
-  public BlockWallBase(Block base, SoundType type, float hardness, String name) {
+  public BlockWallBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base);
     this.setCreativeTab(null);
     this.parent = base;
@@ -50,28 +53,32 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
+  @Nonnull
   public BlockWallBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
-  public BlockWallBase setHarvestReqs(String tool, int level) {
+  @Nonnull
+  public BlockWallBase setHarvestReqs(@Nonnull String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
+  @Nonnull
   public BlockWallBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
-  public BlockWallBase setLayer(BlockRenderLayer layer) {
+  @Nonnull
+  public BlockWallBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
 
   @Override
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull IBlockState state) {
     return isOpaque;
   }
 
@@ -80,7 +87,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
   }
 
@@ -98,12 +105,12 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean canPlaceTorchOnTop(IBlockState state, IBlockAccess world, BlockPos pos) {
+  public boolean canPlaceTorchOnTop(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     return true;
   }
 
   @Override
-  public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
+  public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
     if (tab == this.getCreativeTabToDisplayOn()) {
       list.add(new ItemStack(this, 1));
     }
@@ -124,11 +131,13 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
 
   @Override
   @SideOnly(Side.CLIENT)
+  @Nonnull
   public BlockRenderLayer getBlockLayer() {
     return this.layer;
   }
 
   @Override
+  @Nonnull
   public Item getItemBlock() {
     return itemBlock;
   }

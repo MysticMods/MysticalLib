@@ -2,6 +2,8 @@ package epicsquid.mysticallib.block;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Maps;
 import com.google.common.collect.UnmodifiableIterator;
 
@@ -14,7 +16,8 @@ public class CustomStateMapper implements IStateMapper {
   protected Map<IBlockState, ModelResourceLocation> mapStateModelLocations = Maps.<IBlockState, ModelResourceLocation>newLinkedHashMap();
 
   @Override
-  public Map<IBlockState, ModelResourceLocation> putStateModelLocations(Block block) {
+  @Nonnull
+  public Map<IBlockState, ModelResourceLocation> putStateModelLocations(@Nonnull Block block) {
     UnmodifiableIterator unmodifiableiterator = block.getBlockState().getValidStates().iterator();
 
     while (unmodifiableiterator.hasNext()) {

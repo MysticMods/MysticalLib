@@ -2,6 +2,9 @@ package epicsquid.mysticallib.block;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.item.ItemBlockSlab;
 import epicsquid.mysticallib.model.CustomModelBlock;
@@ -32,18 +35,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, ICustomModeledObject {
+
   public static BlockSlabBase dummy = new BlockSlabBase(Material.AIR, SoundType.SNOW, 0f, "null", Blocks.AIR.getDefaultState(), false, Blocks.AIR);
-  Item itemBlock = null;
+  private final Item itemBlock;
   public List<ItemStack> drops = null;
-  boolean isOpaque = false;
+  private boolean isOpaque = false;
   protected boolean hasCustomModel = false;
-  BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  private @Nonnull BlockRenderLayer layer = BlockRenderLayer.SOLID;
   protected boolean isDouble;
   protected IBlockState parent;
   public String name = "";
   public Block slab = null;
 
-  public BlockSlabBase(Material mat, SoundType type, float hardness, String name, IBlockState parent, boolean isDouble, Block slab) {
+  public BlockSlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull IBlockState parent, boolean isDouble,
+      @Nullable Block slab) {
     super(mat);
     this.isDouble = isDouble;
     setUnlocalizedName(name);
@@ -56,18 +61,21 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
     this.slab = slab;
     if (!isDouble) {
       itemBlock = new ItemBlockSlab(this, slab).setRegistryName(LibRegistry.getActiveModid(), name);
+    } else {
+      itemBlock = null;
     }
   }
 
   @Override
-  public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> items) {
+  public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
     if (tab == this.getCreativeTabToDisplayOn() && !this.isDouble) {
       items.add(new ItemStack(this, 1));
     }
   }
 
   @Override
-  public Block setCreativeTab(CreativeTabs tab) {
+  @Nonnull
+  public Block setCreativeTab(@Nonnull CreativeTabs tab) {
     if (!isDouble) {
       itemBlock.setCreativeTab(tab);
     }
@@ -75,7 +83,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
-  public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+  public void getDrops(@Nonnull NonNullList<ItemStack> drops, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
     if (isDouble) {
       drops.add(new ItemStack(Item.getItemFromBlock(this.slab), 1));
       drops.add(new ItemStack(Item.getItemFromBlock(this.slab), 1));
@@ -84,28 +92,32 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
     }
   }
 
+  @Nonnull
   public BlockSlabBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
-  public BlockSlabBase setHarvestReqs(String tool, int level) {
+  @Nonnull
+  public BlockSlabBase setHarvestReqs(@Nonnull String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
+  @Nonnull
   public BlockSlabBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
-  public BlockSlabBase setLayer(BlockRenderLayer layer) {
+  @Nonnull
+  public BlockSlabBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
 
   @Override
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull IBlockState state) {
     return isOpaque;
   }
 
@@ -114,7 +126,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
   }
 
@@ -153,16 +165,19 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
 
   @Override
   @SideOnly(Side.CLIENT)
+  @Nonnull
   public BlockRenderLayer getBlockLayer() {
     return this.layer;
   }
 
   @Override
+  @Nullable
   public Item getItemBlock() {
     return itemBlock;
   }
 
   @Override
+  @Nonnull
   public IBlockState getStateFromMeta(int meta) {
     IBlockState iblockstate = this.getDefaultState();
     if (!this.isDouble())
@@ -172,16 +187,18 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
-  public int getMetaFromState(IBlockState state) {
+  public int getMetaFromState(@Nullable IBlockState state) {
     return state.getValue(HALF) == EnumBlockHalf.BOTTOM ? 0 : 1;
   }
 
   @Override
+  @Nonnull
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, HALF);
   }
 
   @Override
+  @Nonnull
   public String getUnlocalizedName(int meta) {
     return super.getUnlocalizedName();
   }
@@ -192,12 +209,14 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
+  @Nonnull
   public IProperty<?> getVariantProperty() {
     return HALF;
   }
 
   @Override
-  public Comparable<?> getTypeForItem(ItemStack stack) {
+  @Nonnull
+  public Comparable<?> getTypeForItem(@Nonnull ItemStack stack) {
     return 0;
   }
 }

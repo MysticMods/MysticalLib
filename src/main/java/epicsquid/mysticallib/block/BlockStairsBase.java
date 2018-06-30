@@ -2,6 +2,8 @@ package epicsquid.mysticallib.block;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -18,19 +20,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObject, ICustomModeledObject {
-  Item itemBlock = null;
+  private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
-  boolean isOpaque = false;
+  private boolean isOpaque = false;
   protected boolean hasCustomModel = false;
-  BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   protected IBlockState parent;
   public String name = "";
 
-  public BlockStairsBase(IBlockState base, SoundType type, float hardness, String name) {
+  public BlockStairsBase(@Nonnull IBlockState base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base);
     this.setCreativeTab(null);
     this.parent = base;
@@ -44,28 +47,32 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
+  @Nonnull
   public BlockStairsBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
-  public BlockStairsBase setHarvestReqs(String tool, int level) {
+  @Nonnull
+  public BlockStairsBase setHarvestReqs(@Nonnull String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
+  @Nonnull
   public BlockStairsBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
-  public BlockStairsBase setLayer(BlockRenderLayer layer) {
+  @Nonnull
+  public BlockStairsBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
 
   @Override
-  public boolean isOpaqueCube(IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull IBlockState state) {
     return isOpaque;
   }
 
@@ -74,7 +81,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   }
 
   @Override
-  public boolean isFullCube(IBlockState state) {
+  public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
   }
 
@@ -106,11 +113,13 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
 
   @Override
   @SideOnly(Side.CLIENT)
+  @Nonnull
   public BlockRenderLayer getBlockLayer() {
     return this.layer;
   }
 
   @Override
+  @Nonnull
   public Item getItemBlock() {
     return itemBlock;
   }

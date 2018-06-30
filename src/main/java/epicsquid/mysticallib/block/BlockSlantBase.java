@@ -5,8 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelSlant;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -29,13 +33,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSlantBase extends BlockBase {
   public static float box_precision = 0.125f;
-  public static Map<Integer, List<AxisAlignedBB>> boxes = new HashMap<>();
+  public static @Nonnull Map<Integer, List<AxisAlignedBB>> boxes = new HashMap<>();
   public static final PropertyInteger VERT = PropertyInteger.create("vert", 0, 2); //LOW, MID, HIGH
   public static final PropertyInteger DIR = PropertyInteger.create("dir", 0, 3); //NSWE, for mod NXNZ -> NXPZ -> PXPZ -> PXNZ corner
 
-  protected IBlockState parent = null;
+  protected @Nullable IBlockState parent = null;
 
-  public BlockSlantBase(Material mat, SoundType type, float hardness, String name) {
+  public BlockSlantBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(mat, type, hardness, name);
     setLightOpacity(0);
     setOpacity(false);
@@ -43,7 +47,7 @@ public class BlockSlantBase extends BlockBase {
     setModelCustom(true);
   }
 
-  public BlockSlantBase(IBlockState parent, SoundType type, float hardness, String name) {
+  public BlockSlantBase(@Nonnull IBlockState parent, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(parent.getMaterial(), type, hardness, name);
     setLightOpacity(0);
     setOpacity(false);
@@ -53,8 +57,8 @@ public class BlockSlantBase extends BlockBase {
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY,
-      float hitZ) {
+  public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     if (!world.isRemote && hand == EnumHand.MAIN_HAND) {
       world.setBlockState(pos, state.withRotation(Rotation.COUNTERCLOCKWISE_90), 8);
       return true;
@@ -63,17 +67,20 @@ public class BlockSlantBase extends BlockBase {
   }
 
   @Override
+  @Nonnull
   public BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, VERT, DIR);
   }
 
   @Override
+  @Nonnull
   public IBlockState getStateFromMeta(int meta) {
     return getDefaultState().withProperty(VERT, (int) (meta / 4)).withProperty(DIR, meta % 4);
   }
 
   @Override
-  public IBlockState withRotation(IBlockState state, Rotation rot) {
+  @Nonnull
+  public IBlockState withRotation(@Nonnull IBlockState state, @Nonnull Rotation rot) {
     if (state.getValue(VERT) == 1) {
       int newDir = (state.getValue(DIR) + rot.ordinal()) % 4;
       return state.withProperty(DIR, newDir);
@@ -84,23 +91,23 @@ public class BlockSlantBase extends BlockBase {
   }
 
   @Override
-  public int getMetaFromState(IBlockState state) {
+  public int getMetaFromState(@Nonnull IBlockState state) {
     return state.getValue(VERT) * 4 + state.getValue(DIR);
   }
 
   @Override
-  public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+  public boolean shouldSideBeRendered(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
     return true;
   }
 
   @Override
-  public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+  public boolean doesSideBlockRendering(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
     return false;
   }
 
   @Override
-  public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, Entity entity,
-      boolean advanced) {
+  public void addCollisionBoxToList(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox,
+      @Nonnull List<AxisAlignedBB> collidingBoxes, @Nonnull Entity entity, boolean advanced) {
     List<AxisAlignedBB> temp = new ArrayList<>();
     int vert = state.getValue(VERT);
     int dir = state.getValue(DIR);
@@ -180,7 +187,9 @@ public class BlockSlantBase extends BlockBase {
   }
 
   @Override
-  public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+  @Nonnull
+  public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing face, float hitX, float hitY, float hitZ, int meta,
+      @Nonnull EntityLivingBase placer) {
     int vert = 1;
     if (hitY > 0 && hitY < 1 && (hitX > 0 && hitX < 1 && Math.abs(hitY - 0.5) > Math.abs(hitX - 0.5) || hitZ > 0 && hitZ < 1 && Math.abs(hitY - 0.5) > Math
         .abs(hitZ - 0.5))) {
@@ -241,4 +250,15 @@ public class BlockSlantBase extends BlockBase {
     }
   }
 
+  @Nullable
+  @Override
+  protected IBlockState getParentState() {
+    return parent;
+  }
+
+  @Nonnull
+  @Override
+  protected Class<? extends BakedModelBlock> getModelClass() {
+    return BakedModelSlant.class;
+  }
 }

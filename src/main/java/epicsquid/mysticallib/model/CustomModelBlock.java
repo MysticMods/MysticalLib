@@ -18,6 +18,7 @@ import net.minecraftforge.common.model.TRSRTransformation;
 public class CustomModelBlock extends CustomModelBase {
   Constructor<? extends BakedModelBlock> ctor;
 
+  // TODO make this work with IBlockModel
   public CustomModelBlock(Class<? extends BakedModelBlock> block, ResourceLocation particle, ResourceLocation all) {
     try {
       ctor = block.getConstructor(IModelState.class, VertexFormat.class, Function.class, CustomModelBase.class);

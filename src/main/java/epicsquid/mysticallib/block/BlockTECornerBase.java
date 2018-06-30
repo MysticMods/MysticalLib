@@ -1,5 +1,8 @@
 package epicsquid.mysticallib.block;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.tile.ITile;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
@@ -13,17 +16,18 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
 public class BlockTECornerBase extends BlockCornerBase implements ITileEntityProvider {
-  Class<? extends TileEntity> teClass;
+  private Class<? extends TileEntity> teClass;
 
-  public BlockTECornerBase(IBlockState parent, SoundType type, float hardness, String name, boolean inner, Class<? extends TileEntity> teClass) {
+  public BlockTECornerBase(@Nonnull IBlockState parent, @Nonnull SoundType type, float hardness, @Nonnull String name, boolean inner,
+      @Nonnull Class<? extends TileEntity> teClass) {
     super(parent, type, hardness, name, inner);
     this.teClass = teClass;
     BlockTEBase.attemptRegistry(teClass);
   }
 
   @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing face, float hitX, float hitY,
-      float hitZ) {
+  public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       return ((ITile) t).activate(world, pos, state, player, hand, face, hitX, hitY, hitZ);
@@ -32,7 +36,7 @@ public class BlockTECornerBase extends BlockCornerBase implements ITileEntityPro
   }
 
   @Override
-  public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+  public void onBlockHarvested(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, state, player);
@@ -40,7 +44,7 @@ public class BlockTECornerBase extends BlockCornerBase implements ITileEntityPro
   }
 
   @Override
-  public void onBlockExploded(World world, BlockPos pos, Explosion e) {
+  public void onBlockExploded(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull Explosion e) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, world.getBlockState(pos), null);
@@ -48,7 +52,8 @@ public class BlockTECornerBase extends BlockCornerBase implements ITileEntityPro
   }
 
   @Override
-  public TileEntity createNewTileEntity(World worldIn, int meta) {
+  @Nullable
+  public TileEntity createNewTileEntity(@Nonnull World worldIn, int meta) {
     try {
       return teClass.newInstance();
     } catch (InstantiationException e) {
