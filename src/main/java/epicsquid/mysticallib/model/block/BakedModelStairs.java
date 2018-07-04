@@ -1,16 +1,12 @@
 package epicsquid.mysticallib.model.block;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-import javax.vecmath.Matrix4f;
-
-import org.apache.commons.lang3.tuple.Pair;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.model.CustomModelBase;
-import epicsquid.mysticallib.model.DefaultTransformations;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Cube;
 import epicsquid.mysticallib.struct.Vec4f;
@@ -19,21 +15,17 @@ import net.minecraft.block.BlockStairs.EnumHalf;
 import net.minecraft.block.BlockStairs.EnumShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.model.IModelState;
 
 public class BakedModelStairs extends BakedModelBlock {
-  Cube cube_down, cube_up;
-  Cube q_down_nx, q_down_px, q_down_nz, q_down_pz;
-  Cube q_up_nx, q_up_px, q_up_nz, q_up_pz;
-  Cube e_down_nxnz, e_down_pxnz, e_down_pxpz, e_down_nxpz;
-  Cube e_up_nxnz, e_up_pxnz, e_up_pxpz, e_up_nxpz;
+  private Cube cube_down, cube_up;
+  private Cube q_down_nx, q_down_px, q_down_nz, q_down_pz;
+  private Cube q_up_nx, q_up_px, q_up_nz, q_up_pz;
+  private Cube e_down_nxnz, e_down_pxnz, e_down_pxpz, e_down_nxpz;
+  private Cube e_up_nxnz, e_up_pxnz, e_up_pxpz, e_up_nxpz;
 
   public static Vec4f FULL_FACE_UV = new Vec4f(0, 0, 16, 16);
   public static Vec4f BOTTOM_SIDE_UV = new Vec4f(0, 8, 16, 8);
@@ -41,8 +33,9 @@ public class BakedModelStairs extends BakedModelBlock {
   public static Vec4f[] bottomUV = new Vec4f[] { BOTTOM_SIDE_UV, BOTTOM_SIDE_UV, FULL_FACE_UV, FULL_FACE_UV, BOTTOM_SIDE_UV, BOTTOM_SIDE_UV };
   public static Vec4f[] topUV = new Vec4f[] { TOP_SIDE_UV, TOP_SIDE_UV, FULL_FACE_UV, FULL_FACE_UV, TOP_SIDE_UV, TOP_SIDE_UV };
 
-  public BakedModelStairs(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, CustomModelBase model) {
-    super(state, format, bakedTextureGetter, model);
+  public BakedModelStairs(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
+      @Nonnull CustomModelBase model) {
+    super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     cube_down = ModelUtil.makeCube(format, 0, 0, 0, 1, 0.5, 1, null, texes, 0).setNoCull(EnumFacing.UP);
     cube_up = ModelUtil.makeCube(format, 0, 0.5, 0, 1, 0.5, 1, null, texes, 0).setNoCull(EnumFacing.DOWN);
@@ -65,13 +58,14 @@ public class BakedModelStairs extends BakedModelBlock {
   }
 
   @Override
-  public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-    List<BakedQuad> quads = new ArrayList<BakedQuad>();
+  @Nonnull
+  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+    List<BakedQuad> quads = super.getQuads(state, side, rand);
     getFaceQuads(quads, side, state);
     return quads;
   }
 
-  public void getFaceQuads(List<BakedQuad> quads, EnumFacing side, IBlockState state) {
+  public void getFaceQuads(@Nonnull List<BakedQuad> quads, @Nullable EnumFacing side, @Nullable IBlockState state) {
     if (state == null) {
       cube_down.addToList(quads, side);
       q_up_pz.addToList(quads, side);
@@ -321,41 +315,6 @@ public class BakedModelStairs extends BakedModelBlock {
         }
       }
     }
-  }
-
-  @Override
-  public boolean isAmbientOcclusion() {
-    return true;
-  }
-
-  @Override
-  public boolean isGui3d() {
-    return true;
-  }
-
-  @Override
-  public boolean isBuiltInRenderer() {
-    return false;
-  }
-
-  @Override
-  public TextureAtlasSprite getParticleTexture() {
-    return particle;
-  }
-
-  @Override
-  public ItemOverrideList getOverrides() {
-    return new ItemOverrideList(Arrays.asList());
-  }
-
-  @Override
-  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(ItemCameraTransforms.TransformType type) {
-    Matrix4f matrix = null;
-    if (DefaultTransformations.blockTransforms.containsKey(type)) {
-      matrix = DefaultTransformations.blockTransforms.get(type).getMatrix();
-      return Pair.of(this, matrix);
-    }
-    return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, type);
   }
 
 }

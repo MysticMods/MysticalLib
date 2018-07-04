@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -22,27 +25,33 @@ public class CustomModelBase implements IModel {
   public CustomModelBase() {
   }
 
-  public CustomModelBase addTexture(String name, ResourceLocation texture) {
+  @Nonnull
+  public CustomModelBase addTexture(@Nonnull String name, @Nonnull ResourceLocation texture) {
     textures.put(name, texture);
     return this;
   }
 
   @Override
+  @Nonnull
   public Collection<ResourceLocation> getDependencies() {
     return ImmutableList.of();
   }
 
   @Override
+  @Nonnull
   public Collection<ResourceLocation> getTextures() {
     return textures.values();
   }
 
   @Override
-  public IBakedModel bake(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-    return new BakedModelNull(state, DefaultVertexFormats.BLOCK, bakedTextureGetter, this);
+  @Nonnull
+  public IBakedModel bake(@Nullable IModelState state, @Nonnull VertexFormat format,
+      @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+    return new BakedModelNull(DefaultVertexFormats.BLOCK, bakedTextureGetter);
   }
 
   @Override
+  @Nonnull
   public IModelState getDefaultState() {
     return TRSRTransformation.identity();
   }

@@ -3,12 +3,15 @@ package epicsquid.mysticallib.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
 
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraftforge.common.model.TRSRTransformation;
 
 public class DefaultTransformations {
+
+  @Nonnull
   public static TRSRTransformation create(float translateX, float translateY, float translateZ, float rotateX, float rotateY, float rotateZ, float scale) {
     return new TRSRTransformation(new Vector3f(translateX / 16f, translateY / 16f, translateZ / 16f),
         TRSRTransformation.quatFromXYZDegrees(new Vector3f(rotateX, rotateY, rotateZ)), new Vector3f(scale, scale, scale), null);

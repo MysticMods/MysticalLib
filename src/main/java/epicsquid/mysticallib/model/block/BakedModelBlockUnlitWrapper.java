@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import epicsquid.mysticallib.hax.Hax;
@@ -17,15 +20,17 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
 
 public class BakedModelBlockUnlitWrapper implements IBakedModel {
-  IBakedModel internal;
-  TreeMap<Integer, List<BakedQuad>> quads = new TreeMap<>();
 
-  public BakedModelBlockUnlitWrapper(IBakedModel model) {
+  private IBakedModel internal;
+  private TreeMap<Integer, List<BakedQuad>> quads = new TreeMap<>();
+
+  public BakedModelBlockUnlitWrapper(@Nonnull IBakedModel model) {
     this.internal = model;
   }
 
   @Override
-  public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+  @Nonnull
+  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
     if (side == null) {
       int stateid = Block.getStateId(state);
       if (!quads.containsKey(stateid)) {
@@ -64,17 +69,20 @@ public class BakedModelBlockUnlitWrapper implements IBakedModel {
   }
 
   @Override
+  @Nonnull
   public TextureAtlasSprite getParticleTexture() {
     return internal.getParticleTexture();
   }
 
   @Override
+  @Nonnull
   public ItemOverrideList getOverrides() {
     return internal.getOverrides();
   }
 
   @Override
-  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(ItemCameraTransforms.TransformType type) {
+  @Nonnull
+  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(@Nonnull ItemCameraTransforms.TransformType type) {
     return internal.handlePerspective(type);
   }
 

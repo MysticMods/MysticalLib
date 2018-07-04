@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.container;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.inventory.DummyInventory;
 import epicsquid.mysticallib.inventory.IExtendedInventory;
 import epicsquid.mysticallib.tile.TileModular;
@@ -11,15 +13,15 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerModular extends Container {
-  public TileModular tile = null;
-  IExtendedInventory inventory = null;
+  public @Nonnull TileModular tile;
+  private @Nonnull IExtendedInventory inventory;
 
   @Override
-  public boolean canInteractWith(EntityPlayer playerIn) {
+  public boolean canInteractWith(@Nonnull EntityPlayer playerIn) {
     return true;
   }
 
-  public ContainerModular(TileModular tile) {
+  public ContainerModular(@Nonnull TileModular tile) {
     super();
     inventory = new DummyInventory();
     for (Module m : tile.modules.values()) {
@@ -29,6 +31,7 @@ public class ContainerModular extends Container {
     }
   }
 
+  @Nonnull
   public ContainerModular tryAddSlot(int index, int x, int y) {
     if (index < inventory.getSizeInventory()) {
       this.addSlotToContainer(new SlotInventoryDefault(inventory, index, x, y, false));
@@ -36,6 +39,7 @@ public class ContainerModular extends Container {
     return this;
   }
 
+  @Nonnull
   public ContainerModular tryAddSlot(int index, int x, int y, boolean big) {
     if (index < inventory.getSizeInventory()) {
       this.addSlotToContainer(new SlotInventoryDefault(inventory, index, x, y, big));
@@ -61,7 +65,8 @@ public class ContainerModular extends Container {
   }
 
   @Override
-  public ItemStack transferStackInSlot(EntityPlayer p, int i) {
+  @Nonnull
+  public ItemStack transferStackInSlot(@Nonnull EntityPlayer p, int i) {
     ItemStack itemstack = ItemStack.EMPTY;
     Slot slot = (Slot) inventorySlots.get(i);
     if (i >= slot.inventory.getSizeInventory()) {

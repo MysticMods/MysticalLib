@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -24,17 +26,18 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ItemLayerModel;
-import net.minecraftforge.common.model.IModelState;
 
 public class BakedModelItem implements IBakedModel {
-  Function<ResourceLocation, TextureAtlasSprite> getter;
-  VertexFormat format;
-  ImmutableList.Builder<BakedQuad> quads = ImmutableList.builder();
-  List<TextureAtlasSprite> layers = new ArrayList<>();
-  CustomModelItem model = null;
-  List<BakedQuad> layerQuads = new ArrayList<>();
 
-  public BakedModelItem(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, CustomModelItem model) {
+  protected Function<ResourceLocation, TextureAtlasSprite> getter;
+  protected VertexFormat format;
+  protected ImmutableList.Builder<BakedQuad> quads = ImmutableList.builder();
+  protected List<TextureAtlasSprite> layers = new ArrayList<>();
+  protected CustomModelItem model;
+  protected @Nonnull List<BakedQuad> layerQuads = new ArrayList<>();
+
+  public BakedModelItem(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
+      @Nonnull CustomModelItem model) {
     this.getter = bakedTextureGetter;
     this.format = format;
     int i = 0;
@@ -47,7 +50,8 @@ public class BakedModelItem implements IBakedModel {
   }
 
   @Override
-  public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
+  @Nonnull
+  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
     return layerQuads;
   }
 
@@ -67,18 +71,21 @@ public class BakedModelItem implements IBakedModel {
   }
 
   @Override
+  @Nonnull
   public TextureAtlasSprite getParticleTexture() {
     return null;
   }
 
   @Override
+  @Nonnull
   public ItemOverrideList getOverrides() {
     return new ItemOverrideList(Arrays.asList());
   }
 
   @Override
-  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(ItemCameraTransforms.TransformType type) {
-    Matrix4f matrix = null;
+  @Nonnull
+  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(@Nonnull ItemCameraTransforms.TransformType type) {
+    Matrix4f matrix;
     if (model.handheld) {
       if (DefaultTransformations.handheldTransforms.containsKey(type)) {
         matrix = DefaultTransformations.handheldTransforms.get(type).getMatrix();

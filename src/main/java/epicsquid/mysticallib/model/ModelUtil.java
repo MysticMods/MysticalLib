@@ -2,6 +2,9 @@ package epicsquid.mysticallib.model;
 
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.model.parts.Cube;
 import epicsquid.mysticallib.model.parts.Segment;
 import epicsquid.mysticallib.struct.Vec2f;
@@ -17,13 +20,17 @@ import net.minecraftforge.client.model.pipeline.UnpackedBakedQuad;
 public class ModelUtil {
   public static float STANDARD_SPRITE_WIDTH = 0, STANDARD_SPRITE_HEIGHT = 0;
 
-  public static Vec4f FULL_FACE_UV = new Vec4f(0, 0, 16, 16);
-  public static Vec4f[] FULL_FACES = new Vec4f[] { FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV };
+  // UV for a texture using a full face
+  public static @Nonnull Vec4f FULL_FACE_UV = new Vec4f(0, 0, 16, 16);
+
+  // Array for each face if it has a full uv texture
+  public static @Nonnull Vec4f[] FULL_FACES = new Vec4f[] { FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV, FULL_FACE_UV };
 
   public static boolean[] NO_CULL = new boolean[] { true, true, true, true, true, true };
 
-  public static BakedQuad makeCubeFace(VertexFormat format, EnumFacing side, double x, double y, double z, double w, double h, double l, float u, float v,
-      float uw, float vh, TextureAtlasSprite sprite, int tintIndex) {
+  @Nonnull
+  public static BakedQuad makeCubeFace(@Nonnull VertexFormat format, @Nonnull EnumFacing side, double x, double y, double z, double w, double h, double l,
+      float u, float v, float uw, float vh, @Nonnull TextureAtlasSprite sprite, int tintIndex) {
     switch (side) {
     case NORTH:
       return createQuad(format, x + w, y + h, z, x + w, y, z, x, y, z, x, y + h, z, u, v, uw, vh, new Vec3d(0, 0, -1), sprite, tintIndex);
@@ -46,34 +53,28 @@ public class ModelUtil {
     return null;
   }
 
-  public static BakedQuad makeCubeFace(VertexFormat format, EnumFacing side, double x, double y, double z, double w, double h, double l, float u, float v,
-      float uw, float vh, TextureAtlasSprite sprite, Function<Vec3d, Vec3d> transform, int tintIndex) {
+  @Nonnull
+  public static BakedQuad makeCubeFace(@Nonnull VertexFormat format, @Nonnull EnumFacing side, double x, double y, double z, double w, double h, double l,
+      float u, float v, float uw, float vh, @Nonnull TextureAtlasSprite sprite, @Nonnull Function<Vec3d, Vec3d> transform, int tintIndex) {
     Vec3d[] vertices = new Vec3d[0];
-    Vec3d normal = new Vec3d(0, 1, 0);
     switch (side) {
     case NORTH:
       vertices = new Vec3d[] { new Vec3d(x + w, y + h, z), new Vec3d(x + w, y, z), new Vec3d(x, y, z), new Vec3d(x, y + h, z), };
-      normal = new Vec3d(0, 0, -1);
       break;
     case SOUTH:
       vertices = new Vec3d[] { new Vec3d(x, y + h, z + l), new Vec3d(x, y, z + l), new Vec3d(x + w, y, z + l), new Vec3d(x + w, y + h, z + l), };
-      normal = new Vec3d(0, 0, 1);
       break;
     case WEST:
       vertices = new Vec3d[] { new Vec3d(x, y + h, z), new Vec3d(x, y, z), new Vec3d(x, y, z + l), new Vec3d(x, y + h, z + l), };
-      normal = new Vec3d(-1, 0, 0);
       break;
     case EAST:
       vertices = new Vec3d[] { new Vec3d(x + w, y + h, z + l), new Vec3d(x + w, y, z + l), new Vec3d(x + w, y, z), new Vec3d(x + w, y + h, z), };
-      normal = new Vec3d(1, 0, 0);
       break;
     case DOWN:
       vertices = new Vec3d[] { new Vec3d(x + w, y, z), new Vec3d(x + w, y, z + l), new Vec3d(x, y, z + l), new Vec3d(x, y, z), };
-      normal = new Vec3d(0, -1, 0);
       break;
     case UP:
       vertices = new Vec3d[] { new Vec3d(x, y + h, z), new Vec3d(x, y + h, z + l), new Vec3d(x + w, y + h, z + l), new Vec3d(x + w, y + h, z), };
-      normal = new Vec3d(0, 1, 0);
       break;
     default:
       break;
@@ -88,8 +89,9 @@ public class ModelUtil {
     return null;
   }
 
-  public static Cube makeCube(VertexFormat format, double x, double y, double z, double w, double h, double l, Vec4f[] uv, TextureAtlasSprite[] sprites,
-      Function<Vec3d, Vec3d> transform, int tintIndex) {
+  @Nonnull
+  public static Cube makeCube(@Nonnull VertexFormat format, double x, double y, double z, double w, double h, double l, @Nullable Vec4f[] uv,
+      @Nonnull TextureAtlasSprite[] sprites, @Nonnull Function<Vec3d, Vec3d> transform, int tintIndex) {
     if (uv == null) {
       uv = new Vec4f[] { new Vec4f((float) (z * 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) l * 16f, (float) h * 16f),
           new Vec4f((float) MathUtil.nclamp(l * 16f - z * 16f, 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) l * 16f, (float) h * 16f),
@@ -106,8 +108,9 @@ public class ModelUtil {
         makeCubeFace(format, EnumFacing.SOUTH, x, y, z, w, h, l, uv[5].x, uv[5].y, uv[5].z, uv[5].w, sprites[5], transform, tintIndex));
   }
 
-  public static Cube makeCube(VertexFormat format, float x, float y, float z, float w, float h, float l, Vec4f[] uv, TextureAtlasSprite[] sprites,
-      int tintIndex) {
+  @Nonnull
+  public static Cube makeCube(@Nonnull VertexFormat format, float x, float y, float z, float w, float h, float l, @Nullable Vec4f[] uv,
+      @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
     if (uv == null) {
       uv = new Vec4f[] { new Vec4f((float) (z * 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) l * 16f, (float) h * 16f),
           new Vec4f((float) MathUtil.nclamp(l * 16f - z * 16f, 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) l * 16f, (float) h * 16f),
@@ -124,9 +127,10 @@ public class ModelUtil {
         makeCubeFace(format, EnumFacing.SOUTH, x, y, z, w, h, l, uv[5].x, uv[5].y, uv[5].z, uv[5].w, sprites[5], tintIndex));
   }
 
-  public static Segment makeSegm(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8, double y8,
-      double z8, boolean[] culling, TextureAtlasSprite[] sprites, Function<Vec3d, Vec3d> transform, int tintIndex) {
+  @Nonnull
+  public static Segment makeSegm(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8,
+      double y8, double z8, boolean[] culling, @Nonnull TextureAtlasSprite[] sprites, @Nonnull Function<Vec3d, Vec3d> transform, int tintIndex) {
     Vec2f[] west = getQuadUV(x1, y1, z1, x4, y4, z4, x8, y8, z8, x5, y5, z5, EnumFacing.WEST);
     Vec2f[] east = getQuadUV(x3, y3, z3, x2, y2, z2, x6, y6, z6, x7, y7, z7, EnumFacing.EAST);
     Vec2f[] down = getQuadUV(x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, EnumFacing.DOWN);
@@ -170,9 +174,10 @@ public class ModelUtil {
         createQuad(format, x2, y2, z2, x1, y1, z1, x5, y5, z5, x6, y6, z6, south, sprites[5], tintIndex), culling);
   }
 
-  public static Segment makeSegm(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8, double y8,
-      double z8, boolean[] culling, TextureAtlasSprite[] sprites, int tintIndex) {
+  @Nonnull
+  public static Segment makeSegm(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8,
+      double y8, double z8, boolean[] culling, @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
     return new Segment(createQuad(format, x1, y1, z1, x4, y4, z4, x8, y8, z8, x5, y5, z5, EnumFacing.WEST, sprites[0], tintIndex),
         createQuad(format, x3, y3, z3, x2, y2, z2, x6, y6, z6, x7, y7, z7, EnumFacing.EAST, sprites[1], tintIndex),
         createQuad(format, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, EnumFacing.DOWN, sprites[2], tintIndex),
@@ -181,23 +186,26 @@ public class ModelUtil {
         createQuad(format, x2, y2, z2, x1, y1, z1, x5, y5, z5, x6, y6, z6, EnumFacing.SOUTH, sprites[5], tintIndex), culling);
   }
 
-  public static Segment makeSegm(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8, double y8,
-      double z8, TextureAtlasSprite[] sprites, Function<Vec3d, Vec3d> transform, int tintIndex) {
+  @Nonnull
+  public static Segment makeSegm(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8,
+      double y8, double z8, @Nonnull TextureAtlasSprite[] sprites, @Nonnull Function<Vec3d, Vec3d> transform, int tintIndex) {
     return ModelUtil
         .makeSegm(format, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, x5, y5, z5, x6, y6, z6, x7, y7, z7, x8, y8, z8, ModelUtil.NO_CULL, sprites, transform,
             tintIndex);
   }
 
-  public static Segment makeSegm(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8, double y8,
-      double z8, TextureAtlasSprite[] sprites, int tintIndex) {
+  @Nonnull
+  public static Segment makeSegm(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8,
+      double y8, double z8, @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
     return ModelUtil
         .makeSegm(format, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, x5, y5, z5, x6, y6, z6, x7, y7, z7, x8, y8, z8, ModelUtil.NO_CULL, sprites,
             tintIndex);
   }
 
-  public static Vec2f getUVForPos(double x, double y, double z, EnumFacing face) {
+  @Nonnull
+  public static Vec2f getUVForPos(double x, double y, double z, @Nonnull EnumFacing face) {
     Vec2f uv = new Vec2f(0, 0);
     switch (face) {
     case DOWN:
@@ -224,6 +232,7 @@ public class ModelUtil {
     return uv;
   }
 
+  @Nonnull
   public static Vec2f[] getQuadUV(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3, double x4, double y4,
       double z4, EnumFacing face) {
     Vec2f uv1 = getUVForPos(x1, y1, z1, face);
@@ -233,8 +242,9 @@ public class ModelUtil {
     return new Vec2f[] { uv1, uv2, uv3, uv4 };
   }
 
-  public static BakedQuad createQuad(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, Vec2f[] uv, TextureAtlasSprite sprite, int tintIndex) {
+  @Nonnull
+  public static BakedQuad createQuad(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, @Nonnull Vec2f[] uv, @Nonnull TextureAtlasSprite sprite, int tintIndex) {
     Vec3d normal = getNormal(x1, y1, z1, x2, y2, z2, x4, y4, z4);
     UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
     builder.setTexture(sprite);
@@ -252,8 +262,9 @@ public class ModelUtil {
     return builder.build();
   }
 
-  public static BakedQuad createQuad(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, EnumFacing face, TextureAtlasSprite sprite, int tintIndex) {
+  @Nonnull
+  public static BakedQuad createQuad(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, @Nonnull EnumFacing face, @Nonnull TextureAtlasSprite sprite, int tintIndex) {
     Vec3d normal = getNormal(x1, y1, z1, x2, y2, z2, x4, y4, z4);
     UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
     builder.setTexture(sprite);
@@ -271,9 +282,10 @@ public class ModelUtil {
     return builder.build();
   }
 
-  public static BakedQuad createQuad(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, float u1, float v1, float u2, float v2, float u3, float v3, float u4, float v4, TextureAtlasSprite sprite,
-      int tintIndex) {
+  @Nonnull
+  public static BakedQuad createQuad(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, float u1, float v1, float u2, float v2, float u3, float v3, float u4, float v4,
+      @Nonnull TextureAtlasSprite sprite, int tintIndex) {
     Vec3d normal = getNormal(x1, y1, z1, x2, y2, z2, x4, y4, z4);
     UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
     builder.setTexture(sprite);
@@ -287,8 +299,9 @@ public class ModelUtil {
     return builder.build();
   }
 
-  public static BakedQuad createQuad(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, float u, float v, float uw, float vh, TextureAtlasSprite sprite, int tintIndex) {
+  @Nonnull
+  public static BakedQuad createQuad(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, float u, float v, float uw, float vh, @Nonnull TextureAtlasSprite sprite, int tintIndex) {
     Vec3d normal = getNormal(x1, y1, z1, x2, y2, z2, x4, y4, z4);
     UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
     builder.setTexture(sprite);
@@ -302,8 +315,9 @@ public class ModelUtil {
     return builder.build();
   }
 
-  public static Cube makeCube(VertexFormat format, double x, double y, double z, double w, double h, double l, Vec4f[] uv, TextureAtlasSprite[] sprites,
-      int tintIndex) {
+  @Nonnull
+  public static Cube makeCube(@Nonnull VertexFormat format, double x, double y, double z, double w, double h, double l, @Nullable Vec4f[] uv,
+      @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
     if (uv == null) {
       uv = new Vec4f[] { new Vec4f((float) z * 16f, (float) -y * 16f + (16f - (float) (h) * 16f), (float) l * 16f, (float) h * 16f),
           new Vec4f((16f - (float) l * 16f) - (float) z * 16f, (float) -y * 16f + (16f - (float) (h) * 16f), (float) l * 16f, (float) h * 16f),
@@ -320,12 +334,15 @@ public class ModelUtil {
         makeCubeFace(format, EnumFacing.SOUTH, x, y, z, w, h, l, uv[5].x, uv[5].y, uv[5].z, uv[5].w, sprites[5], tintIndex));
   }
 
+  @Nonnull
   public static Vec3d getNormal(double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3) {
     return (new Vec3d(x2 - x1, y2 - y1, z2 - z1)).crossProduct(new Vec3d(x3 - x1, y3 - y1, z3 - z1)).normalize();
   }
 
-  public static BakedQuad createQuad(VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3, double z3,
-      double x4, double y4, double z4, float u, float v, float uw, float vh, Vec3d normal, TextureAtlasSprite sprite, int tintIndex) {
+  @Nonnull
+  public static BakedQuad createQuad(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+      double z3, double x4, double y4, double z4, float u, float v, float uw, float vh, @Nonnull Vec3d normal, @Nonnull TextureAtlasSprite sprite,
+      int tintIndex) {
     UnpackedBakedQuad.Builder builder = new UnpackedBakedQuad.Builder(format);
     builder.setTexture(sprite);
     if (tintIndex > -1) {
@@ -338,7 +355,8 @@ public class ModelUtil {
     return builder.build();
   }
 
-  public static void putVertex(UnpackedBakedQuad.Builder builder, Vec3d normal, double x, double y, double z, float u, float v, TextureAtlasSprite sprite) {
+  public static void putVertex(@Nonnull UnpackedBakedQuad.Builder builder, @Nonnull Vec3d normal, double x, double y, double z, float u, float v,
+      @Nonnull TextureAtlasSprite sprite) {
     VertexFormat format = builder.getVertexFormat();
     for (int e = 0; e < format.getElementCount(); e++) {
       switch (format.getElement(e).getUsage()) {

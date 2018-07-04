@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 
 public class SlotInventoryDefault extends Slot {
-  boolean big = false;
+  private boolean big = false;
 
   public SlotInventoryDefault(IInventory inventoryIn, int index, int xPosition, int yPosition, boolean isBig) {
     super(inventoryIn, index, xPosition, yPosition);

@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -26,10 +28,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.IModelState;
 
 public class BakedModelWall extends BakedModelBlock {
-  Cube post, north, south, west, east;
+  private Cube post, north, south, west, east;
 
-  public BakedModelWall(IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, CustomModelBase model) {
-    super(state, format, bakedTextureGetter, model);
+  public BakedModelWall(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
+    super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     post = ModelUtil.makeCube(format, 0.25, 0, 0.25, 0.5, 1, 0.5, null, texes, -1);
     north = ModelUtil.makeCube(format, 0.3125, 0, 0, 0.375, 0.875, 0.5, null, texes, -1);
@@ -39,8 +41,9 @@ public class BakedModelWall extends BakedModelBlock {
   }
 
   @Override
-  public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
-    List<BakedQuad> quads = new ArrayList<BakedQuad>();
+  @Nonnull
+  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+    List<BakedQuad> quads = super.getQuads(state, side, rand);
     if (state == null) {
       post.addToList(quads, side);
       west.addToList(quads, side);
@@ -68,41 +71,6 @@ public class BakedModelWall extends BakedModelBlock {
       }
     }
     return quads;
-  }
-
-  @Override
-  public boolean isAmbientOcclusion() {
-    return true;
-  }
-
-  @Override
-  public boolean isGui3d() {
-    return true;
-  }
-
-  @Override
-  public boolean isBuiltInRenderer() {
-    return false;
-  }
-
-  @Override
-  public TextureAtlasSprite getParticleTexture() {
-    return particle;
-  }
-
-  @Override
-  public ItemOverrideList getOverrides() {
-    return new ItemOverrideList(Arrays.asList());
-  }
-
-  @Override
-  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(ItemCameraTransforms.TransformType type) {
-    Matrix4f matrix = null;
-    if (DefaultTransformations.blockTransforms.containsKey(type)) {
-      matrix = DefaultTransformations.blockTransforms.get(type).getMatrix();
-      return Pair.of(this, matrix);
-    }
-    return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, type);
   }
 
 }
