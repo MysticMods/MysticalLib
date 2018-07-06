@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
 import epicsquid.mysticallib.gui.IHUDContainer;
 import epicsquid.mysticallib.network.MessageLeftClickEmpty;
@@ -41,6 +43,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LibEvents {
+
   public static boolean acceptUpdates = true;
 
   public static Map<BlockPos, TileEntity> toUpdate = new HashMap<BlockPos, TileEntity>();
@@ -54,7 +57,7 @@ public class LibEvents {
     FluidTextureUtil.initTextures(event.getMap());
   }
 
-  public static void markForUpdate(BlockPos pos, TileEntity tile) {
+  public static void markForUpdate(@Nonnull BlockPos pos, @Nonnull TileEntity tile) {
     if (!tile.getWorld().isRemote && acceptUpdates) {
       if (!toUpdate.containsKey(pos)) {
         toUpdate.put(pos, tile);
@@ -151,7 +154,7 @@ public class LibEvents {
   }
 
   @SideOnly(Side.CLIENT)
-  public static void renderEntityStatic(Entity entityIn, float partialTicks, boolean b, Render render) {
+  public static void renderEntityStatic(@Nonnull Entity entityIn, float partialTicks, boolean b, @Nonnull Render render) {
     if (entityIn.ticksExisted == 0) {
       entityIn.lastTickPosX = entityIn.posX;
       entityIn.lastTickPosY = entityIn.posY;

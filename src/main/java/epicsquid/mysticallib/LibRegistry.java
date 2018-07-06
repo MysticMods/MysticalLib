@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.block.BlockSlabBase;
 import epicsquid.mysticallib.block.BlockTEBase;
 import epicsquid.mysticallib.block.IBlock;
@@ -65,22 +67,25 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class LibRegistry {
-  public static ArrayList<Item> items = new ArrayList<Item>();
-  public static ArrayList<Block> blocks = new ArrayList<Block>();
-  static Map<Class<? extends Entity>, IRenderFactory> entityRenderMap = new HashMap<Class<? extends Entity>, IRenderFactory>();
-  static Map<Class<? extends TileEntity>, TileEntitySpecialRenderer> tileEntityRenderMap = new HashMap<Class<? extends TileEntity>, TileEntitySpecialRenderer>();
+  private static ArrayList<Item> items = new ArrayList<Item>();
+  private static ArrayList<Block> blocks = new ArrayList<Block>();
+  private static Map<Class<? extends Entity>, IRenderFactory> entityRenderMap = new HashMap<Class<? extends Entity>, IRenderFactory>();
+  private static Map<Class<? extends TileEntity>, TileEntitySpecialRenderer> tileEntityRenderMap = new HashMap<Class<? extends TileEntity>, TileEntitySpecialRenderer>();
   private static int entityId = 0;
 
   private static String activeModid = "";
 
+  // Test blocks
   public static Block multiblock_slave_empty, multiblock_slave_modular;
-
   public static Block test, test_stairs, test_slab, test_double_slab, test_slant, test_outer_corner, test_inner_corner, test_wall;
 
   public static String getActiveModid() {
     return activeModid;
   }
 
+  /**
+   * Test method for the registry
+   */
   public static void initAll() {
     ModContainer container = Loader.instance().activeModContainer();
     MinecraftForge.EVENT_BUS.post(new RegisterContentEvent(items, blocks));
@@ -103,12 +108,12 @@ public class LibRegistry {
   }
 
   @SideOnly(Side.CLIENT)
-  public static void registerEntityRenderer(Class<? extends Entity> entity, IRenderFactory render) {
+  public static void registerEntityRenderer(@Nonnull Class<? extends Entity> entity, @Nonnull IRenderFactory render) {
     entityRenderMap.put(entity, render);
   }
 
   @SideOnly(Side.CLIENT)
-  public static void registerTileRenderer(Class<? extends TileEntity> entity, TileEntitySpecialRenderer render) {
+  public static void registerTileRenderer(@Nonnull Class<? extends TileEntity> entity, @Nonnull TileEntitySpecialRenderer render) {
     tileEntityRenderMap.put(entity, render);
   }
 
@@ -137,26 +142,30 @@ public class LibRegistry {
   public static void registerEntity(Class<? extends Entity> entity, int eggColor1, int eggColor2) {
     String[] nameParts = entity.getTypeName().split("\\.");
     String className = nameParts[nameParts.length - 1];
-    EntityRegistry
-        .registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++, MysticalLib.INSTANCE,
-            64, 1, true, eggColor1, eggColor2);
+    EntityRegistry.registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++,
+        MysticalLib.INSTANCE, 64, 1, true, eggColor1, eggColor2);
   }
 
   public static void registerEntity(Class<? extends Entity> entity) {
     String[] nameParts = entity.getTypeName().split("\\.");
     String className = nameParts[nameParts.length - 1];
-    EntityRegistry
-        .registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++, MysticalLib.INSTANCE,
-            64, 1, true);
+    EntityRegistry.registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++,
+        MysticalLib.INSTANCE, 64, 1, true);
   }
 
-  public static void setActiveMod(String modid, ModContainer container) {
+  /**
+   * Sets the current mod to register the blocks/items/entities/tes under
+   *
+   * @param modid     ID Of the mod (e.g. "MysticalLib")
+   * @param container The instance of the ModContainer
+   */
+  public static void setActiveMod(@Nonnull String modid, @Nonnull ModContainer container) {
     activeModid = modid;
     Loader.instance().setActiveModContainer(container);
   }
 
   @SubscribeEvent
-  public void registerItems(RegistryEvent.Register<Item> event) {
+  public void registerItems(@Nonnull RegistryEvent.Register<Item> event) {
     for (Item i : items) {
       event.getRegistry().register(i);
     }
@@ -171,18 +180,18 @@ public class LibRegistry {
   }
 
   @SubscribeEvent
-  public void registerBlocks(RegistryEvent.Register<Block> event) {
+  public void registerBlocks(@Nonnull RegistryEvent.Register<Block> event) {
     for (Block b : blocks) {
       event.getRegistry().register(b);
     }
   }
 
-  static Set<ModelResourceLocation> noCullMRLs = new HashSet<>();
-  static Set<ModelResourceLocation> colorMRLs = new HashSet<>();
+  private static Set<ModelResourceLocation> noCullMRLs = new HashSet<>();
+  private static Set<ModelResourceLocation> colorMRLs = new HashSet<>();
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
-  public void registerRendering(ModelRegistryEvent event) {
+  public void registerRendering(@Nonnull ModelRegistryEvent event) {
     for (Item i : items) {
       if (i instanceof IModeledObject) {
         ((IModeledObject) i).initModel();
@@ -195,6 +204,9 @@ public class LibRegistry {
     }
   }
 
+  /**
+   * Call in preInit to register Entity and TE rendering
+   */
   public static void registerEntityRenders() {
     for (Entry<Class<? extends Entity>, IRenderFactory> e : entityRenderMap.entrySet()) {
       RenderingRegistry.registerEntityRenderingHandler(e.getKey(), e.getValue());
@@ -206,7 +218,7 @@ public class LibRegistry {
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
-  public void onRegisterCustomModels(RegisterCustomModelsEvent event) {
+  public void onRegisterCustomModels(@Nonnull RegisterCustomModelsEvent event) {
     for (Block b : blocks) {
       if (b instanceof ICustomModeledObject) {
         ((ICustomModeledObject) b).initCustomModel();
@@ -221,7 +233,7 @@ public class LibRegistry {
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
-  public void onTextureStitch(TextureStitchEvent event) {
+  public void onTextureStitch(@Nonnull TextureStitchEvent event) {
     for (Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
       event.getMap().registerSprite(e.getValue());
     }
@@ -240,7 +252,7 @@ public class LibRegistry {
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
-  public void onModelBake(ModelBakeEvent event) {
+  public void onModelBake(@Nonnull ModelBakeEvent event) {
     MinecraftForge.EVENT_BUS.post(new RegisterTintedModelsEvent());
     noCullMRLs.clear();
     for (Block b : blocks) {
@@ -250,15 +262,11 @@ public class LibRegistry {
         }
       }
     }
-    //TextureAtlasSprite sprite = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(Blocks.STONE.getDefaultState()).getParticleTexture();
-    //ModelUtil.STANDARD_SPRITE_WIDTH = sprite.getMaxU()-sprite.getMinU();
-    //ModelUtil.STANDARD_SPRITE_HEIGHT = sprite.getMaxV()-sprite.getMinV();
 
-    Function<ResourceLocation, TextureAtlasSprite> getter = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
     for (ResourceLocation r : CustomModelLoader.itemmodels.keySet()) {
       ModelResourceLocation mrl = new ModelResourceLocation(r.toString().replace("#inventory", ""), "inventory");
-      Object object = event.getModelRegistry().getObject(mrl);
-      if (object instanceof IBakedModel) {
+      IBakedModel bakedModel = event.getModelRegistry().getObject(mrl);
+      if (bakedModel != null) {
         IModel m = CustomModelLoader.itemmodels.get(r);
         event.getModelRegistry().putObject(mrl, m.bake(m.getDefaultState(), DefaultVertexFormats.ITEM, ModelLoader.defaultTextureGetter()));
       }
@@ -268,8 +276,6 @@ public class LibRegistry {
       if (noCullMRLs.contains(mrl)) {
         event.getModelRegistry().putObject(mrl, new BakedModelBlockUnlitWrapper(event.getModelManager().getModel(mrl)));
       }
-      if (mrl.toString().startsWith("eidolon"))
-        System.out.println(mrl.toString());
       if (colorMRLs.contains(mrl)) {
         event.getModelRegistry().putObject(mrl, new BakedModelColorWrapper(event.getModelManager().getModel(mrl)));
       }
@@ -280,11 +286,12 @@ public class LibRegistry {
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
-  public void onRegisterCustomModels(RegisterParticleEvent event) {
+  public void onRegisterCustomModels(@Nonnull RegisterParticleEvent event) {
     PARTICLE_GLOW = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleGlow.class, new ResourceLocation("mysticallib:particle/particle_glow"));
     PARTICLE_SMOKE = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleSmoke.class, new ResourceLocation("mysticallib:particle/particle_smoke"));
     PARTICLE_SPARK = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleSpark.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
-    PARTICLE_GLITTER = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
+    PARTICLE_GLITTER = ParticleRegistry
+        .registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
     PARTICLE_FLAME = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleFlame.class, new ResourceLocation("mysticallib:particle/particle_fire"));
   }
 }
