@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -11,9 +13,12 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.Chunk.EnumCreateEntityType;
 
 public class Util {
+
   public static Random rand = new Random();
 
-  public static <T extends TileEntity> List<T> getTileEntitiesWithin(World world, Class<? extends T> teClass, int x1, int y1, int z1, int x2, int y2, int z2) {
+  @Nonnull
+  public static <T extends TileEntity> List<T> getTileEntitiesWithin(@Nonnull World world, @Nonnull Class<? extends T> teClass, int x1, int y1, int z1, int x2,
+      int y2, int z2) {
     List<T> tiles = new ArrayList<T>();
     for (int i = x1; i <= x2; i++) {
       for (int j = y1; j <= y2; j++) {
@@ -32,7 +37,8 @@ public class Util {
     return tiles;
   }
 
-  public static String lowercase(String s) {
+  @Nonnull
+  public static String lowercase(@Nonnull String s) {
     String f = "";
     for (int i = 0; i < s.length(); i++) {
       String c = s.substring(i, i + 1);
@@ -52,7 +58,8 @@ public class Util {
     return ((255 << 24) + r * 65536 + g * 256 + b);
   }
 
-  public static String getLowercaseClassName(Class c) {
+  @Nonnull
+  public static String getLowercaseClassName(@Nonnull Class c) {
     String[] nameParts = c.getTypeName().split("\\.");
     String className = nameParts[nameParts.length - 1];
     return lowercase(className);

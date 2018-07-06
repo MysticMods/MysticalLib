@@ -2,6 +2,8 @@ package epicsquid.mysticallib.util;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.struct.Vec4d;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +11,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class Primitives {
-  public static void putVertex(World world, List<Float> data, List<Float> lmapData, float x, float y, float z) {
+
+  public static void putVertex(@Nonnull World world, @Nonnull List<Float> data, @Nonnull List<Float> lmapData, float x, float y, float z) {
     data.add(x);
     data.add(y);
     data.add(z);
@@ -20,25 +23,25 @@ public class Primitives {
     lmapData.add((float) k);
   }
 
-  public static void putUV(List<Float> data, float u, float v) {
+  public static void putUV(@Nonnull List<Float> data, float u, float v) {
     data.add(u);
     data.add(v);
   }
 
-  public static void putColor(List<Float> data, float r, float g, float b, float a) {
+  public static void putColor(@Nonnull List<Float> data, float r, float g, float b, float a) {
     data.add(r);
     data.add(g);
     data.add(b);
     data.add(a);
   }
 
-  public static void putNormal(List<Float> data, float nx, float ny, float nz) {
+  public static void putNormal(@Nonnull List<Float> data, float nx, float ny, float nz) {
     data.add(nx);
     data.add(ny);
     data.add(nz);
   }
 
-  public static int getBrightnessForPos(World world, float x, float y, float z) {
+  public static int getBrightnessForPos(@Nonnull World world, float x, float y, float z) {
     BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(MathHelper.floor(x), 0, MathHelper.floor(z));
     if (world.isBlockLoaded(pos)) {
       pos.setY(MathHelper.floor(y));
@@ -47,8 +50,8 @@ public class Primitives {
     return 0;
   }
 
-  public static void addCubeToBuffer(BufferBuilder buff, double x1, double y1, double z1, double x2, double y2, double z2, Vec4d[] uv, float r, float g,
-      float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west) {
+  public static void addCubeToBuffer(@Nonnull BufferBuilder buff, double x1, double y1, double z1, double x2, double y2, double z2, @Nonnull Vec4d[] uv,
+      float r, float g, float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west) {
     if (north) {
       buff.pos(x1, y1, z1).tex(uv[0].x, uv[0].y).color(r, g, b, a).normal(0, 0, -1.0f).endVertex();
       buff.pos(x2, y1, z1).tex(uv[0].x + uv[0].z, uv[0].y).color(r, g, b, a).normal(0, 0, -1.0f).endVertex();
@@ -87,8 +90,8 @@ public class Primitives {
     }
   }
 
-  public static void addCubeToBuffer(BufferBuilder buff, double x1, double y1, double z1, double x2, double y2, double z2, Vec4d[] uv, float r, float g,
-      float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west, int lightx, int lighty) {
+  public static void addCubeToBuffer(@Nonnull BufferBuilder buff, double x1, double y1, double z1, double x2, double y2, double z2, @Nonnull Vec4d[] uv,
+      float r, float g, float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west, int lightx, int lighty) {
     if (north) {
       buff.pos(x1, y1, z1).tex(uv[0].x, uv[0].y).lightmap(lightx, lighty).color(r, g, b, a).endVertex();
       buff.pos(x2, y1, z1).tex(uv[0].x + uv[0].z, uv[0].y).lightmap(lightx, lighty).color(r, g, b, a).endVertex();

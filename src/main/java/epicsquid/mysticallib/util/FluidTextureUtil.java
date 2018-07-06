@@ -2,6 +2,8 @@ package epicsquid.mysticallib.util;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Maps;
 
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -15,7 +17,7 @@ public class FluidTextureUtil {
   //This code is borrowed and tweaked from Fancy Fluid Storage by LordMau5
   //Find the source here: https://github.com/Lordmau5/FFS/blob/1.10.2/src/main/java/com/lordmau5/ffs/client/FluidHelper.java
 
-  public static void initTextures(TextureMap map) {
+  public static void initTextures(@Nonnull TextureMap map) {
     for (Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
       if (fluid.getStill() != null) {
         String still = fluid.getStill().toString();

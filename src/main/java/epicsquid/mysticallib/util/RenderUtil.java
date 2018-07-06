@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.util;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibEvents;
 import epicsquid.mysticallib.MysticalLib;
 import net.minecraft.client.gui.FontRenderer;
@@ -10,13 +12,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class RenderUtil {
+
   public static ResourceLocation beam_texture = new ResourceLocation(MysticalLib.MODID + ":textures/effect/beam.png");
   public static ResourceLocation glow_texture = new ResourceLocation(MysticalLib.MODID + ":textures/effect/glow.png");
   public static int maxLightX = 0xF000F0;
   public static int maxLightY = 0xF000F0;
 
-  public static void renderBeam(BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1, float a1,
-      float r2, float g2, float b2, float a2, double width) {
+  public static void renderBeam(@Nonnull BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1,
+      float a1, float r2, float g2, float b2, float a2, double width) {
     float yaw = (float) Math.atan2(x2 - x1, z2 - z1);
     float pitch = (float) Math.atan2(y2 - y1, (double) MathHelper.sqrt(Math.pow(x2 - x1, 2) + Math.pow(z2 - z1, 2)));
 
@@ -47,8 +50,8 @@ public class RenderUtil {
         .color((float) r1, (float) g1, (float) b1, (float) a1).endVertex();
   }
 
-  public static void renderBeam(BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1, float a1,
-      float r2, float g2, float b2, float a2, double width1, double width2, double angle) {
+  public static void renderBeam(@Nonnull BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1,
+      float a1, float r2, float g2, float b2, float a2, double width1, double width2, double angle) {
     float rads = (float) Math.toRadians(angle);
     double ac = MathHelper.cos(rads);
     double as = MathHelper.sin(rads);
@@ -95,8 +98,8 @@ public class RenderUtil {
         .color((float) r1, (float) g1, (float) b1, (float) a1).endVertex();
   }
 
-  public static void renderBeam(BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1, float a1,
-      float r2, float g2, float b2, float a2, double width, double angle) {
+  public static void renderBeam(@Nonnull BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1,
+      float a1, float r2, float g2, float b2, float a2, double width, double angle) {
     float rads = (float) Math.toRadians(angle);
     double ac = MathHelper.cos(rads);
     double as = MathHelper.sin(rads);
@@ -137,8 +140,8 @@ public class RenderUtil {
         .color((float) r1, (float) g1, (float) b1, (float) a1).endVertex();
   }
 
-  public static void renderBeamGui(BufferBuilder buf, double x1, double y1, double x2, double y2, float r1, float g1, float b1, float a1, float r2, float g2,
-      float b2, float a2, double width) {
+  public static void renderBeamGui(@Nonnull BufferBuilder buf, double x1, double y1, double x2, double y2, float r1, float g1, float b1, float a1, float r2,
+      float g2, float b2, float a2, double width) {
     float yaw = (float) Math.atan2(y2 - y1, x2 - x1);
 
     double tX1 = -width * (double) MathHelper.sin(yaw);
@@ -154,8 +157,8 @@ public class RenderUtil {
         .color((float) r1, (float) g1, (float) b1, (float) a1).endVertex();
   }
 
-  public static void renderBeamSeriesGui(BufferBuilder buf, double x1, double y1, double x2, double y2, float r1, float g1, float b1, float a1, double width,
-      boolean horiz) {
+  public static void renderBeamSeriesGui(@Nonnull BufferBuilder buf, double x1, double y1, double x2, double y2, float r1, float g1, float b1, float a1,
+      double width, boolean horiz) {
     float yaw2 = (float) Math.atan2(y2 - y1, x2 - x1);
 
     double tX1 = width * (double) MathHelper.cos(yaw2);
@@ -167,8 +170,8 @@ public class RenderUtil {
         .color((float) r1, (float) g1, (float) b1, (float) a1).endVertex();
   }
 
-  public static void renderBeamSeries(BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1,
-      float a1, double width, boolean horiz) {
+  public static void renderBeamSeries(@Nonnull BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1,
+      float b1, float a1, double width, boolean horiz) {
     float yaw2 = (float) Math.atan2(x2 - x1, z2 - z1);
     float pitch2 = (float) Math.atan2(y2 - y1, (double) MathHelper.sqrt(Math.pow(x2 - x1, 2) + Math.pow(z2 - z1, 2)));
 
@@ -192,8 +195,8 @@ public class RenderUtil {
     }
   }
 
-  public static void renderBeamSeries(BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1,
-      float a1, double width, boolean horiz, double angle) {
+  public static void renderBeamSeries(@Nonnull BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1,
+      float b1, float a1, double width, boolean horiz, double angle) {
     float rads = (float) Math.toRadians(angle);
     double ac = MathHelper.cos(rads);
     double as = MathHelper.sin(rads);
@@ -227,7 +230,7 @@ public class RenderUtil {
     }
   }
 
-  public static void renderSlash(BufferBuilder buf, double x0, double y0, double z0, float r, float g, float b, float a, float radius, float width,
+  public static void renderSlash(@Nonnull BufferBuilder buf, double x0, double y0, double z0, float r, float g, float b, float a, float radius, float width,
       float angleRange) {
     for (float i = -angleRange / 2.0f; i < angleRange / 2.0f; i += angleRange / 16.0f) {
       float coeff1 = 1.0f - Math.abs(i) / (angleRange / 2.0f);
@@ -279,8 +282,8 @@ public class RenderUtil {
     }
   }
 
-  public static void renderBeamSeries(BufferBuilder buf, double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2, double z2,
-      float r1, float g1, float b1, float a1, float r2, float g2, float b2, float a2) {
+  public static void renderBeamSeries(@Nonnull BufferBuilder buf, double x0, double y0, double z0, double x1, double y1, double z1, double x2, double y2,
+      double z2, float r1, float g1, float b1, float a1, float r2, float g2, float b2, float a2) {
     float yaw1 = (float) Math.atan2(x1 - x0, z1 - z0);
     float pitch1 = (float) Math.atan2(y1 - y0, (double) MathHelper.sqrt(Math.pow(x1 - x0, 2) + Math.pow(z1 - z0, 2)));
 
@@ -343,11 +346,12 @@ public class RenderUtil {
     }
   }
 
-  public static void drawTextRGBA(FontRenderer font, String s, int x, int y, int r, int g, int b, int a) {
+  public static void drawTextRGBA(@Nonnull FontRenderer font, @Nonnull String s, int x, int y, int r, int g, int b, int a) {
     font.drawString(s, x, y, (a << 24) + (r << 16) + (g << 8) + (b));
   }
 
-  public static void renderStarBurst(BufferBuilder buf, double x, double y, double z, float r, float g, float b, float a, double width, double radius) {
+  public static void renderStarBurst(@Nonnull BufferBuilder buf, double x, double y, double z, float r, float g, float b, float a, double width,
+      double radius) {
     for (double i = -Math.PI * 0.5; i <= Math.PI * 0.5; i += Math.PI * 0.125) {
       for (double j = 0; j < Math.PI * 2.0; j += Math.PI * (0.75 * (Math.abs(i / (Math.PI * 0.5))) + 0.25)) {
         double si = ((float) (LibEvents.ticks) / 80.0f) * (0.375f + 0.773 * j / (Math.PI * 2.0)) * (0.25f + 1.225 * i / (Math.PI)) * Math.PI * 2.0;
@@ -362,7 +366,7 @@ public class RenderUtil {
     }
   }
 
-  public static void renderBeamCircle(BufferBuilder buf, double x, double y, double z, float r, float g, float b, float a, double width, double radius,
+  public static void renderBeamCircle(@Nonnull BufferBuilder buf, double x, double y, double z, float r, float g, float b, float a, double width, double radius,
       int steps, boolean horiz) {
     for (double i = 0; i <= Math.PI * 2.0; i += Math.PI * (2.0 / (double) steps)) {
       double x1 = x + Math.sin(i) * radius;
@@ -373,8 +377,8 @@ public class RenderUtil {
     }
   }
 
-  public static void drawCrystal(BufferBuilder buf, float x, float y, float z, float r, float g, float b, float a, float rotation, float hsize, float ysize,
-      float minU, float minV, float maxU, float maxV) {
+  public static void drawCrystal(@Nonnull BufferBuilder buf, float x, float y, float z, float r, float g, float b, float a, float rotation, float hsize,
+      float ysize, float minU, float minV, float maxU, float maxV) {
     float offX1 = hsize * 0.5f * (float) Math.sin(Math.toRadians(rotation));
     float offZ1 = hsize * 0.5f * (float) Math.cos(Math.toRadians(rotation));
     float offX2 = hsize * 0.5f * (float) Math.sin(Math.toRadians(rotation + 90.0f));
@@ -442,8 +446,8 @@ public class RenderUtil {
     buf.pos(pos2X, pos2Y, pos2Z).tex(maxU, maxV).color(r, g, b, a).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();
   }
 
-  public static void drawCrystal(BufferBuilder b, float x, float y, float z, float rotation, float hsize, float ysize, float minU, float minV, float maxU,
-      float maxV) {
+  public static void drawCrystal(@Nonnull BufferBuilder b, float x, float y, float z, float rotation, float hsize, float ysize, float minU, float minV,
+      float maxU, float maxV) {
     float offX1 = hsize * 0.5f * (float) Math.sin(Math.toRadians(rotation));
     float offZ1 = hsize * 0.5f * (float) Math.cos(Math.toRadians(rotation));
     float offX2 = hsize * 0.5f * (float) Math.sin(Math.toRadians(rotation + 90.0f));
@@ -521,7 +525,7 @@ public class RenderUtil {
 
   public static TransformType itemTransformType = TransformType.NONE;
 
-  public static void setTransform(TransformType t) {
+  public static void setTransform(@Nonnull TransformType t) {
     itemTransformType = t;
   }
 

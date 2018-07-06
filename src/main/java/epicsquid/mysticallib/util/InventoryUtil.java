@@ -1,11 +1,14 @@
 package epicsquid.mysticallib.util;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class InventoryUtil {
-  public static int attemptInsert(ItemStack stack, IItemHandler inventory, boolean simulate) {
+
+  public static int attemptInsert(@Nonnull ItemStack stack, @Nonnull IItemHandler inventory, boolean simulate) {
     int count = stack.getCount();
     ItemStack toInsert = stack.copy();
     for (int i = 0; i < inventory.getSlots() && !toInsert.isEmpty(); i++) {
@@ -15,7 +18,7 @@ public class InventoryUtil {
     return count - toInsert.getCount();
   }
 
-  public static int attemptInsert(ItemStack stack, IItemHandler inventory, boolean simulate, int startSlot, int endSlot) {
+  public static int attemptInsert(@Nonnull ItemStack stack, @Nonnull IItemHandler inventory, boolean simulate, int startSlot, int endSlot) {
     int count = stack.getCount();
     ItemStack toInsert = stack.copy();
     for (int i = startSlot; i < endSlot && !toInsert.isEmpty(); i++) {
@@ -25,13 +28,11 @@ public class InventoryUtil {
     return count - toInsert.getCount();
   }
 
-  public static boolean stackMatches(ItemStack stack, Object recipeInput) {
+  public static boolean stackMatches(@Nonnull ItemStack stack, @Nonnull Object recipeInput) {
     if (recipeInput instanceof ItemStack) {
-      if (!ItemStack.areItemsEqual(stack, (ItemStack) recipeInput)) {
-        return false;
-      }
+      return ItemStack.areItemsEqual(stack, (ItemStack) recipeInput);
     } else if (recipeInput instanceof OreStack) {
-      int id = OreDictionary.getOreID(((OreStack) recipeInput).oreId);
+      int id = OreDictionary.getOreID(((OreStack) recipeInput).getOreId());
       int[] ids = OreDictionary.getOreIDs(stack);
       boolean hasMatch = false;
       for (int pid : ids) {
@@ -39,9 +40,7 @@ public class InventoryUtil {
           hasMatch = true;
         }
       }
-      if (!hasMatch) {
-        return hasMatch;
-      }
+      return hasMatch;
     } else if (recipeInput instanceof String) {
       int id = OreDictionary.getOreID((String) recipeInput);
       int[] ids = OreDictionary.getOreIDs(stack);
@@ -51,10 +50,8 @@ public class InventoryUtil {
           hasMatch = true;
         }
       }
-      if (!hasMatch) {
-        return hasMatch;
-      }
+      return hasMatch;
     }
-    return true;
+    return false;
   }
 }

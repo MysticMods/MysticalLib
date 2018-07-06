@@ -2,16 +2,20 @@ package epicsquid.mysticallib.util;
 
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.util.math.MathHelper;
 
 public class NoiseGenUtil {
-  static Random random = new Random();
+
+  private static Random random = new Random();
 
   public static double getNoise(long seed, int x, int y) {
     random.setSeed(simple_hash(new int[] { (int) seed, (int) (seed << 32), (int) Math.signum(y) * 512 + 512, (int) Math.signum(x) * 512 + 512, x, y }, 5));
     return random.nextDouble();
   }
 
+  @Nonnull
   public static Random getRandom(int... args) {
     return new Random((long) simple_hash(args, args.length));
   }

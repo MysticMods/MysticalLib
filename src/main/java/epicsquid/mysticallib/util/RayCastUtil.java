@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.util;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
@@ -13,9 +14,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class RayCastUtil {
+
   @Nullable
-  public static RayTraceResult rayTraceBlocks(World world, Vec3d vec31, Vec3d vec32, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox,
-      boolean returnLastUncollidableBlock, boolean allowNonfullCube) {
+  public static RayTraceResult rayTraceBlocks(@Nonnull World world, @Nonnull Vec3d vec31, @Nonnull Vec3d vec32, boolean stopOnLiquid,
+      boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock, boolean allowNonfullCube) {
     if (!Double.isNaN(vec31.x) && !Double.isNaN(vec31.y) && !Double.isNaN(vec31.z)) {
       if (!Double.isNaN(vec32.x) && !Double.isNaN(vec32.y) && !Double.isNaN(vec32.z)) {
         int i = MathHelper.floor(vec32.x);
