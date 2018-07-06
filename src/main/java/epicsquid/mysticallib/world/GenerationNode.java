@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.world;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.Mirror;
@@ -8,18 +10,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class GenerationNode {
-  String structure = "";
-  Rotation rotation = Rotation.NONE;
-  Mirror mirror = Mirror.NONE;
+  private String structure = "";
+  private Rotation rotation = Rotation.NONE;
+  private Mirror mirror = Mirror.NONE;
   public BlockPos pos = new BlockPos(-1, -1, -1);
-  boolean replaceWithAir = false;
-  public boolean isAlive = true;
+  private boolean replaceWithAir = false;
+  boolean isAlive = true;
 
-  public GenerationNode(NBTTagCompound tag) {
+  public GenerationNode(@Nonnull NBTTagCompound tag) {
     readFromNBT(tag);
   }
 
-  public GenerationNode(BlockPos pos, String structure, Rotation rotation, Mirror mirror, boolean replaceWithAir) {
+  public GenerationNode(@Nonnull BlockPos pos, @Nonnull String structure, @Nonnull Rotation rotation, @Nonnull Mirror mirror, boolean replaceWithAir) {
     this.pos = pos;
     this.structure = structure;
     this.rotation = rotation;
@@ -27,7 +29,7 @@ public class GenerationNode {
     this.replaceWithAir = replaceWithAir;
   }
 
-  public void update(World world) {
+  public void update(@Nonnull World world) {
     if (structure.length() > 0) {
       IGeneratable data = StructureRegistry.structures.get(structure);
       if (data != null) {
@@ -43,7 +45,7 @@ public class GenerationNode {
     }
   }
 
-  protected void readFromNBT(NBTTagCompound compound) {
+  protected void readFromNBT(@Nonnull NBTTagCompound compound) {
     structure = compound.getString("structure");
     rotation = Rotation.values()[compound.getInteger("rotation")];
     mirror = Mirror.values()[compound.getInteger("mirror")];

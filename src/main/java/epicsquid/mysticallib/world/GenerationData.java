@@ -3,6 +3,8 @@ package epicsquid.mysticallib.world;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.MysticalLib;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -12,23 +14,23 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
 public class GenerationData extends WorldSavedData {
-  public Set<GenerationNode> nodes = new HashSet<>();
+  private Set<GenerationNode> nodes = new HashSet<>();
 
-  public GenerationData(String name) {
+  public GenerationData(@Nonnull String name) {
     super(name);
   }
 
   public GenerationData() {
-    super(MysticalLib.MODID + "_generation_data");
+    this(MysticalLib.MODID + "_generation_data");
   }
 
-  public void addNode(GenerationNode node) {
+  public void addNode(@Nonnull GenerationNode node) {
     nodes.add(node);
     markDirty();
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound nbt) {
+  public void readFromNBT(@Nonnull NBTTagCompound nbt) {
     NBTTagList list = nbt.getTagList("gen_data_nodes", Constants.NBT.TAG_COMPOUND);
     for (int i = 0; i < list.tagCount(); i++) {
       nodes.add(new GenerationNode(list.getCompoundTagAt(i)));
@@ -36,7 +38,8 @@ public class GenerationData extends WorldSavedData {
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+  @Nonnull
+  public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
     NBTTagList list = new NBTTagList();
     for (GenerationNode g : nodes) {
       list.appendTag(g.writeToNBT());
@@ -45,7 +48,7 @@ public class GenerationData extends WorldSavedData {
     return compound;
   }
 
-  public static GenerationData get(World w) {
+  public static GenerationData get(@Nonnull World w) {
     MapStorage s = w.getPerWorldStorage();
     GenerationData d = (GenerationData) s.getOrLoadData(GenerationData.class, MysticalLib.MODID + "_generation_data");
 
@@ -57,20 +60,18 @@ public class GenerationData extends WorldSavedData {
     return d;
   }
 
-  public void update(World world) {
+  public void update(@Nonnull World world) {
     Set<GenerationNode> toDelete = new HashSet<>();
     for (GenerationNode n : nodes) {
       if (n != null) {
         n.update(world);
       }
-      if (!n.isAlive || n == null) {
+      if (n == null || !n.isAlive) {
         toDelete.add(n);
       }
     }
     for (GenerationNode n : toDelete) {
-      if (nodes.contains(n)) {
         nodes.remove(n);
-      }
     }
     toDelete.clear();
   }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Mirror;
@@ -15,13 +17,13 @@ import net.minecraft.world.World;
 public class StructureData implements IGeneratable {
   public Map<Vec3i, String> data = new HashMap<>();
   public Map<String, IBlockState> blocks = new HashMap<>();
-  int width = 0, height = 0, length = 0;
+  private int width = 0, height = 0, length = 0;
 
-  public void addBlock(String string, IBlockState state) {
+  public void addBlock(@Nonnull String string, @Nonnull IBlockState state) {
     blocks.put(string, state);
   }
 
-  public void addLayer(String[] layer, int y) {
+  public void addLayer(@Nonnull String[] layer, int y) {
     for (int i = 0; i < layer.length; i++) {
       for (int j = 0; j < layer[i].length(); j++) {
         data.put(new Vec3i(i, y, j), layer[i].substring(j, j + 1));
@@ -59,7 +61,7 @@ public class StructureData implements IGeneratable {
   }
 
   @Override
-  public void generateIn(World world, int x, int y, int z, Rotation rotation, Mirror doMirror, boolean replaceWithAir) {
+  public void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir) {
     calcDimensions();
     for (Entry<Vec3i, String> e : data.entrySet()) {
       Vec3i v = e.getKey();
@@ -79,7 +81,8 @@ public class StructureData implements IGeneratable {
     }
   }
 
-  public void placeBlock(World world, BlockPos pos, IBlockState state, Rotation rotation, Mirror mirror, boolean replaceWithAir) {
+  private void placeBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Rotation rotation, @Nonnull Mirror mirror,
+      boolean replaceWithAir) {
     if (state.getBlock() != Blocks.AIR || state.getBlock() == Blocks.AIR && replaceWithAir) {
       world.setBlockState(pos, state.withRotation(rotation).withMirror(mirror));
     }

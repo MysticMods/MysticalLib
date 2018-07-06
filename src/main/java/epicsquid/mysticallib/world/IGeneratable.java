@@ -1,15 +1,18 @@
 package epicsquid.mysticallib.world;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.world.World;
 
 public interface IGeneratable {
-  public void generateIn(World world, int x, int y, int z, Rotation rotation, Mirror doMirror, boolean replaceWithAir);
 
-  public void calcDimensions();
+  void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir);
 
-  public int getWidth();
+  void calcDimensions();
 
-  public int getLength();
+  int getWidth();
+
+  int getLength();
 }

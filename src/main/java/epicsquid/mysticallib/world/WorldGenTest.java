@@ -2,6 +2,8 @@ package epicsquid.mysticallib.world;
 
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.block.BlockCornerBase;
 import epicsquid.mysticallib.block.BlockSlantBase;
@@ -15,7 +17,8 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 
 public class WorldGenTest extends WorldGenBase {
-  public String structureId = "";
+
+  private String structureId = "";
 
   public static final String[] compass = { "....E....", ".........", "....^....", "....|....", "N.<-O->.S", "....|....", "....v....", ".........",
       "....W....", };
@@ -43,7 +46,8 @@ public class WorldGenTest extends WorldGenBase {
   }
 
   @Override
-  public void generateStruct(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
+  public void generateStruct(@Nonnull Random random, int chunkX, int chunkZ, @Nonnull World world, @Nonnull IChunkGenerator chunkGenerator,
+      @Nonnull IChunkProvider chunkProvider) {
     GenerationData.get(world).addNode(new GenerationNode(world.getTopSolidOrLiquidBlock(new BlockPos(chunkX * 16, 64, chunkZ * 16)).down(1), structureId,
         Rotation.values()[random.nextInt(4)], Mirror.NONE, true));
   }
