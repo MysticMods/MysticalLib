@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import epicsquid.mysticallib.LibEvents;
-import epicsquid.mysticallib.tile.TileCable;
 import epicsquid.mysticallib.tile.TileModular;
 import epicsquid.mysticallib.tile.module.FaceConfig.FaceIO;
 import net.minecraft.nbt.NBTTagCompound;
@@ -144,47 +143,16 @@ public class ModuleEnergy extends Module {
             IEnergyStorage s = t.getCapability(CapabilityEnergy.ENERGY, f.getOpposite());
             if (s != null) {
               int amount = s.receiveEnergy(Math.min(giveLimit, battery.getEnergyStored()), true);
-              if (amount > 0/* || t instanceof TileCable*/) {
-                if (t instanceof TileCable) {
-                  ((TileCable) t).from = tile.getPos();
-                }
+              if (amount > 0) {
                 s.receiveEnergy(amount, false);
                 battery.extractEnergy(amount, false);
                 tile.markDirty();
-                t.markDirty();
-                LibEvents.markForUpdate(tile.getPos().offset(f), t);
-              } else if (t instanceof TileCable) {
-                s.receiveEnergy(0, false);
                 t.markDirty();
                 LibEvents.markForUpdate(tile.getPos().offset(f), t);
               }
             }
           }
         }
-				/*if (tile.config.ioConfig.get(f) == FaceIO.IN && !tile.getWorld().isRemote){
-					TileEntity t = tile.getWorld().getTileEntity(tile.getPos().offset(f));
-					if (t != null && t.hasCapability(CapabilityEnergy.ENERGY, f.getOpposite())){
-						IEnergyStorage s = t.getCapability(CapabilityEnergy.ENERGY, f.getOpposite());
-						if (s != null){
-							int amount = s.extractEnergy(Math.min(giveLimit, battery.getEnergyStored()), true);
-							if (amount > 0 || t instanceof TileCable){
-								if (t instanceof TileCable){
-									((TileCable)t).from = tile.getPos();
-								}
-								s.extractEnergy(amount, false);
-								battery.receiveEnergy(amount, false);
-								tile.markDirty();
-								t.markDirty();
-								EventManager.markForUpdate(tile.getPos().offset(f), t);
-							}
-							else if (t instanceof TileCable){
-								s.extractEnergy(0, false);
-								t.markDirty();
-								EventManager.markForUpdate(tile.getPos().offset(f), t);
-							}
-						}
-					}
-				}*/
       }
     }
   }

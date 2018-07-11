@@ -3,7 +3,6 @@ package epicsquid.mysticallib;
 import epicsquid.mysticallib.fx.FXHandler;
 import epicsquid.mysticallib.proxy.CommonProxy;
 import epicsquid.mysticallib.recipe.RecipeRegistry;
-import epicsquid.mysticallib.tile.CableManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -28,7 +27,6 @@ public class MysticalLib {
   public void preInit(FMLPreInitializationEvent event) {
     MinecraftForge.EVENT_BUS.register(new LibRegistry());
     MinecraftForge.EVENT_BUS.register(new LibEvents());
-    MinecraftForge.EVENT_BUS.register(new CableManager());
     MinecraftForge.EVENT_BUS.register(new FXHandler());
     MinecraftForge.EVENT_BUS.register(new RecipeRegistry());
     proxy.preInit(event);
