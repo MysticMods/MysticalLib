@@ -24,7 +24,7 @@ public class TileModularSlave extends TileModular implements ISlave, IHUDContain
   public TileModular tile = null;
 
   public TileModularSlave() {
-    this.config.setAllIO(FaceIO.IN);
+    this.faceConfig.setAllIO(FaceIO.IN);
   }
 
   @Override

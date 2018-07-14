@@ -1,61 +1,154 @@
 package epicsquid.mysticallib.tile.module;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.LibEvents;
 import epicsquid.mysticallib.tile.TileModular;
 import epicsquid.mysticallib.tile.module.FaceConfig.FaceIO;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
 
-public class ModuleEnergy extends Module {
-  public EnergyStorage battery;
-  public Map<EnumFacing, EnergyIOProxy> ioProxies = new HashMap<EnumFacing, EnergyIOProxy>();
-  public TileModular tile = null;
-  public int receiveLimit = 0, giveLimit = 0;
+public class ModuleEnergy implements IModule<IEnergyStorage> {
 
-  public ModuleEnergy(String name, TileModular tile, int capacity, int receiveLimit, int giveLimit) {
-    super(name);
-    this.receiveLimit = receiveLimit;
-    this.giveLimit = giveLimit;
+  public static final @Nonnull String ENERGY_MODULE = "ENERGY_MODULE";
+
+  private @Nonnull EnergyStorage battery;
+  private @Nonnull Map<EnumFacing, EnergyIOProxy> ioProxies = new EnumMap<>(EnumFacing.class);
+  private int inputLimit, outputLimit;
+  private @Nonnull FaceConfig faceConfig;
+  private @Nonnull TileModular tile;
+
+  public ModuleEnergy(@Nonnull String name, @Nonnull TileModular tile, int capacity, int inputLimit, int outputLimit) {
+    this.inputLimit = inputLimit;
+    this.outputLimit = outputLimit;
     this.tile = tile;
-    battery = constructBattery(capacity, receiveLimit, giveLimit, 0);
+    this.faceConfig = tile.getFaceConfig();
+    battery = constructBattery(capacity, inputLimit, outputLimit, 0);
     for (EnumFacing f : EnumFacing.values()) {
-      ioProxies.put(f, constructIOProxy(f, capacity, receiveLimit, giveLimit, 0));
+      ioProxies.put(f, constructIOProxy(f, faceConfig.getIO(f), capacity, inputLimit, outputLimit, 0));
     }
   }
 
   public int getInputLimit() {
-    return receiveLimit;
+    return inputLimit;
   }
 
   public int getOutputLimit() {
-    return giveLimit;
+    return outputLimit;
   }
 
-  public EnergyStorage constructBattery(int capacity, int maxIn, int maxOut, int energy) {
+  @Nonnull
+  protected EnergyStorage constructBattery(int capacity, int maxIn, int maxOut, int energy) {
     return new EnergyStorage(capacity, maxIn, maxOut, energy);
   }
 
-  public class EnergyIOProxy extends EnergyStorage {
-    EnumFacing face = EnumFacing.NORTH;
-    TileModular tile = null;
+  @Nonnull
+  protected EnergyIOProxy constructIOProxy(@Nonnull EnumFacing face, @Nonnull FaceIO ioMode, int capacity, int maxIn, int maxOut, int energy) {
+    return new EnergyIOProxy(face, ioMode, capacity, maxIn, maxOut, energy);
+  }
 
-    public EnergyIOProxy(EnumFacing face, TileModular tile, int capacity, int maxReceive, int maxExtract, int energy) {
+  @Nonnull
+  public EnergyStorage getBattery() {
+    return battery;
+  }
+
+  @Override
+  public boolean hasCapability(@Nonnull Capability<IEnergyStorage> capability, @Nullable EnumFacing face) {
+    return capability == CapabilityEnergy.ENERGY;
+  }
+
+  @Override
+  @Nonnull
+  public IEnergyStorage getCapability(@Nullable Capability<IEnergyStorage> capability, @Nullable EnumFacing face) {
+    if (face != null) {
+      return ioProxies.get(face);
+    } else {
+      return battery;
+    }
+  }
+
+  @Override
+  @Nonnull
+  public NBTTagCompound writeToNBT() {
+    NBTTagCompound tag = new NBTTagCompound();
+    tag.setInteger("energy", battery.getEnergyStored());
+    tag.setInteger("capacity", battery.getMaxEnergyStored());
+    tag.setInteger("inputLimit", inputLimit);
+    tag.setInteger("outputLimit", outputLimit);
+    return tag;
+  }
+
+  @Override
+  public void readFromNBT(@Nonnull NBTTagCompound tag) {
+    outputLimit = tag.getInteger("outputLimit");
+    inputLimit = tag.getInteger("inputLimit");
+    battery = constructBattery(tag.getInteger("capacity"), inputLimit, outputLimit, tag.getInteger("energy"));
+  }
+
+  @Override
+  public void onUpdate(@Nonnull BlockPos pos, @Nonnull World world) {
+
+    // Check all connecting tiles to
+    for (EnumFacing dir : EnumFacing.values()) {
+      if (faceConfig.getIO(dir) == FaceIO.OUT && !world.isRemote) {
+        // Get the tile next to tbe block to check for its energy level
+        TileEntity adjTile = world.getTileEntity(pos.offset(dir));
+        if (adjTile != null && adjTile.hasCapability(CapabilityEnergy.ENERGY, dir.getOpposite())) {
+          // Get the energy capability of adjacent block
+          IEnergyStorage adjBattery = adjTile.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite());
+          if (adjBattery != null) {
+            // Output energy into the battery
+            int amount = adjBattery.receiveEnergy(Math.min(outputLimit, battery.getEnergyStored()), true);
+            if (amount > 0) {
+              adjBattery.receiveEnergy(amount, false);
+              battery.extractEnergy(amount, false);
+              tile.markDirty();
+              adjTile.markDirty();
+              LibEvents.markForUpdate(pos.offset(dir), adjTile);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @Nonnull
+  @Override
+  public String getModuleName() {
+    return ModuleEnergy.ENERGY_MODULE;
+  }
+
+  @Override
+  public void onBroken(@Nonnull World world, @Nonnull BlockPos pos, @Nullable EntityPlayer player) {
+    // Nothing required
+  }
+
+  @Override
+  @Nonnull
+  public Capability<IEnergyStorage> getCapabilityType() {
+    return CapabilityEnergy.ENERGY;
+  }
+
+  public class EnergyIOProxy extends EnergyStorage {
+    private @Nonnull EnumFacing face;
+    private @Nonnull FaceIO ioMode;
+
+    public EnergyIOProxy(@Nonnull EnumFacing face, @Nonnull FaceIO ioMode, int capacity, int maxReceive, int maxExtract, int energy) {
       super(capacity, maxReceive, maxExtract, energy);
       this.face = face;
-      this.tile = tile;
-    }
-
-    public EnergyIOProxy setTile(TileModular tile) {
-      this.tile = tile;
-      return this;
+      this.ioMode = ioMode;
     }
 
     public int getMaxEnergyStored() {
@@ -69,7 +162,7 @@ public class ModuleEnergy extends Module {
 
     @Override
     public int receiveEnergy(int amount, boolean simulate) {
-      if (tile.config.ioConfig.get(face) == FaceIO.IN || tile.config.ioConfig.get(face) == FaceIO.INOUT) {
+      if (ioMode == FaceIO.IN || ioMode == FaceIO.INOUT) {
         tile.markDirty();
         return battery.receiveEnergy(amount, simulate);
       }
@@ -78,8 +171,7 @@ public class ModuleEnergy extends Module {
 
     @Override
     public int extractEnergy(int amount, boolean simulate) {
-      if ((tile.config.ioConfig.get(face) == FaceIO.OUT || tile.config.ioConfig.get(face) == FaceIO.NEUTRAL
-          || tile.config.ioConfig.get(face) == FaceIO.INOUT)) {
+      if ((ioMode == FaceIO.OUT || ioMode == FaceIO.NEUTRAL || ioMode == FaceIO.INOUT)) {
         tile.markDirty();
         return battery.extractEnergy(amount, simulate);
       }
@@ -88,77 +180,13 @@ public class ModuleEnergy extends Module {
 
     @Override
     public boolean canReceive() {
-      return super.canReceive() && (tile.config.ioConfig.get(face) == FaceIO.IN || tile.config.ioConfig.get(face) == FaceIO.INOUT);
+      return super.canReceive() && (ioMode == FaceIO.IN || ioMode == FaceIO.INOUT);
     }
 
     @Override
     public boolean canExtract() {
-      return super.canExtract() && (tile.config.ioConfig.get(face) == FaceIO.OUT || tile.config.ioConfig.get(face) == FaceIO.INOUT);
+      return super.canExtract() && (ioMode == FaceIO.OUT || ioMode == FaceIO.INOUT);
     }
 
-  }
-
-  public EnergyIOProxy constructIOProxy(EnumFacing face, int capacity, int maxIn, int maxOut, int energy) {
-    return new EnergyIOProxy(face, tile, battery.getMaxEnergyStored(), receiveLimit, giveLimit, battery.getEnergyStored());
-  }
-
-  @Override
-  public boolean hasCapability(Capability<?> capability, EnumFacing face, TileModular tile) {
-    return capability == CapabilityEnergy.ENERGY;
-  }
-
-  @Override
-  public Object getCapability(Capability<?> capability, EnumFacing face, TileModular tile) {
-    if (face != null) {
-      return ioProxies.get(face).setTile(tile);
-    } else {
-      return battery;
-    }
-  }
-
-  @Override
-  public NBTTagCompound writeToNBT() {
-    NBTTagCompound tag = new NBTTagCompound();
-    tag.setInteger("energy", battery.getEnergyStored());
-    tag.setInteger("capacity", battery.getMaxEnergyStored());
-    tag.setInteger("receiveLimit", receiveLimit);
-    tag.setInteger("giveLimit", giveLimit);
-    return tag;
-  }
-
-  @Override
-  public void readFromNBT(NBTTagCompound tag) {
-    battery = constructBattery(tag.getInteger("capacity"), tag.getInteger("receiveLimit"), tag.getInteger("giveLimit"), tag.getInteger("energy"));
-    giveLimit = tag.getInteger("giveLimit");
-    receiveLimit = tag.getInteger("receiveLimit");
-  }
-
-  @Override
-  public void onUpdate(TileModular tile) {
-    for (EnumFacing f : EnumFacing.values()) {
-      if (hasCapability(CapabilityEnergy.ENERGY, f, tile)) {
-        if (tile.config.ioConfig.get(f) == FaceIO.OUT && !tile.getWorld().isRemote && tile.validIOModules.contains(this.getModuleName())) {
-          TileEntity t = tile.getWorld().getTileEntity(tile.getPos().offset(f));
-          if (t != null && t.hasCapability(CapabilityEnergy.ENERGY, f.getOpposite())) {
-            IEnergyStorage s = t.getCapability(CapabilityEnergy.ENERGY, f.getOpposite());
-            if (s != null) {
-              int amount = s.receiveEnergy(Math.min(giveLimit, battery.getEnergyStored()), true);
-              if (amount > 0) {
-                s.receiveEnergy(amount, false);
-                battery.extractEnergy(amount, false);
-                tile.markDirty();
-                t.markDirty();
-                LibEvents.markForUpdate(tile.getPos().offset(f), t);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  @Override
-  public Capability getCapabilityType() {
-    return CapabilityEnergy.ENERGY;
   }
 }

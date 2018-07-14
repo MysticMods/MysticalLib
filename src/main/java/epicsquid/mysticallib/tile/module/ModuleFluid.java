@@ -118,8 +118,8 @@ public class ModuleFluid extends Module {
 
     @Override
     public FluidStack drain(FluidStack stack, boolean simulate) {
-      if (ModuleFluid.this.tile.config.ioConfig.get(face) == FaceConfig.FaceIO.OUT || tile.config.ioConfig.get(face) == FaceConfig.FaceIO.INOUT
-          || ModuleFluid.this.tile.config.ioConfig.get(face) == FaceConfig.FaceIO.NEUTRAL) {
+      if (ModuleFluid.this.tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.OUT || tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.INOUT
+          || ModuleFluid.this.tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.NEUTRAL) {
         ModuleFluid.this.tile.markDirty();
         return manager.drain(stack, simulate);
       }
@@ -128,7 +128,7 @@ public class ModuleFluid extends Module {
 
     @Override
     public int fill(FluidStack stack, boolean simulate) {
-      if (ModuleFluid.this.tile.config.ioConfig.get(face) == FaceConfig.FaceIO.IN || tile.config.ioConfig.get(face) == FaceConfig.FaceIO.INOUT) {
+      if (ModuleFluid.this.tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.IN || tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.INOUT) {
         ModuleFluid.this.tile.markDirty();
         return manager.fill(stack, simulate);
       }
@@ -137,7 +137,7 @@ public class ModuleFluid extends Module {
 
     @Override
     public FluidStack drain(int maxDrain, boolean doDrain) {
-      if (ModuleFluid.this.tile.config.ioConfig.get(face) == FaceConfig.FaceIO.OUT || tile.config.ioConfig.get(face) == FaceConfig.FaceIO.INOUT) {
+      if (ModuleFluid.this.tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.OUT || tile.faceConfig.ioConfig.get(face) == FaceConfig.FaceIO.INOUT) {
         return manager.drain(maxDrain, doDrain);
       }
       return null;
@@ -185,7 +185,7 @@ public class ModuleFluid extends Module {
   public void onUpdate(TileModular tile) {
     for (EnumFacing f : EnumFacing.values()) {
       if (hasCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, f, tile)) {
-        if (tile.config.ioConfig.get(f) == FaceConfig.FaceIO.OUT && !tile.getWorld().isRemote && tile.validIOModules.contains(this.getModuleName())) {
+        if (tile.faceConfig.ioConfig.get(f) == FaceConfig.FaceIO.OUT && !tile.getWorld().isRemote && tile.validIOModules.contains(this.getModuleName())) {
           for (ExtendedFluidTank tank : tanks) {
             if (tank.canOutput() && tank.getFluid() != null && tank.getFluid().getFluid() != null) {
               TileEntity t = tile.getWorld().getTileEntity(tile.getPos().offset(f));

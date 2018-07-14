@@ -103,7 +103,7 @@ public class ModuleInventory extends Module implements IExtendedInventory {
 
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-      if ((tile.config.ioConfig.get(face) == FaceIO.IN || tile.config.ioConfig.get(face) == FaceIO.INOUT) && inputSlots.contains(slot)) {
+      if ((tile.faceConfig.ioConfig.get(face) == FaceIO.IN || tile.faceConfig.ioConfig.get(face) == FaceIO.INOUT) && inputSlots.contains(slot)) {
         return inventory.insertItem(slot, stack, simulate);
       }
       return stack;
@@ -111,7 +111,7 @@ public class ModuleInventory extends Module implements IExtendedInventory {
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-      if ((tile.config.ioConfig.get(face) == FaceIO.OUT || tile.config.ioConfig.get(face) == FaceIO.NEUTRAL || tile.config.ioConfig.get(face) == FaceIO.INOUT)
+      if ((tile.faceConfig.ioConfig.get(face) == FaceIO.OUT || tile.faceConfig.ioConfig.get(face) == FaceIO.NEUTRAL || tile.faceConfig.ioConfig.get(face) == FaceIO.INOUT)
           && outputSlots.contains(slot)) {
         return inventory.extractItem(slot, amount, simulate);
       }
@@ -296,7 +296,7 @@ public class ModuleInventory extends Module implements IExtendedInventory {
   public void onUpdate(TileModular tile) {
     for (EnumFacing f : EnumFacing.values()) {
       if (hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f, tile)) {
-        if (tile.config.ioConfig.get(f) == FaceIO.OUT && !tile.getWorld().isRemote && tile.validIOModules.contains(this.getModuleName())) {
+        if (tile.faceConfig.ioConfig.get(f) == FaceIO.OUT && !tile.getWorld().isRemote && tile.validIOModules.contains(this.getModuleName())) {
           TileEntity t = tile.getWorld().getTileEntity(tile.getPos().offset(f));
           if (t != null && t.hasCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite())) {
             IItemHandler inv = t.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, f.getOpposite());

@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.tile;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.LibEvents;
@@ -19,29 +20,30 @@ public class TileBase extends TileEntity implements ITile {
   public boolean dirty = false;
 
   @Override
-  public boolean activate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY,
-      float hitZ) {
+  public boolean activate(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     return false;
   }
 
   @Override
-  public void breakBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+  public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
     invalidate();
   }
 
   @Override
+  @Nonnull
   public NBTTagCompound getUpdateTag() {
     return writeToNBT(new NBTTagCompound());
   }
 
-  @Nullable
   @Override
+  @Nullable
   public SPacketUpdateTileEntity getUpdatePacket() {
     return new SPacketUpdateTileEntity(getPos(), 0, getUpdateTag());
   }
 
   @Override
-  public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+  public void onDataPacket(@Nonnull NetworkManager net, @Nonnull SPacketUpdateTileEntity pkt) {
     readFromNBT(pkt.getNbtCompound());
   }
 
@@ -51,7 +53,8 @@ public class TileBase extends TileEntity implements ITile {
     LibEvents.markForUpdate(getPos(), this);
   }
 
-  public static String getTileName(Class<? extends TileEntity> teClass) {
+  @Nonnull
+  public static String getTileName(@Nonnull Class<? extends TileEntity> teClass) {
     return Util.getLowercaseClassName(teClass);
   }
 }
