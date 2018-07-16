@@ -1,7 +1,8 @@
 package epicsquid.mysticallib.tile;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,23 +22,24 @@ import net.minecraftforge.common.capabilities.Capability;
 
 public class TileModular extends TileBase {
 
-  public Map<String, IModule> modules = new HashMap<String, IModule>();
-  public FaceConfig faceConfig = new FaceConfig();
+  public @Nonnull List<IModule> modules;
+  public @Nonnull FaceConfig faceConfig;
 
   public TileModular(@Nonnull IModule... modules) {
     super();
-    for (IModule m : modules) {
-      this.modules.put(m.getModuleName(), m);
-    }
+    this.modules = new ArrayList<>();
+    this.faceConfig = new FaceConfig(FaceConfig.FaceIO.NEUTRAL);
+    Collections.addAll(this.modules, modules);
   }
 
   /**
    * Used to dynamically add modules to the tile after creation.
+   *
    * @param module The module to append to the tile
    * @return This tile
    */
   public TileModular addModule(@Nonnull IModule module) {
-    modules.put(module.getModuleName(), module);
+    modules.add(module);
     return this;
   }
 
@@ -45,7 +47,7 @@ public class TileModular extends TileBase {
   @Nonnull
   public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound tag) {
     super.writeToNBT(tag);
-    for (IModule m : modules.values()) {
+    for (IModule m : modules) {
       tag.setTag(m.getModuleName(), m.writeToNBT());
     }
     tag.setTag("faceConfig", faceConfig.writeToNBT());
@@ -55,7 +57,7 @@ public class TileModular extends TileBase {
   @Override
   public void readFromNBT(@Nonnull NBTTagCompound tag) {
     super.readFromNBT(tag);
-    for (IModule m : modules.values()) {
+    for (IModule m : modules) {
       if (tag.hasKey(m.getModuleName())) {
         m.readFromNBT(tag.getCompoundTag(m.getModuleName()));
       }
@@ -65,7 +67,7 @@ public class TileModular extends TileBase {
 
   @Override
   public boolean hasCapability(@Nonnull Capability capability, @Nullable EnumFacing facing) {
-    for (IModule m : modules.values()) {
+    for (IModule m : modules) {
       if (m.hasCapability(capability, facing)) {
         return true;
       }
@@ -76,7 +78,7 @@ public class TileModular extends TileBase {
   @Override
   @SuppressWarnings("unchecked")
   public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-    for (IModule m : modules.values()) {
+    for (IModule m : modules) {
       if (m.hasCapability(capability, facing)) {
         return (T) m.getCapability(capability, facing);
       }
@@ -96,7 +98,7 @@ public class TileModular extends TileBase {
 
   @Override
   public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
-    for (IModule m : modules.values()) {
+    for (IModule m : modules) {
       m.onBroken(world, pos, player);
     }
     super.breakBlock(world, pos, state, player);

@@ -16,9 +16,9 @@ public class FaceConfig {
 
   private Map<EnumFacing, FaceIO> ioConfig = new EnumMap<>(EnumFacing.class);
 
-  public FaceConfig() {
+  public FaceConfig(@Nonnull FaceIO defaultIO) {
     for (EnumFacing e : EnumFacing.values()) {
-      ioConfig.put(e, FaceIO.NEUTRAL);
+      ioConfig.put(e, defaultIO);
     }
   }
 
