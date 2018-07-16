@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.LibEvents;
+import epicsquid.mysticallib.handlers.MysticalEnergyStorage;
 import epicsquid.mysticallib.tile.TileModular;
 import epicsquid.mysticallib.tile.module.FaceConfig.FaceIO;
 import net.minecraft.entity.player.EntityPlayer;
@@ -24,34 +25,18 @@ public class ModuleEnergy implements IModule<IEnergyStorage> {
 
   public static final @Nonnull String ENERGY_MODULE = "ENERGY_MODULE";
 
-  private @Nonnull EnergyStorage battery;
+  private @Nonnull MysticalEnergyStorage battery;
   private @Nonnull Map<EnumFacing, EnergyIOProxy> ioProxies = new EnumMap<>(EnumFacing.class);
-  private int inputLimit, outputLimit;
   private @Nonnull FaceConfig faceConfig;
   private @Nonnull TileModular tile;
 
-  public ModuleEnergy(@Nonnull String name, @Nonnull TileModular tile, int capacity, int inputLimit, int outputLimit) {
-    this.inputLimit = inputLimit;
-    this.outputLimit = outputLimit;
+  public ModuleEnergy(@Nonnull TileModular tile, int capacity, int inputLimit, int outputLimit) {
     this.tile = tile;
     this.faceConfig = tile.getFaceConfig();
-    battery = constructBattery(capacity, inputLimit, outputLimit, 0);
+    battery = new MysticalEnergyStorage(capacity, inputLimit, outputLimit);
     for (EnumFacing f : EnumFacing.values()) {
       ioProxies.put(f, constructIOProxy(f, faceConfig.getIO(f), capacity, inputLimit, outputLimit, 0));
     }
-  }
-
-  public int getInputLimit() {
-    return inputLimit;
-  }
-
-  public int getOutputLimit() {
-    return outputLimit;
-  }
-
-  @Nonnull
-  protected EnergyStorage constructBattery(int capacity, int maxIn, int maxOut, int energy) {
-    return new EnergyStorage(capacity, maxIn, maxOut, energy);
   }
 
   @Nonnull
@@ -60,7 +45,7 @@ public class ModuleEnergy implements IModule<IEnergyStorage> {
   }
 
   @Nonnull
-  public EnergyStorage getBattery() {
+  public MysticalEnergyStorage getBattery() {
     return battery;
   }
 
@@ -83,23 +68,17 @@ public class ModuleEnergy implements IModule<IEnergyStorage> {
   @Nonnull
   public NBTTagCompound writeToNBT() {
     NBTTagCompound tag = new NBTTagCompound();
-    tag.setInteger("energy", battery.getEnergyStored());
-    tag.setInteger("capacity", battery.getMaxEnergyStored());
-    tag.setInteger("inputLimit", inputLimit);
-    tag.setInteger("outputLimit", outputLimit);
+    tag.setTag("battery", battery.writeToNBT());
     return tag;
   }
 
   @Override
   public void readFromNBT(@Nonnull NBTTagCompound tag) {
-    outputLimit = tag.getInteger("outputLimit");
-    inputLimit = tag.getInteger("inputLimit");
-    battery = constructBattery(tag.getInteger("capacity"), inputLimit, outputLimit, tag.getInteger("energy"));
+    battery.readFromNBT(tag.getCompoundTag("battery"));
   }
 
   @Override
   public void onUpdate(@Nonnull BlockPos pos, @Nonnull World world) {
-
     // Check all connecting tiles to
     for (EnumFacing dir : EnumFacing.values()) {
       if (faceConfig.getIO(dir) == FaceIO.OUT && !world.isRemote) {
@@ -110,7 +89,7 @@ public class ModuleEnergy implements IModule<IEnergyStorage> {
           IEnergyStorage adjBattery = adjTile.getCapability(CapabilityEnergy.ENERGY, dir.getOpposite());
           if (adjBattery != null) {
             // Output energy into the battery
-            int amount = adjBattery.receiveEnergy(Math.min(outputLimit, battery.getEnergyStored()), true);
+            int amount = adjBattery.receiveEnergy(Math.min(battery.getMaxExtract(), battery.getEnergyStored()), true);
             if (amount > 0) {
               adjBattery.receiveEnergy(amount, false);
               battery.extractEnergy(amount, false);
@@ -141,7 +120,7 @@ public class ModuleEnergy implements IModule<IEnergyStorage> {
     return CapabilityEnergy.ENERGY;
   }
 
-  public class EnergyIOProxy extends EnergyStorage {
+  public class EnergyIOProxy extends MysticalEnergyStorage {
     private @Nonnull EnumFacing face;
     private @Nonnull FaceIO ioMode;
 
