@@ -295,12 +295,12 @@ public class BlockCornerBase extends BlockBase {
       if (inner) {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
             new CustomModelBlock(BakedModelInnerCorner.class, defaultTex, defaultTex));
-        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#inventory"),
+        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
             new CustomModelBlock(BakedModelInnerCorner.class, defaultTex, defaultTex));
       } else {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
             new CustomModelBlock(BakedModelOuterCorner.class, defaultTex, defaultTex));
-        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#inventory"),
+        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
             new CustomModelBlock(BakedModelOuterCorner.class, defaultTex, defaultTex));
       }
     }

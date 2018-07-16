@@ -77,7 +77,7 @@ public class BlockMultiblockSlave extends BlockTEBase {
       ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/null");
       CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
           new CustomModelBlock(BakedModelBlock.class, defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#inventory"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
           new CustomModelBlock(BakedModelBlock.class, defaultTex, defaultTex));
     }
   }

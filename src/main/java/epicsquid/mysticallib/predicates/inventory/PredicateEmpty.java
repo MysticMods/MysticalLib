@@ -1,4 +1,4 @@
-package epicsquid.mysticallib.inventory.predicates;
+package epicsquid.mysticallib.predicates.inventory;
 
 import java.util.function.Predicate;
 

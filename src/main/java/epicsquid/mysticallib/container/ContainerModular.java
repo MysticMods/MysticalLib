@@ -2,8 +2,6 @@ package epicsquid.mysticallib.container;
 
 import javax.annotation.Nonnull;
 
-import epicsquid.mysticallib.inventory.DummyInventory;
-import epicsquid.mysticallib.inventory.IExtendedInventory;
 import epicsquid.mysticallib.tile.TileModular;
 import epicsquid.mysticallib.tile.module.Module;
 import net.minecraft.entity.player.EntityPlayer;

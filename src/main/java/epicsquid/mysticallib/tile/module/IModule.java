@@ -10,6 +10,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
+/**
+ * Implements a capability for a tile
+ * @param <T> Type of Capability
+ */
 public interface IModule<T> {
 
   boolean hasCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing);

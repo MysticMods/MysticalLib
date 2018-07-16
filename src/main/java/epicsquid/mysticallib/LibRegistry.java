@@ -264,7 +264,7 @@ public class LibRegistry {
     }
 
     for (ResourceLocation r : CustomModelLoader.itemmodels.keySet()) {
-      ModelResourceLocation mrl = new ModelResourceLocation(r.toString().replace("#inventory", ""), "inventory");
+      ModelResourceLocation mrl = new ModelResourceLocation(r.toString().replace("#handlers", ""), "handlers");
       IBakedModel bakedModel = event.getModelRegistry().getObject(mrl);
       if (bakedModel != null) {
         IModel m = CustomModelLoader.itemmodels.get(r);

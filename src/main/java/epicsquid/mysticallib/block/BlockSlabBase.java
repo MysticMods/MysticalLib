@@ -137,9 +137,9 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
     }
     if (!this.hasCustomModel) {
-      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
     } else {
-      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
     }
   }
 
@@ -152,12 +152,12 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
       if (isDouble) {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + getRegistryName().getResourcePath()),
             new CustomModelBlock(BakedModelCube.class, defaultTex, defaultTex));
-        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#inventory"),
+        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#handlers"),
             new CustomModelBlock(BakedModelCube.class, defaultTex, defaultTex));
       } else {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + getRegistryName().getResourcePath()),
             new CustomModelBlock(BakedModelSlab.class, defaultTex, defaultTex));
-        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#inventory"),
+        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#handlers"),
             new CustomModelBlock(BakedModelSlab.class, defaultTex, defaultTex));
       }
     }

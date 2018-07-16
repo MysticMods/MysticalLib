@@ -27,7 +27,7 @@ public class ItemBase extends Item implements IModeledObject, ICustomModeledObje
 
   @Override
   public void initModel() {
-    ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "handlers"));
   }
 
   @Override

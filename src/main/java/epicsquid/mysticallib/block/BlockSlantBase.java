@@ -245,7 +245,7 @@ public class BlockSlantBase extends BlockBase {
       }
       CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
           new CustomModelBlock(BakedModelSlant.class, defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#inventory"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
           new CustomModelBlock(BakedModelSlant.class, defaultTex, defaultTex));
     }
   }
