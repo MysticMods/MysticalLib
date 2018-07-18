@@ -1,8 +1,12 @@
 package epicsquid.mysticallib.tile.multiblock;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.gui.IHUDContainer;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.tile.TileBase;
+import epicsquid.mysticallib.tile.module.FaceConfig;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,22 +21,35 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileSlave extends TileBase implements ISlave, IHUDContainer {
-  public BlockPos master = null;
-  public TileEntity tile = null;
+
+  private BlockPos master;
+  private TileEntity tile;
+  private FaceConfig faceIO;
+
+  public TileSlave(@Nullable BlockPos master, @Nullable TileEntity tile) {
+    this.master = master;
+    this.tile = tile;
+    this.faceIO = new FaceConfig(FaceConfig.FaceIO.IN);
+  }
+
+  public TileSlave() {
+    this(null, null);
+  }
 
   @Override
-  public BlockPos getMaster() {
+  @Nullable
+  public BlockPos getMasterPos() {
     return master;
   }
 
   @Override
-  public void setMaster(BlockPos pos) {
+  public void setMasterPos(@Nullable BlockPos pos) {
     master = pos;
     markDirty();
   }
 
   @Override
-  public boolean hasCapability(Capability capability, EnumFacing face) {
+  public boolean hasCapability(@Nonnull Capability capability, @Nullable EnumFacing face) {
     if (tile == null) {
       tile = world.getTileEntity(master);
     }
@@ -43,7 +60,8 @@ public class TileSlave extends TileBase implements ISlave, IHUDContainer {
   }
 
   @Override
-  public <T> T getCapability(Capability<T> capability, EnumFacing face) {
+  @Nullable
+  public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing face) {
     if (tile == null) {
       tile = world.getTileEntity(master);
     }
@@ -54,21 +72,22 @@ public class TileSlave extends TileBase implements ISlave, IHUDContainer {
   }
 
   @Override
-  public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+  @Nonnull
+  public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound tag) {
     super.writeToNBT(tag);
     tag.setTag("master", NBTUtil.createPosTag(master));
     return tag;
   }
 
   @Override
-  public void readFromNBT(NBTTagCompound tag) {
+  public void readFromNBT(@Nonnull NBTTagCompound tag) {
     super.readFromNBT(tag);
     master = NBTUtil.getPosFromTag(tag.getCompoundTag("master"));
   }
 
   @Override
-  public boolean activate(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY,
-      float hitZ) {
+  public boolean activate(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     if (tile == null) {
       tile = world.getTileEntity(master);
     }
@@ -80,7 +99,7 @@ public class TileSlave extends TileBase implements ISlave, IHUDContainer {
   }
 
   @Override
-  public void breakBlock(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+  public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
     if (tile == null) {
       tile = world.getTileEntity(master);
     }

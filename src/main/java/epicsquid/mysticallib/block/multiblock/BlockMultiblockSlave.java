@@ -63,7 +63,7 @@ public class BlockMultiblockSlave extends BlockTEBase {
       @Nonnull EntityPlayer player) {
     TileEntity tile = world.getTileEntity(pos);
     if (tile instanceof ISlave) {
-      BlockPos p = ((ISlave) tile).getMaster();
+      BlockPos p = ((ISlave) tile).getMasterPos();
       IBlockState master = world.getBlockState(p);
       return master.getBlock().getPickBlock(master, target, world, pos, player);
     }

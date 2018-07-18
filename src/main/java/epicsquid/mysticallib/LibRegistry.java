@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 
@@ -29,7 +28,6 @@ import epicsquid.mysticallib.particle.particles.ParticleGlitter;
 import epicsquid.mysticallib.particle.particles.ParticleGlow;
 import epicsquid.mysticallib.particle.particles.ParticleSmoke;
 import epicsquid.mysticallib.particle.particles.ParticleSpark;
-import epicsquid.mysticallib.tile.multiblock.TileModularSlave;
 import epicsquid.mysticallib.tile.multiblock.TileSlave;
 import epicsquid.mysticallib.tile.test.TileTest;
 import epicsquid.mysticallib.util.Util;
@@ -37,10 +35,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.creativetab.CreativeTabs;
@@ -76,7 +72,7 @@ public class LibRegistry {
   private static String activeModid = "";
 
   // Test blocks
-  public static Block multiblock_slave_empty, multiblock_slave_modular;
+  public static Block multiblock_slave_empty;
   public static Block test, test_stairs, test_slab, test_double_slab, test_slant, test_outer_corner, test_inner_corner, test_wall;
 
   public static String getActiveModid() {
@@ -91,8 +87,6 @@ public class LibRegistry {
     MinecraftForge.EVENT_BUS.post(new RegisterContentEvent(items, blocks));
     setActiveMod(MysticalLib.MODID, container);
     blocks.add(multiblock_slave_empty = new BlockMultiblockSlave(Material.ROCK, SoundType.METAL, 1.0f, "multiblock_slave_empty", TileSlave.class)
-        .setModelCustom(true));
-    blocks.add(multiblock_slave_modular = new BlockMultiblockSlave(Material.ROCK, SoundType.METAL, 1.0f, "multiblock_slave_modular", TileModularSlave.class)
         .setModelCustom(true));
     blocks.add(test = new BlockTEBase(Material.ANVIL, SoundType.METAL, 1.0f, "test", TileTest.class));
     /*if (EluLib.proxy instanceof ClientProxy) registerTileRenderer(TileTest.class, new TESRTest());*/

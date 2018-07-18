@@ -40,7 +40,7 @@ public class ModuleFluid implements IModule<IFluidHandler> {
   public ModuleFluid(@Nonnull TileModular tile, int maxTransfer, @Nullable SmartTank... tanks) {
     this.tile = tile;
     manager = new MysticalFluidHandler(maxTransfer, tanks);
-    this.faceConfig = tile.faceConfig;
+    this.faceConfig = tile.getFaceConfig();
     for (EnumFacing f : EnumFacing.values()) {
       ioProxies.put(f, constructIOProxy(f));
     }

@@ -22,14 +22,21 @@ import net.minecraftforge.common.capabilities.Capability;
 
 public class TileModular extends TileBase {
 
-  public @Nonnull List<IModule> modules;
-  public @Nonnull FaceConfig faceConfig;
+  private @Nonnull List<IModule> modules;
+  private @Nonnull FaceConfig faceConfig;
 
-  public TileModular(@Nonnull IModule... modules) {
+  public TileModular(@Nullable IModule... modules) {
     super();
     this.modules = new ArrayList<>();
     this.faceConfig = new FaceConfig(FaceConfig.FaceIO.NEUTRAL);
-    Collections.addAll(this.modules, modules);
+
+    if (modules != null) {
+      Collections.addAll(this.modules, modules);
+    }
+  }
+
+  public TileModular() {
+    this(null);
   }
 
   /**
