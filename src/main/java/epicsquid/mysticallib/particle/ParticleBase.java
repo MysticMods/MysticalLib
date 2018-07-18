@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.particle;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -8,9 +10,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class ParticleBase extends Particle implements IParticle {
-  public int lifetime = 0;
 
-  public ParticleBase(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  private int lifetime = 0;
+
+  public ParticleBase(@Nonnull World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
     super(world, x, y, z, 0, 0, 0);
     this.motionX = vx;
     this.motionY = vy;

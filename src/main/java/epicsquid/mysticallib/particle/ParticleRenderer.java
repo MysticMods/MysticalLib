@@ -3,6 +3,8 @@ package epicsquid.mysticallib.particle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import org.lwjgl.opengl.GL11;
 
 import epicsquid.mysticallib.MysticalLib;
@@ -19,10 +21,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public class ParticleRenderer {
-  ArrayList<Particle> particles = new ArrayList<Particle>();
+  private ArrayList<Particle> particles = new ArrayList<Particle>();
 
   public void updateParticles() {
-    boolean doRemove = false;
+    boolean doRemove;
     for (int i = 0; i < particles.size(); i++) {
       doRemove = true;
       if (particles.get(i) != null) {
@@ -39,7 +41,7 @@ public class ParticleRenderer {
     }
   }
 
-  public void renderParticles(EntityPlayer dumbplayer, float partialTicks) {
+  public void renderParticles(@Nonnull EntityPlayer dumbplayer, float partialTicks) {
     float f = ActiveRenderInfo.getRotationX();
     float f1 = ActiveRenderInfo.getRotationZ();
     float f2 = ActiveRenderInfo.getRotationYZ();
@@ -64,10 +66,10 @@ public class ParticleRenderer {
 
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-      for (int i = 0; i < particles.size(); i++) {
-        if (particles.get(i) instanceof IParticle) {
-          if (!((IParticle) particles.get(i)).isAdditive()) {
-            particles.get(i).renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+      for (Particle particle : particles) {
+        if (particle instanceof IParticle) {
+          if (!((IParticle) particle).isAdditive()) {
+            particle.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
           }
         }
       }
@@ -75,10 +77,10 @@ public class ParticleRenderer {
 
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-      for (int i = 0; i < particles.size(); i++) {
-        if (particles.get(i) != null) {
-          if (((IParticle) particles.get(i)).isAdditive()) {
-            particles.get(i).renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+      for (Particle particle : particles) {
+        if (particle != null) {
+          if (((IParticle) particle).isAdditive()) {
+            particle.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
           }
         }
       }
@@ -87,10 +89,10 @@ public class ParticleRenderer {
       GlStateManager.disableDepth();
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-      for (int i = 0; i < particles.size(); i++) {
-        if (particles.get(i) instanceof IParticle) {
-          if (!((IParticle) particles.get(i)).isAdditive() && ((IParticle) particles.get(i)).renderThroughBlocks()) {
-            particles.get(i).renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+      for (Particle particle : particles) {
+        if (particle instanceof IParticle) {
+          if (!((IParticle) particle).isAdditive() && ((IParticle) particle).renderThroughBlocks()) {
+            particle.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
           }
         }
       }
@@ -98,10 +100,10 @@ public class ParticleRenderer {
 
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-      for (int i = 0; i < particles.size(); i++) {
-        if (particles.get(i) != null) {
-          if (((IParticle) particles.get(i)).isAdditive() && ((IParticle) particles.get(i)).renderThroughBlocks()) {
-            particles.get(i).renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+      for (Particle particle : particles) {
+        if (particle != null) {
+          if (((IParticle) particle).isAdditive() && ((IParticle) particle).renderThroughBlocks()) {
+            particle.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
           }
         }
       }
@@ -120,7 +122,7 @@ public class ParticleRenderer {
   public void spawnParticle(World world, String particle, double x, double y, double z, double vx, double vy, double vz, double... data) {
     if (MysticalLib.proxy instanceof ClientProxy) {
       try {
-        particles.add(ParticleRegistry.particles.get(particle).newInstance(world, x, y, z, vx, vy, vz, data));
+        particles.add(ParticleRegistry.getParticles().get(particle).newInstance(world, x, y, z, vx, vy, vz, data));
       } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
         e.printStackTrace();
       }
