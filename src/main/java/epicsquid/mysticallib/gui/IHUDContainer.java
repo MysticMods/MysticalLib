@@ -1,12 +1,16 @@
 package epicsquid.mysticallib.gui;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.gui.Gui;
 
 public interface IHUDContainer {
-  public void addHUD(float w, float h);
 
-  public static void renderBox(int x, int y, int w, int h, int r, int g, int b) {
+  @Nonnull
+  void addHUD(float w, float h);
+
+  static void renderBox(int x, int y, int w, int h, int r, int g, int b) {
     int r2 = r / 4;
     int g2 = g / 4;
     int b2 = b / 4;

@@ -3,6 +3,8 @@ package epicsquid.mysticallib.gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.container.ContainerModular;
 import epicsquid.mysticallib.tile.TileModular;
 import net.minecraft.client.Minecraft;
@@ -14,16 +16,13 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiModular extends GuiContainer {
-  public static ResourceLocation baseTexture = new ResourceLocation("elulib:textures/gui/container.png");
-  public ResourceLocation texture = new ResourceLocation("elulib:textures/gui/container.png");
+  static ResourceLocation baseTexture = new ResourceLocation("mysticallib:textures/gui/container.png");
+  private ResourceLocation texture = new ResourceLocation("mysticallib:textures/gui/container.png");
 
-  public ArrayList<IGuiElement> elements = new ArrayList<IGuiElement>();
+  private ArrayList<IGuiElement> elements = new ArrayList<>();
 
-  TileModular tile = null;
-
-  public GuiModular(ContainerModular inventorySlotsIn, int width, int height) {
+  public GuiModular(@Nonnull ContainerModular inventorySlotsIn, int width, int height) {
     super(inventorySlotsIn);
-    tile = inventorySlotsIn.tile;
     this.xSize = width;
     this.ySize = height;
   }
@@ -43,7 +42,7 @@ public class GuiModular extends GuiContainer {
     drawElements(partialTicks, mouseX, mouseY);
   }
 
-  public void drawElements(float partialTicks, int mouseX, int mouseY) {
+  protected void drawElements(float partialTicks, int mouseX, int mouseY) {
     for (IGuiElement e : elements) {
       e.draw(this, partialTicks, mouseX, mouseY);
     }
@@ -67,7 +66,8 @@ public class GuiModular extends GuiContainer {
     }
   }
 
-  public GuiModular addElement(IGuiElement e) {
+  @Nonnull
+  public GuiModular addElement(@Nonnull IGuiElement e) {
     elements.add(e);
     return this;
   }

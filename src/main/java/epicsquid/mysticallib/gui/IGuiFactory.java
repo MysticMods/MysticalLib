@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.gui;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -10,19 +12,25 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IGuiFactory {
-  default Container constructContainer(EntityPlayer player, World world, int x, int y, int z) {
+
+  @Nonnull
+  default Container constructContainer(@Nonnull EntityPlayer player, @Nonnull World world, int x, int y, int z) {
     return constructContainer(player, world.getTileEntity(new BlockPos(x, y, z)));
   }
 
   @SideOnly(Side.CLIENT)
-  default Gui constructGui(EntityPlayer player, World world, int x, int y, int z) {
+  @Nonnull
+  default Gui constructGui(@Nonnull EntityPlayer player, @Nonnull World world, int x, int y, int z) {
     return constructGui(player, world.getTileEntity(new BlockPos(x, y, z)));
   }
 
-  public Container constructContainer(EntityPlayer player, TileEntity tile);
+  @Nonnull
+  Container constructContainer(@Nonnull EntityPlayer player, @Nonnull TileEntity tile);
 
   @SideOnly(Side.CLIENT)
-  public Gui constructGui(EntityPlayer player, TileEntity tile);
+  @Nonnull
+  Gui constructGui(@Nonnull EntityPlayer player, @Nonnull TileEntity tile);
 
-  public String getName();
+  @Nonnull
+  String getName();
 }
