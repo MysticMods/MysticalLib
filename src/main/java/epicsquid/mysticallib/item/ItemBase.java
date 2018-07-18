@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.item;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -12,13 +14,13 @@ import net.minecraftforge.client.model.ModelLoader;
 
 public class ItemBase extends Item implements IModeledObject, ICustomModeledObject {
 
-  public ItemBase(String name) {
+  private boolean hasCustomModel = false;
+
+  public ItemBase(@Nonnull String name) {
     super();
     setUnlocalizedName(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
   }
-
-  protected boolean hasCustomModel = false;
 
   public ItemBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;

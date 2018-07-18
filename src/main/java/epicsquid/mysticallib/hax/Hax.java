@@ -18,13 +18,13 @@ import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class Hax {
-  public static Field modifiersField, bakedQuadFace, bakedQuadDiffuse, bakedQuadTint;
+
+  public static Field bakedQuadFace, bakedQuadDiffuse, bakedQuadTint;
 
   public static Field field_ModelBakery_blockModelShapes;
 
   public static void init()
-      throws InstantiationException, IllegalAccessException, NoSuchFieldException, SecurityException, NoSuchMethodException, IllegalArgumentException,
-      InvocationTargetException {
+      throws IllegalAccessException, NoSuchFieldException, SecurityException, IllegalArgumentException{
     Field f = ReflectionHelper.findField(ModelBlock.class, "SERIALIZER", "field_178319_a");
     f.setAccessible(true);
     Field modifiersField = Field.class.getDeclaredField("modifiers");

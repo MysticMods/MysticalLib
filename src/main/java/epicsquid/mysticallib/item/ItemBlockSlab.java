@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.item;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -20,9 +22,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlockSlab extends ItemBlock implements IModeledObject {
-  Block doubleSlab;
 
-  public ItemBlockSlab(Block block, Block doubleSlabBlock) {
+  private Block doubleSlab;
+
+  public ItemBlockSlab(@Nonnull Block block, @Nonnull Block doubleSlabBlock) {
     super(block);
     doubleSlab = doubleSlabBlock;
   }
@@ -33,7 +36,7 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
     ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName().toString()));
   }
 
-  public void decrementHeldStack(EntityPlayer player, ItemStack stack, EnumHand hand) {
+  public void decrementHeldStack(@Nonnull EntityPlayer player, @Nonnull ItemStack stack, @Nonnull EnumHand hand) {
     if (!player.capabilities.isCreativeMode) {
       stack.shrink(1);
       if (stack.getCount() == 0) {
@@ -48,7 +51,9 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
   }
 
   @Override
-  public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+  @Nonnull
+  public EnumActionResult onItemUse(@Nonnull EntityPlayer playerIn, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = playerIn.getHeldItem(hand);
     if (stack.getCount() == 0) {
       return EnumActionResult.FAIL;
@@ -74,43 +79,42 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
         }
       }
 
-      return (this.func_180615_a(stack, worldIn, pos.offset(side)) || (
-          super.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ) == EnumActionResult.SUCCESS ? true : false)) ?
-          EnumActionResult.SUCCESS :
-          EnumActionResult.FAIL;
+      return (this.userItem(stack, worldIn, pos.offset(side)) || (super.onItemUse(playerIn, worldIn, pos, hand, side, hitX, hitY, hitZ)
+          == EnumActionResult.SUCCESS)) ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }
   }
 
   @Override
   @SideOnly(Side.CLIENT)
-  public boolean canPlaceBlockOnSide(World worldIn, BlockPos p_179222_2_, EnumFacing p_179222_3_, EntityPlayer p_179222_4_, ItemStack p_179222_5_) {
-    BlockPos blockpos1 = p_179222_2_;
-    IBlockState iblockstate = worldIn.getBlockState(p_179222_2_);
+  public boolean canPlaceBlockOnSide(@Nonnull World worldIn, @Nonnull BlockPos posIn, @Nonnull EnumFacing faceIn, @Nonnull EntityPlayer playerIn,
+      @Nonnull ItemStack stackIn) {
+    BlockPos blockpos1 = posIn;
+    IBlockState iblockstate = worldIn.getBlockState(posIn);
 
     if (iblockstate.getBlock() == getBlock()) {
       boolean flag = iblockstate.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
 
-      if ((p_179222_3_ == EnumFacing.UP && !flag || p_179222_3_ == EnumFacing.DOWN && flag)) {
+      if ((faceIn == EnumFacing.UP && !flag || faceIn == EnumFacing.DOWN && flag)) {
         return true;
       }
     }
 
-    p_179222_2_ = p_179222_2_.offset(p_179222_3_);
-    IBlockState iblockstate1 = worldIn.getBlockState(p_179222_2_);
-    return iblockstate1.getBlock() == getBlock() || super.canPlaceBlockOnSide(worldIn, blockpos1, p_179222_3_, p_179222_4_, p_179222_5_);
+    posIn = posIn.offset(faceIn);
+    IBlockState iblockstate1 = worldIn.getBlockState(posIn);
+    return iblockstate1.getBlock() == getBlock() || super.canPlaceBlockOnSide(worldIn, blockpos1, faceIn, playerIn, stackIn);
   }
 
-  private boolean func_180615_a(ItemStack p_180615_1_, World worldIn, BlockPos p_180615_3_) {
-    IBlockState iblockstate = worldIn.getBlockState(p_180615_3_);
+  private boolean userItem(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull BlockPos pos) {
+    IBlockState iblockstate = worldIn.getBlockState(pos);
 
     if (iblockstate.getBlock() == getBlock()) {
       IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
 
-      if (worldIn.checkNoEntityCollision(this.doubleSlab.getBoundingBox(iblockstate1, worldIn, p_180615_3_)) && worldIn
-          .setBlockState(p_180615_3_, iblockstate1, 3)) {
-        worldIn.playSound(p_180615_3_.getX() + 0.5F, p_180615_3_.getY() + 0.5F, p_180615_3_.getZ() + 0.5F, this.doubleSlab.getSoundType().getPlaceSound(),
+      if (worldIn.checkNoEntityCollision(this.doubleSlab.getBoundingBox(iblockstate1, worldIn, pos)) && worldIn
+          .setBlockState(pos, iblockstate1, 3)) {
+        worldIn.playSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, this.doubleSlab.getSoundType().getPlaceSound(),
             SoundCategory.BLOCKS, (this.doubleSlab.getSoundType().getVolume() + 1.0F) / 2.0F, this.doubleSlab.getSoundType().getPitch() * 0.8F, true);
-        p_180615_1_.shrink(1);
+        stack.shrink(1);
       }
 
       return true;
