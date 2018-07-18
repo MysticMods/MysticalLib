@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import epicsquid.mysticallib.container.ContainerModular;
-import epicsquid.mysticallib.container.SlotInventoryDefault;
 import epicsquid.mysticallib.tile.TileModular;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -50,11 +49,11 @@ public class GuiModular extends GuiContainer {
     }
 
     for (Slot s : inventorySlots.inventorySlots) {
-      if (s instanceof SlotInventoryDefault && ((SlotInventoryDefault) s).isBig()) {
-        drawTexturedModalRect(guiLeft + s.xPos - 5, guiTop + s.yPos - 5, 176, 32, 26, 26);
-      } else {
+//      if (s instanceof SlotInventoryDefault && ((SlotInventoryDefault) s).isBig()) {
+//        drawTexturedModalRect(guiLeft + s.xPos - 5, guiTop + s.yPos - 5, 176, 32, 26, 26);
+//      } else {
         drawTexturedModalRect(guiLeft + s.xPos - 1, guiTop + s.yPos - 1, 208, 32, 18, 18);
-      }
+//      }
     }
   }
 

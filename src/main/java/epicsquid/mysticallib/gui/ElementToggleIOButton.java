@@ -33,11 +33,11 @@ public class ElementToggleIOButton implements IGuiElement {
 
   @Override
   public void draw(GuiContainer g, float partialTicks, int mouseX, int mouseY) {
-    if (tile.validIOModules.contains(module)) {
-      g.drawTexturedModalRect(g.getGuiLeft() + x, g.getGuiTop() + y, 176, 144, 16, 16);
-    } else {
+//    if (tile.validIOModules.contains(module)) {
+//      g.drawTexturedModalRect(g.getGuiLeft() + x, g.getGuiTop() + y, 176, 144, 16, 16);
+//    } else
       g.drawTexturedModalRect(g.getGuiLeft() + x, g.getGuiTop() + y, 192, 144, 16, 16);
-    }
+
     if (mouseX >= g.getGuiLeft() + x && mouseY >= g.getGuiTop() + y && mouseX < g.getGuiLeft() + x + 16 && mouseY < g.getGuiTop() + y + 16) {
       GlStateManager.enableBlend();
       GlStateManager.disableAlpha();

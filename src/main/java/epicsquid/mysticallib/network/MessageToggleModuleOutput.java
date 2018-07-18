@@ -49,11 +49,11 @@ public class MessageToggleModuleOutput implements IMessage {
         TileEntity t = FMLCommonHandler.instance().getMinecraftServerInstance().getEntityWorld().getTileEntity(p);
         if (t instanceof TileModular) {
           TileModular m = (TileModular) t;
-          if (m.validIOModules.contains(message.module)) {
-            m.validIOModules.remove(message.module);
-          } else {
-            m.validIOModules.add(message.module);
-          }
+//          if (m.validIOModules.contains(message.module)) {
+//            m.validIOModules.remove(message.module);
+//          } else {
+//            m.validIOModules.add(message.module);
+//          }
           m.markDirty();
         }
       });

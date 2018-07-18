@@ -27,7 +27,7 @@ public class ElementEnergyBar implements IGuiElement {
   @Override
   public void draw(GuiContainer g, float partialTicks, int mouseX, int mouseY) {
     Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
-    float coeff = 1.0f - (float) module.battery.getEnergyStored() / (float) module.battery.getMaxEnergyStored();
+    float coeff = 1.0f - (float) module.getBattery().getEnergyStored() / (float) module.getBattery().getMaxEnergyStored();
     g.drawTexturedModalRect(g.getGuiLeft() + x, g.getGuiTop() + y, 176, 64, 16, 66);
     g.drawTexturedModalRect(g.getGuiLeft() + x, g.getGuiTop() + y + 1 + (int) Math.round((float) 64 * coeff), 192, 65 + (int) Math.round((float) 64 * coeff),
         16, (int) Math.round((float) 64 * (1.0f - coeff)));
@@ -43,7 +43,7 @@ public class ElementEnergyBar implements IGuiElement {
   @Override
   public void drawTooltip(GuiContainer g, float partialTicks, int mouseX, int mouseY) {
     if (mouseX >= g.getGuiLeft() + x && mouseY >= g.getGuiTop() + y && mouseX < g.getGuiLeft() + x + 16 && mouseY < g.getGuiTop() + y + 66) {
-      g.drawHoveringText("" + module.battery.getEnergyStored() + " / " + module.battery.getMaxEnergyStored(), mouseX, mouseY);
+      g.drawHoveringText("" + module.getBattery().getEnergyStored() + " / " + module.getBattery().getMaxEnergyStored(), mouseX, mouseY);
     }
   }
 
