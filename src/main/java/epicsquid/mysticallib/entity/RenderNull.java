@@ -7,6 +7,9 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
+/**
+ * Renders an empty entity
+ */
 public class RenderNull extends RenderEntity {
 
   public RenderNull(@Nonnull RenderManager renderManager) {
