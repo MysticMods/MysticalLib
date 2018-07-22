@@ -26,7 +26,7 @@ public class ClientProxy extends CommonProxy {
 
     try {
       Hax.init();
-    } catch (InstantiationException | IllegalAccessException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException e) {
+    } catch (IllegalAccessException | NoSuchFieldException | SecurityException | IllegalArgumentException e) {
       e.printStackTrace();
     }
 

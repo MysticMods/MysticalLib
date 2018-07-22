@@ -14,10 +14,11 @@ import net.minecraft.world.World;
 
 public class ParticleRegistry {
 
-  private static Map<String, Constructor<? extends ParticleBase>> particles = new HashMap<String, Constructor<? extends ParticleBase>>();
-  private static Map<String, ResourceLocation> particleTextures = new HashMap<String, ResourceLocation>();
+  public static Map<String, ResourceLocation> particleTextures = new HashMap<String, ResourceLocation>();
 
-  public static String registerParticle(@Nonnull Class<? extends ParticleBase> particleClass, @Nonnull ResourceLocation texture) {
+  private static Map<String, Constructor<? extends ParticleBase>> particles = new HashMap<String, Constructor<? extends ParticleBase>>();
+
+  public static String registerParticle(@Nonnull String modid, @Nonnull Class<? extends ParticleBase> particleClass, @Nonnull ResourceLocation texture) {
     String name = Util.getLowercaseClassName(particleClass);
     if (MysticalLib.proxy instanceof ClientProxy) {
       try {

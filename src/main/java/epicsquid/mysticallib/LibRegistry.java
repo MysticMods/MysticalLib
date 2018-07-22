@@ -71,10 +71,6 @@ public class LibRegistry {
 
   private static String activeModid = "";
 
-  // Test blocks
-  public static Block multiblock_slave_empty;
-  public static Block test, test_stairs, test_slab, test_double_slab, test_slant, test_outer_corner, test_inner_corner, test_wall;
-
   public static String getActiveModid() {
     return activeModid;
   }
@@ -86,19 +82,6 @@ public class LibRegistry {
     ModContainer container = Loader.instance().activeModContainer();
     MinecraftForge.EVENT_BUS.post(new RegisterContentEvent(items, blocks));
     setActiveMod(MysticalLib.MODID, container);
-    blocks.add(multiblock_slave_empty = new BlockMultiblockSlave(Material.ROCK, SoundType.METAL, 1.0f, "multiblock_slave_empty", TileSlave.class)
-        .setModelCustom(true));
-    blocks.add(test = new BlockTEBase(Material.ANVIL, SoundType.METAL, 1.0f, "test", TileTest.class));
-    /*if (EluLib.proxy instanceof ClientProxy) registerTileRenderer(TileTest.class, new TESRTest());*/
-		/*blocks.add(test_stairs = new BlockStairsBase(test.getDefaultState(), SoundType.METAL, 1.0f, "test_stairs").setModelCustom(true));
-		addSlabPair(Material.ANVIL, SoundType.METAL, 1.0f, "test", test.getDefaultState(), new Block[]{
-				test_slab = BlockSlabBase.dummy, test_double_slab = BlockSlabBase.dummy	
-		}, true);
-		blocks.add(test_slant = new BlockSlantBase(test.getDefaultState(), SoundType.METAL, 1.0f, "test_slant").setModelCustom(true));
-		blocks.add(test_outer_corner = new BlockCornerBase(test.getDefaultState(), SoundType.METAL, 1.0f, "test_outer_corner", false).setModelCustom(true));
-		blocks.add(test_inner_corner = new BlockCornerBase(test.getDefaultState(), SoundType.METAL, 1.0f, "test_inner_corner", true).setModelCustom(true));
-		blocks.add(test_wall = new BlockWallBase(test, SoundType.METAL, 1.0f, "test_wall").setModelCustom(true));
-		items.add(test_item = new ItemBase("test_item").setModelCustom(true));*/
   }
 
   @SideOnly(Side.CLIENT)
