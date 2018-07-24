@@ -1,7 +1,6 @@
 package epicsquid.mysticallib.hax;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 import com.google.gson.GsonBuilder;

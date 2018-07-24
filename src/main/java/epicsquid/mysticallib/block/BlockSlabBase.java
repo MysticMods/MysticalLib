@@ -11,7 +11,7 @@ import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
-import epicsquid.mysticallib.model.block.BakedModelCube;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelSlab;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -40,10 +40,10 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   private final Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
-  protected boolean hasCustomModel = false;
+  private boolean hasCustomModel = false;
   private @Nonnull BlockRenderLayer layer = BlockRenderLayer.SOLID;
-  protected boolean isDouble;
-  protected IBlockState parent;
+  private boolean isDouble;
+  private IBlockState parent;
   public String name = "";
   public Block slab = null;
 
@@ -133,10 +133,10 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel) {
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
     }
-    if (!this.hasCustomModel) {
+    if (!hasCustomModel) {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
     } else {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
@@ -146,20 +146,34 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
           parent.getBlock().getRegistryName().getResourceDomain() + ":blocks/" + parent.getBlock().getRegistryName().getResourcePath());
       if (isDouble) {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + getRegistryName().getResourcePath()),
-            new CustomModelBlock(BakedModelCube.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));
         CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#handlers"),
-            new CustomModelBlock(BakedModelCube.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));
       } else {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + getRegistryName().getResourcePath()),
-            new CustomModelBlock(BakedModelSlab.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
         CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#handlers"),
-            new CustomModelBlock(BakedModelSlab.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       }
+    }
+  }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass() {
+    return getModelClass(0);
+  }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass(int type) {
+    if (type == 1) {
+      return BakedModelBlock.class;
+    } else {
+      return BakedModelSlab.class;
     }
   }
 

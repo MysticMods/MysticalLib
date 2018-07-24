@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelInnerCorner;
 import epicsquid.mysticallib.model.block.BakedModelOuterCorner;
 import net.minecraft.block.SoundType;
@@ -286,7 +287,7 @@ public class BlockCornerBase extends BlockBase {
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel()) {
       ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/" + getRegistryName().getResourcePath());
       if (parent != null) {
         defaultTex = new ResourceLocation(
@@ -294,16 +295,25 @@ public class BlockCornerBase extends BlockBase {
       }
       if (inner) {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
-            new CustomModelBlock(BakedModelInnerCorner.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(0), defaultTex, defaultTex));
         CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
-            new CustomModelBlock(BakedModelInnerCorner.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(0), defaultTex, defaultTex));
       } else {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
-            new CustomModelBlock(BakedModelOuterCorner.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));
         CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
-            new CustomModelBlock(BakedModelOuterCorner.class, defaultTex, defaultTex));
+            new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));
       }
     }
   }
 
+  @Nonnull
+  @Override
+  protected Class<? extends BakedModelBlock> getModelClass(int type) {
+    if (type == 1) {
+      return BakedModelOuterCorner.class;
+    } else {
+      return BakedModelInnerCorner.class;
+    }
+  }
 }

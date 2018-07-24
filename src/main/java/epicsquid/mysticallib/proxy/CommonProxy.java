@@ -1,8 +1,7 @@
 package epicsquid.mysticallib.proxy;
 
-
-import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.LibRegistry;
+import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.event.RegisterFXEvent;
 import epicsquid.mysticallib.event.RegisterWorldGenEvent;
 import epicsquid.mysticallib.gui.GuiHandler;

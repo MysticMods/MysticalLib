@@ -1,20 +1,14 @@
 package epicsquid.mysticallib.container;
 
 import javax.annotation.Nonnull;
-import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import epicsquid.mysticallib.tile.TileModular;
-import epicsquid.mysticallib.tile.module.IModule;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 

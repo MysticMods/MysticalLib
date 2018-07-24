@@ -5,13 +5,16 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.LibRegistry;
+import epicsquid.mysticallib.model.CustomModelBlock;
+import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
+import epicsquid.mysticallib.model.block.BakedModelFence;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,6 +23,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
@@ -29,10 +33,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject, ICustomModeledObject {
   private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
-  protected boolean isOpaque = false;
-  protected boolean hasCustomModel = false;
-  protected BlockRenderLayer layer = BlockRenderLayer.SOLID;
-  protected Block parent;
+  private boolean isOpaque = false;
+  private boolean hasCustomModel = false;
+  private BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  private Block parent;
   public String name = "";
 
   public BlockFenceBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
@@ -116,6 +120,19 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
+    if (hasCustomModel) {
+      ResourceLocation defaultTex = new ResourceLocation(
+          parent.getRegistryName().getResourceDomain() + ":blocks/" + parent.getRegistryName().getResourcePath());
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+    }
+  }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass() {
+    return BakedModelFence.class;
   }
 
   @Override
@@ -129,5 +146,10 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Nonnull
+  public Block getParent() {
+    return parent;
   }
 }

@@ -33,11 +33,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockBase extends Block implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
   private final @Nonnull Item itemBlock;
   public @Nonnull List<ItemStack> drops;
-  protected boolean isOpaque = true;
-  protected boolean hasCustomModel = false;
-  protected boolean hasItems = true;
-  protected boolean noCull = false;
-  protected AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
+  private boolean isOpaque = true;
+  private boolean hasCustomModel = false;
+  private boolean hasItems = true;
+  private boolean noCull = false;
+  private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   public @Nonnull String name;
 
@@ -174,6 +174,11 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
 
   @Nonnull
   protected Class<? extends BakedModelBlock> getModelClass() {
+    return getModelClass(0);
+  }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass(int type) {
     return BakedModelBlock.class;
   }
 }

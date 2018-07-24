@@ -1,7 +1,6 @@
 package epicsquid.mysticallib.tile.module;
 
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nonnull;

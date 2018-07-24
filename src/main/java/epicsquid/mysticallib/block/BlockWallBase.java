@@ -3,13 +3,13 @@ package epicsquid.mysticallib.block;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelWall;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
@@ -94,10 +94,10 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel) {
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
     }
-    if (!this.hasCustomModel) {
+    if (!hasCustomModel) {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
     } else {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
@@ -119,14 +119,19 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
           parent.getRegistryName().getResourceDomain() + ":blocks/" + parent.getRegistryName().getResourcePath());
       CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
-          new CustomModelBlock(BakedModelWall.class, defaultTex, defaultTex));
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
-          new CustomModelBlock(BakedModelWall.class, defaultTex, defaultTex));
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
+  }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass() {
+    return BakedModelWall.class;
   }
 
   @Override

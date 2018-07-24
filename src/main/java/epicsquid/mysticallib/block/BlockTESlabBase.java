@@ -21,7 +21,7 @@ public class BlockTESlabBase extends BlockSlabBase implements ITileEntityProvide
   private Class<? extends TileEntity> teClass;
 
   public BlockTESlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull IBlockState parent, boolean isDouble,
-      @Nonnull Block slab, @Nonnull Class<? extends TileEntity> teClass) {
+      @Nullable Block slab, @Nonnull Class<? extends TileEntity> teClass) {
     super(mat, type, hardness, name, parent, isDouble, slab);
     this.teClass = teClass;
     BlockTEBase.attemptRegistry(teClass);

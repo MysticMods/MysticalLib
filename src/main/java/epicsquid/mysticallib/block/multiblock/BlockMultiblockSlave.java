@@ -73,7 +73,7 @@ public class BlockMultiblockSlave extends BlockTEBase {
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel()) {
       ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/null");
       CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
           new CustomModelBlock(BakedModelBlock.class, defaultTex, defaultTex));

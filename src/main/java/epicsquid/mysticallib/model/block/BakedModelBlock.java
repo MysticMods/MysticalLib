@@ -13,7 +13,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.DefaultTransformations;
-import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;

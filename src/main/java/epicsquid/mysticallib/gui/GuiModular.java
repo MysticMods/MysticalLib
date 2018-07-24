@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.container.ContainerModular;
-import epicsquid.mysticallib.tile.TileModular;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.BufferBuilder;

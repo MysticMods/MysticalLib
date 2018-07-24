@@ -237,16 +237,16 @@ public class BlockSlantBase extends BlockBase {
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel()) {
       ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/" + getRegistryName().getResourcePath());
       if (parent != null) {
         defaultTex = new ResourceLocation(
             parent.getBlock().getRegistryName().getResourceDomain() + ":blocks/" + parent.getBlock().getRegistryName().getResourcePath());
       }
       CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
-          new CustomModelBlock(BakedModelSlant.class, defaultTex, defaultTex));
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
-          new CustomModelBlock(BakedModelSlant.class, defaultTex, defaultTex));
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }
 

@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.tile.multiblock;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.tile.ITile;

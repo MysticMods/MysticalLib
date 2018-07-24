@@ -9,6 +9,7 @@ import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelStairs;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.SoundType;
@@ -20,17 +21,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObject, ICustomModeledObject {
+
   private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
-  protected boolean hasCustomModel = false;
+  private boolean hasCustomModel = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
-  protected IBlockState parent;
+  private IBlockState parent;
   public String name = "";
 
   public BlockStairsBase(@Nonnull IBlockState base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
@@ -88,10 +89,10 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel) {
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
     }
-    if (!this.hasCustomModel) {
+    if (!hasCustomModel) {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
     } else {
       ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
@@ -101,15 +102,21 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   @Override
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
-    if (this.hasCustomModel) {
+    if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
           parent.getBlock().getRegistryName().getResourceDomain() + ":blocks/" + parent.getBlock().getRegistryName().getResourcePath());
       CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
-          new CustomModelBlock(BakedModelStairs.class, defaultTex, defaultTex));
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
-          new CustomModelBlock(BakedModelStairs.class, defaultTex, defaultTex));
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass() {
+    return BakedModelStairs.class;
+  }
+
 
   @Override
   @SideOnly(Side.CLIENT)

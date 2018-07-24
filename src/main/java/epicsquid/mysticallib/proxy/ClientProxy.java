@@ -1,7 +1,5 @@
 package epicsquid.mysticallib.proxy;
 
-import java.lang.reflect.InvocationTargetException;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.event.RegisterColorHandlersEvent;
