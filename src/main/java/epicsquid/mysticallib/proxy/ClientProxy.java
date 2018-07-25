@@ -5,6 +5,7 @@ import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.event.RegisterColorHandlersEvent;
 import epicsquid.mysticallib.event.RegisterParticleEvent;
 import epicsquid.mysticallib.fx.EffectManager;
+import epicsquid.mysticallib.fx.FXHandler;
 import epicsquid.mysticallib.hax.Hax;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.particle.ParticleRenderer;
@@ -21,6 +22,8 @@ public class ClientProxy extends CommonProxy {
   @Override
   public void preInit(FMLPreInitializationEvent event) {
     super.preInit(event);
+
+    MinecraftForge.EVENT_BUS.register(new FXHandler());
 
     try {
       Hax.init();

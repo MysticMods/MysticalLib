@@ -7,6 +7,8 @@ import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Registers effects to the FXRegistry
@@ -15,6 +17,7 @@ public class FXHandler {
 
   public static int FX_BEAM, FX_SLASH, FX_BURST;
 
+  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRegisterFX(RegisterFXEvent event) {
     FX_BEAM = FXRegistry.registerEffect(nbt -> {

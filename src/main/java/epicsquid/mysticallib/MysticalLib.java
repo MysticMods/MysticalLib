@@ -27,7 +27,6 @@ public class MysticalLib {
   public void preInit(FMLPreInitializationEvent event) {
     MinecraftForge.EVENT_BUS.register(new LibRegistry());
     MinecraftForge.EVENT_BUS.register(new LibEvents());
-    MinecraftForge.EVENT_BUS.register(new FXHandler());
     MinecraftForge.EVENT_BUS.register(new RecipeRegistry());
     proxy.preInit(event);
   }
