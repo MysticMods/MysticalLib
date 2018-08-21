@@ -17,39 +17,17 @@ import net.minecraftforge.common.EnumPlantType;
 public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject {
 
   private final @Nonnull EnumPlantType plantType;
-  private final @Nonnull Item seed;
-  private final @Nonnull Item crop;
 
   /**
    * Used for arbitrary crops
    * @param name Name of the crop
    */
-  public BlockCropBase(@Nonnull String name, @Nonnull EnumPlantType plantType, @Nonnull Item seed, @Nonnull Item crop) {
+  public BlockCropBase(@Nonnull String name, @Nonnull EnumPlantType plantType) {
     super();
     setUnlocalizedName(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
 
     this.plantType = plantType;
-    this.seed = seed;
-    this.crop = crop;
-  }
-
-  /**
-   * Gets the seed to drop for the crop
-   */
-  @Override
-  @Nonnull
-  public Item getSeed() {
-    return seed;
-  }
-
-  /**
-   * Gets the crop to drop for the plant
-   */
-  @Override
-  @Nonnull
-  public Item getCrop() {
-    return crop;
   }
 
   /**
