@@ -23,6 +23,7 @@ public class DefaultTransformations {
 
   public static TRSRTransformation ITEM_GROUND = create(0, 2, 0, 0, 0, 0, 0.5f);
   public static TRSRTransformation ITEM_HEAD = create(0, 13, 7, 0, 180, 0, 1);
+  public static TRSRTransformation ITEM_FIXED = create(0, 0, 0, 0, 180, 0, 1f);
   public static TRSRTransformation ITEM_THIRD_PERSON_RIGHT = create(0, 3, 1, 0, 0, 0, 0.55f);
   public static TRSRTransformation ITEM_THIRD_PERSON_LEFT = create(0, 3, 1, 0, 0, 0, 0.55f);
   public static TRSRTransformation ITEM_FIRST_PERSON_RIGHT = create(1.13f, 3.2f, 1.13f, 0, -90, 25, 0.68f);
@@ -41,6 +42,7 @@ public class DefaultTransformations {
   public static TRSRTransformation BLOCK_FIRST_PERSON_LEFT = create(0, 0, 0, 0, 225, 0, 0.4f);
 
   static {
+    itemTransforms.put(TransformType.FIXED, ITEM_FIXED);
     itemTransforms.put(TransformType.GROUND, ITEM_GROUND);
     itemTransforms.put(TransformType.HEAD, ITEM_HEAD);
     itemTransforms.put(TransformType.THIRD_PERSON_RIGHT_HAND, ITEM_THIRD_PERSON_RIGHT);
