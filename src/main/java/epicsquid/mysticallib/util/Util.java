@@ -6,11 +6,14 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.Chunk.EnumCreateEntityType;
+import net.minecraftforge.items.IItemHandler;
 
 public class Util {
 
@@ -63,5 +66,15 @@ public class Util {
     String[] nameParts = c.getTypeName().split("\\.");
     String className = nameParts[nameParts.length - 1];
     return lowercase(className);
+  }
+
+  public static void spawnInventoryInWorld(World world, double x, double y, double z, IItemHandler inventory) {
+    if (inventory != null && !world.isRemote) {
+      for (int i = 0; i < inventory.getSlots(); i++) {
+        if (inventory.getStackInSlot(i) != ItemStack.EMPTY) {
+          world.spawnEntity(new EntityItem(world, x, y, z, inventory.getStackInSlot(i)));
+        }
+      }
+    }
   }
 }
