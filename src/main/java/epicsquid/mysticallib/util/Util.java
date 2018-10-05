@@ -6,9 +6,11 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
@@ -38,6 +40,13 @@ public class Util {
       }
     }
     return tiles;
+  }
+
+  public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class <? extends T > classEntity, BlockPos pos, float radius)
+  {
+    return world.getEntitiesWithinAABB(classEntity, new AxisAlignedBB(pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
+            pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius));
+
   }
 
   @Nonnull
