@@ -24,8 +24,11 @@ import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.particle.particles.ParticleFlame;
 import epicsquid.mysticallib.particle.particles.ParticleGlitter;
 import epicsquid.mysticallib.particle.particles.ParticleGlow;
+import epicsquid.mysticallib.particle.particles.ParticleLineGlow;
 import epicsquid.mysticallib.particle.particles.ParticleSmoke;
 import epicsquid.mysticallib.particle.particles.ParticleSpark;
+import epicsquid.mysticallib.particle.particles.ParticleStar;
+import epicsquid.mysticallib.particle.particles.ParticleThorn;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -255,7 +258,7 @@ public class LibRegistry {
     }
   }
 
-  public static String PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME;
+  public static String PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME, PARTICLE_STAR, PARTICLE_LINE_GLOW, PARTICLE_THORN;
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -266,5 +269,8 @@ public class LibRegistry {
     PARTICLE_GLITTER = ParticleRegistry
         .registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
     PARTICLE_FLAME = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleFlame.class, new ResourceLocation("mysticallib:particle/particle_fire"));
+    PARTICLE_STAR = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleStar.class, new ResourceLocation("mysticallib:particle/particle_star"));
+    PARTICLE_LINE_GLOW = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLineGlow.class, new ResourceLocation("mysticallib:particle/particle_glow"));
+    PARTICLE_THORN = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleThorn.class, new ResourceLocation("mysticallib:particle/particle_thorn"));
   }
 }
