@@ -43,6 +43,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
     setRegistryName(name);
     setSoundType(type);
     setHardness(hardness);
+    setLightOpacity(0);
     setOpacity(false);
     this.fullBlock = false;
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);

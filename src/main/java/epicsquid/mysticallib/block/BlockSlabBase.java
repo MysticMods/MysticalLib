@@ -55,6 +55,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
     setRegistryName(name);
     setSoundType(type);
     setHardness(hardness);
+    setLightOpacity(0);
     setOpacity(false);
     this.fullBlock = false;
     this.parent = parent;
