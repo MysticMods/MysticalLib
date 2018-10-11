@@ -130,6 +130,10 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
     return false;
   }
 
+  public void setSlab(@Nonnull Block slab) {
+    this.slab = slab;
+  }
+
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
