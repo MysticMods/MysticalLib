@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.model.block;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -16,11 +17,12 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.model.IModelState;
 
 public class BakedModelWall extends BakedModelBlock {
   private Cube post, north, south, west, east;
 
-  public BakedModelWall(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
+  public BakedModelWall(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     post = ModelUtil.makeCube(format, 0.25, 0, 0.25, 0.5, 1, 0.5, null, texes, -1);
@@ -33,7 +35,12 @@ public class BakedModelWall extends BakedModelBlock {
   @Override
   @Nonnull
   public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-    List<BakedQuad> quads = super.getQuads(state, side, rand);
+    List<BakedQuad> quads = new ArrayList<>();
+    getFaceQuads(quads, side, state);
+    return quads;
+  }
+
+  private void getFaceQuads(@Nonnull List<BakedQuad> quads, @Nullable EnumFacing side, @Nullable IBlockState state) {
     if (state == null) {
       post.addToList(quads, side);
       west.addToList(quads, side);
@@ -60,7 +67,6 @@ public class BakedModelWall extends BakedModelBlock {
         east.addToList(quads, side);
       }
     }
-    return quads;
   }
 
 }

@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.model.block;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -19,6 +20,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.model.IModelState;
 
 public class BakedModelStairs extends BakedModelBlock {
   private Cube cube_down, cube_up;
@@ -33,7 +35,7 @@ public class BakedModelStairs extends BakedModelBlock {
   public static Vec4f[] bottomUV = new Vec4f[] { BOTTOM_SIDE_UV, BOTTOM_SIDE_UV, FULL_FACE_UV, FULL_FACE_UV, BOTTOM_SIDE_UV, BOTTOM_SIDE_UV };
   public static Vec4f[] topUV = new Vec4f[] { TOP_SIDE_UV, TOP_SIDE_UV, FULL_FACE_UV, FULL_FACE_UV, TOP_SIDE_UV, TOP_SIDE_UV };
 
-  public BakedModelStairs(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
+  public BakedModelStairs(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
       @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
@@ -60,12 +62,12 @@ public class BakedModelStairs extends BakedModelBlock {
   @Override
   @Nonnull
   public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
-    List<BakedQuad> quads = super.getQuads(state, side, rand);
+    List<BakedQuad> quads = new ArrayList<>();
     getFaceQuads(quads, side, state);
     return quads;
   }
 
-  public void getFaceQuads(@Nonnull List<BakedQuad> quads, @Nullable EnumFacing side, @Nullable IBlockState state) {
+  private void getFaceQuads(@Nonnull List<BakedQuad> quads, @Nullable EnumFacing side, @Nullable IBlockState state) {
     if (state == null) {
       cube_down.addToList(quads, side);
       q_up_pz.addToList(quads, side);

@@ -16,13 +16,14 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.model.IModelState;
 
 public class BakedModelSlant extends BakedModelBlock {
   private Segment segm_down_north, segm_down_east, segm_down_south, segm_down_west;
   private Segment segm_up_north, segm_up_east, segm_up_south, segm_up_west;
   private Segment segm_mid_nxnz, segm_mid_pxnz, segm_mid_pxpz, segm_mid_nxpz;
 
-  public BakedModelSlant(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
+  public BakedModelSlant(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
       @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
