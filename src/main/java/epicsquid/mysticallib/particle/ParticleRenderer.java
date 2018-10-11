@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 public class ParticleRenderer {
   private ArrayList<Particle> particles = new ArrayList<Particle>();
 
-  public void updateParticles() {
+  public synchronized void updateParticles() {
     boolean doRemove;
 
     for (Iterator<Particle> iterator = particles.iterator(); iterator.hasNext();) {
