@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ListUtil {
@@ -55,4 +56,5 @@ public class ListUtil {
     }
     return doMatch;
   }
+
 }

@@ -22,12 +22,11 @@ public class Util {
   public static Random rand = new Random();
 
   @Nonnull
-  public static <T extends TileEntity> List<T> getTileEntitiesWithin(@Nonnull World world, @Nonnull Class<? extends T> teClass, int x1, int y1, int z1, int x2,
-      int y2, int z2) {
+  public static <T extends TileEntity> List<T> getTileEntitiesWithin(@Nonnull World world, @Nonnull Class<? extends T> teClass, BlockPos pos, int radius) {
     List<T> tiles = new ArrayList<T>();
-    for (int i = x1; i <= x2; i++) {
-      for (int j = y1; j <= y2; j++) {
-        for (int k = z1; k <= z2; k++) {
+    for (int i = pos.getX() - radius; i <= pos.getX() + radius; i++) {
+      for (int j = pos.getY() - radius; j <= pos.getY() + radius; j++) {
+        for (int k = pos.getZ() - radius; k <= pos.getZ() + radius; k++) {
           BlockPos p = new BlockPos(i, j, k);
           Chunk c = world.getChunkFromBlockCoords(p);
           if (c.isLoaded()) {
@@ -42,11 +41,10 @@ public class Util {
     return tiles;
   }
 
-  public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class <? extends T > classEntity, BlockPos pos, float radius)
+  public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class <? extends T > classEntity, BlockPos pos, float xradius, float yradius, float zradius)
   {
-    return world.getEntitiesWithinAABB(classEntity, new AxisAlignedBB(pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
-            pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius));
-
+    return world.getEntitiesWithinAABB(classEntity, new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius,
+            pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius));
   }
 
   @Nonnull
