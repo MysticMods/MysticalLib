@@ -205,6 +205,27 @@ public class ModelUtil {
   }
 
   @Nonnull
+  public static Segment makeSegmUp(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+	  double z3, double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8,
+	  double y8, double z8, boolean[] culling, @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
+    return new Segment(ModelUtil.createQuad(format, x8, y8, z8, x5, y5, z5, x1, y1, z1, x4, y4, z4, EnumFacing.WEST, sprites[0], tintIndex),
+            ModelUtil.createQuad(format, x6, y6, z6, x7, y7, z7, x3, y3, z3, x2, y2, z2, EnumFacing.EAST, sprites[1], tintIndex),
+            ModelUtil.createQuad(format, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, EnumFacing.DOWN, sprites[2], tintIndex),
+            ModelUtil.createQuad(format, x8, y8, z8, x7, y7, z7, x6, y6, z6, x5, y5, z5, EnumFacing.UP, sprites[3], tintIndex),
+            ModelUtil.createQuad(format, x7, y7, z7, x8, y8, z8, x4, y4, z4, x3, y3, z3, EnumFacing.NORTH, sprites[4], tintIndex),
+            ModelUtil.createQuad(format, x5, y5, z5, x6, y6, z6, x2, y2, z2, x1, y1, z1, EnumFacing.SOUTH, sprites[5], tintIndex), ModelUtil.NO_CULL);
+  }
+
+  @Nonnull
+  public static Segment makeSegmUp(@Nonnull VertexFormat format, double x1, double y1, double z1, double x2, double y2, double z2, double x3, double y3,
+	  double z3, double x4, double y4, double z4, double x5, double y5, double z5, double x6, double y6, double z6, double x7, double y7, double z7, double x8,
+	  double y8, double z8, @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
+    return ModelUtil
+		.makeSegmUp(format, x1, y1, z1, x2, y2, z2, x3, y3, z3, x4, y4, z4, x5, y5, z5, x6, y6, z6, x7, y7, z7, x8, y8, z8, ModelUtil.NO_CULL, sprites,
+		    tintIndex);
+  }
+
+  @Nonnull
   public static Vec2f getUVForPos(double x, double y, double z, @Nonnull EnumFacing face) {
     Vec2f uv = new Vec2f(0, 0);
     switch (face) {
