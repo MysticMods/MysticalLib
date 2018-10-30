@@ -1,6 +1,5 @@
 package epicsquid.mysticallib;
 
-import epicsquid.mysticallib.fx.FXHandler;
 import epicsquid.mysticallib.proxy.CommonProxy;
 import epicsquid.mysticallib.recipe.RecipeRegistry;
 import net.minecraftforge.common.MinecraftForge;
