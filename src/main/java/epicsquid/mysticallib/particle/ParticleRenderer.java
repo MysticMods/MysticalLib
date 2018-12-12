@@ -44,7 +44,7 @@ public class ParticleRenderer {
     }
   }
 
-  public void renderParticles(@Nonnull EntityPlayer dumbplayer, float partialTicks) {
+  public synchronized void renderParticles(@Nonnull EntityPlayer dumbplayer, float partialTicks) {
     float f = ActiveRenderInfo.getRotationX();
     float f1 = ActiveRenderInfo.getRotationZ();
     float f2 = ActiveRenderInfo.getRotationYZ();
