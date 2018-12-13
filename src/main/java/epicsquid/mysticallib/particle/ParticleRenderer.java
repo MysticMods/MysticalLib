@@ -3,6 +3,7 @@ package epicsquid.mysticallib.particle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.Nonnull;
 
@@ -22,7 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 
 public class ParticleRenderer {
-  private ArrayList<Particle> particles = new ArrayList<Particle>();
+  private CopyOnWriteArrayList<Particle> particles = new CopyOnWriteArrayList<>();
 
   public synchronized void updateParticles() {
     boolean doRemove;
