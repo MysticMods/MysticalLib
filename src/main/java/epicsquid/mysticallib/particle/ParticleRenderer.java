@@ -3,6 +3,7 @@ package epicsquid.mysticallib.particle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.Nonnull;
@@ -27,10 +28,10 @@ public class ParticleRenderer {
 
   public synchronized void updateParticles() {
     boolean doRemove;
+    List<Particle> toRemove = new ArrayList<>();
 
-    for (Iterator<Particle> iterator = particles.iterator(); iterator.hasNext();) {
+    for (Particle particle : particles) {
       doRemove = true;
-      Particle particle = iterator.next();
       if (particle != null) {
         if (particle instanceof IParticle) {
           if (((IParticle) particle).alive()) {
@@ -40,8 +41,12 @@ public class ParticleRenderer {
         }
       }
       if (doRemove) {
-        iterator.remove();
+        toRemove.add(particle);
       }
+    }
+
+    if (!toRemove.isEmpty()) {
+      particles.removeAll(toRemove);
     }
   }
 
