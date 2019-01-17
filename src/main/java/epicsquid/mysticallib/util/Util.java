@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -45,6 +46,21 @@ public class Util {
   {
     return world.getEntitiesWithinAABB(classEntity, new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius,
             pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius));
+  }
+
+  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Block block){
+    List<BlockPos> blockList = new ArrayList<>();
+    for(int x = (int) -xradius; x <= xradius; x++){
+      System.out.println(x + "| " + world.isRemote);
+      for(int z = (int) -zradius; z <= zradius; z++){
+        for(int y = (int) -yradius; y <= yradius; y++){
+          if(world.getBlockState(pos.add(x, y, z)).getBlock() == block){
+            blockList.add(pos.add(x, y, z));
+          }
+        }
+      }
+    }
+    return blockList;
   }
 
   @Nonnull
