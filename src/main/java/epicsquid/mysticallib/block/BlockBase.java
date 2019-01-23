@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.block;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -17,6 +18,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -26,13 +28,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockBase extends Block implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
   private final @Nonnull Item itemBlock;
-  public @Nonnull List<ItemStack> drops;
+  private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
@@ -50,6 +53,12 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
     setLightOpacity(15);
     setHardness(hardness);
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
+  }
+
+  @Nonnull
+  public BlockBase setDrops(@Nonnull List<ItemStack> drops) {
+    this.drops = drops;
+    return this;
   }
 
   @Nonnull
@@ -170,6 +179,14 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   @Nullable
   protected IBlockState getParentState() {
     return null;
+  }
+
+  @Override
+  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+    if (drops != null && drops.size() > 0) {
+      return drops.get(0).getItem();
+    }
+    return super.getItemDropped(state, rand, fortune);
   }
 
   @Nonnull
