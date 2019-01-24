@@ -19,7 +19,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,6 +33,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
+  private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   private IBlockState parent;
   public String name = "";
@@ -47,6 +51,19 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
     setOpacity(false);
     this.fullBlock = false;
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
+  }
+
+  @Nonnull
+  public BlockStairsBase setFlammable(boolean flammable) {
+    this.isFlammable = flammable;
+    return this;
+  }
+
+  @Override
+  @Nonnull
+  public BlockStairsBase setResistance(float resistance) {
+    super.setResistance(resistance);
+    return this;
   }
 
   @Nonnull
@@ -85,6 +102,11 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   @Override
   public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
+  }
+
+  @Override
+  public boolean isFlammable(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
+    return isFlammable || super.isFlammable(world, pos, face);
   }
 
   @Override

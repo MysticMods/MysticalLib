@@ -26,6 +26,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -42,6 +43,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
   private @Nonnull BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  private boolean isFlammable = false;
   private boolean isDouble;
   private IBlockState parent;
   public String name = "";
@@ -65,6 +67,19 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
     } else {
       itemBlock = null;
     }
+  }
+
+  @Nonnull
+  public BlockSlabBase setFlammable(boolean flammable) {
+    this.isFlammable = flammable;
+    return this;
+  }
+
+  @Override
+  @Nonnull
+  public BlockSlabBase setResistance(float resistance) {
+    super.setResistance(resistance);
+    return this;
   }
 
   @Override
@@ -133,6 +148,11 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
 
   public void setSlab(@Nonnull Block slab) {
     this.slab = slab;
+  }
+
+  @Override
+  public boolean isFlammable(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
+    return isFlammable || super.isFlammable(world, pos, face);
   }
 
   @Override

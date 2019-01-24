@@ -23,6 +23,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -40,6 +41,8 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
   private boolean noCull = false;
+  // By default the blocks are made of wood and therefore flammable
+  private boolean isFlammable = false;
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   public @Nonnull String name;
@@ -53,6 +56,19 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
     setLightOpacity(15);
     setHardness(hardness);
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
+  }
+
+  @Nonnull
+  public BlockBase setFlammable(boolean flammable) {
+    this.isFlammable = flammable;
+    return this;
+  }
+
+  @Override
+  @Nonnull
+  public BlockBase setResistance(float resistance) {
+    super.setResistance(resistance);
+    return this;
   }
 
   @Nonnull
@@ -187,6 +203,11 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
       return drops.get(0).getItem();
     }
     return super.getItemDropped(state, rand, fortune);
+  }
+
+  @Override
+  public boolean isFlammable(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
+    return isFlammable || super.isFlammable(world, pos, face);
   }
 
   @Nonnull
