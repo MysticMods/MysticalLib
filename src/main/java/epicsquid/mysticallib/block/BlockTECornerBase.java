@@ -49,6 +49,7 @@ public class BlockTECornerBase extends BlockCornerBase implements ITileEntityPro
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, world.getBlockState(pos), null);
     }
+    super.onBlockExploded(world, pos, e);
   }
 
   @Override

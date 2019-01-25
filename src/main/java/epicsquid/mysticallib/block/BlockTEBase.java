@@ -65,6 +65,7 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, world.getBlockState(pos), null);
     }
+    super.onBlockExploded(world, pos, e);
   }
 
   @Override

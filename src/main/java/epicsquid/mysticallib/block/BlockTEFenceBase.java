@@ -48,6 +48,7 @@ public class BlockTEFenceBase extends BlockFenceBase implements ITileEntityProvi
     if (t instanceof ITile) {
       ((ITile) t).breakBlock(world, pos, world.getBlockState(pos), null);
     }
+    super.onBlockExploded(world, pos, e);
   }
 
   @Override

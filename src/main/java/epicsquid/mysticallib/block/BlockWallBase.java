@@ -112,6 +112,11 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   }
 
   @Override
+  public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+    return isFlammable ? 100 : super.getFlammability(world, pos, face);
+  }
+
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     if (hasCustomModel) {

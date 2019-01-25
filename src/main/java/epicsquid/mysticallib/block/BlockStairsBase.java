@@ -110,6 +110,11 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   }
 
   @Override
+  public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+    return isFlammable ? 100 : super.getFlammability(world, pos, face);
+  }
+
+  @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
     if (hasCustomModel) {

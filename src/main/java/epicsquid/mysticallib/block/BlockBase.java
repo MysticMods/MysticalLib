@@ -210,6 +210,11 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
     return isFlammable || super.isFlammable(world, pos, face);
   }
 
+  @Override
+  public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+    return isFlammable ? 100 : super.getFlammability(world, pos, face);
+  }
+
   @Nonnull
   protected Class<? extends BakedModelBlock> getModelClass() {
     return getModelClass(0);
