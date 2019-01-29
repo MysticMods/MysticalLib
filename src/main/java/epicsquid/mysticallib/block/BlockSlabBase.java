@@ -70,6 +70,11 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Nonnull
+  public IBlockState getParent() {
+    return parent;
+  }
+
+  @Nonnull
   public BlockSlabBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;

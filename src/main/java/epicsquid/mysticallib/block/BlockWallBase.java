@@ -171,4 +171,9 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   public Item getItemBlock() {
     return itemBlock;
   }
+
+  @Nonnull
+  public Block getParent() {
+    return parent;
+  }
 }

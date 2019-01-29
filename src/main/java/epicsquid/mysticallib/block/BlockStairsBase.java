@@ -54,6 +54,11 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   }
 
   @Nonnull
+  public IBlockState getParent() {
+    return parent;
+  }
+
+  @Nonnull
   public BlockStairsBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;
