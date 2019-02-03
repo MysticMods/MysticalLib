@@ -31,7 +31,7 @@ public class TileBase extends TileEntity implements ITile {
   }
 
   @Override
-  public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
+  public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nullable EntityPlayer player) {
     invalidate();
   }
 
