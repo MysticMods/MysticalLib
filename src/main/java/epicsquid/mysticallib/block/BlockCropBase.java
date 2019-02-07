@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.block;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
@@ -35,7 +36,7 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
    */
   @Override
   @Nonnull
-  public EnumPlantType getPlantType(@Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
+  public EnumPlantType getPlantType(@Nullable IBlockAccess world, @Nullable BlockPos pos) {
     return plantType;
   }
 
