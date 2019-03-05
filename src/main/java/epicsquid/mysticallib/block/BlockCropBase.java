@@ -3,6 +3,13 @@ package epicsquid.mysticallib.block;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.BlockCrops;
@@ -14,8 +21,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.EnumPlantType;
+import tehnut.harvest.IReplantHandler;
 
-public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject {
+public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject, IReplantHandler {
 
   private final @Nonnull EnumPlantType plantType;
 
@@ -60,5 +68,28 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
   @Override
   public Item getItemBlock() {
     return null;
+  }
+
+  @Override
+  public void handlePlant(World world, BlockPos pos, IBlockState state, EntityPlayer player, @Nullable TileEntity tileEntity) {
+    IBlockState newState = getDefaultState();
+    NonNullList<ItemStack> drops = NonNullList.create();
+    getDrops(drops, world, pos, state, 0);
+    ForgeEventFactory.fireBlockHarvesting(drops, world, pos, state, 0, 1.0f, false, player);
+    for (ItemStack stack : drops) {
+      if (stack.getItem() == getSeed()) {
+        stack.shrink(1);
+        break;
+      }
+    }
+
+    if (!world.isRemote) {
+      world.setBlockState(pos, newState);
+      for (ItemStack drop : drops) {
+        EntityItem entityItem = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
+        entityItem.setPickupDelay(10);
+        world.spawnEntity(entityItem);
+      }
+    }
   }
 }

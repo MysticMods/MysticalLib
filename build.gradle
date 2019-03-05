@@ -32,12 +32,17 @@ minecraft {
 
 dependencies {
     deobfCompile "mezz.jei:jei_1.12.2:${jei_version}"
+    deobfCompile "info.tehnut.harvest:Harvest:1.12-1.2.7-20"
 }
 
 repositories {
     maven {
         name 'DVS1 Maven FS'
         url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name = "TehNut"
+        url = "http://tehnut.info/maven"
     }
 }
 
