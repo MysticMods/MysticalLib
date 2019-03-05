@@ -21,8 +21,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.fml.common.Optional;
 import tehnut.harvest.IReplantHandler;
 
+@Optional.Interface(iface="tehnut.harvest.IReplantHandler", modid="harvest", striprefs=true)
 public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject, IReplantHandler {
 
   private final @Nonnull EnumPlantType plantType;
