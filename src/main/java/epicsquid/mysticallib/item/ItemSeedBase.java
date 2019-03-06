@@ -53,7 +53,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
     ItemStack itemstack = player.getHeldItem(hand);
     net.minecraft.block.state.IBlockState state = worldIn.getBlockState(pos);
     if (facing == EnumFacing.UP && player.canPlayerEdit(pos.offset(facing), facing, itemstack) && worldIn.isAirBlock(pos.up()) &&
-        (state.getBlock().canSustainPlant(state, worldIn, pos, EnumFacing.UP, this) || (this.plantType != EnumPlantType.Crop)))
+        (state.getBlock().canSustainPlant(state, worldIn, pos, EnumFacing.UP, this)))
     {
       worldIn.setBlockState(pos.up(), crop.getDefaultState());
 
