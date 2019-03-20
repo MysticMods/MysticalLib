@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 public class ListUtil {
   public static class StateComparator implements Comparator<IBlockState> {
@@ -51,6 +52,28 @@ public class ListUtil {
       for (int i = 0; i < list1.size(); i++) {
         if (list1.get(i).getItem() != list2.get(i).getItem() || list1.get(i).getItemDamage() != list2.get(i).getItemDamage()) {
           doMatch = false;
+        }
+      }
+    }
+    return doMatch;
+  }
+
+  public static boolean matchesIngredients(List<ItemStack> ingredients, List<Ingredient> selfIngredients) {
+    boolean doMatch = ingredients.size() == selfIngredients.size();
+    if (doMatch) {
+      for (ItemStack stack : ingredients) {
+        boolean matchIngredient = false;
+        for (Ingredient ingredient : selfIngredients) {
+          for (ItemStack matchingStack : ingredient.getMatchingStacks()) {
+            if (stack.isItemEqual(matchingStack)) {
+              matchIngredient = true;
+              break;
+            }
+          }
+        }
+        if (!matchIngredient) {
+          doMatch = false;
+          break;
         }
       }
     }
