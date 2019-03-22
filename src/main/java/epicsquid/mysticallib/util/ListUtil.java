@@ -2,7 +2,10 @@ package epicsquid.mysticallib.util;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -59,25 +62,28 @@ public class ListUtil {
   }
 
   public static boolean matchesIngredients(List<ItemStack> ingredients, List<Ingredient> selfIngredients) {
-    boolean doMatch = ingredients.size() == selfIngredients.size();
-    if (doMatch) {
-      for (ItemStack stack : ingredients) {
-        boolean matchIngredient = false;
-        for (Ingredient ingredient : selfIngredients) {
-          for (ItemStack matchingStack : ingredient.getMatchingStacks()) {
-            if (stack.isItemEqual(matchingStack)) {
-              matchIngredient = true;
-              break;
-            }
-          }
-        }
-        if (!matchIngredient) {
-          doMatch = false;
+    List<ItemStack> actualInput = ingredients.stream().filter((i) -> i != null && !i.isEmpty()).sorted(stackComparator).collect(Collectors.toList());
+    List<Ingredient> actualIngredients = selfIngredients.stream().filter(Objects::nonNull).collect(Collectors.toList());
+
+    if (actualInput.size() != actualIngredients.size()) return false;
+
+    IntOpenHashSet foundIngredients = new IntOpenHashSet();
+    IntOpenHashSet usedItemStacks = new IntOpenHashSet();
+
+    Ingredient ingredient;
+
+    for (int i = 0; i < actualIngredients.size(); i++) {
+      ingredient = actualIngredients.get(i);
+      for (int j = 0; j < actualInput.size(); j++) {
+        if (usedItemStacks.contains(j)) continue;
+        if (ingredient.apply(actualInput.get(j))) {
+          usedItemStacks.add(j);
+          foundIngredients.add(i);
           break;
         }
       }
     }
-    return doMatch;
-  }
 
+    return foundIngredients.size() == actualIngredients.size();
+  }
 }
