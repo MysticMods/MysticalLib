@@ -1,12 +1,16 @@
 package epicsquid.mysticallib.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BooleanSupplier;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -48,12 +52,21 @@ public class Util {
             pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius));
   }
 
-  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Block block){
+  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Block... block) {
+    List<Block> blocks = Arrays.asList(block);
+    return getBlocksWithinRadius(world, pos, xradius, yradius, zradius, (test) -> blocks.contains(test.getBlock()));
+  }
+
+  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Block block) {
+    return getBlocksWithinRadius(world, pos, xradius, yradius, zradius, (test) -> test.getBlock() == block);
+  }
+
+  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Predicate<IBlockState> comparison){
     List<BlockPos> blockList = new ArrayList<>();
     for(int x = (int) -xradius; x <= xradius; x++){
       for(int z = (int) -zradius; z <= zradius; z++){
         for(int y = (int) -yradius; y <= yradius; y++){
-          if(world.getBlockState(pos.add(x, y, z)).getBlock() == block){
+          if (comparison.test(world.getBlockState(pos.add(x, y, z)))) {
             blockList.add(pos.add(x, y, z));
           }
         }
