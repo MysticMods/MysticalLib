@@ -40,6 +40,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -61,6 +62,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class LibRegistry {
   private static ArrayList<Item> items = new ArrayList<Item>();
   private static ArrayList<Block> blocks = new ArrayList<Block>();
+  private static ArrayList<SoundEvent> sounds = new ArrayList<>();
   private static Map<Class<? extends Entity>, IRenderFactory> entityRenderMap = new HashMap<Class<? extends Entity>, IRenderFactory>();
   private static Map<Class<? extends TileEntity>, TileEntitySpecialRenderer> tileEntityRenderMap = new HashMap<Class<? extends TileEntity>, TileEntitySpecialRenderer>();
   private static int entityId = 0;
@@ -76,7 +78,7 @@ public class LibRegistry {
    */
   public static void initAll() {
     ModContainer container = Loader.instance().activeModContainer();
-    MinecraftForge.EVENT_BUS.post(new RegisterContentEvent(items, blocks));
+    MinecraftForge.EVENT_BUS.post(new RegisterContentEvent(items, blocks, sounds));
     setActiveMod(MysticalLib.MODID, container);
   }
 
@@ -156,6 +158,14 @@ public class LibRegistry {
   public void registerBlocks(@Nonnull RegistryEvent.Register<Block> event) {
     for (Block b : blocks) {
       event.getRegistry().register(b);
+    }
+  }
+
+  @SubscribeEvent
+  @SideOnly(Side.CLIENT)
+  public void registerSounds(@Nonnull RegistryEvent.Register<SoundEvent> event) {
+    for (SoundEvent s: sounds) {
+      event.getRegistry().register(s);
     }
   }
 
