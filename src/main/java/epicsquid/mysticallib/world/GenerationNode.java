@@ -16,17 +16,19 @@ public class GenerationNode {
   public BlockPos pos = new BlockPos(-1, -1, -1);
   private boolean replaceWithAir = false;
   boolean isAlive = true;
+  boolean force = false;
 
   public GenerationNode(@Nonnull NBTTagCompound tag) {
     readFromNBT(tag);
   }
 
-  public GenerationNode(@Nonnull BlockPos pos, @Nonnull String structure, @Nonnull Rotation rotation, @Nonnull Mirror mirror, boolean replaceWithAir) {
+  public GenerationNode(@Nonnull BlockPos pos, @Nonnull String structure, @Nonnull Rotation rotation, @Nonnull Mirror mirror, boolean replaceWithAir, boolean force) {
     this.pos = pos;
     this.structure = structure;
     this.rotation = rotation;
     this.mirror = mirror;
     this.replaceWithAir = replaceWithAir;
+    this.force = force;
   }
 
   public void update(@Nonnull World world) {
@@ -36,7 +38,7 @@ public class GenerationNode {
         data.calcDimensions();
         if (world.isAreaLoaded(new BlockPos(pos.getX() - 8, pos.getY(), pos.getZ() - 8),
             new BlockPos(pos.getX() + data.getWidth() + 8, pos.getY(), pos.getZ() + data.getLength() + 8))) {
-          data.generateIn(world, pos.getX(), pos.getY(), pos.getZ(), rotation, mirror, replaceWithAir);
+          data.generateIn(world, pos.getX(), pos.getY(), pos.getZ(), rotation, mirror, replaceWithAir, force);
           isAlive = false;
         }
       } else {

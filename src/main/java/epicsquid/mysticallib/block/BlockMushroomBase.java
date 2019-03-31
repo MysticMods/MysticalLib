@@ -38,7 +38,7 @@ public class BlockMushroomBase extends BlockMushroom implements IBlock, IModeled
   @Override
   public boolean generateBigMushroom(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
     world.setBlockToAir(pos);
-    hugeMushroom.generateIn(world, pos.getX(), pos.getY(), pos.getZ(), Rotation.NONE, Mirror.NONE, false);
+    hugeMushroom.generateIn(world, pos.getX(), pos.getY(), pos.getZ(), Rotation.NONE, Mirror.NONE, false, false);
     return true;
   }
 
