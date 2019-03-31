@@ -37,6 +37,7 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -147,7 +148,7 @@ public class LibRegistry {
     for (Block b : blocks) {
       if (b instanceof IBlock) {
         Item i = ((IBlock) b).getItemBlock();
-        if (i != null) {
+        if (i != null && i != Items.AIR) {
           event.getRegistry().register(i);
         }
       }
