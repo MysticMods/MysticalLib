@@ -61,30 +61,33 @@ public class StructureData implements IGeneratable {
   }
 
   @Override
-  public void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir) {
+  public void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir, boolean force) {
     calcDimensions();
     for (Entry<Vec3i, String> e : data.entrySet()) {
       Vec3i v = e.getKey();
       String b = e.getValue();
       if (rotation == Rotation.CLOCKWISE_180) {
-        placeBlock(world, new BlockPos(x + v.getX(), y + v.getY(), z - v.getZ() + length), blocks.get(b), rotation, doMirror, replaceWithAir);
+        placeBlock(world, new BlockPos(x + v.getX(), y + v.getY(), z - v.getZ() + length), blocks.get(b), rotation, doMirror, replaceWithAir, force);
       }
       if (rotation == Rotation.COUNTERCLOCKWISE_90) {
-        placeBlock(world, new BlockPos(x + v.getZ(), y + v.getY(), z + v.getX()), blocks.get(b), rotation, doMirror, replaceWithAir);
+        placeBlock(world, new BlockPos(x + v.getZ(), y + v.getY(), z + v.getX()), blocks.get(b), rotation, doMirror, replaceWithAir, force);
       }
       if (rotation == Rotation.NONE) {
-        placeBlock(world, new BlockPos(x - v.getX() + width, y + v.getY(), z + v.getZ()), blocks.get(b), rotation, doMirror, replaceWithAir);
+        placeBlock(world, new BlockPos(x - v.getX() + width, y + v.getY(), z + v.getZ()), blocks.get(b), rotation, doMirror, replaceWithAir, force);
       }
       if (rotation == Rotation.CLOCKWISE_90) {
-        placeBlock(world, new BlockPos(x - v.getZ() + length, y + v.getY(), z - v.getX() + width), blocks.get(b), rotation, doMirror, replaceWithAir);
+        placeBlock(world, new BlockPos(x - v.getZ() + length, y + v.getY(), z - v.getX() + width), blocks.get(b), rotation, doMirror, replaceWithAir, force);
       }
     }
   }
 
   private void placeBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Rotation rotation, @Nonnull Mirror mirror,
-      boolean replaceWithAir) {
-    if (state.getBlock() != Blocks.AIR || state.getBlock() == Blocks.AIR && replaceWithAir) {
-      world.setBlockState(pos, state.withRotation(rotation).withMirror(mirror));
+      boolean replaceWithAir, boolean force) {
+    IBlockState at = world.getBlockState(pos);
+    if (world.isAirBlock(pos) || at.getBlock().isReplaceable(world, pos) || force) {
+      if (state.getBlock() != Blocks.AIR || state.getBlock() == Blocks.AIR && replaceWithAir) {
+        world.setBlockState(pos, state.withRotation(rotation).withMirror(mirror));
+      }
     }
   }
 }
