@@ -1,8 +1,5 @@
 package epicsquid.mysticallib.tile;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibEvents;
 import epicsquid.mysticallib.network.MessageTEUpdate;
 import epicsquid.mysticallib.network.PacketHandler;
@@ -20,6 +17,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class TileBase extends TileEntity implements ITile {
   public boolean dirty = false;
@@ -70,7 +70,7 @@ public class TileBase extends TileEntity implements ITile {
         world.spawnEntity(new EntityItem(world, getPos().getX() + 0.5, getPos().getY() + 0.5, getPos().getZ() + 0.5, extracted));
       }
       markDirty();
-      PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(this.getUpdateTag()));
+      PacketHandler.sendToAllTracking(new MessageTEUpdate(this.getUpdateTag()), this);
       return true;
     }
     return false;

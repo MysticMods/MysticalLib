@@ -108,6 +108,7 @@ public class LibEvents {
       if (!list.hasNoTags()) {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setTag("data", list);
+        // THIS ONE CAN STAY ~ Noob
         PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(tag));
       }
       toUpdate.clear();
@@ -237,7 +238,7 @@ public class LibEvents {
 				tag.setDouble("speed", 0.5f);
 				tag.setDouble("scale", 12f);
 				tag.setInteger("count", 40);
-				PacketHandler.INSTANCE.sendToAll(new MessageEffect(ELFXHandler.FX_BURST, tag));
+				PacketHandler.sendToAllTracking(new MessageEffect(ELFXHandler.FX_BURST, tag), event.getPlayer());
 			}
 		}
 	}*/
