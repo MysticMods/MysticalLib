@@ -21,6 +21,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -28,7 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BlockDoorBase extends BlockDoor implements IBlock {
+public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   private final @Nonnull
   Item itemBlock;
   public List<ItemStack> drops = null;
@@ -140,8 +141,18 @@ public class BlockDoorBase extends BlockDoor implements IBlock {
     return itemBlock;
   }
 
+  @Override
+  public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+    return new ItemStack(itemBlock);
+  }
+
   @Nonnull
   public Block getParent() {
     return parent;
+  }
+
+  @Override
+  public void initModel() {
+     ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
   }
 }
