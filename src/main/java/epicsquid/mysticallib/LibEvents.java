@@ -105,7 +105,7 @@ public class LibEvents {
         TileEntity t = updateArray[i];
         list.appendTag(t.getUpdateTag());
       }
-      if (!list.hasNoTags()) {
+      if (!list.isEmpty()) {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setTag("data", list);
         // THIS ONE CAN STAY ~ Noob

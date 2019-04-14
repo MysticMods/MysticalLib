@@ -34,6 +34,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockBase extends Block implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
   private final @Nonnull Item itemBlock;
   private List<ItemStack> drops;
@@ -50,7 +51,7 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   public BlockBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(mat);
     this.name = name;
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setSoundType(type);
     setLightOpacity(15);
@@ -161,14 +162,14 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/" + getRegistryName().getResourcePath());
+      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
       if (getParentState() != null) {
         defaultTex = new ResourceLocation(
-            getParentState().getBlock().getRegistryName().getResourceDomain() + ":blocks/" + getParentState().getBlock().getRegistryName().getResourcePath());
+            getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
       }
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }
@@ -183,7 +184,7 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   @Override
   @SideOnly(Side.CLIENT)
   @Nonnull
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return this.layer;
   }
 

@@ -36,7 +36,7 @@ public class TileModular extends TileBase {
   }
 
   public TileModular() {
-    this(null);
+    this((IModule) null);
   }
 
   /**
@@ -75,6 +75,7 @@ public class TileModular extends TileBase {
   @Override
   public boolean hasCapability(@Nonnull Capability capability, @Nullable EnumFacing facing) {
     for (IModule m : modules) {
+      // We need to fix this somehow
       if (m.hasCapability(capability, facing)) {
         return true;
       }

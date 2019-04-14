@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   private final @Nonnull
   Item itemBlock;
@@ -45,14 +46,14 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
     this.parent = base;
     this.name = name;
     setCreativeTab(null);
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(name);
     setSoundType(type);
     setLightOpacity(0);
     setHardness(hardness);
     setOpacity(false);
     this.fullBlock = false;
-    itemBlock = new ItemDoor(this).setUnlocalizedName(name).setRegistryName(LibRegistry.getActiveModid(), name);
+    itemBlock = new ItemDoor(this).setTranslationKey(name).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
   @Nonnull
@@ -113,7 +114,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
 
   @Override
   public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-    if (tab == this.getCreativeTabToDisplayOn()) {
+    if (tab == this.getCreativeTab()) {
       list.add(new ItemStack(this, 1));
     }
   }
@@ -131,7 +132,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   @Override
   @SideOnly(Side.CLIENT)
   @Nonnull
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return this.layer;
   }
 

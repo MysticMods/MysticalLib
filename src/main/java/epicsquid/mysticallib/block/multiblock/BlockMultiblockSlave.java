@@ -22,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockMultiblockSlave extends BlockTEBase {
 
   public static final PropertyBool SHADOW = PropertyBool.create("shadow");
@@ -74,10 +75,10 @@ public class BlockMultiblockSlave extends BlockTEBase {
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel()) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/null");
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/null");
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
           new CustomModelBlock(BakedModelBlock.class, defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(BakedModelBlock.class, defaultTex, defaultTex));
     }
   }

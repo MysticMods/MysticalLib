@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockSlantBase extends BlockBase {
   public static float box_precision = 0.125f;
   public static @Nonnull Map<Integer, List<AxisAlignedBB>> boxes = new HashMap<>();
@@ -85,7 +86,7 @@ public class BlockSlantBase extends BlockBase {
       int newDir = (state.getValue(DIR) + rot.ordinal()) % 4;
       return state.withProperty(DIR, newDir);
     } else {
-      EnumFacing face = EnumFacing.getFront(state.getValue(DIR) + 2);
+      EnumFacing face = EnumFacing.byIndex(state.getValue(DIR) + 2);
       return state.withProperty(DIR, rot.rotate(face).getIndex() - 2);
     }
   }
@@ -238,14 +239,14 @@ public class BlockSlantBase extends BlockBase {
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel()) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/" + getRegistryName().getResourcePath());
+      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
       if (parent != null) {
         defaultTex = new ResourceLocation(
-            parent.getBlock().getRegistryName().getResourceDomain() + ":blocks/" + parent.getBlock().getRegistryName().getResourcePath());
+            parent.getBlock().getRegistryName().getNamespace() + ":blocks/" + parent.getBlock().getRegistryName().getPath());
       }
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }

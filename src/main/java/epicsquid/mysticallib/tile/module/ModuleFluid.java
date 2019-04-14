@@ -24,6 +24,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidTankProperties;
 
+@SuppressWarnings("deprecation")
 public class ModuleFluid implements IModule<IFluidHandler> {
 
   public static final @Nonnull String MODULE_FLUID = "MODULE_FLUID";
@@ -34,7 +35,7 @@ public class ModuleFluid implements IModule<IFluidHandler> {
   private @Nonnull FaceConfig faceConfig;
 
   public ModuleFluid(@Nonnull TileModular tile, int maxTransfer) {
-    this(tile, maxTransfer, null);
+    this(tile, maxTransfer, (SmartTank) null);
   }
 
   public ModuleFluid(@Nonnull TileModular tile, int maxTransfer, @Nullable SmartTank... tanks) {

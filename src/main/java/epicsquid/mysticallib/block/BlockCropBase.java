@@ -15,6 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.EnumPlantType;
 
+@SuppressWarnings("deprecation")
 public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject {
 
   private final @Nonnull EnumPlantType plantType;
@@ -25,7 +26,7 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
    */
   public BlockCropBase(@Nonnull String name, @Nonnull EnumPlantType plantType) {
     super();
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
 
     this.plantType = plantType;

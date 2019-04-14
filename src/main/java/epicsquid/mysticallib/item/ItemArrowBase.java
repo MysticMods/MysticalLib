@@ -21,7 +21,7 @@ public class ItemArrowBase extends ItemArrow implements IModeledObject, ICustomM
 
   public ItemArrowBase(String name) {
     super();
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
@@ -47,7 +47,7 @@ public class ItemArrowBase extends ItemArrow implements IModeledObject, ICustomM
   public void initCustomModel() {
     if (this.hasCustomModel) {
       CustomModelLoader.itemmodels.put(getRegistryName(),
-              new CustomModelItem(false, new ResourceLocation(getRegistryName().getResourceDomain() + ":items/" + getRegistryName().getResourcePath())));
+              new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
     }
   }
 }

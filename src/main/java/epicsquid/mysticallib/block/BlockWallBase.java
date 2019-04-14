@@ -30,6 +30,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, ICustomModeledObject {
   private final Item itemBlock;
   public List<ItemStack> drops = null;
@@ -45,7 +46,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
     this.setCreativeTab(null);
     this.parent = base;
     this.name = name;
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(name);
     setSoundType(type);
     setLightOpacity(0);
@@ -136,7 +137,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
 
   @Override
   public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
-    if (tab == this.getCreativeTabToDisplayOn()) {
+    if (tab == this.getCreativeTab()) {
       list.add(new ItemStack(this, 1));
     }
   }
@@ -146,10 +147,10 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   public void initCustomModel() {
     if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
-          parent.getRegistryName().getResourceDomain() + ":blocks/" + parent.getRegistryName().getResourcePath());
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+          parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }
@@ -162,7 +163,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   @Override
   @SideOnly(Side.CLIENT)
   @Nonnull
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return this.layer;
   }
 

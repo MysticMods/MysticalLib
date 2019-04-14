@@ -22,6 +22,7 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+@SuppressWarnings("deprecation")
 public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   protected Class<? extends TileEntity> teClass;
   public static Set<Class<? extends TileEntity>> classes = new HashSet<>();

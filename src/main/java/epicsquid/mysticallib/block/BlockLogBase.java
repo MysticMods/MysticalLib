@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, ICustomModeledObject {
 
     private final @Nonnull
@@ -42,7 +43,7 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
         super();
         this.setCreativeTab(null);
         this.name = name;
-        setUnlocalizedName(name);
+        setTranslationKey(name);
         setRegistryName(name);
         itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
         this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
@@ -103,14 +104,14 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
     @SideOnly(Side.CLIENT)
     public void initCustomModel() {
         if (hasCustomModel) {
-            ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getResourceDomain() + ":blocks/" + getRegistryName().getResourcePath());
+            ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
             if (getParentState() != null) {
                 defaultTex = new ResourceLocation(
-                        getParentState().getBlock().getRegistryName().getResourceDomain() + ":blocks/" + getParentState().getBlock().getRegistryName().getResourcePath());
+                        getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
             }
-            CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+            CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
                     new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-            CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+            CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
                     new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
         }
     }
@@ -124,7 +125,7 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
     @Override
     @SideOnly(Side.CLIENT)
     @Nonnull
-    public BlockRenderLayer getBlockLayer() {
+    public BlockRenderLayer getRenderLayer() {
         return this.layer;
     }
 

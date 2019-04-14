@@ -27,6 +27,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObject, ICustomModeledObject {
 
   private final @Nonnull Item itemBlock;
@@ -43,7 +44,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
     this.setCreativeTab(null);
     this.parent = base;
     this.name = name;
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(name);
     setSoundType(type);
     setHardness(hardness);
@@ -137,10 +138,10 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   public void initCustomModel() {
     if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
-          parent.getBlock().getRegistryName().getResourceDomain() + ":blocks/" + parent.getBlock().getRegistryName().getResourcePath());
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + name),
+          parent.getBlock().getRegistryName().getNamespace() + ":blocks/" + parent.getBlock().getRegistryName().getPath());
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + name + "#handlers"),
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }
@@ -154,7 +155,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   @Override
   @SideOnly(Side.CLIENT)
   @Nonnull
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return this.layer;
   }
 

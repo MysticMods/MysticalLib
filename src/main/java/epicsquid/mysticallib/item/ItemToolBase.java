@@ -19,7 +19,7 @@ public class ItemToolBase extends ItemTool implements IModeledObject, ICustomMod
 
   protected ItemToolBase(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn, Set<Block> effectiveBlocksIn) {
     super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
@@ -37,7 +37,7 @@ public class ItemToolBase extends ItemTool implements IModeledObject, ICustomMod
   public void initCustomModel() {
     if (this.hasCustomModel) {
       CustomModelLoader.itemmodels.put(getRegistryName(),
-          new CustomModelItem(false, new ResourceLocation(getRegistryName().getResourceDomain() + ":items/" + getRegistryName().getResourcePath())));
+          new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
     }
   }
 }

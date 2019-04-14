@@ -21,6 +21,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class ItemBlockSlab extends ItemBlock implements IModeledObject {
 
   private Block doubleSlab;

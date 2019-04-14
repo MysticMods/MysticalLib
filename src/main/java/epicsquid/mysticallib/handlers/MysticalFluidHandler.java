@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.handlers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import net.minecraftforge.fluids.capability.IFluidTankProperties;
 /**
  * Used to handle any number of SmartTanks
  */
+@SuppressWarnings("deprecation")
 public class MysticalFluidHandler implements IFluidHandler {
 
   private @Nonnull List<SmartTank> tanks;
@@ -22,7 +24,7 @@ public class MysticalFluidHandler implements IFluidHandler {
   private int maxExtract;
 
   public MysticalFluidHandler(int maxTransfer) {
-    this(maxTransfer, null);
+    this(maxTransfer, (SmartTank) null);
   }
 
   public MysticalFluidHandler(int maxTransfer, @Nullable SmartTank... tanks) {
@@ -52,11 +54,9 @@ public class MysticalFluidHandler implements IFluidHandler {
     List<IFluidTankProperties> props = new ArrayList<>();
     for (SmartTank t : tanks) {
       IFluidTankProperties[] tprops = t.getTankProperties();
-      for (IFluidTankProperties p : tprops) {
-        props.add(p);
-      }
+      props.addAll(Arrays.asList(tprops));
     }
-    return props.toArray(new IFluidTankProperties[props.size()]);
+    return props.toArray(new IFluidTankProperties[0]);
   }
 
   @Override

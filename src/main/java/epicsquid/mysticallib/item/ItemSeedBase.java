@@ -41,7 +41,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
    */
   public ItemSeedBase(@Nonnull String name, @Nonnull BlockCropBase crop, @Nonnull Block base) {
     super(crop, base);
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     this.plantType = crop.getPlantType(null, null);
     this.crop = crop;
@@ -88,7 +88,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
   public void initCustomModel() {
     if (this.hasCustomModel) {
       CustomModelLoader.itemmodels.put(getRegistryName(),
-          new CustomModelItem(false, new ResourceLocation(getRegistryName().getResourceDomain() + ":items/" + getRegistryName().getResourcePath())));
+          new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
     }
   }
 

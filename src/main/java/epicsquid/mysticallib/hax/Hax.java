@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelBlock;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+@SuppressWarnings("deprecation")
 public class Hax {
 
   public static Field bakedQuadFace, bakedQuadDiffuse, bakedQuadTint;

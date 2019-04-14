@@ -26,7 +26,7 @@ public class BlockMushroomBase extends BlockMushroom implements IBlock, IModeled
   public BlockMushroomBase(@Nonnull String name, @Nonnull StructureData hugeMushroom) {
     super();
     this.hugeMushroom = hugeMushroom;
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
   }
 

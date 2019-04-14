@@ -35,6 +35,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SuppressWarnings("deprecation")
 public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, ICustomModeledObject {
 
   public static BlockSlabBase dummy = new BlockSlabBase(Material.AIR, SoundType.SNOW, 0f, "null", Blocks.AIR.getDefaultState(), false, Blocks.AIR);
@@ -53,7 +54,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
       @Nullable Block slab) {
     super(mat);
     this.isDouble = isDouble;
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(name);
     setSoundType(type);
     setHardness(hardness);
@@ -89,7 +90,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
 
   @Override
   public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
-    if (tab == this.getCreativeTabToDisplayOn() && !this.isDouble) {
+    if (tab == this.getCreativeTab() && !this.isDouble) {
       items.add(new ItemStack(this, 1));
     }
   }
@@ -183,16 +184,16 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   public void initCustomModel() {
     if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
-          parent.getBlock().getRegistryName().getResourceDomain() + ":blocks/" + parent.getBlock().getRegistryName().getResourcePath());
+          parent.getBlock().getRegistryName().getNamespace() + ":blocks/" + parent.getBlock().getRegistryName().getPath());
       if (isDouble) {
-        CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + getRegistryName().getResourcePath()),
+        CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + getRegistryName().getPath()),
             new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));
-        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#handlers"),
+        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + getRegistryName().getPath() + "#handlers"),
             new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));
       } else {
-        CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":models/block/" + getRegistryName().getResourcePath()),
+        CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + getRegistryName().getPath()),
             new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getResourceDomain() + ":" + getRegistryName().getResourcePath() + "#handlers"),
+        CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + getRegistryName().getPath() + "#handlers"),
             new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       }
     }
@@ -215,7 +216,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   @Override
   @SideOnly(Side.CLIENT)
   @Nonnull
-  public BlockRenderLayer getBlockLayer() {
+  public BlockRenderLayer getRenderLayer() {
     return this.layer;
   }
 
@@ -248,8 +249,8 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
 
   @Override
   @Nonnull
-  public String getUnlocalizedName(int meta) {
-    return super.getUnlocalizedName();
+  public String getTranslationKey(int meta) {
+    return super.getTranslationKey();
   }
 
   @Override

@@ -18,7 +18,7 @@ public class ItemFoodBase extends ItemFood implements IModeledObject, ICustomMod
 
   public ItemFoodBase(@Nonnull String name, int amount, float saturation, boolean isWolfFood) {
     super(amount, saturation, isWolfFood);
-    setUnlocalizedName(name);
+    setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
@@ -40,7 +40,7 @@ public class ItemFoodBase extends ItemFood implements IModeledObject, ICustomMod
   public void initCustomModel() {
     if (this.hasCustomModel) {
       CustomModelLoader.itemmodels.put(getRegistryName(),
-          new CustomModelItem(false, new ResourceLocation(getRegistryName().getResourceDomain() + ":items/" + getRegistryName().getResourcePath())));
+          new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
     }
   }
 }
