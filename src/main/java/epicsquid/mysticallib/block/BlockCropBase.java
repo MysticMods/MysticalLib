@@ -52,7 +52,6 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
 
   @Override
   public void initModel(){
-    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName().toString(),"inventory"));
   }
 
   /**
