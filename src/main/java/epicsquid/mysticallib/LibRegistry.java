@@ -163,7 +163,6 @@ public class LibRegistry {
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
   public void registerSounds(@Nonnull RegistryEvent.Register<SoundEvent> event) {
     for (SoundEvent s: sounds) {
       event.getRegistry().register(s);
