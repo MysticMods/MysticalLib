@@ -1,13 +1,11 @@
 package epicsquid.mysticallib.block;
 
 import epicsquid.mysticallib.LibRegistry;
-import epicsquid.mysticallib.model.CustomModelBlock;
-import epicsquid.mysticallib.model.CustomModelLoader;
-import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -29,8 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
-public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
+public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock, IModeledObject {
   private final @Nonnull
   Item itemBlock;
   public List<ItemStack> drops = null;
@@ -41,8 +37,8 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   private Block parent;
   public String name = "";
 
-  public BlockDoorBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
-    super(base.getDefaultState().getMaterial());
+  public BlockPressurePlateBase(@Nonnull Block base, @Nonnull BlockPressurePlate.Sensitivity sensitivity, @Nonnull SoundType type, float hardness, @Nonnull String name) {
+    super(base.getDefaultState().getMaterial(), sensitivity);
     this.parent = base;
     this.name = name;
     setCreativeTab(null);
@@ -53,42 +49,42 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
     setHardness(hardness);
     setOpacity(false);
     this.fullBlock = false;
-    itemBlock = new ItemDoor(this).setTranslationKey(name).setRegistryName(LibRegistry.getActiveModid(), name);
+    itemBlock = new ItemBlock(this).setTranslationKey(name).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
   @Nonnull
-  public BlockDoorBase setFlammable(boolean flammable) {
+  public BlockPressurePlateBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;
   }
 
   @Override
   @Nonnull
-  public BlockDoorBase setResistance(float resistance) {
+  public BlockPressurePlateBase setResistance(float resistance) {
     super.setResistance(resistance);
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setModelCustom(boolean custom) {
+  public BlockPressurePlateBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setHarvestReqs(String tool, int level) {
+  public BlockPressurePlateBase setHarvestReqs(String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setOpacity(boolean isOpaque) {
+  public BlockPressurePlateBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setLayer(@Nonnull BlockRenderLayer layer) {
+  public BlockPressurePlateBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
@@ -154,6 +150,6 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
 
   @Override
   public void initModel() {
-     ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
   }
 }

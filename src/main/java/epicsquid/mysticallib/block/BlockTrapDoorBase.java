@@ -1,13 +1,12 @@
 package epicsquid.mysticallib.block;
 
 import epicsquid.mysticallib.LibRegistry;
-import epicsquid.mysticallib.model.CustomModelBlock;
-import epicsquid.mysticallib.model.CustomModelLoader;
-import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -18,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -27,10 +25,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
-@SuppressWarnings("deprecation")
-public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
+public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeledObject {
   private final @Nonnull
   Item itemBlock;
   public List<ItemStack> drops = null;
@@ -41,7 +39,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   private Block parent;
   public String name = "";
 
-  public BlockDoorBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
+  public BlockTrapDoorBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base.getDefaultState().getMaterial());
     this.parent = base;
     this.name = name;
@@ -51,44 +49,49 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
     setSoundType(type);
     setLightOpacity(0);
     setHardness(hardness);
-    setOpacity(false);
     this.fullBlock = false;
-    itemBlock = new ItemDoor(this).setTranslationKey(name).setRegistryName(LibRegistry.getActiveModid(), name);
+    itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
+  }
+
+  @Nullable
+  @Override
+  public Item getItemBlock() {
+    return itemBlock;
   }
 
   @Nonnull
-  public BlockDoorBase setFlammable(boolean flammable) {
+  public BlockTrapDoorBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;
   }
 
   @Override
   @Nonnull
-  public BlockDoorBase setResistance(float resistance) {
+  public BlockTrapDoorBase setResistance(float resistance) {
     super.setResistance(resistance);
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setModelCustom(boolean custom) {
+  public BlockTrapDoorBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setHarvestReqs(String tool, int level) {
+  public BlockTrapDoorBase setHarvestReqs(String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setOpacity(boolean isOpaque) {
+  public BlockTrapDoorBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
   @Nonnull
-  public BlockDoorBase setLayer(@Nonnull BlockRenderLayer layer) {
+  public BlockTrapDoorBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
@@ -109,7 +112,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
 
   @Override
   public boolean canPlaceTorchOnTop(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
-    return true;
+    return false;
   }
 
   @Override
@@ -134,12 +137,6 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   @Nonnull
   public BlockRenderLayer getRenderLayer() {
     return this.layer;
-  }
-
-  @Override
-  @Nonnull
-  public Item getItemBlock() {
-    return itemBlock;
   }
 
   @Override
