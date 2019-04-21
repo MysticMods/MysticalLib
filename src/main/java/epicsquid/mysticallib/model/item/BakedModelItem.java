@@ -35,6 +35,7 @@ public class BakedModelItem implements IBakedModel {
   protected List<TextureAtlasSprite> layers = new ArrayList<>();
   protected CustomModelItem model;
   protected @Nonnull List<BakedQuad> layerQuads = new ArrayList<>();
+  protected TextureAtlasSprite particle = null;
 
   public BakedModelItem(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
       @Nonnull CustomModelItem model) {
@@ -46,6 +47,9 @@ public class BakedModelItem implements IBakedModel {
       layers.add(getter.apply(model.textures.get("layer" + i)));
       layerQuads.addAll(ItemLayerModel.getQuadsForSprite(i, layers.get(i), format, Optional.empty()));
       i++;
+    }
+    if (model.textures.containsKey("particle")) {
+      particle = getter.apply(model.textures.get("particle"));
     }
   }
 
@@ -73,7 +77,7 @@ public class BakedModelItem implements IBakedModel {
   @Override
   @Nonnull
   public TextureAtlasSprite getParticleTexture() {
-    return null;
+    return particle;
   }
 
   @Override
