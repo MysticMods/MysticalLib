@@ -45,9 +45,8 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
     this.name = name;
     setCreativeTab(null);
     setTranslationKey(name);
-    setRegistryName(name);
+    setRegistryName(LibRegistry.getActiveModid(), name);
     setSoundType(type);
-    setLightOpacity(0);
     setHardness(hardness);
     this.fullBlock = false;
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);

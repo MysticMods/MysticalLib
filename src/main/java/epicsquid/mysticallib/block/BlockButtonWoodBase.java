@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -25,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BlockButtonBase extends BlockButtonWood implements IBlock, IModeledObject {
+public class BlockButtonWoodBase extends BlockButtonWood implements IBlock, IModeledObject {
   private final @Nonnull
   Item itemBlock;
   public List<ItemStack> drops = null;
@@ -36,13 +35,13 @@ public class BlockButtonBase extends BlockButtonWood implements IBlock, IModeled
   private Block parent;
   public String name = "";
 
-  public BlockButtonBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
+  public BlockButtonWoodBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super();
     this.parent = base;
     this.name = name;
     setCreativeTab(null);
     setTranslationKey(name);
-    setRegistryName(name);
+    setRegistryName(LibRegistry.getActiveModid(), name);
     setSoundType(type);
     setLightOpacity(0);
     setHardness(hardness);
@@ -52,38 +51,38 @@ public class BlockButtonBase extends BlockButtonWood implements IBlock, IModeled
   }
 
   @Nonnull
-  public BlockButtonBase setFlammable(boolean flammable) {
+  public BlockButtonWoodBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;
   }
 
   @Override
   @Nonnull
-  public BlockButtonBase setResistance(float resistance) {
+  public BlockButtonWoodBase setResistance(float resistance) {
     super.setResistance(resistance);
     return this;
   }
 
   @Nonnull
-  public BlockButtonBase setModelCustom(boolean custom) {
+  public BlockButtonWoodBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
   @Nonnull
-  public BlockButtonBase setHarvestReqs(String tool, int level) {
+  public BlockButtonWoodBase setHarvestReqs(String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
   @Nonnull
-  public BlockButtonBase setOpacity(boolean isOpaque) {
+  public BlockButtonWoodBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
   @Nonnull
-  public BlockButtonBase setLayer(@Nonnull BlockRenderLayer layer) {
+  public BlockButtonWoodBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }

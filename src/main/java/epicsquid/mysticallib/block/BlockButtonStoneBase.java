@@ -3,15 +3,14 @@ package epicsquid.mysticallib.block;
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPressurePlate;
+import net.minecraft.block.BlockButtonStone;
+import net.minecraft.block.BlockButtonWood;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -26,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock, IModeledObject {
+public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IModeledObject {
   private final @Nonnull
   Item itemBlock;
   public List<ItemStack> drops = null;
@@ -37,8 +36,8 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   private Block parent;
   public String name = "";
 
-  public BlockPressurePlateBase(@Nonnull Block base, @Nonnull BlockPressurePlate.Sensitivity sensitivity, @Nonnull SoundType type, float hardness, @Nonnull String name) {
-    super(base.getDefaultState().getMaterial(), sensitivity);
+  public BlockButtonStoneBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
+    super();
     this.parent = base;
     this.name = name;
     setCreativeTab(null);
@@ -53,38 +52,38 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   }
 
   @Nonnull
-  public BlockPressurePlateBase setFlammable(boolean flammable) {
+  public BlockButtonStoneBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;
   }
 
   @Override
   @Nonnull
-  public BlockPressurePlateBase setResistance(float resistance) {
+  public BlockButtonStoneBase setResistance(float resistance) {
     super.setResistance(resistance);
     return this;
   }
 
   @Nonnull
-  public BlockPressurePlateBase setModelCustom(boolean custom) {
+  public BlockButtonStoneBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
   @Nonnull
-  public BlockPressurePlateBase setHarvestReqs(String tool, int level) {
+  public BlockButtonStoneBase setHarvestReqs(String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
   @Nonnull
-  public BlockPressurePlateBase setOpacity(boolean isOpaque) {
+  public BlockButtonStoneBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
   @Nonnull
-  public BlockPressurePlateBase setLayer(@Nonnull BlockRenderLayer layer) {
+  public BlockButtonStoneBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
