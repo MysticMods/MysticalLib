@@ -1,28 +1,29 @@
 package epicsquid.mysticallib.block;
 
 import epicsquid.mysticallib.LibRegistry;
-import epicsquid.mysticallib.model.CustomModelBlock;
-import epicsquid.mysticallib.model.CustomModelLoader;
-import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.model.block.BakedModelBlock;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockSapling;
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,84 +34,55 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
-@SuppressWarnings("deprecation")
-public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
+public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObject, IGrowable {
   private final @Nonnull
   Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
-  private boolean noCull = true;
+  private AxisAlignedBB box;
+  // By default the blocks are made of wood and therefore flammable
   private boolean isFlammable = false;
-  private Supplier<ItemStack> sapling = null;
-  private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
-  private BlockRenderLayer layer = BlockRenderLayer.CUTOUT_MIPPED;
-  private int saplingChance;
+  private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
+  private Supplier<WorldGenAbstractTree> treeGenerator = null;
   public @Nonnull
   String name;
 
-  public BlockLeavesBase(float hardness, @Nonnull String name, Supplier<ItemStack> sapling, int saplingChance) {
+  public BlockSaplingBase(@Nonnull String name, Supplier<WorldGenAbstractTree> treeGenerator) {
     super();
     this.name = name;
-    this.sapling = sapling;
-    this.saplingChance = saplingChance;
+    this.treeGenerator = treeGenerator;
+    setBox(new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D));
     setTranslationKey(name);
+    setSoundType(SoundType.PLANT);
     setRegistryName(LibRegistry.getActiveModid(), name);
-    setHardness(hardness);
+    setLightOpacity(0);
+    setOpacity(false);
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
-  protected BlockStateContainer createBlockState() {
-    return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
-  }
-
   @Nonnull
-  public BlockLeavesBase setFlammable(boolean flammable) {
+  public BlockSaplingBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
     return this;
   }
 
   @Override
   @Nonnull
-  public BlockLeavesBase setResistance(float resistance) {
+  public BlockSaplingBase setResistance(float resistance) {
     super.setResistance(resistance);
     return this;
   }
 
   @Nonnull
-  public BlockLeavesBase setDrops(@Nonnull List<ItemStack> drops) {
+  public BlockSaplingBase setDrops(@Nonnull List<ItemStack> drops) {
     this.drops = drops;
     return this;
   }
 
-  @Override
-  protected int getSaplingDropChance(IBlockState state) {
-    return saplingChance;
-  }
-
-  @Override
-  public void getDrops(net.minecraft.util.NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    Random rand = world instanceof World ? ((World) world).rand : new Random();
-    int chance = getSaplingDropChance(state);
-
-    if (fortune > 0) {
-      chance -= 2 << fortune;
-      if (chance < 10) chance = 10;
-    }
-
-    if (rand.nextInt(chance) == 0) {
-      if (sapling != null) {
-        ItemStack sap = sapling.get();
-        if (!sap.isEmpty()) {
-          drops.add(sap);
-        }
-      }
-    }
-  }
-
   @Nonnull
-  public BlockLeavesBase setBox(@Nonnull AxisAlignedBB box) {
+  public BlockSaplingBase setBox(@Nonnull AxisAlignedBB box) {
     this.box = box;
     return this;
   }
@@ -122,42 +94,31 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   }
 
   @Nonnull
-  public BlockLeavesBase setNoCull(boolean noCull) {
-    this.noCull = noCull;
-    return this;
-  }
-
-  @Override
-  public boolean noCull() {
-    return noCull;
-  }
-
-  @Nonnull
-  public BlockLeavesBase setModelCustom(boolean custom) {
+  public BlockSaplingBase setModelCustom(boolean custom) {
     this.hasCustomModel = custom;
     return this;
   }
 
   @Nonnull
-  public BlockLeavesBase setHarvestReqs(@Nonnull String tool, int level) {
+  public BlockSaplingBase setHarvestReqs(@Nonnull String tool, int level) {
     setHarvestLevel(tool, level);
     return this;
   }
 
   @Nonnull
-  public BlockLeavesBase setOpacity(boolean isOpaque) {
+  public BlockSaplingBase setOpacity(boolean isOpaque) {
     this.isOpaque = isOpaque;
     return this;
   }
 
   @Nonnull
-  public BlockLeavesBase setHasItem(boolean hasItem) {
+  public BlockSaplingBase setHasItem(boolean hasItem) {
     this.hasItems = hasItem;
     return this;
   }
 
   @SideOnly(Side.CLIENT)
-  public BlockLeavesBase setLayer(@Nonnull BlockRenderLayer layer) {
+  public BlockSaplingBase setLayer(@Nonnull BlockRenderLayer layer) {
     this.layer = layer;
     return this;
   }
@@ -173,7 +134,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
 
   @Override
   public boolean isFullCube(@Nonnull IBlockState state) {
-    return isOpaque;
+    return false;
   }
 
   @Override
@@ -190,26 +151,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   }
 
   @Override
-  @SideOnly(Side.CLIENT)
-  public void initCustomModel() {
-    if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
-      if (getParentState() != null) {
-        defaultTex = new ResourceLocation(
-            getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
-      }
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-    }
-  }
-
-  @Override
   public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
-    if (hasItems) {
-      super.getSubBlocks(tab, items);
-    }
+    items.add(new ItemStack(this));
   }
 
   @Override
@@ -217,11 +160,6 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   @Nonnull
   public BlockRenderLayer getRenderLayer() {
     return this.layer;
-  }
-
-  @Override
-  public BlockPlanks.EnumType getWoodType(int meta) {
-    return null;
   }
 
   @Override
@@ -262,29 +200,69 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     return BakedModelBlock.class;
   }
 
-  @Nonnull
+  public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
+    WorldGenerator worldgenerator = treeGenerator.get();
+    IBlockState iblockstate2 = Blocks.AIR.getDefaultState();
+    worldIn.setBlockState(pos, iblockstate2, 4);
+    if (!worldgenerator.generate(worldIn, rand, pos)) {
+      worldIn.setBlockState(pos, state, 4);
+    }
+  }
+
   @Override
-  public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
-    return NonNullList.withSize(1, new ItemStack(this, 1));
+  public int damageDropped(IBlockState state) {
+    return 0;
+  }
+
+  @Override
+  public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    if (!worldIn.isRemote) {
+      super.updateTick(worldIn, pos, state, rand);
+
+      if (!worldIn.isAreaLoaded(pos, 1))
+        return;
+      if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
+        this.grow(worldIn, pos, state, rand);
+      }
+    }
+  }
+
+  public void grow(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    if (state.getValue(BlockSapling.STAGE) == 0) {
+      worldIn.setBlockState(pos, state.cycleProperty(BlockSapling.STAGE), 4);
+    } else {
+      this.generateTree(worldIn, pos, state, rand);
+    }
+  }
+
+  @Override
+  public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+    return true;
+  }
+
+  @Override
+  public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+    return (double) worldIn.rand.nextFloat() < 0.45D;
+  }
+
+  @Override
+  public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+    this.grow(worldIn, pos, state, rand);
+  }
+
+  @Override
+  protected BlockStateContainer createBlockState() {
+    return new BlockStateContainer(this, BlockSapling.STAGE);
   }
 
   @Override
   public IBlockState getStateFromMeta(int meta) {
-    return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
+    return this.getDefaultState().withProperty(BlockSapling.STAGE, meta);
   }
 
   @Override
   public int getMetaFromState(IBlockState state) {
-    int i = 0;
-
-    if (!state.getValue(DECAYABLE)) {
-      i |= 4;
-    }
-
-    if (state.getValue(CHECK_DECAY)) {
-      i |= 8;
-    }
-
-    return i;
+    return state.getValue(BlockSapling.STAGE);
   }
 }
