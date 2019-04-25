@@ -8,6 +8,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
@@ -145,9 +146,9 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
   }
 
   @Nonnull
-  @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    return this.itemBlock;
+  public Item getItemDropped(IBlockState state, Random rand, int fortune)
+  {
+    return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.AIR : itemBlock;
   }
 
   @Override
