@@ -89,6 +89,7 @@ public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IM
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public boolean isOpaqueCube(@Nonnull IBlockState state) {
     return isOpaque;
   }
@@ -98,6 +99,7 @@ public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IM
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
   }
@@ -138,6 +140,7 @@ public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IM
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
     return new ItemStack(itemBlock);
   }

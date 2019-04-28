@@ -89,6 +89,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
 
   @Override
   @Nonnull
+  @SuppressWarnings("deprecation")
   public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     return box;
   }
@@ -124,6 +125,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public boolean isOpaqueCube(@Nonnull IBlockState state) {
     return isOpaque;
   }
@@ -133,6 +135,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public boolean isFullCube(@Nonnull IBlockState state) {
     return false;
   }
@@ -257,6 +260,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(BlockSapling.STAGE, meta);
   }

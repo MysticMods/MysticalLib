@@ -99,6 +99,7 @@ public class BlockLadderBase extends BlockLadder implements IBlock, IModeledObje
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
     return new ItemStack(itemBlock);
   }
