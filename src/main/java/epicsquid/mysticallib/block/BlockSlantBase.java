@@ -15,6 +15,7 @@ import epicsquid.mysticallib.model.block.BakedModelSlant;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -55,6 +56,30 @@ public class BlockSlantBase extends BlockBase {
     this.fullBlock = false;
     this.parent = parent;
     setModelCustom(true);
+  }
+
+  @Override
+  @Nonnull
+  public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+    switch (state.getValue(VERT)) {
+    case 0:
+      return !(face == EnumFacing.UP) && !(face.getOpposite().getIndex() == state.getValue(DIR) + 2) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+    case 1:
+      switch (state.getValue(DIR)) {
+      case 0:
+        return !(face == EnumFacing.EAST || face == EnumFacing.SOUTH) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+      case 1:
+        return !(face == EnumFacing.WEST || face == EnumFacing.SOUTH) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+      case 2:
+        return !(face == EnumFacing.WEST || face == EnumFacing.NORTH) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+      case 3:
+        return !(face == EnumFacing.EAST || face == EnumFacing.NORTH) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+      }
+      break;
+    case 2:
+      return !(face == EnumFacing.DOWN) && !(face.getOpposite().getIndex() == state.getValue(DIR) + 2) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
+    }
+    return BlockFaceShape.SOLID;
   }
 
   @Override
