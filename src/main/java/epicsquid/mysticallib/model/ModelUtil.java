@@ -345,7 +345,7 @@ public class ModelUtil {
       uv = new Vec4f[] { new Vec4f((float) z * 16f, (float) -y * 16f + (16f - (float) (h) * 16f), (float) l * 16f, (float) h * 16f),
           new Vec4f((16f - (float) l * 16f) - (float) z * 16f, (float) -y * 16f + (16f - (float) (h) * 16f), (float) l * 16f, (float) h * 16f),
           new Vec4f((float) (x * 16f), (float) MathUtil.nclamp(z * 16f, 16f), (float) w * 16f, (float) l * 16f),
-          new Vec4f((float) (x * 16f), (float) MathUtil.nclamp(l * 16f - z * 16f, 16f), (float) w * 16f, (float) l * 16f),
+          new Vec4f((float) (x * 16f), (float) MathUtil.nclamp(z * 16f, 16f), (float) w * 16f, (float) l * 16f),
           new Vec4f((16f - (float) w * 16f) - (float) x * 16f, (float) -y * 16f + (16f - (float) (h) * 16f), (float) w * 16f, (float) h * 16f),
           new Vec4f((float) x * 16f, (float) -y * 16f + (16f - (float) (h) * 16f), (float) w * 16f, (float) h * 16f), };
     }
