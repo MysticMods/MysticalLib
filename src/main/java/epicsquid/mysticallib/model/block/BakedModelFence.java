@@ -30,15 +30,15 @@ public class BakedModelFence extends BakedModelBlock {
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     post_right = makePostCube(format, 0, 0, 0.375, 0.25, 1, 0.25, null, texes, 0);
     post_left = makePostCube(format, 0.75, 0, 0.375, 0.25, 1, 0.25, null, texes, 0);
-    north = ModelUtil.makeCube(format, 0.4375, 0.375, 0, 0.125, 0.1875, 0.5, null, texes, 0);
-    south = ModelUtil.makeCube(format, 0.4375, 0.375, 0.5, 0.125, 0.1875, 0.5, null, texes, 0);
-    west = ModelUtil.makeCube(format, 0, 0.375, 0.4375, 0.5, 0.1875, 0.125, null, texes, 0);
-    east = ModelUtil.makeCube(format, 0.5, 0.375, 0.4375, 0.5, 0.1875, 0.125, null, texes, 0);
+    north = ModelUtil.makeCube(format, 0.4375, 0.375, 0, 0.125, 0.1875, 0.375, null, texes, 0);
+    south = ModelUtil.makeCube(format, 0.4375, 0.375, 0.625, 0.125, 0.1875, 0.375, null, texes, 0);
+    west = ModelUtil.makeCube(format, 0, 0.375, 0.4375, 0.375, 0.1875, 0.125, null, texes, 0);
+    east = ModelUtil.makeCube(format, 0.625, 0.375, 0.4375, 0.375, 0.1875, 0.125, null, texes, 0);
 
-    north_top = ModelUtil.makeCube(format, 0.4375, 0.75, 0, 0.125, 0.1875, 0.5, null, texes, 0);
-    south_top = ModelUtil.makeCube(format, 0.4375, 0.75, 0.5, 0.125, 0.1875, 0.5, null, texes, 0);
-    west_top = ModelUtil.makeCube(format, 0, 0.75, 0.4375, 0.5, 0.1875, 0.125, null, texes, 0);
-    east_top = ModelUtil.makeCube(format, 0.5, 0.75, 0.4375, 0.5, 0.1875, 0.125, null, texes, 0);
+    north_top = ModelUtil.makeCube(format, 0.4375, 0.75, 0, 0.125, 0.1875, 0.375, null, texes, 0);
+    south_top = ModelUtil.makeCube(format, 0.4375, 0.75, 0.625, 0.125, 0.1875, 0.375, null, texes, 0);
+    west_top = ModelUtil.makeCube(format, 0, 0.75, 0.4375, 0.375, 0.1875, 0.125, null, texes, 0);
+    east_top = ModelUtil.makeCube(format, 0.625, 0.75, 0.4375, 0.375, 0.1875, 0.125, null, texes, 0);
 
     post = makePostCube(format, 0.375, 0, 0.375, 0.25, 1, 0.25, null, texes, 0);
   }
