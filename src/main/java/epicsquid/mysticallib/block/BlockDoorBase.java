@@ -1,7 +1,13 @@
 package epicsquid.mysticallib.block;
 
 import epicsquid.mysticallib.LibRegistry;
+import epicsquid.mysticallib.model.CustomModelBlock;
+import epicsquid.mysticallib.model.CustomModelLoader;
+import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.model.block.BakedModelBlock;
+import epicsquid.mysticallib.model.block.BakedModelDoor;
+import epicsquid.mysticallib.model.block.BakedModelTrapDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -15,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -27,7 +34,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
+public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, ICustomModeledObject {
   private final @Nonnull
   Item itemBlock;
   public List<ItemStack> drops = null;
@@ -164,6 +171,31 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject {
 
   @Override
   public void initModel() {
-     ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+    if (hasCustomModel) {
+      ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
+    }
+    if (!hasCustomModel) {
+      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
+    } else {
+      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
+    }
+  }
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public void initCustomModel() {
+    if (hasCustomModel) {
+      ResourceLocation defaultTex = new ResourceLocation(
+          parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
+      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
+          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+    }
+  }
+
+  @Nonnull
+  protected Class<? extends BakedModelBlock> getModelClass() {
+    return BakedModelDoor.class;
   }
 }
