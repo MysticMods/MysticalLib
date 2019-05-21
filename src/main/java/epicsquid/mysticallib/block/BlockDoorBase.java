@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.block;
 
 import epicsquid.mysticallib.LibRegistry;
+import epicsquid.mysticallib.item.ItemDoorBase;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
@@ -57,7 +58,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
     setHardness(hardness);
     setOpacity(false);
     this.fullBlock = false;
-    itemBlock = new ItemDoor(this).setTranslationKey(name).setRegistryName(LibRegistry.getActiveModid(), name);
+    itemBlock = new ItemDoorBase(this, name).setModelCustom(true);
   }
 
   @Nonnull
@@ -175,9 +176,9 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
     }
     if (!hasCustomModel) {
-      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
+      ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "handlers"));
     } else {
-      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
+      ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "handler"));
     }
   }
 
