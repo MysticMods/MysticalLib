@@ -29,8 +29,8 @@ public class BlockTEPressurePlateBase extends BlockPressurePlateBase implements 
   protected Class<? extends TileEntity> teClass;
   public static Set<Class<? extends TileEntity>> classes = new HashSet<>();
 
-  public BlockTEPressurePlateBase(@Nonnull Block block, BlockPressurePlate.Sensitivity sensitivity, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
-    super(block, sensitivity, type, hardness, name);
+  public BlockTEPressurePlateBase(@Nonnull Block block, PressurePlateType plateType, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
+    super(block, plateType, type, hardness, name);
     this.teClass = teClass;
     attemptRegistry(teClass);
   }

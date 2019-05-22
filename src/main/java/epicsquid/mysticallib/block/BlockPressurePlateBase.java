@@ -1,5 +1,9 @@
 package epicsquid.mysticallib.block;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -7,22 +11,25 @@ import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelPressurePlate;
-import epicsquid.mysticallib.model.block.BakedModelTrapDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPressurePlate;
+import net.minecraft.block.BlockPressurePlateWeighted;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -30,12 +37,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
 public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock, IModeledObject, ICustomModeledObject {
-  private final @Nonnull
-  Item itemBlock;
+  private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -44,8 +47,11 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   private Block parent;
   public String name = "";
 
-  public BlockPressurePlateBase(@Nonnull Block base, @Nonnull BlockPressurePlate.Sensitivity sensitivity, @Nonnull SoundType type, float hardness, @Nonnull String name) {
-    super(base.getDefaultState().getMaterial(), sensitivity);
+  private final PressurePlateType plateType;
+
+  public BlockPressurePlateBase(@Nonnull Block base, @Nonnull PressurePlateType plateType, @Nonnull SoundType type, float hardness,
+      @Nonnull String name) {
+    super(base.getDefaultState().getMaterial(), Sensitivity.EVERYTHING);
     this.parent = base;
     this.name = name;
     setCreativeTab(null);
@@ -57,6 +63,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
     setOpacity(false);
     this.fullBlock = false;
     itemBlock = new ItemBlock(this).setTranslationKey(name).setRegistryName(LibRegistry.getActiveModid(), name);
+    this.plateType = plateType;
   }
 
   @Nonnull
@@ -174,17 +181,53 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(
-          parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      ResourceLocation defaultTex = new ResourceLocation(parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
+      CustomModelLoader.blockmodels
+          .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
   }
 
+  @Override
+  protected int computeRedstoneStrength(@Nonnull World worldIn, @Nonnull BlockPos pos) {
+    AxisAlignedBB axisalignedbb = PRESSURE_AABB.offset(pos);
+    List<? extends Entity> list;
+
+    switch (this.plateType) {
+    case ALL:
+      list = worldIn.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
+      break;
+    case MOBS:
+      list = worldIn.<Entity>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
+      break;
+    case ITEMS:
+      list = worldIn.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
+      break;
+    case PLAYER:
+      list = worldIn.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
+      break;
+    default:
+      return 0;
+    }
+
+    if (!list.isEmpty()) {
+      for (Entity entity : list) {
+        if (!entity.doesEntityNotTriggerPressurePlate()) {
+          return 15;
+        }
+      }
+    }
+
+    return 0;
+  }
+
   @Nonnull
   protected Class<? extends BakedModelBlock> getModelClass() {
     return BakedModelPressurePlate.class;
+  }
+
+  public static enum PressurePlateType {
+    ALL, ITEMS, MOBS, PLAYER
   }
 }
