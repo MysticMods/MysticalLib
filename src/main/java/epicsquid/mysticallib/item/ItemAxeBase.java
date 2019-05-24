@@ -19,7 +19,7 @@ public class ItemAxeBase extends ItemAxe implements IModeledObject, ICustomModel
   private final int enchantability;
 
   public ItemAxeBase(ToolMaterial material, String name, int toolLevel, int maxDamage, int enchantability) {
-    super(material);
+    super(material, 8.0f, -3.0f);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setHarvestLevel("axe", toolLevel);
