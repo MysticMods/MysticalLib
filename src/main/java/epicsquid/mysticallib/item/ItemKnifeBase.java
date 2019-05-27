@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.item;
 
 import com.google.common.collect.Sets;
+import epicsquid.mysticallib.material.MaterialTypes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -15,11 +16,7 @@ public class ItemKnifeBase extends ItemToolBase {
   public static Set<Block> BLOCKS = Sets.newHashSet(Blocks.PLANKS, Blocks.LOG, Blocks.LOG2);
 
   public ItemKnifeBase(String name, ToolMaterial material) {
-    super(name, 2.0f, -1.6f, material, BLOCKS);
-  }
-
-  public ItemKnifeBase(String name, ToolMaterial material, Set<Block> blocks) {
-    super(name, 2.0f, -1.6f, material, blocks);
+    super(name, MaterialTypes.stats(material) != null ? MaterialTypes.stats(material).damage + 1.0f : 1.0f, MaterialTypes.stats(material) != null ? MaterialTypes.stats(material).speed : -2.0f, material, BLOCKS);
   }
 
   @Override
