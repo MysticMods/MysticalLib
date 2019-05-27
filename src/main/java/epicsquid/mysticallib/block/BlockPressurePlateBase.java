@@ -166,6 +166,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   }
 
   @Override
+  @SideOnly(Side.CLIENT)
   public void initModel() {
     if (hasCustomModel) {
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
