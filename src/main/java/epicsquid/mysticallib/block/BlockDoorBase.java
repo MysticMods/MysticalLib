@@ -171,6 +171,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
   }
 
   @Override
+  @SideOnly(Side.CLIENT)
   public void initModel() {
     if (hasCustomModel) {
       ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
