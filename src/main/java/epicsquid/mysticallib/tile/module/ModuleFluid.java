@@ -111,6 +111,7 @@ public class ModuleFluid implements IModule<IFluidHandler> {
                   tank.drainInternal(new FluidStack(fl.getFluid(), amount), true);
                   tile.markDirty();
                   adjTile.markDirty();
+                  // TODO: NO NO NO NO NO
                   LibEvents.markForUpdate(tile.getPos().offset(dir), adjTile);
                   break;
                 }

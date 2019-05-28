@@ -93,6 +93,7 @@ public class ModuleItem implements IModule<IItemHandler> {
 
   @Override
   public void onUpdate(@Nonnull BlockPos pos, @Nonnull World world) {
+    // TODO: PIPES????????????
     // Check all connecting tiles for pushing
     for (EnumFacing dir : EnumFacing.values()) {
       if (faceConfig.getIO(dir) == FaceIO.OUT && world.isRemote) {
@@ -113,6 +114,7 @@ public class ModuleItem implements IModule<IItemHandler> {
                     inventory.getStackInSlot(i).shrink(amountInserted);
                     tile.markDirty();
                     adjTile.markDirty();
+                    // TODO: NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
                     LibEvents.markForUpdate(tile.getPos().offset(dir), adjTile);
                   }
                 }

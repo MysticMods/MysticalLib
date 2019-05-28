@@ -52,15 +52,15 @@ public class TileBase extends TileEntity implements ITile {
     readFromNBT(pkt.getNbtCompound());
   }
 
-  @Override
-  public void markDirty() {
-    super.markDirty();
-    LibEvents.markForUpdate(getPos(), this);
-  }
-
   @Nonnull
   public static String getTileName(@Nonnull Class<? extends TileEntity> teClass) {
     return Util.getLowercaseClassName(teClass);
+  }
+
+  // I literally can't think of a better name for this function
+  public void updatePacketViaState () {
+ 		IBlockState state = world.getBlockState(getPos());
+		world.notifyBlockUpdate(getPos(), state, state, 8);
   }
 
   protected boolean dropItemInInventory(ItemStackHandler inventory, int slot){

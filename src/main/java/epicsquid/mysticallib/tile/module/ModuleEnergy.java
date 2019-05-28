@@ -94,6 +94,7 @@ public class ModuleEnergy implements IModule<IEnergyStorage> {
               battery.extractEnergy(amount, false);
               tile.markDirty();
               adjTile.markDirty();
+              // TODO: NOO!!! NO!!!! NO!!!
               LibEvents.markForUpdate(pos.offset(dir), adjTile);
             }
           }

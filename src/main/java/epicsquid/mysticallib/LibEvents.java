@@ -17,6 +17,7 @@ import epicsquid.mysticallib.proxy.ClientProxy;
 import epicsquid.mysticallib.tile.IDelayedTileRenderer;
 import epicsquid.mysticallib.util.FluidTextureUtil;
 import epicsquid.mysticallib.world.GenerationData;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -57,6 +58,7 @@ public class LibEvents {
     FluidTextureUtil.initTextures(event.getMap());
   }
 
+  // TODO: FIX THIS FIX THIS FIX THIS
   public static void markForUpdate(@Nonnull BlockPos pos, @Nonnull TileEntity tile) {
     if (!tile.getWorld().isRemote && acceptUpdates) {
       if (!toUpdate.containsKey(pos)) {
@@ -91,9 +93,13 @@ public class LibEvents {
   }
 
   @SubscribeEvent
+  // TODO: FIX THIS FIX THIS FIX THIS
   public void onServerTick(TickEvent.WorldTickEvent event) {
     if (!event.world.isRemote && event.phase == TickEvent.Phase.END) {
       NBTTagList list = new NBTTagList();
+      // TODO: WHY WOULD UPDATES... ARGH NETWORK PACKETS???
+      // TODO: JUST WHY
+      // TODO: ... I DON'T EVEN KNOW
       acceptUpdates = false;
       TileEntity[] updateArray = toUpdate.values().toArray(new TileEntity[0]);
       acceptUpdates = true;
@@ -109,6 +115,8 @@ public class LibEvents {
         NBTTagCompound tag = new NBTTagCompound();
         tag.setTag("data", list);
         // THIS ONE CAN STAY ~ Noob
+        // TODO: NO THIS REALLY CAN'T
+        // TODO: IT DOESN'T CHECK DIMENSIONS???
         PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(tag));
       }
       toUpdate.clear();
@@ -180,7 +188,7 @@ public class LibEvents {
         -TileEntityRendererDispatcher.staticPlayerZ, f, partialTicks);
   }
 
-  Map<Integer, Integer> dimCounts = new HashMap<>();
+  Int2IntOpenHashMap dimCounts = new Int2IntOpenHashMap();
 
   @SubscribeEvent
   public void onWorldTick(WorldTickEvent event) {
@@ -189,13 +197,13 @@ public class LibEvents {
       if (!dimCounts.containsKey(dim)) {
         dimCounts.put(dim, 0);
       } else {
-        int val = dimCounts.get(event.world.provider.getDimension());
+        int val = dimCounts.get(dim);
         if (val + 1 >= 20) {
-          dimCounts.replace(dim, 0);
+          dimCounts.put(dim, 0);
           GenerationData data = GenerationData.get(event.world);
           data.update(event.world);
         } else {
-          dimCounts.replace(dim, dimCounts.get(dim) + 1);
+          dimCounts.put(dim, val + 1);
         }
       }
 
@@ -225,21 +233,4 @@ public class LibEvents {
       }
     }
   }
-	
-	/*@SubscribeEvent
-	public void jump(PlayerServerInteractEvent.LeftClickAir event){
-		if (event.getPlayer() instanceof EntityPlayer && !event.getPlayer().world.isRemote){
-			for (int i = 0; i < 20; i ++){
-				NBTTagCompound tag = new NBTTagCompound();
-				tag.setInteger("lifetime", 40);
-				tag.setDouble("x", event.getPlayer().posX+event.getPlayer().getLookVec().x*(4.0f+i));
-				tag.setDouble("y", event.getPlayer().posY+event.getPlayer().getEyeHeight()+event.getPlayer().getLookVec().y*(4.0f+i));
-				tag.setDouble("z", event.getPlayer().posZ+event.getPlayer().getLookVec().z*(4.0f+i));
-				tag.setDouble("speed", 0.5f);
-				tag.setDouble("scale", 12f);
-				tag.setInteger("count", 40);
-				PacketHandler.sendToAllTracking(new MessageEffect(ELFXHandler.FX_BURST, tag), event.getPlayer());
-			}
-		}
-	}*/
 }
