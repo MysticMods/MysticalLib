@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.tile;
 
-import epicsquid.mysticallib.LibEvents;
 import epicsquid.mysticallib.network.MessageTEUpdate;
 import epicsquid.mysticallib.network.PacketHandler;
 import epicsquid.mysticallib.util.Util;
@@ -26,7 +25,7 @@ public class TileBase extends TileEntity implements ITile {
 
   @Override
   public boolean activate(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
-      @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
+                          @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     return false;
   }
 
@@ -57,13 +56,13 @@ public class TileBase extends TileEntity implements ITile {
     return Util.getLowercaseClassName(teClass);
   }
 
-  // I literally can't think of a better name for this function
-  public void updatePacketViaState () {
- 		IBlockState state = world.getBlockState(getPos());
-		world.notifyBlockUpdate(getPos(), state, state, 8);
+  // TODO: I literally can't think of a better name for this function
+  public void updatePacketViaState() {
+    IBlockState state = world.getBlockState(getPos());
+    world.notifyBlockUpdate(getPos(), state, state, 8);
   }
 
-  protected boolean dropItemInInventory(ItemStackHandler inventory, int slot){
+  protected boolean dropItemInInventory(ItemStackHandler inventory, int slot) {
     if (!inventory.getStackInSlot(slot).isEmpty()) {
       ItemStack extracted = inventory.extractItem(slot, 1, false);
       if (!world.isRemote) {
