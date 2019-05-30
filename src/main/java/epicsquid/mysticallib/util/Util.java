@@ -16,12 +16,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.Chunk.EnumCreateEntityType;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.IItemHandler;
 
 public class Util {
@@ -115,6 +119,34 @@ public class Util {
           world.spawnEntity(new EntityItem(world, x, y, z, inventory.getStackInSlot(i)));
         }
       }
+    }
+  }
+
+  public static void appendLoreTag (ItemStack stack, String ... lines) {
+    NBTTagCompound tag = stack.getTagCompound();
+    if (tag == null) {
+      tag = new NBTTagCompound();
+      stack.setTagCompound(tag);
+    }
+
+    NBTTagCompound display;
+    if (!tag.hasKey("display") || !(tag.getTag("display") instanceof NBTTagCompound)) {
+      display = new NBTTagCompound();
+      tag.setTag("display", display);
+    } else {
+      display = tag.getCompoundTag("display");
+    }
+
+    NBTTagList lore;
+    if (!display.hasKey("Lore") || !(display.getTag("Lore") instanceof NBTTagList)) {
+      lore = new NBTTagList();
+      display.setTag("Lore", lore);
+    } else {
+      lore = display.getTagList("Lore", Constants.NBT.TAG_STRING);
+    }
+
+    for (String string : lines) {
+      lore.appendTag(new NBTTagString(string));
     }
   }
 }

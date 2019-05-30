@@ -8,6 +8,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class InventoryUtil {
 
+  // TODO: This is disgusting and should burn in hell.
   public static int attemptInsert(@Nonnull ItemStack stack, @Nonnull IItemHandler inventory, boolean simulate) {
     int count = stack.getCount();
     ItemStack toInsert = stack.copy();
