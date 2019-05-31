@@ -69,7 +69,8 @@ public class TileBase extends TileEntity implements ITile {
         world.spawnEntity(new EntityItem(world, getPos().getX() + 0.5, getPos().getY() + 0.5, getPos().getZ() + 0.5, extracted));
       }
       markDirty();
-      PacketHandler.sendToAllTracking(new MessageTEUpdate(this.getUpdateTag()), this);
+      updatePacketViaState();
+      //PacketHandler.sendToAllTracking(new MessageTEUpdate(this.getUpdateTag()), this);
       return true;
     }
     return false;
