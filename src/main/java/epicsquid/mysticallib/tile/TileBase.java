@@ -1,7 +1,5 @@
 package epicsquid.mysticallib.tile;
 
-import epicsquid.mysticallib.network.MessageTEUpdate;
-import epicsquid.mysticallib.network.PacketHandler;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -57,6 +55,7 @@ public class TileBase extends TileEntity implements ITile {
   }
 
   // TODO: I literally can't think of a better name for this function
+  // It's not that bad, I like it :P      -Davoleo
   public void updatePacketViaState() {
     IBlockState state = world.getBlockState(getPos());
     world.notifyBlockUpdate(getPos(), state, state, 8);
