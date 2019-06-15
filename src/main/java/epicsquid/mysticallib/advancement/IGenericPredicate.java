@@ -5,8 +5,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 import javax.annotation.Nullable;
 
-public interface IGenericPlayerPredicate {
-    boolean test(EntityPlayerMP player);
+public interface IGenericPredicate<T> {
+    boolean test(EntityPlayerMP player, T condition);
 
-    IGenericPlayerPredicate deserialize(@Nullable JsonElement element);
+    IGenericPredicate<T> deserialize(@Nullable JsonElement element);
 }
