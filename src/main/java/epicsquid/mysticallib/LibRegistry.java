@@ -24,6 +24,7 @@ import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.particle.particles.ParticleFlame;
 import epicsquid.mysticallib.particle.particles.ParticleGlitter;
 import epicsquid.mysticallib.particle.particles.ParticleGlow;
+import epicsquid.mysticallib.particle.particles.ParticleLeafArc;
 import epicsquid.mysticallib.particle.particles.ParticleSmoke;
 import epicsquid.mysticallib.particle.particles.ParticleSpark;
 import epicsquid.mysticallib.util.Util;
@@ -265,7 +266,7 @@ public class LibRegistry {
     }
   }
 
-  public static String PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME;
+  public static String PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME, PARTICLE_LEAF;
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -276,5 +277,6 @@ public class LibRegistry {
     PARTICLE_GLITTER = ParticleRegistry
         .registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
     PARTICLE_FLAME = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleFlame.class, new ResourceLocation("mysticallib:particle/particle_fire"));
+    PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, new ResourceLocation("mysticallib:particle/particle_leaf1"));
   }
 }
