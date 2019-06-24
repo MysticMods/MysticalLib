@@ -38,6 +38,11 @@ public class ParticleBase extends Particle implements IParticle {
     lifetime--;
   }
 
+  protected void onUpdateNoMotion() {
+    super.onUpdate();
+    lifetime--;
+  }
+
   protected void setDead() {
     this.lifetime = 0;
   }

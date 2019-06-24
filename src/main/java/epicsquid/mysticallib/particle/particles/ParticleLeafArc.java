@@ -39,7 +39,7 @@ public class ParticleLeafArc extends ParticleBase {
 
   @Override
   public void onUpdate() {
-    super.onUpdate();
+    super.onUpdateNoMotion();
     this.prevParticleAngle = particleAngle;
     this.particleAngle += this.angularVelocity;
     float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
