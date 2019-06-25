@@ -26,6 +26,7 @@ public interface IMaster extends ITile {
 
   /**
    * Gets the location of slave tiles for the multiblock
+   *
    * @return The location of the slave tiles
    */
   @Nonnull
@@ -33,6 +34,7 @@ public interface IMaster extends ITile {
 
   /**
    * Adds a given pos a valid slave location
+   *
    * @param p Position of the slave tile
    */
   void addSlave(@Nonnull BlockPos p);

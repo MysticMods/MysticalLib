@@ -71,7 +71,7 @@ public class GenerationData extends WorldSavedData {
       }
     }
     for (GenerationNode n : toDelete) {
-        nodes.remove(n);
+      nodes.remove(n);
     }
     toDelete.clear();
   }

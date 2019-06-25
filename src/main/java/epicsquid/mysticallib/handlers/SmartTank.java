@@ -132,8 +132,8 @@ public class SmartTank extends FluidTank {
 
   @Override
   public boolean canFillFluidType(@Nullable FluidStack resource) {
-    return super.canFillFluidType(resource)
-        && (restriction == null || (resource != null && resource.getFluid() != null && SmartTank.areFluidsTheSame(restriction, resource.getFluid())));
+    return super.canFillFluidType(resource) && (restriction == null || (resource != null && resource.getFluid() != null && SmartTank
+        .areFluidsTheSame(restriction, resource.getFluid())));
   }
 
   public void setFluidAmount(int amount) {
@@ -170,7 +170,8 @@ public class SmartTank extends FluidTank {
   }
 
   @Override
-  public @Nullable FluidStack getFluid() {
+  public @Nullable
+  FluidStack getFluid() {
     if (fluid != null) {
       return fluid;
     } else if (restriction != null) {

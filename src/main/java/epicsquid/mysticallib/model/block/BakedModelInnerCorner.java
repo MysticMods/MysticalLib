@@ -25,8 +25,8 @@ public class BakedModelInnerCorner extends BakedModelBlock {
   private Segment segm_up_nxnz_1, segm_up_pxnz_1, segm_up_pxpz_1, segm_up_nxpz_1;
   private Segment segm_up_nxnz_2, segm_up_pxnz_2, segm_up_pxpz_2, segm_up_nxpz_2;
 
-  public BakedModelInnerCorner(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-      @Nonnull CustomModelBase model) {
+  public BakedModelInnerCorner(@Nonnull IModelState state, @Nonnull VertexFormat format,
+      @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     segm_down_nxnz_1 = ModelUtil
@@ -78,6 +78,7 @@ public class BakedModelInnerCorner extends BakedModelBlock {
         .makeSegm(format, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, new boolean[] { false, true, true, false, true, true }, texes,
             -1);
   }
+
   @Override
   @Nonnull
   public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {

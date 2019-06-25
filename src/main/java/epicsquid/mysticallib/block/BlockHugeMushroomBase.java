@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.block;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -9,8 +11,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Random;
-
 public class BlockHugeMushroomBase extends BlockBase {
   private Block smallBlock;
 
@@ -18,7 +18,7 @@ public class BlockHugeMushroomBase extends BlockBase {
     super(materialIn, type, hardness, name);
   }
 
-  public void setSmallBlock (Block smallBlockIn) {
+  public void setSmallBlock(Block smallBlockIn) {
     this.smallBlock = smallBlockIn;
   }
 

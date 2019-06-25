@@ -165,7 +165,7 @@ public class LibRegistry {
 
   @SubscribeEvent
   public void registerSounds(@Nonnull RegistryEvent.Register<SoundEvent> event) {
-    for (SoundEvent s: sounds) {
+    for (SoundEvent s : sounds) {
       event.getRegistry().register(s);
     }
   }

@@ -29,7 +29,7 @@ public class RegisterContentEvent extends Event {
     return block;
   }
 
-  public SoundEvent addSound (SoundEvent sound) {
+  public SoundEvent addSound(SoundEvent sound) {
     sounds.add(sound);
     return sound;
   }

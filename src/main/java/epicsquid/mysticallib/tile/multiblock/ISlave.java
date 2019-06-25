@@ -12,12 +12,14 @@ public interface ISlave extends ITile {
 
   /**
    * Sets the master tile location.
+   *
    * @param pos BlockPos of the master tile. Use null to remove the master.
    */
   void setMasterPos(@Nullable BlockPos pos);
 
   /**
    * Gets the location of the master tile.
+   *
    * @return The BlockPos of the master tile. Null if no master is set.
    */
   @Nullable

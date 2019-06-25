@@ -1,5 +1,10 @@
 package epicsquid.mysticallib.block;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -27,13 +32,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-
 public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeledObject, ICustomModeledObject {
-  private final @Nonnull
-  Item itemBlock;
+  private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -171,10 +171,9 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(
-          parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      ResourceLocation defaultTex = new ResourceLocation(parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
+      CustomModelLoader.blockmodels
+          .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }

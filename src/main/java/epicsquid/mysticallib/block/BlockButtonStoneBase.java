@@ -1,10 +1,13 @@
 package epicsquid.mysticallib.block;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockButtonStone;
-import net.minecraft.block.BlockButtonWood;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -22,12 +25,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-
 public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IModeledObject {
-  private final @Nonnull
-  Item itemBlock;
+  private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;

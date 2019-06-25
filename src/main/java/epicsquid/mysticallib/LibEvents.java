@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
-import epicsquid.mysticallib.gui.IHUDContainer;
-import epicsquid.mysticallib.network.MessageLeftClickEmpty;
 import epicsquid.mysticallib.network.MessageTEUpdate;
 import epicsquid.mysticallib.network.PacketHandler;
 import epicsquid.mysticallib.particle.ParticleRegistry;
@@ -25,18 +23,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
@@ -207,30 +200,6 @@ public class LibEvents {
         }
       }
 
-    }
-  }
-
-  @SubscribeEvent
-  public void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-    PacketHandler.INSTANCE.sendToServer(new MessageLeftClickEmpty(event.getEntityPlayer(), event.getHand(), event.getItemStack()));
-  }
-
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void onGameOverlayRender(RenderGameOverlayEvent.Post e) {
-    int w = e.getResolution().getScaledWidth();
-    int h = e.getResolution().getScaledHeight();
-    EntityPlayer player = Minecraft.getMinecraft().player;
-    World world = player.getEntityWorld();
-    RayTraceResult result = player.rayTrace(6.0, e.getPartialTicks());
-
-    if (result != null) {
-      if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
-        TileEntity tile = world.getTileEntity(result.getBlockPos());
-        if (tile instanceof IHUDContainer) {
-          ((IHUDContainer) tile).addHUD(w, h);
-        }
-      }
     }
   }
 }
