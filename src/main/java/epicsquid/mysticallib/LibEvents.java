@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
-import epicsquid.mysticallib.network.MessageTEUpdate;
-import epicsquid.mysticallib.network.PacketHandler;
 import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.proxy.ClientProxy;
 import epicsquid.mysticallib.tile.IDelayedTileRenderer;
@@ -23,8 +21,6 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -85,36 +81,36 @@ public class LibEvents {
     }
   }
 
-  @SubscribeEvent
-  // TODO: FIX THIS FIX THIS FIX THIS
-  public void onServerTick(TickEvent.WorldTickEvent event) {
-    if (!event.world.isRemote && event.phase == TickEvent.Phase.END) {
-      NBTTagList list = new NBTTagList();
-      // TODO: WHY WOULD UPDATES... ARGH NETWORK PACKETS???
-      // TODO: JUST WHY
-      // TODO: ... I DON'T EVEN KNOW
-      acceptUpdates = false;
-      TileEntity[] updateArray = toUpdate.values().toArray(new TileEntity[0]);
-      acceptUpdates = true;
-      for (Entry<BlockPos, TileEntity> e : overflow.entrySet()) {
-        toUpdate.put(e.getKey(), e.getValue());
-      }
-      overflow.clear();
-      for (int i = 0; i < updateArray.length; i++) {
-        TileEntity t = updateArray[i];
-        list.appendTag(t.getUpdateTag());
-      }
-      if (!list.isEmpty()) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setTag("data", list);
-        // THIS ONE CAN STAY ~ Noob
-        // TODO: NO THIS REALLY CAN'T
-        // TODO: IT DOESN'T CHECK DIMENSIONS???
-        PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(tag));
-      }
-      toUpdate.clear();
-    }
-  }
+//  @SubscribeEvent
+//  // TODO: FIX THIS FIX THIS FIX THIS
+//  public void onServerTick(TickEvent.WorldTickEvent event) {
+//    if (!event.world.isRemote && event.phase == TickEvent.Phase.END) {
+//      NBTTagList list = new NBTTagList();
+//      // TODO: WHY WOULD UPDATES... ARGH NETWORK PACKETS???
+//      // TODO: JUST WHY
+//      // TODO: ... I DON'T EVEN KNOW
+//      acceptUpdates = false;
+//      TileEntity[] updateArray = toUpdate.values().toArray(new TileEntity[0]);
+//      acceptUpdates = true;
+//      for (Entry<BlockPos, TileEntity> e : overflow.entrySet()) {
+//        toUpdate.put(e.getKey(), e.getValue());
+//      }
+//      overflow.clear();
+//      for (int i = 0; i < updateArray.length; i++) {
+//        TileEntity t = updateArray[i];
+//        list.appendTag(t.getUpdateTag());
+//      }
+//      if (!list.isEmpty()) {
+//        NBTTagCompound tag = new NBTTagCompound();
+//        tag.setTag("data", list);
+//        // THIS ONE CAN STAY ~ Noob
+//        // TODO: NO THIS REALLY CAN'T
+//        // TODO: IT DOESN'T CHECK DIMENSIONS???
+//        PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(tag));
+//      }
+//      toUpdate.clear();
+//    }
+//  }
 
   @SubscribeEvent
   @SideOnly(Side.CLIENT)

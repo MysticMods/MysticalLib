@@ -68,7 +68,6 @@ public class TileBase extends TileEntity implements ITile {
       }
       markDirty();
       updatePacketViaState();
-      //PacketHandler.sendToAllTracking(new MessageTEUpdate(this.getUpdateTag()), this);
       return true;
     }
     return false;
