@@ -81,37 +81,6 @@ public class LibEvents {
     }
   }
 
-//  @SubscribeEvent
-//  // TODO: FIX THIS FIX THIS FIX THIS
-//  public void onServerTick(TickEvent.WorldTickEvent event) {
-//    if (!event.world.isRemote && event.phase == TickEvent.Phase.END) {
-//      NBTTagList list = new NBTTagList();
-//      // TODO: WHY WOULD UPDATES... ARGH NETWORK PACKETS???
-//      // TODO: JUST WHY
-//      // TODO: ... I DON'T EVEN KNOW
-//      acceptUpdates = false;
-//      TileEntity[] updateArray = toUpdate.values().toArray(new TileEntity[0]);
-//      acceptUpdates = true;
-//      for (Entry<BlockPos, TileEntity> e : overflow.entrySet()) {
-//        toUpdate.put(e.getKey(), e.getValue());
-//      }
-//      overflow.clear();
-//      for (int i = 0; i < updateArray.length; i++) {
-//        TileEntity t = updateArray[i];
-//        list.appendTag(t.getUpdateTag());
-//      }
-//      if (!list.isEmpty()) {
-//        NBTTagCompound tag = new NBTTagCompound();
-//        tag.setTag("data", list);
-//        // THIS ONE CAN STAY ~ Noob
-//        // TODO: NO THIS REALLY CAN'T
-//        // TODO: IT DOESN'T CHECK DIMENSIONS???
-//        PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(tag));
-//      }
-//      toUpdate.clear();
-//    }
-//  }
-
   @SubscribeEvent
   @SideOnly(Side.CLIENT)
   public void onRenderAfterWorld(RenderWorldLastEvent event) {
