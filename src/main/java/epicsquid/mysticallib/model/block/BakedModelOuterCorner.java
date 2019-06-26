@@ -23,8 +23,8 @@ public class BakedModelOuterCorner extends BakedModelBlock {
   private Segment segm_down_nxnz, segm_down_pxnz, segm_down_pxpz, segm_down_nxpz;
   private Segment segm_up_nxnz, segm_up_pxnz, segm_up_pxpz, segm_up_nxpz;
 
-  public BakedModelOuterCorner(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-      @Nonnull CustomModelBase model) {
+  public BakedModelOuterCorner(@Nonnull IModelState state, @Nonnull VertexFormat format,
+      @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
     TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     segm_down_nxnz = ModelUtil.makeSegm(format, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, texes, -1);

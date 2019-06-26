@@ -22,7 +22,8 @@ public class GenerationNode {
     readFromNBT(tag);
   }
 
-  public GenerationNode(@Nonnull BlockPos pos, @Nonnull String structure, @Nonnull Rotation rotation, @Nonnull Mirror mirror, boolean replaceWithAir, boolean force) {
+  public GenerationNode(@Nonnull BlockPos pos, @Nonnull String structure, @Nonnull Rotation rotation, @Nonnull Mirror mirror, boolean replaceWithAir,
+      boolean force) {
     this.pos = pos;
     this.structure = structure;
     this.rotation = rotation;

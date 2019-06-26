@@ -7,12 +7,10 @@ import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.EnumPlantType;
 
 @SuppressWarnings("deprecation")
@@ -22,6 +20,7 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
 
   /**
    * Used for arbitrary crops
+   *
    * @param name Name of the crop
    */
   public BlockCropBase(@Nonnull String name, @Nonnull EnumPlantType plantType) {
@@ -46,12 +45,12 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
    */
   @Override
   @Nonnull
-  public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos){
-    return new AxisAlignedBB(0,0,0,1,0.125f*(state.getValue(this.AGE)+1),1);
+  public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
+    return new AxisAlignedBB(0, 0, 0, 1, 0.125f * (state.getValue(this.AGE) + 1), 1);
   }
 
   @Override
-  public void initModel(){
+  public void initModel() {
   }
 
   /**

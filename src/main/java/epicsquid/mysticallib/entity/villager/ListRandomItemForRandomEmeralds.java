@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.entity.villager;
 
+import java.util.Random;
+
 import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
@@ -8,13 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
-import java.util.Random;
-
 public class ListRandomItemForRandomEmeralds implements EntityVillager.ITradeList {
   public Item[] items;
   public EntityVillager.PriceInfo price;
 
-  public ListRandomItemForRandomEmeralds(EntityVillager.PriceInfo price, Item ... items) {
+  public ListRandomItemForRandomEmeralds(EntityVillager.PriceInfo price, Item... items) {
     this.items = items;
     this.price = price;
   }

@@ -1,6 +1,10 @@
 package epicsquid.mysticallib.block;
 
-import epicsquid.mysticallib.LibRegistry;
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.item.ItemDoorBase;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -8,7 +12,6 @@ import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelDoor;
-import epicsquid.mysticallib.model.block.BakedModelTrapDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
@@ -17,7 +20,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -30,14 +32,9 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-import java.util.Random;
-
 @SuppressWarnings("deprecation")
 public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, ICustomModeledObject {
-  private final @Nonnull
-  Item itemBlock;
+  private final @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -155,8 +152,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
 
   @Nonnull
   @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune)
-  {
+  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     return state.getValue(HALF) == BlockDoor.EnumDoorHalf.UPPER ? Items.AIR : itemBlock;
   }
 
@@ -187,10 +183,9 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(
-          parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      ResourceLocation defaultTex = new ResourceLocation(parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
+      CustomModelLoader.blockmodels
+          .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }

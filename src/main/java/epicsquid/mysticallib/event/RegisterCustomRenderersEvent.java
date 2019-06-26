@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-public class RegisterCustomRenderersEvent extends Event{
+public class RegisterCustomRenderersEvent extends Event {
 
   public RegisterCustomRenderersEvent() {
 

@@ -13,7 +13,6 @@ import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelPressurePlate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPressurePlate;
-import net.minecraft.block.BlockPressurePlateWeighted;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -49,8 +48,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
 
   private final PressurePlateType plateType;
 
-  public BlockPressurePlateBase(@Nonnull Block base, @Nonnull PressurePlateType plateType, @Nonnull SoundType type, float hardness,
-      @Nonnull String name) {
+  public BlockPressurePlateBase(@Nonnull Block base, @Nonnull PressurePlateType plateType, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base.getDefaultState().getMaterial(), Sensitivity.EVERYTHING);
     this.parent = base;
     this.name = name;

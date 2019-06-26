@@ -16,7 +16,8 @@ public class Cube {
   public Map<EnumFacing, BakedQuad> quads = new EnumMap<EnumFacing, BakedQuad>(EnumFacing.class);
   public List<BakedQuad> unculledQuads = new ArrayList<>();
 
-  public Cube(@Nonnull BakedQuad west, @Nonnull BakedQuad east, @Nonnull BakedQuad down, @Nonnull BakedQuad up, @Nonnull BakedQuad north, @Nonnull BakedQuad south) {
+  public Cube(@Nonnull BakedQuad west, @Nonnull BakedQuad east, @Nonnull BakedQuad down, @Nonnull BakedQuad up, @Nonnull BakedQuad north,
+      @Nonnull BakedQuad south) {
     quads.put(EnumFacing.WEST, west);
     quads.put(EnumFacing.EAST, east);
     quads.put(EnumFacing.DOWN, down);

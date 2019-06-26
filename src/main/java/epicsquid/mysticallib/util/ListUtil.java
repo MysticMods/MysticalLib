@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
@@ -65,7 +64,8 @@ public class ListUtil {
     List<ItemStack> actualInput = ingredients.stream().filter((i) -> i != null && !i.isEmpty()).sorted(stackComparator).collect(Collectors.toList());
     List<Ingredient> actualIngredients = selfIngredients.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
-    if (actualInput.size() != actualIngredients.size()) return false;
+    if (actualInput.size() != actualIngredients.size())
+      return false;
 
     IntOpenHashSet foundIngredients = new IntOpenHashSet();
     IntOpenHashSet usedItemStacks = new IntOpenHashSet();
@@ -75,7 +75,8 @@ public class ListUtil {
     for (int i = 0; i < actualIngredients.size(); i++) {
       ingredient = actualIngredients.get(i);
       for (int j = 0; j < actualInput.size(); j++) {
-        if (usedItemStacks.contains(j)) continue;
+        if (usedItemStacks.contains(j))
+          continue;
         if (ingredient.apply(actualInput.get(j))) {
           usedItemStacks.add(j);
           foundIngredients.add(i);

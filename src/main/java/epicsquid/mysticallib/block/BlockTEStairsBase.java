@@ -18,15 +18,16 @@ import net.minecraft.world.World;
 public class BlockTEStairsBase extends BlockStairsBase implements ITileEntityProvider {
   private Class<? extends TileEntity> teClass;
 
-  public BlockTEStairsBase(@Nonnull IBlockState state, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
+  public BlockTEStairsBase(@Nonnull IBlockState state, @Nonnull SoundType type, float hardness, @Nonnull String name,
+      @Nonnull Class<? extends TileEntity> teClass) {
     super(state, type, hardness, name);
     this.teClass = teClass;
     BlockTEBase.attemptRegistry(teClass);
   }
 
   @Override
-  public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand, @Nonnull EnumFacing face, float hitX, float hitY,
-      float hitZ) {
+  public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       return ((ITile) t).activate(world, pos, state, player, hand, face, hitX, hitY, hitZ);
