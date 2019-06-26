@@ -131,26 +131,4 @@ public class LibEvents {
     ((IDelayedEntityRenderer) render).renderLater(entityIn, -TileEntityRendererDispatcher.staticPlayerX, -TileEntityRendererDispatcher.staticPlayerY,
         -TileEntityRendererDispatcher.staticPlayerZ, f, partialTicks);
   }
-
-  Int2IntOpenHashMap dimCounts = new Int2IntOpenHashMap();
-
-  @SubscribeEvent
-  public void onWorldTick(WorldTickEvent event) {
-    if (event.phase == TickEvent.Phase.START) {
-      int dim = event.world.provider.getDimension();
-      if (!dimCounts.containsKey(dim)) {
-        dimCounts.put(dim, 0);
-      } else {
-        int val = dimCounts.get(dim);
-        if (val + 1 >= 20) {
-          dimCounts.put(dim, 0);
-          GenerationData data = GenerationData.get(event.world);
-          data.update(event.world);
-        } else {
-          dimCounts.put(dim, val + 1);
-        }
-      }
-
-    }
-  }
 }
