@@ -50,23 +50,6 @@ public class LibEvents {
     FluidTextureUtil.initTextures(event.getMap());
   }
 
-  // TODO: FIX THIS FIX THIS FIX THIS
-  public static void markForUpdate(@Nonnull BlockPos pos, @Nonnull TileEntity tile) {
-    if (!tile.getWorld().isRemote && acceptUpdates) {
-      if (!toUpdate.containsKey(pos)) {
-        toUpdate.put(pos, tile);
-      } else {
-        toUpdate.replace(pos, tile);
-      }
-    } else if (!tile.getWorld().isRemote) {
-      if (!overflow.containsKey(pos)) {
-        overflow.put(pos, tile);
-      } else {
-        overflow.replace(pos, tile);
-      }
-    }
-  }
-
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(TextureStitchEvent event) {
