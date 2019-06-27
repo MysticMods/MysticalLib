@@ -139,8 +139,8 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
     if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
           parent.getBlock().getRegistryName().getNamespace() + ":blocks/" + parent.getBlock().getRegistryName().getPath());
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      CustomModelLoader.blockmodels
+          .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }
@@ -150,7 +150,6 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   protected Class<? extends BakedModelBlock> getModelClass() {
     return BakedModelStairs.class;
   }
-
 
   @Override
   @SideOnly(Side.CLIENT)

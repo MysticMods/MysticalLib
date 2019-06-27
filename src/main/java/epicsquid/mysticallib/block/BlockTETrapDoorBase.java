@@ -10,10 +10,8 @@ import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -30,7 +28,8 @@ public class BlockTETrapDoorBase extends BlockTrapDoorBase implements ITileEntit
   protected Class<? extends TileEntity> teClass;
   public static Set<Class<? extends TileEntity>> classes = new HashSet<>();
 
-  public BlockTETrapDoorBase(@Nonnull Block block, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
+  public BlockTETrapDoorBase(@Nonnull Block block, @Nonnull SoundType type, float hardness, @Nonnull String name,
+      @Nonnull Class<? extends TileEntity> teClass) {
     super(block, type, hardness, name);
     this.teClass = teClass;
     attemptRegistry(teClass);

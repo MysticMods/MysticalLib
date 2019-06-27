@@ -46,8 +46,8 @@ public class ItemArrowBase extends ItemArrow implements IModeledObject, ICustomM
   @Override
   public void initCustomModel() {
     if (this.hasCustomModel) {
-      CustomModelLoader.itemmodels.put(getRegistryName(),
-              new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
+      CustomModelLoader.itemmodels
+          .put(getRegistryName(), new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
     }
   }
 }

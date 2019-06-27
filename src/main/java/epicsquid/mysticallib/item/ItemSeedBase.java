@@ -1,7 +1,6 @@
 package epicsquid.mysticallib.item;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.block.BlockCropBase;
@@ -35,6 +34,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
 
   /**
    * Creates a generic seed item with a given farmland and crop block
+   *
    * @param name Name of the seed item
    * @param crop Crop block to plant with the seed
    * @param base Block to grow the crop on
@@ -48,25 +48,20 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
     this.base = base;
   }
 
-  public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-  {
+  public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     ItemStack itemstack = player.getHeldItem(hand);
     net.minecraft.block.state.IBlockState state = worldIn.getBlockState(pos);
-    if (facing == EnumFacing.UP && player.canPlayerEdit(pos.offset(facing), facing, itemstack) && worldIn.isAirBlock(pos.up()) &&
-        (state.getBlock().canSustainPlant(state, worldIn, pos, EnumFacing.UP, this)))
-    {
+    if (facing == EnumFacing.UP && player.canPlayerEdit(pos.offset(facing), facing, itemstack) && worldIn.isAirBlock(pos.up()) && (state.getBlock()
+        .canSustainPlant(state, worldIn, pos, EnumFacing.UP, this))) {
       worldIn.setBlockState(pos.up(), crop.getDefaultState());
 
-      if (player instanceof EntityPlayerMP)
-      {
-        CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), itemstack);
+      if (player instanceof EntityPlayerMP) {
+        CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP) player, pos.up(), itemstack);
       }
 
       itemstack.shrink(1);
       return EnumActionResult.SUCCESS;
-    }
-    else
-    {
+    } else {
       return EnumActionResult.FAIL;
     }
   }
@@ -87,8 +82,8 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
   @Override
   public void initCustomModel() {
     if (this.hasCustomModel) {
-      CustomModelLoader.itemmodels.put(getRegistryName(),
-          new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
+      CustomModelLoader.itemmodels
+          .put(getRegistryName(), new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
     }
   }
 
@@ -97,6 +92,5 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
   public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
     return this.plantType;
   }
-
 
 }

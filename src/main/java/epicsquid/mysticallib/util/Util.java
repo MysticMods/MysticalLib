@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.BooleanSupplier;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -52,13 +50,17 @@ public class Util {
     return tiles;
   }
 
-  public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class <? extends T > classEntity, BlockPos pos, float xradius, float yradius, float zradius) {
-    return world.getEntitiesWithinAABB(classEntity, new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius,
-            pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius));
+  public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class<? extends T> classEntity, BlockPos pos, float xradius, float yradius,
+      float zradius) {
+    return world.getEntitiesWithinAABB(classEntity,
+        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius));
   }
 
-  public static List<EntityLiving> getEntitiesWithinRadius(World world, Predicate<Entity> comparison, BlockPos pos, float xradius, float yradius, float zradius) {
-    return world.getEntitiesWithinAABB(EntityLiving.class, new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius)).stream().filter(comparison).collect(Collectors.toList());
+  public static List<EntityLiving> getEntitiesWithinRadius(World world, Predicate<Entity> comparison, BlockPos pos, float xradius, float yradius,
+      float zradius) {
+    return world.getEntitiesWithinAABB(EntityLiving.class,
+        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius))
+        .stream().filter(comparison).collect(Collectors.toList());
   }
 
   public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Block... block) {
@@ -70,11 +72,11 @@ public class Util {
     return getBlocksWithinRadius(world, pos, xradius, yradius, zradius, (test) -> world.getBlockState(test).getBlock() == block);
   }
 
-  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Predicate<BlockPos> comparison){
+  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Predicate<BlockPos> comparison) {
     List<BlockPos> blockList = new ArrayList<>();
-    for(int x = (int) -xradius; x <= xradius; x++){
-      for(int z = (int) -zradius; z <= zradius; z++){
-        for(int y = (int) -yradius; y <= yradius; y++){
+    for (int x = (int) -xradius; x <= xradius; x++) {
+      for (int z = (int) -zradius; z <= zradius; z++) {
+        for (int y = (int) -yradius; y <= yradius; y++) {
           if (comparison.test(pos.add(x, y, z))) {
             blockList.add(pos.add(x, y, z));
           }
@@ -122,7 +124,7 @@ public class Util {
     }
   }
 
-  public static void appendLoreTag (ItemStack stack, String ... lines) {
+  public static void appendLoreTag(ItemStack stack, String... lines) {
     NBTTagCompound tag = stack.getTagCompound();
     if (tag == null) {
       tag = new NBTTagCompound();

@@ -12,7 +12,8 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public interface IOreGenerator extends IWorldGenerator {
 
-  default void generateOre(@Nonnull IBlockState ore, @Nonnull World world, @Nonnull Random random, int x, int z, int minY, int maxY, int size, int numberToGenerate) {
+  default void generateOre(@Nonnull IBlockState ore, @Nonnull World world, @Nonnull Random random, int x, int z, int minY, int maxY, int size,
+      int numberToGenerate) {
     for (int i = 0; i < numberToGenerate; i++) {
       BlockPos pos = new BlockPos(x * 16 + random.nextInt(16), random.nextInt(maxY - minY) + minY, z * 16 + random.nextInt(16));
       WorldGenMinable generator = new WorldGenMinable(ore, size);

@@ -61,7 +61,8 @@ public class StructureData implements IGeneratable {
   }
 
   @Override
-  public void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir, boolean force) {
+  public void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir,
+      boolean force) {
     calcDimensions();
     for (Entry<Vec3i, String> e : data.entrySet()) {
       Vec3i v = e.getKey();

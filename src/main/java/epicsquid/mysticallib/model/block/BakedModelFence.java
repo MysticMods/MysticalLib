@@ -84,8 +84,13 @@ public class BakedModelFence extends BakedModelBlock {
     }
   }
 
-  private Cube makePostCube(VertexFormat format, double x, double y, double z, double w, double h, double l, Vec4f[] uv, TextureAtlasSprite[] sprites, int tintIndex) {
-    uv = new Vec4f[]{new Vec4f((float)z * 16.0F, (float)(-y) * 16.0F + (16.0F - (float)h * 16.0F), (float)l * 16.0F, (float)h * 16.0F), new Vec4f(16.0F - (float)l * 16.0F - (float)z * 16.0F, (float)(-y) * 16.0F + (16.0F - (float)h * 16.0F), (float)l * 16.0F, (float)h * 16.0F), new Vec4f(5f, 5f, 6f, 6f), new Vec4f(5f, 5f, 6f, 6f), new Vec4f(16.0F - (float)w * 16.0F - (float)x * 16.0F, (float)(-y) * 16.0F + (16.0F - (float)h * 16.0F), (float)w * 16.0F, (float)h * 16.0F), new Vec4f((float)x * 16.0F, (float)(-y) * 16.0F + (16.0F - (float)h * 16.0F), (float)w * 16.0F, (float)h * 16.0F)};
+  private Cube makePostCube(VertexFormat format, double x, double y, double z, double w, double h, double l, Vec4f[] uv, TextureAtlasSprite[] sprites,
+      int tintIndex) {
+    uv = new Vec4f[] { new Vec4f((float) z * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) l * 16.0F, (float) h * 16.0F),
+        new Vec4f(16.0F - (float) l * 16.0F - (float) z * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) l * 16.0F, (float) h * 16.0F),
+        new Vec4f(5f, 5f, 6f, 6f), new Vec4f(5f, 5f, 6f, 6f),
+        new Vec4f(16.0F - (float) w * 16.0F - (float) x * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) w * 16.0F, (float) h * 16.0F),
+        new Vec4f((float) x * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) w * 16.0F, (float) h * 16.0F) };
     return ModelUtil.makeCube(format, x, y, z, w, h, l, uv, sprites, tintIndex);
   }
 }

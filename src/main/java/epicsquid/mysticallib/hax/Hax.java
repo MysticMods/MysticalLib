@@ -23,8 +23,7 @@ public class Hax {
 
   public static Field field_ModelBakery_blockModelShapes;
 
-  public static void init()
-      throws IllegalAccessException, NoSuchFieldException, SecurityException, IllegalArgumentException{
+  public static void init() throws IllegalAccessException, NoSuchFieldException, SecurityException, IllegalArgumentException {
     Field f = ReflectionHelper.findField(ModelBlock.class, "SERIALIZER", "field_178319_a");
     f.setAccessible(true);
     Field modifiersField = Field.class.getDeclaredField("modifiers");

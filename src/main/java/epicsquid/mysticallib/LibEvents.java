@@ -8,9 +8,6 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
-import epicsquid.mysticallib.gui.IHUDContainer;
-import epicsquid.mysticallib.network.MessageLeftClickEmpty;
-import epicsquid.mysticallib.network.MessageTEUpdate;
 import epicsquid.mysticallib.network.PacketHandler;
 import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.proxy.ClientProxy;
@@ -25,18 +22,13 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
@@ -58,23 +50,6 @@ public class LibEvents {
     FluidTextureUtil.initTextures(event.getMap());
   }
 
-  // TODO: FIX THIS FIX THIS FIX THIS
-  public static void markForUpdate(@Nonnull BlockPos pos, @Nonnull TileEntity tile) {
-    if (!tile.getWorld().isRemote && acceptUpdates) {
-      if (!toUpdate.containsKey(pos)) {
-        toUpdate.put(pos, tile);
-      } else {
-        toUpdate.replace(pos, tile);
-      }
-    } else if (!tile.getWorld().isRemote) {
-      if (!overflow.containsKey(pos)) {
-        overflow.put(pos, tile);
-      } else {
-        overflow.replace(pos, tile);
-      }
-    }
-  }
-
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(TextureStitchEvent event) {
@@ -89,37 +64,6 @@ public class LibEvents {
     if (event.phase == TickEvent.Phase.END) {
       ticks++;
       ClientProxy.particleRenderer.updateParticles();
-    }
-  }
-
-  @SubscribeEvent
-  // TODO: FIX THIS FIX THIS FIX THIS
-  public void onServerTick(TickEvent.WorldTickEvent event) {
-    if (!event.world.isRemote && event.phase == TickEvent.Phase.END) {
-      NBTTagList list = new NBTTagList();
-      // TODO: WHY WOULD UPDATES... ARGH NETWORK PACKETS???
-      // TODO: JUST WHY
-      // TODO: ... I DON'T EVEN KNOW
-      acceptUpdates = false;
-      TileEntity[] updateArray = toUpdate.values().toArray(new TileEntity[0]);
-      acceptUpdates = true;
-      for (Entry<BlockPos, TileEntity> e : overflow.entrySet()) {
-        toUpdate.put(e.getKey(), e.getValue());
-      }
-      overflow.clear();
-      for (int i = 0; i < updateArray.length; i++) {
-        TileEntity t = updateArray[i];
-        list.appendTag(t.getUpdateTag());
-      }
-      if (!list.isEmpty()) {
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setTag("data", list);
-        // THIS ONE CAN STAY ~ Noob
-        // TODO: NO THIS REALLY CAN'T
-        // TODO: IT DOESN'T CHECK DIMENSIONS???
-        PacketHandler.INSTANCE.sendToAll(new MessageTEUpdate(tag));
-      }
-      toUpdate.clear();
     }
   }
 
@@ -186,51 +130,5 @@ public class LibEvents {
     GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
     ((IDelayedEntityRenderer) render).renderLater(entityIn, -TileEntityRendererDispatcher.staticPlayerX, -TileEntityRendererDispatcher.staticPlayerY,
         -TileEntityRendererDispatcher.staticPlayerZ, f, partialTicks);
-  }
-
-  Int2IntOpenHashMap dimCounts = new Int2IntOpenHashMap();
-
-  @SubscribeEvent
-  public void onWorldTick(WorldTickEvent event) {
-    if (event.phase == TickEvent.Phase.START) {
-      int dim = event.world.provider.getDimension();
-      if (!dimCounts.containsKey(dim)) {
-        dimCounts.put(dim, 0);
-      } else {
-        int val = dimCounts.get(dim);
-        if (val + 1 >= 20) {
-          dimCounts.put(dim, 0);
-          GenerationData data = GenerationData.get(event.world);
-          data.update(event.world);
-        } else {
-          dimCounts.put(dim, val + 1);
-        }
-      }
-
-    }
-  }
-
-  @SubscribeEvent
-  public void onLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-    PacketHandler.INSTANCE.sendToServer(new MessageLeftClickEmpty(event.getEntityPlayer(), event.getHand(), event.getItemStack()));
-  }
-
-  @SideOnly(Side.CLIENT)
-  @SubscribeEvent
-  public void onGameOverlayRender(RenderGameOverlayEvent.Post e) {
-    int w = e.getResolution().getScaledWidth();
-    int h = e.getResolution().getScaledHeight();
-    EntityPlayer player = Minecraft.getMinecraft().player;
-    World world = player.getEntityWorld();
-    RayTraceResult result = player.rayTrace(6.0, e.getPartialTicks());
-
-    if (result != null) {
-      if (result.typeOfHit == RayTraceResult.Type.BLOCK) {
-        TileEntity tile = world.getTileEntity(result.getBlockPos());
-        if (tile instanceof IHUDContainer) {
-          ((IHUDContainer) tile).addHUD(w, h);
-        }
-      }
-    }
   }
 }

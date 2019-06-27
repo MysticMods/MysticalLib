@@ -1,5 +1,12 @@
 package epicsquid.mysticallib.block;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -27,16 +34,9 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-
 @SuppressWarnings("deprecation")
 public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
-  private final @Nonnull
-  Item itemBlock;
+  private final @Nonnull Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
@@ -47,8 +47,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT_MIPPED;
   private int saplingChance;
-  public @Nonnull
-  String name;
+  public @Nonnull String name;
 
   public BlockLeavesBase(float hardness, @Nonnull String name, Supplier<ItemStack> sapling, int saplingChance) {
     super();
@@ -96,7 +95,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
 
     if (fortune > 0) {
       chance -= 2 << fortune;
-      if (chance < 10) chance = 10;
+      if (chance < 10)
+        chance = 10;
     }
 
     if (rand.nextInt(chance) == 0) {
@@ -198,8 +198,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
         defaultTex = new ResourceLocation(
             getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
       }
-      CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
+      CustomModelLoader.blockmodels
+          .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
           new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
     }

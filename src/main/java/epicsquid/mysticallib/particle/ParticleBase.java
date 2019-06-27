@@ -38,6 +38,15 @@ public class ParticleBase extends Particle implements IParticle {
     lifetime--;
   }
 
+  protected void onUpdateNoMotion() {
+    super.onUpdate();
+    lifetime--;
+  }
+
+  protected void setDead() {
+    this.lifetime = 0;
+  }
+
   @Override
   public int getFXLayer() {
     return 1;

@@ -10,12 +10,10 @@ import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -29,7 +27,8 @@ public class BlockTEPressurePlateBase extends BlockPressurePlateBase implements 
   protected Class<? extends TileEntity> teClass;
   public static Set<Class<? extends TileEntity>> classes = new HashSet<>();
 
-  public BlockTEPressurePlateBase(@Nonnull Block block, PressurePlateType plateType, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
+  public BlockTEPressurePlateBase(@Nonnull Block block, PressurePlateType plateType, @Nonnull SoundType type, float hardness, @Nonnull String name,
+      @Nonnull Class<? extends TileEntity> teClass) {
     super(block, plateType, type, hardness, name);
     this.teClass = teClass;
     attemptRegistry(teClass);
