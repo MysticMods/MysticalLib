@@ -52,7 +52,7 @@ public class LibEvents {
 
   @SubscribeEvent
   public void onTextureStitchPre(TextureStitchEvent.Pre event) {
-//    FluidTextureUtil.initTextures(event.getMap());
+    FluidTextureUtil.initTextures(event.getMap());
   }
 
   @SubscribeEvent
@@ -74,6 +74,7 @@ public class LibEvents {
   public void onRenderAfterWorld(RenderWorldLastEvent event) {
     if (MysticalLib.proxy instanceof ClientProxy) {
       GlStateManager.pushMatrix();
+      event.getContext(
       ClientProxy.particleRenderer.renderParticles(MysticalLib.proxy.getClientPlayer(), event.getPartialTicks());
       GlStateManager.popMatrix();
       if (MysticalLib.proxy.getClientWorld() != null) {
