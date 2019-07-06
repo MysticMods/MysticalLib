@@ -1,26 +1,26 @@
 package epicsquid.mysticallib.entity.villager;
 
-import net.minecraft.entity.merchant.IMerchant;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
+import java.util.Random;
+
+import net.minecraft.entity.IMerchant;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
 
-import java.util.Random;
-
-public class EmeraldForRandomItem implements VillagerEntity.ITradeList {
+public class EmeraldForRandomItem implements EntityVillager.ITradeList {
   private Item[] buyingItems;
-  private VillagerEntity.PriceInfo price;
+  private EntityVillager.PriceInfo price;
 
-  public EmeraldForRandomItem(VillagerEntity.PriceInfo priceIn, Item... items) {
+  public EmeraldForRandomItem(EntityVillager.PriceInfo priceIn, Item... items) {
     this.buyingItems = items;
     this.price = priceIn;
   }
 
   @Override
-  public void addMerchantRecipe(IMerchant merchant, Merchant recipeList, Random random) {
+  public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
     int i = 1;
 
     if (this.price != null) {
