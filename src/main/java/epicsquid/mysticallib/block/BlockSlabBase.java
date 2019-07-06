@@ -19,7 +19,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -46,11 +46,11 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   private @Nonnull BlockRenderLayer layer = BlockRenderLayer.SOLID;
   private boolean isFlammable = false;
   private boolean isDouble;
-  private IBlockState parent;
+  private BlockState parent;
   public String name = "";
   public Block slab = null;
 
-  public BlockSlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull IBlockState parent, boolean isDouble,
+  public BlockSlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull BlockState parent, boolean isDouble,
       @Nullable Block slab) {
     super(mat);
     this.isDouble = isDouble;
@@ -71,7 +71,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Nonnull
-  public IBlockState getParent() {
+  public BlockState getParent() {
     return parent;
   }
 
@@ -105,7 +105,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
-  public void getDrops(@Nonnull NonNullList<ItemStack> drops, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull IBlockState state, int fortune) {
+  public void getDrops(@Nonnull NonNullList<ItemStack> drops, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull BlockState state, int fortune) {
     if (isDouble) {
       drops.add(new ItemStack(Item.getItemFromBlock(this.slab), 1));
       drops.add(new ItemStack(Item.getItemFromBlock(this.slab), 1));
@@ -139,7 +139,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean isOpaqueCube(@Nonnull IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull BlockState state) {
     return isOpaque;
   }
 
@@ -148,7 +148,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean isFullCube(@Nonnull IBlockState state) {
+  public boolean isFullCube(@Nonnull BlockState state) {
     return false;
   }
 
@@ -228,16 +228,16 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
 
   @Override
   @Nonnull
-  public IBlockState getStateFromMeta(int meta) {
-    IBlockState iblockstate = this.getDefaultState();
+  public BlockState getStateFromMeta(int meta) {
+    BlockState BlockState = this.getDefaultState();
     if (!this.isDouble())
-      iblockstate = iblockstate.withProperty(HALF, (meta) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+      BlockState = BlockState.withProperty(HALF, (meta) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
 
-    return iblockstate;
+    return BlockState;
   }
 
   @Override
-  public int getMetaFromState(@Nullable IBlockState state) {
+  public int getMetaFromState(@Nullable BlockState state) {
     return state.getValue(HALF) == EnumBlockHalf.BOTTOM ? 0 : 1;
   }
 

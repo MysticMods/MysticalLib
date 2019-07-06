@@ -15,7 +15,7 @@ import epicsquid.mysticallib.model.block.BakedModelTrapDoor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -100,7 +100,7 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isOpaqueCube(@Nonnull IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull BlockState state) {
     return isOpaque;
   }
 
@@ -110,12 +110,12 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
 
   @Override
   @SuppressWarnings("deprecation")
-  public boolean isFullCube(@Nonnull IBlockState state) {
+  public boolean isFullCube(@Nonnull BlockState state) {
     return false;
   }
 
   @Override
-  public boolean canPlaceTorchOnTop(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
+  public boolean canPlaceTorchOnTop(@Nonnull BlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     return false;
   }
 
@@ -145,7 +145,7 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
 
   @Override
   @SuppressWarnings("deprecation")
-  public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
+  public ItemStack getItem(World worldIn, BlockPos pos, BlockState state) {
     return new ItemStack(itemBlock);
   }
 

@@ -13,7 +13,7 @@ import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelStairs;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -36,10 +36,10 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   private boolean hasCustomModel = false;
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
-  private IBlockState parent;
+  private BlockState parent;
   public String name = "";
 
-  public BlockStairsBase(@Nonnull IBlockState base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
+  public BlockStairsBase(@Nonnull BlockState base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base);
     this.setCreativeTab(null);
     this.parent = base;
@@ -55,7 +55,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   }
 
   @Nonnull
-  public IBlockState getParent() {
+  public BlockState getParent() {
     return parent;
   }
 
@@ -97,7 +97,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   }
 
   @Override
-  public boolean isOpaqueCube(@Nonnull IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull BlockState state) {
     return isOpaque;
   }
 
@@ -106,7 +106,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   }
 
   @Override
-  public boolean isFullCube(@Nonnull IBlockState state) {
+  public boolean isFullCube(@Nonnull BlockState state) {
     return false;
   }
 

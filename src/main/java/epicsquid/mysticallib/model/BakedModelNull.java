@@ -11,7 +11,7 @@ import javax.vecmath.Matrix4f;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -32,7 +32,7 @@ public class BakedModelNull implements IBakedModel {
 
   @Override
   @Nonnull
-  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
     return new ArrayList<>();
   }
 

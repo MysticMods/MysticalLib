@@ -16,7 +16,7 @@ import com.google.common.collect.ImmutableList;
 
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.DefaultTransformations;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -55,7 +55,7 @@ public class BakedModelItem implements IBakedModel {
 
   @Override
   @Nonnull
-  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
     return layerQuads;
   }
 

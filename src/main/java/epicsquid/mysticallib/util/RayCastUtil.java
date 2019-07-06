@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -27,12 +27,12 @@ public class RayCastUtil {
         int i1 = MathHelper.floor(vec31.y);
         int j1 = MathHelper.floor(vec31.z);
         BlockPos blockpos = new BlockPos(l, i1, j1);
-        IBlockState iblockstate = world.getBlockState(blockpos);
-        Block block = iblockstate.getBlock();
+        BlockState BlockState = world.getBlockState(blockpos);
+        Block block = BlockState.getBlock();
 
-        if ((iblockstate.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) && (iblockstate.isFullCube() || allowNonfullCube) && block
-            .canCollideCheck(iblockstate, stopOnLiquid)) {
-          RayTraceResult raytraceresult = iblockstate.collisionRayTrace(world, blockpos, vec31, vec32);
+        if ((BlockState.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) && (BlockState.isFullCube() || allowNonfullCube) && block
+            .canCollideCheck(BlockState, stopOnLiquid)) {
+          RayTraceResult raytraceresult = BlockState.collisionRayTrace(world, blockpos, vec31, vec32);
 
           if (raytraceresult != null) {
             return raytraceresult;
@@ -130,12 +130,12 @@ public class RayCastUtil {
           i1 = MathHelper.floor(vec31.y) - (enumfacing == EnumFacing.UP ? 1 : 0);
           j1 = MathHelper.floor(vec31.z) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
           blockpos = new BlockPos(l, i1, j1);
-          IBlockState iblockstate1 = world.getBlockState(blockpos);
-          Block block1 = iblockstate1.getBlock();
+          BlockState BlockState1 = world.getBlockState(blockpos);
+          Block block1 = BlockState1.getBlock();
 
-          if (iblockstate1.getMaterial() == Material.PORTAL || iblockstate1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) {
-            if (block1.canCollideCheck(iblockstate1, stopOnLiquid) && (iblockstate.isFullCube() || allowNonfullCube)) {
-              RayTraceResult raytraceresult1 = iblockstate1.collisionRayTrace(world, blockpos, vec31, vec32);
+          if (BlockState1.getMaterial() == Material.PORTAL || BlockState1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) {
+            if (block1.canCollideCheck(BlockState1, stopOnLiquid) && (BlockState.isFullCube() || allowNonfullCube)) {
+              RayTraceResult raytraceresult1 = BlockState1.collisionRayTrace(world, blockpos, vec31, vec32);
 
               if (raytraceresult1 != null) {
                 return raytraceresult1;

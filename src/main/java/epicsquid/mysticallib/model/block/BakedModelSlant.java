@@ -10,7 +10,7 @@ import epicsquid.mysticallib.block.BlockSlantBase;
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Segment;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -43,7 +43,7 @@ public class BakedModelSlant extends BakedModelBlock {
 
   @Override
   @Nonnull
-  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
     List<BakedQuad> quads = super.getQuads(state, side, rand);
     if (state == null) {
       segm_down_south.addToList(quads, side);

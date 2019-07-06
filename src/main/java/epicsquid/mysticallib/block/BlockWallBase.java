@@ -14,7 +14,7 @@ import epicsquid.mysticallib.model.block.BakedModelWall;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWall;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -94,7 +94,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean isOpaqueCube(@Nonnull IBlockState state) {
+  public boolean isOpaqueCube(@Nonnull BlockState state) {
     return isOpaque;
   }
 
@@ -103,7 +103,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean isFullCube(@Nonnull IBlockState state) {
+  public boolean isFullCube(@Nonnull BlockState state) {
     return false;
   }
 
@@ -131,7 +131,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   }
 
   @Override
-  public boolean canPlaceTorchOnTop(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
+  public boolean canPlaceTorchOnTop(@Nonnull BlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     return true;
   }
 

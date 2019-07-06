@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -32,8 +32,8 @@ public class ItemBlockMultiblock extends ItemBlock {
   @Nonnull
   public EnumActionResult onItemUse(@Nonnull EntityPlayer player, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull EnumHand hand,
       @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
-    IBlockState iblockstate = worldIn.getBlockState(pos);
-    Block block = iblockstate.getBlock();
+    BlockState BlockState = worldIn.getBlockState(pos);
+    Block block = BlockState.getBlock();
 
     if (!block.isReplaceable(worldIn, pos)) {
       pos = pos.offset(facing, offset);
@@ -43,11 +43,11 @@ public class ItemBlockMultiblock extends ItemBlock {
 
     if (!itemstack.isEmpty() && player.canPlayerEdit(pos, facing, itemstack) && worldIn.mayPlace(this.block, pos, false, facing, null)) {
       int i = this.getMetadata(itemstack.getMetadata());
-      IBlockState iblockstate1 = this.block.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, i, player, hand);
+      BlockState BlockState1 = this.block.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, i, player, hand);
 
-      if (placeBlockAt(itemstack, player, worldIn, pos, facing, hitX, hitY, hitZ, iblockstate1)) {
-        iblockstate1 = worldIn.getBlockState(pos);
-        SoundType soundtype = iblockstate1.getBlock().getSoundType(iblockstate1, worldIn, pos, player);
+      if (placeBlockAt(itemstack, player, worldIn, pos, facing, hitX, hitY, hitZ, BlockState1)) {
+        BlockState1 = worldIn.getBlockState(pos);
+        SoundType soundtype = BlockState1.getBlock().getSoundType(BlockState1, worldIn, pos, player);
         worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
         itemstack.shrink(1);
       }

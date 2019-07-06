@@ -7,10 +7,11 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class BlockOreBase extends BlockBase {
@@ -22,44 +23,47 @@ public class BlockOreBase extends BlockBase {
       int maxXP) {
     super(mat, type, hardness, name);
     this.drop = drop;
-    this.setHarvestLevel("pickaxe", level);
+    //this.setHarvestLevel("pickaxe", level);
     this.minXP = minXP;
     this.maxXP = maxXP;
   }
 
+//  @Override
+//  public Item getItemDropped(BlockState state, Random rand, int fortune) {
+//    if (drop != null)
+//      return drop;
+//
+//    return super.getItemDropped(state, rand, fortune);
+//  }
+//
+//
+//  @Override
+//  public int quantityDroppedWithBonus(int fortune, Random random) {
+//    if (this.drop == null)
+//      return super.quantityDroppedWithBonus(fortune, random);
+//
+//    int drop = quantityDropped(random);
+//    if (fortune > 0 || random.nextInt(10) == 0) {
+//      int i = random.nextInt(fortune + 2);
+//
+//      if (i < 0) {
+//        i = 1;
+//      }
+//
+//      return drop * i;
+//    }
+//
+//    return drop;
+//  }
+
   @Override
-  public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-    if (drop != null)
-      return drop;
-
-    return super.getItemDropped(state, rand, fortune);
-  }
-
-  @Override
-  public int quantityDroppedWithBonus(int fortune, Random random) {
-    if (this.drop == null)
-      return super.quantityDroppedWithBonus(fortune, random);
-
-    int drop = quantityDropped(random);
-    if (fortune > 0 || random.nextInt(10) == 0) {
-      int i = random.nextInt(fortune + 2);
-
-      if (i < 0) {
-        i = 1;
-      }
-
-      return drop * i;
-    }
-
-    return drop;
-  }
-
-  @Override
-  public int getExpDrop(IBlockState state, net.minecraft.world.IBlockAccess world, BlockPos pos, int fortune) {
+  public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch) {
     if (minXP == -1 || maxXP == -1)
       return 0;
 
     Random rand = world instanceof World ? ((World) world).rand : new Random();
-    return MathHelper.getInt(rand, minXP, maxXP);
+    return MathHelper.getInt("", minXP, maxXP);
+    //todo: fix the string part of getInt
   }
+
 }

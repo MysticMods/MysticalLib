@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import epicsquid.mysticallib.util.Util;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,13 +22,13 @@ public class TileBase extends TileEntity implements ITile {
   public boolean dirty = false;
 
   @Override
-  public boolean activate(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
+  public boolean activate(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
       @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     return false;
   }
 
   @Override
-  public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nullable EntityPlayer player) {
+  public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nullable EntityPlayer player) {
     invalidate();
   }
 
@@ -56,7 +56,7 @@ public class TileBase extends TileEntity implements ITile {
 
   // TODO: I literally can't think of a better name for this function
   public void updatePacketViaState() {
-    IBlockState state = world.getBlockState(getPos());
+    BlockState state = world.getBlockState(getPos());
     world.notifyBlockUpdate(getPos(), state, state, 8);
   }
 

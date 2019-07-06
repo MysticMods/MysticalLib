@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -61,16 +61,16 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
     } else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) {
       return EnumActionResult.FAIL;
     } else {
-      IBlockState iblockstate = worldIn.getBlockState(pos);
+      BlockState BlockState = worldIn.getBlockState(pos);
 
-      if (iblockstate.getBlock() == getBlock()) {
-        BlockSlab.EnumBlockHalf enumblockhalf = iblockstate.getValue(BlockSlab.HALF);
+      if (BlockState.getBlock() == getBlock()) {
+        BlockSlab.EnumBlockHalf enumblockhalf = BlockState.getValue(BlockSlab.HALF);
 
         if ((side == EnumFacing.UP && enumblockhalf == BlockSlab.EnumBlockHalf.BOTTOM
             || side == EnumFacing.DOWN && enumblockhalf == BlockSlab.EnumBlockHalf.TOP)) {
-          IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
+          BlockState BlockState1 = this.doubleSlab.getDefaultState();
 
-          if (worldIn.checkNoEntityCollision(this.doubleSlab.getBoundingBox(iblockstate1, worldIn, pos)) && worldIn.setBlockState(pos, iblockstate1, 3)) {
+          if (worldIn.checkNoEntityCollision(this.doubleSlab.getBoundingBox(BlockState1, worldIn, pos)) && worldIn.setBlockState(pos, BlockState1, 3)) {
             worldIn.playSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, this.doubleSlab.getSoundType().getPlaceSound(), SoundCategory.BLOCKS,
                 (this.doubleSlab.getSoundType().getVolume() + 1.0F) / 2.0F, this.doubleSlab.getSoundType().getPitch() * 0.8F, true);
             stack.shrink(1);
@@ -90,10 +90,10 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
   public boolean canPlaceBlockOnSide(@Nonnull World worldIn, @Nonnull BlockPos posIn, @Nonnull EnumFacing faceIn, @Nonnull EntityPlayer playerIn,
       @Nonnull ItemStack stackIn) {
     BlockPos blockpos1 = posIn;
-    IBlockState iblockstate = worldIn.getBlockState(posIn);
+    BlockState BlockState = worldIn.getBlockState(posIn);
 
-    if (iblockstate.getBlock() == getBlock()) {
-      boolean flag = iblockstate.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
+    if (BlockState.getBlock() == getBlock()) {
+      boolean flag = BlockState.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
 
       if ((faceIn == EnumFacing.UP && !flag || faceIn == EnumFacing.DOWN && flag)) {
         return true;
@@ -101,17 +101,17 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
     }
 
     posIn = posIn.offset(faceIn);
-    IBlockState iblockstate1 = worldIn.getBlockState(posIn);
-    return iblockstate1.getBlock() == getBlock() || super.canPlaceBlockOnSide(worldIn, blockpos1, faceIn, playerIn, stackIn);
+    BlockState BlockState1 = worldIn.getBlockState(posIn);
+    return BlockState1.getBlock() == getBlock() || super.canPlaceBlockOnSide(worldIn, blockpos1, faceIn, playerIn, stackIn);
   }
 
   private boolean userItem(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull BlockPos pos) {
-    IBlockState iblockstate = worldIn.getBlockState(pos);
+    BlockState BlockState = worldIn.getBlockState(pos);
 
-    if (iblockstate.getBlock() == getBlock()) {
-      IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
+    if (BlockState.getBlock() == getBlock()) {
+      BlockState BlockState1 = this.doubleSlab.getDefaultState();
 
-      if (worldIn.checkNoEntityCollision(this.doubleSlab.getBoundingBox(iblockstate1, worldIn, pos)) && worldIn.setBlockState(pos, iblockstate1, 3)) {
+      if (worldIn.checkNoEntityCollision(this.doubleSlab.getBoundingBox(BlockState1, worldIn, pos)) && worldIn.setBlockState(pos, BlockState1, 3)) {
         worldIn.playSound(pos.getX() + 0.5F, pos.getY() + 0.5F, pos.getZ() + 0.5F, this.doubleSlab.getSoundType().getPlaceSound(), SoundCategory.BLOCKS,
             (this.doubleSlab.getSoundType().getVolume() + 1.0F) / 2.0F, this.doubleSlab.getSoundType().getPitch() * 0.8F, true);
         stack.shrink(1);

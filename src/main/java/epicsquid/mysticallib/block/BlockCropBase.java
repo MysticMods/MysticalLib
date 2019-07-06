@@ -1,32 +1,32 @@
 package epicsquid.mysticallib.block;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CropsBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.EnumPlantType;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
+import net.minecraftforge.common.PlantType;
+
+import javax.annotation.Nonnull;
 
 @SuppressWarnings("deprecation")
-public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject {
+public class BlockCropBase extends CropsBlock implements IBlock, IModeledObject {
 
-  private final @Nonnull EnumPlantType plantType;
+  private final @Nonnull PlantType plantType;
 
   /**
    * Used for arbitrary crops
    *
    * @param name Name of the crop
    */
-  public BlockCropBase(@Nonnull String name, @Nonnull EnumPlantType plantType) {
-    super();
-    setTranslationKey(name);
-    setRegistryName(LibRegistry.getActiveModid(), name);
+  public BlockCropBase(@Nonnull Material material, @Nonnull String name, @Nonnull PlantType plantType) {
+    super(Block.Properties.create(material));
+    setRegistryName(name);
 
     this.plantType = plantType;
   }
@@ -34,9 +34,8 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
   /**
    * Controls the type of plant
    */
-  @Override
   @Nonnull
-  public EnumPlantType getPlantType(@Nullable IBlockAccess world, @Nullable BlockPos pos) {
+  public PlantType getPlantType() {
     return plantType;
   }
 
@@ -44,9 +43,8 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
    * Scales the bounding box of the crop with it's age
    */
   @Override
-  @Nonnull
-  public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
-    return new AxisAlignedBB(0, 0, 0, 1, 0.125f * (state.getValue(this.AGE) + 1), 1);
+  public VoxelShape getShape(BlockState state, IBlockReader blockReader, BlockPos pos, ISelectionContext selectionContext) {
+    return Block.makeCuboidShape(0, 0, 0, 16.0D, 2.0D * (state.get(this.AGE) + 1), 16.0D);
   }
 
   @Override

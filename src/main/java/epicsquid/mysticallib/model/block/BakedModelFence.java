@@ -12,7 +12,7 @@ import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Cube;
 import epicsquid.mysticallib.struct.Vec4f;
 import net.minecraft.block.BlockWall;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -45,13 +45,13 @@ public class BakedModelFence extends BakedModelBlock {
 
   @Override
   @Nonnull
-  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
     List<BakedQuad> quads = new ArrayList<>();
     getFaceQuads(quads, side, state);
     return quads;
   }
 
-  private void getFaceQuads(@Nonnull List<BakedQuad> quads, @Nullable EnumFacing side, @Nullable IBlockState state) {
+  private void getFaceQuads(@Nonnull List<BakedQuad> quads, @Nullable EnumFacing side, @Nullable BlockState state) {
     if (state == null) {
       post_left.addToList(quads, side);
       post_right.addToList(quads, side);

@@ -15,7 +15,7 @@ import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.DefaultTransformations;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Cube;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
@@ -56,7 +56,7 @@ public class BakedModelBlock implements IBakedModel {
   // TODO Clean this up
   @Override
   @Nonnull
-  public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
     List<BakedQuad> finalQuads = new ArrayList<>();
     if (state != null) {
       TextureAtlasSprite[] sprites = new TextureAtlasSprite[] { getParticleTexture() };
@@ -70,7 +70,7 @@ public class BakedModelBlock implements IBakedModel {
     return finalQuads;
   }
 
-  public void addGeometry(@Nonnull List<BakedQuad> quads, @Nonnull EnumFacing side, IBlockState state, TextureAtlasSprite[] texes, int tintIndex) {
+  public void addGeometry(@Nonnull List<BakedQuad> quads, @Nonnull EnumFacing side, BlockState state, TextureAtlasSprite[] texes, int tintIndex) {
     ModelUtil.makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, texes, tintIndex).addToList(quads, side);
   }
 
