@@ -1,9 +1,6 @@
 package epicsquid.mysticallib.setup;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -25,6 +22,7 @@ import epicsquid.mysticallib.particle.particles.ParticleSmoke;
 import epicsquid.mysticallib.particle.particles.ParticleSpark;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -104,13 +102,13 @@ public class ClientLibRegistry {
   }
 
   @SubscribeEvent
-  public void onTextureStitch(@Nonnull TextureStitchEvent event) {
+  public void onTextureStitch(@Nonnull TextureStitchEvent.Pre event) {
     for (Map.Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
-      event.getMap().registerSprite(e.getValue());
+      event.addSprite(e.getValue());
     }
-    for (Map.Entry<ResourceLocation, IModel> e : CustomModelLoader.itemmodels.entrySet()) {
-      for (ResourceLocation r : e.getValue().getTextures()) {
-        event.getMap().registerSprite(r);
+    for (Map.Entry<ResourceLocation, IUnbakedModel> e : CustomModelLoader.itemmodels.entrySet()) {
+      for (ResourceLocation r : e.getValue().getTextures(ModelLoader.defaultModelGetter(), Collections.emptySet())) {
+        event.addSprite(r);
       }
     }
   }
@@ -137,8 +135,8 @@ public class ClientLibRegistry {
       ModelResourceLocation mrl = new ModelResourceLocation(r.toString().replace("#handlers", ""), "handlers");
       IBakedModel bakedModel = event.getModelRegistry().get(mrl);
       if (bakedModel != null) {
-        IModel m = CustomModelLoader.itemmodels.get(r);
-        event.getModelRegistry().put(mrl, m.bake(m.getDefaultState(), DefaultVertexFormats.ITEM, ModelLoader.defaultTextureGetter()));
+        IUnbakedModel m = CustomModelLoader.itemmodels.get(r);
+        event.getModelRegistry().put(mrl, m.bake(m.getDefaultState(), ModelLoader.defaultTextureGetter(), , DefaultVertexFormats.ITEM));
       }
     }
 
