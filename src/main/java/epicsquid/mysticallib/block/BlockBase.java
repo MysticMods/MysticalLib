@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 public class BlockBase extends Block{
 
   private VoxelShape box = Block.makeCuboidShape(16.0D,16.0D,16.0D,16.0D,16.0D,16.0D);
-  public @Nonnull String name;
+  public final String name;
 
   public BlockBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(Block.Properties.create(mat).sound(type).lightValue(15).hardnessAndResistance(hardness));
