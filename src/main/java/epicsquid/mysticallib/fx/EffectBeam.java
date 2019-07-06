@@ -1,15 +1,12 @@
 package epicsquid.mysticallib.fx;
 
-import org.lwjgl.opengl.GL11;
-
 import epicsquid.mysticallib.util.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.nbt.CompoundNBT;
+import org.lwjgl.opengl.GL11;
 
 public class EffectBeam extends Effect {
   public double x2 = 0;
@@ -37,7 +34,7 @@ public class EffectBeam extends Effect {
   }
 
   @Override
-  public void read(NBTTagCompound tag) {
+  public void read(CompoundNBT tag) {
     super.read(tag);
     x2 = tag.getDouble("x2");
     y2 = tag.getDouble("y2");
@@ -46,22 +43,21 @@ public class EffectBeam extends Effect {
   }
 
   @Override
-  public NBTTagCompound write() {
-    NBTTagCompound tag = super.write();
-    tag.setDouble("x2", x2);
-    tag.setDouble("y2", y2);
-    tag.setDouble("z2", z2);
-    tag.setFloat("thick", thickness);
+  public CompoundNBT write() {
+    CompoundNBT tag = super.write();
+    tag.putDouble("x2", x2);
+    tag.putDouble("y2", y2);
+    tag.putDouble("z2", z2);
+    tag.putFloat("thick", thickness);
     return tag;
   }
 
-  @SideOnly(Side.CLIENT)
   @Override
   public void render(float pticks) {
     Tessellator tess = Tessellator.getInstance();
     BufferBuilder buffer = tess.getBuffer();
 
-    Minecraft.getMinecraft().renderEngine.bindTexture(RenderUtil.beam_texture);
+    Minecraft.getInstance().textureManager.bindTexture(RenderUtil.beam_texture);
     buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
     RenderUtil
         .renderBeam(buffer, x, y, z, x2 * 0.1 + x * 0.9, y2 * 0.1 + y * 0.9, z2 * 0.1 + z * 0.9, r, g, b, 0f, r, g, b, a * getLifeCoeff(pticks), thickness,

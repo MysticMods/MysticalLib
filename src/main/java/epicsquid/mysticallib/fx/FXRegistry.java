@@ -1,24 +1,23 @@
 package epicsquid.mysticallib.fx;
 
+import epicsquid.mysticallib.MysticalLib;
+import epicsquid.mysticallib.setup.ClientProxy;
+import net.minecraft.nbt.CompoundNBT;
+
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-
-import epicsquid.mysticallib.MysticalLib;
-import epicsquid.mysticallib.setup.ClientProxy;
-import net.minecraft.nbt.NBTTagCompound;
-
 public class FXRegistry {
-  public static Map<Integer, Function<NBTTagCompound, Void>> effects = new HashMap<>();
+	public static Map<Integer, Function<CompoundNBT, Void>> effects = new HashMap<>();
 
-  private static int id = 0;
+	private static int id = 0;
 
-  public static int registerEffect(@Nonnull Function<NBTTagCompound, Void> func) {
-    if (MysticalLib.proxy instanceof ClientProxy) {
-      effects.put(id, func);
-    }
-    return id++;
-  }
+	public static int registerEffect(@Nonnull Function<CompoundNBT, Void> func) {
+		if (MysticalLib.proxy instanceof ClientProxy) {
+			effects.put(id, func);
+		}
+		return id++;
+	}
 }

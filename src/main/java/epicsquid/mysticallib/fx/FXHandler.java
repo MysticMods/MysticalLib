@@ -1,23 +1,25 @@
 package epicsquid.mysticallib.fx;
 
 import epicsquid.mysticallib.LibRegistry;
+import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.event.RegisterFXEvent;
+import epicsquid.mysticallib.setup.ClientLibRegistry;
 import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 /**
  * Registers effects to the FXRegistry
  */
+@Mod.EventBusSubscriber(modid = MysticalLib.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FXHandler {
 
   public static int FX_BEAM, FX_SLASH, FX_BURST;
 
-  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRegisterFX(RegisterFXEvent event) {
     FX_BEAM = FXRegistry.registerEffect(nbt -> {
@@ -33,7 +35,7 @@ public class FXHandler {
       return null;
     });
     FX_BURST = FXRegistry.registerEffect(nbt -> {
-      for (int i = 0; i < nbt.getInteger("count"); i++) {
+      for (int i = 0; i < nbt.getInt("count"); i++) {
         float yaw = Util.rand.nextFloat() * 2.0f * (float) Math.PI;
         float pitch = Util.rand.nextFloat() * 2.0f * (float) Math.PI;
         float speed = Util.rand.nextFloat() * (float) nbt.getDouble("speed");
@@ -42,13 +44,13 @@ public class FXHandler {
         float vz = MathHelper.cos(pitch) * MathHelper.cos(yaw) * speed;
         float solid = (Util.rand.nextFloat());
         ClientProxy.particleRenderer
-            .spawnParticle(Minecraft.getMinecraft().world, LibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx * 0.25f,
-                Math.abs(vy * 0.5f), vz * 0.25f, nbt.getInteger("lifetime"), 0.25f * solid, 0.25f * solid, 0.25f * solid, 0.5f * solid,
+            .spawnParticle(MysticalLib.proxy.getClientWorld(), ClientLibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx * 0.25f,
+                Math.abs(vy * 0.5f), vz * 0.25f, nbt.getInt("lifetime"), 0.25f * solid, 0.25f * solid, 0.25f * solid, 0.5f * solid,
                 nbt.getDouble("scale") * (0.5f + Util.rand.nextFloat() * 0.5f), 0.75f);
         if (Util.rand.nextInt(4) == 0) {
           ClientProxy.particleRenderer
-              .spawnParticle(Minecraft.getMinecraft().world, LibRegistry.PARTICLE_SPARK, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx,
-                  Math.abs(vy * 0.5f), vz, nbt.getInteger("lifetime") * 0.5f, 0.25f, 0.25f, 1.0f, 1.0f,
+              .spawnParticle(MysticalLib.proxy.getClientWorld(), ClientLibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx,
+                  Math.abs(vy * 0.5f), vz, nbt.getInt("lifetime") * 0.5f, 0.25f, 0.25f, 1.0f, 1.0f,
                   0.5f * Util.rand.nextFloat() * nbt.getDouble("scale") * (0.5f + Util.rand.nextFloat() * 0.5f), 1.5f);
         }
       }
