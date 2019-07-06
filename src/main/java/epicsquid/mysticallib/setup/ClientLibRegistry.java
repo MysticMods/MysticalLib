@@ -1,4 +1,4 @@
-package epicsquid.mysticallib.world;
+package epicsquid.mysticallib.setup;
 
 import java.util.HashMap;
 import java.util.HashSet;

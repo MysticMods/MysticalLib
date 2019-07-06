@@ -15,14 +15,14 @@ import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.tile.IDelayedTileRenderer;
 import epicsquid.mysticallib.util.FluidTextureUtil;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -32,16 +32,13 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(modid = MysticalLib.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class LibEvents {
 
-  private static Map<Class<? extends Entity>, IRenderFactory> entityRenderMap = new HashMap<Class<? extends Entity>, IRenderFactory>();
-  private static Map<Class<? extends TileEntity>, TileEntitySpecialRenderer> tileEntityRenderMap = new HashMap<Class<? extends TileEntity>, TileEntitySpecialRenderer>();
+  private static Map<Class<? extends Entity>, IRenderFactory> entityRenderMap = new HashMap<>();
+  private static Map<Class<? extends TileEntity>, TileEntityRenderer> tileEntityRenderMap = new HashMap<>();
 
   public static boolean acceptUpdates = true;
 
@@ -74,34 +71,30 @@ public class LibEvents {
   public void onRenderAfterWorld(RenderWorldLastEvent event) {
     if (MysticalLib.proxy instanceof ClientProxy) {
       GlStateManager.pushMatrix();
-      event.getContext(
-      ClientProxy.particleRenderer.renderParticles(MysticalLib.proxy.getClientPlayer(), event.getPartialTicks());
-      GlStateManager.popMatrix();
+      event.getContext(ClientProxy.particleRenderer.renderParticles(event.getPartialTicks()); GlStateManager.popMatrix();
       if (MysticalLib.proxy.getClientWorld() != null) {
-        List<TileEntity> list = Minecraft.getMinecraft().world.loadedTileEntityList;
+        List<TileEntity> list = MysticalLib.proxy.getClientWorld().loadedTileEntityList;
         GlStateManager.pushMatrix();
         for (int i = 0; i < list.size(); i++) {
-          TileEntitySpecialRenderer render = TileEntityRendererDispatcher.instance.getRenderer(list.get(i));
+          TileEntityRenderer render = TileEntityRendererDispatcher.instance.getRenderer(list.get(i));
           if (render instanceof IDelayedTileRenderer) {
-            double x = Minecraft.getMinecraft().player.lastTickPosX + Minecraft.getMinecraft().getRenderPartialTicks() * (Minecraft.getMinecraft().player.posX
-                - Minecraft.getMinecraft().player.lastTickPosX);
-            double y = Minecraft.getMinecraft().player.lastTickPosY + Minecraft.getMinecraft().getRenderPartialTicks() * (Minecraft.getMinecraft().player.posY
-                - Minecraft.getMinecraft().player.lastTickPosY);
-            double z = Minecraft.getMinecraft().player.lastTickPosZ + Minecraft.getMinecraft().getRenderPartialTicks() * (Minecraft.getMinecraft().player.posZ
-                - Minecraft.getMinecraft().player.lastTickPosZ);
-            GlStateManager.translate(-x, -y, -z);
+            PlayerEntity player = MysticalLib.proxy.getClientPlayer();
+            double x = player.lastTickPosX + Minecraft.getInstance().getRenderPartialTicks() * (Minecraft.getInstance().player.posX - player.lastTickPosX);
+            double y = player.lastTickPosY + Minecraft.getInstance().getRenderPartialTicks() * (Minecraft.getInstance().player.posY - player.lastTickPosY);
+            double z = player.lastTickPosZ + Minecraft.getInstance().getRenderPartialTicks() * (Minecraft.getInstance().player.posZ - player.lastTickPosZ);
+            GlStateManager.translated(-x, -y, -z);
             ((IDelayedTileRenderer) render).renderLater(list.get(i), list.get(i).getPos().getX(), list.get(i).getPos().getY(), list.get(i).getPos().getZ(),
-                Minecraft.getMinecraft().getRenderPartialTicks());
-            GlStateManager.translate(x, y, z);
+                Minecraft.getInstance().getRenderPartialTicks());
+            GlStateManager.translated(x, y, z);
           }
         }
         GlStateManager.popMatrix();
-        List<Entity> entityList = Minecraft.getMinecraft().world.loadedEntityList;
+        List<Entity> entityList = MysticalLib.proxy.getClientWorld().loadedEntityList;
         GlStateManager.pushMatrix();
         for (int i = 0; i < entityList.size(); i++) {
-          Render render = Minecraft.getMinecraft().getRenderManager().entityRenderMap.get(entityList.get(i).getClass());
+          EntityRenderer render = Minecraft.getInstance().getRenderManager().entityRenderMap.get(entityList.get(i).getClass());
           if (render instanceof IDelayedEntityRenderer) {
-            renderEntityStatic(entityList.get(i), Minecraft.getMinecraft().getRenderPartialTicks(), true, render);
+            renderEntityStatic(entityList.get(i), Minecraft.getInstance().getRenderPartialTicks(), true, render);
           }
         }
         GlStateManager.popMatrix();
@@ -109,7 +102,7 @@ public class LibEvents {
     }
   }
 
-  public static void renderEntityStatic(@Nonnull Entity entityIn, float partialTicks, boolean b, @Nonnull Render render) {
+  public static void renderEntityStatic(@Nonnull Entity entityIn, float partialTicks, boolean b, @Nonnull EntityRenderer render) {
     if (entityIn.ticksExisted == 0) {
       entityIn.lastTickPosX = entityIn.posX;
       entityIn.lastTickPosY = entityIn.posY;
@@ -128,8 +121,8 @@ public class LibEvents {
 
     int j = i % 65536;
     int k = i / 65536;
-    OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
-    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    OpenGLHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float) j, (float) k);
+    GlStateManager.color4f(1.0f, 1.0f, 1.0f, 1.0f);
     ((IDelayedEntityRenderer) render).renderLater(entityIn, -TileEntityRendererDispatcher.staticPlayerX, -TileEntityRendererDispatcher.staticPlayerY,
         -TileEntityRendererDispatcher.staticPlayerZ, f, partialTicks);
   }
