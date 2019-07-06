@@ -1,22 +1,20 @@
 package epicsquid.mysticallib.advancement;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.critereon.AbstractCriterionInstance;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GenericTrigger<T> implements ICriterionTrigger<GenericTrigger.Instance<T>> {
   private final ResourceLocation id;
@@ -74,7 +72,7 @@ public class GenericTrigger<T> implements ICriterionTrigger<GenericTrigger.Insta
     return new Instance<>(getId(), predicate.deserialize(json));
   }
 
-  public void trigger(EntityPlayerMP player, T condition) {
+  public void trigger(ServerPlayerEntity player, T condition) {
     Listeners<T> list = listeners.get(player.getAdvancements());
 
     if (list != null) {
@@ -82,7 +80,7 @@ public class GenericTrigger<T> implements ICriterionTrigger<GenericTrigger.Insta
     }
   }
 
-  public static class Instance<T> extends AbstractCriterionInstance {
+  public static class Instance<T> extends CriterionInstance {
     IGenericPredicate<T> predicate;
 
     Instance(ResourceLocation location, IGenericPredicate<T> predicate) {
@@ -91,7 +89,7 @@ public class GenericTrigger<T> implements ICriterionTrigger<GenericTrigger.Insta
       this.predicate = predicate;
     }
 
-    public boolean test(EntityPlayerMP player, T event) {
+    public boolean test(ServerPlayerEntity player, T event) {
       return predicate.test(player, event);
     }
   }
@@ -116,7 +114,7 @@ public class GenericTrigger<T> implements ICriterionTrigger<GenericTrigger.Insta
       listeners.remove(listener);
     }
 
-    void trigger(EntityPlayerMP player, T condition) {
+    void trigger(ServerPlayerEntity player, T condition) {
       List<Listener<Instance<T>>> list = Lists.newArrayList();
 
       for (Listener<Instance<T>> listener : listeners) {
