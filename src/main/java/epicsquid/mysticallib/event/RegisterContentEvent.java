@@ -1,11 +1,11 @@
 package epicsquid.mysticallib.event;
 
-import java.util.List;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.eventbus.api.Event;
+
+import java.util.List;
 
 public class RegisterContentEvent extends Event {
   private List<Item> items;

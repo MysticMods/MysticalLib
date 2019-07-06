@@ -1,17 +1,17 @@
 package epicsquid.mysticallib.event;
 
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.fml.common.eventhandler.Event;
-import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class RegisterModRecipesEvent extends Event {
-  IForgeRegistry<IRecipe> registry = null;
+	IForgeRegistryEntry<IRecipe> registry = null;
 
-  public RegisterModRecipesEvent(IForgeRegistry<IRecipe> registry) {
-    this.registry = registry;
-  }
+	public RegisterModRecipesEvent(IForgeRegistryEntry<IRecipe> registry) {
+		this.registry = registry;
+	}
 
-  public IForgeRegistry<IRecipe> getRegistry() {
-    return registry;
-  }
+	public IForgeRegistryEntry<IRecipe> getRegistry() {
+		return registry;
+	}
 }
