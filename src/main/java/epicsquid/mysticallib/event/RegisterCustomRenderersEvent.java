@@ -13,11 +13,4 @@ public class RegisterCustomRenderersEvent extends Event {
 
   }
 
-  public void addTileRender(Class<? extends TileEntity> c, TileEntityRenderer r) {
-    LibRegistry.registerTileRenderer(c, r);
-  }
-
-  public void addEntityender(Class<? extends Entity> c, IRenderFactory r) {
-    LibRegistry.registerEntityRenderer(c, r);
-  }
 }
