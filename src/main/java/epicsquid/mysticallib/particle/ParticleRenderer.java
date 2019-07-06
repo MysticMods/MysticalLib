@@ -9,6 +9,8 @@ import javax.annotation.Nonnull;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.setup.ClientProxy;
 import net.minecraft.client.Minecraft;
@@ -17,9 +19,11 @@ import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 public class ParticleRenderer {
@@ -34,7 +38,7 @@ public class ParticleRenderer {
       if (particle != null) {
         if (particle instanceof IParticle) {
           if (((IParticle) particle).alive()) {
-            particle.onUpdate();
+            particle.tick();
             doRemove = false;
           }
         }
@@ -49,26 +53,26 @@ public class ParticleRenderer {
     }
   }
 
-  public synchronized void renderParticles(@Nonnull EntityPlayer dumbplayer, float partialTicks) {
+  public synchronized void renderParticles(float partialTicks) {
     float f = ActiveRenderInfo.getRotationX();
     float f1 = ActiveRenderInfo.getRotationZ();
     float f2 = ActiveRenderInfo.getRotationYZ();
     float f3 = ActiveRenderInfo.getRotationXY();
     float f4 = ActiveRenderInfo.getRotationXZ();
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    PlayerEntity player = MysticalLib.proxy.getClientPlayer();
     if (player != null) {
       Particle.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
       Particle.interpPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
       Particle.interpPosZ = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks;
       Particle.cameraViewDir = player.getLook(partialTicks);
-      GlStateManager.enableAlpha();
+      GlStateManager.enableAlphaTest();
       GlStateManager.enableBlend();
       GlStateManager.alphaFunc(516, 0.003921569F);
       GlStateManager.disableCull();
 
       GlStateManager.depthMask(false);
 
-      Minecraft.getMinecraft().renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+      Minecraft.getInstance().getTextureManager().bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
       Tessellator tess = Tessellator.getInstance();
       BufferBuilder buffer = tess.getBuffer();
 
@@ -94,7 +98,7 @@ public class ParticleRenderer {
       }
       tess.draw();
 
-      GlStateManager.disableDepth();
+      GlStateManager.disableDepthTest(););
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
       for (Particle particle : particles) {
@@ -116,14 +120,14 @@ public class ParticleRenderer {
         }
       }
       tess.draw();
-      GlStateManager.enableDepth();
+      GlStateManager.enableDepthTest();
 
       GlStateManager.enableCull();
       GlStateManager.depthMask(true);
       GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       GlStateManager.disableBlend();
       GlStateManager.alphaFunc(516, 0.1F);
-      GlStateManager.enableAlpha();
+      GlStateManager.enableAlphaTest();
     }
   }
 

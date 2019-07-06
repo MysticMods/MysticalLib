@@ -1,11 +1,13 @@
 package epicsquid.mysticallib.setup;
 
+import epicsquid.mysticallib.particle.ParticleRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 public class ClientProxy implements IProxy {
-  //  public static ParticleRenderer particleRenderer = new ParticleRenderer();
+
+  public static ParticleRenderer particleRenderer = new ParticleRenderer();
 
   //  @Override
   //  public void preInit(FMLPreInitializationEvent event) {

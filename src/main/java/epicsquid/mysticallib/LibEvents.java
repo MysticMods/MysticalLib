@@ -7,6 +7,8 @@ import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
 import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.setup.ClientProxy;
@@ -24,29 +26,35 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Mod.EventBusSubscriber(modid = MysticalLib.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class LibEvents {
+
+  private static Map<Class<? extends Entity>, IRenderFactory> entityRenderMap = new HashMap<Class<? extends Entity>, IRenderFactory>();
+  private static Map<Class<? extends TileEntity>, TileEntitySpecialRenderer> tileEntityRenderMap = new HashMap<Class<? extends TileEntity>, TileEntitySpecialRenderer>();
 
   public static boolean acceptUpdates = true;
 
-  public static Map<BlockPos, TileEntity> toUpdate = new HashMap<BlockPos, TileEntity>();
-  public static Map<BlockPos, TileEntity> overflow = new HashMap<BlockPos, TileEntity>();
+  public static Map<BlockPos, TileEntity> toUpdate = new HashMap<>();
+  public static Map<BlockPos, TileEntity> overflow = new HashMap<>();
 
   public static int ticks = 0;
 
-  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitchPre(TextureStitchEvent.Pre event) {
-    FluidTextureUtil.initTextures(event.getMap());
+//    FluidTextureUtil.initTextures(event.getMap());
   }
 
-  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(TextureStitchEvent event) {
     for (Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
@@ -54,7 +62,6 @@ public class LibEvents {
     }
   }
 
-  @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onClientTick(TickEvent.ClientTickEvent event) {
     if (event.phase == TickEvent.Phase.END) {
@@ -64,13 +71,12 @@ public class LibEvents {
   }
 
   @SubscribeEvent
-  @SideOnly(Side.CLIENT)
   public void onRenderAfterWorld(RenderWorldLastEvent event) {
     if (MysticalLib.proxy instanceof ClientProxy) {
       GlStateManager.pushMatrix();
-      ClientProxy.particleRenderer.renderParticles(Minecraft.getMinecraft() != null ? Minecraft.getMinecraft().player : null, event.getPartialTicks());
+      ClientProxy.particleRenderer.renderParticles(MysticalLib.proxy.getClientPlayer(), event.getPartialTicks());
       GlStateManager.popMatrix();
-      if (Minecraft.getMinecraft().world != null) {
+      if (MysticalLib.proxy.getClientWorld() != null) {
         List<TileEntity> list = Minecraft.getMinecraft().world.loadedTileEntityList;
         GlStateManager.pushMatrix();
         for (int i = 0; i < list.size(); i++) {
@@ -102,7 +108,6 @@ public class LibEvents {
     }
   }
 
-  @SideOnly(Side.CLIENT)
   public static void renderEntityStatic(@Nonnull Entity entityIn, float partialTicks, boolean b, @Nonnull Render render) {
     if (entityIn.ticksExisted == 0) {
       entityIn.lastTickPosX = entityIn.posX;
