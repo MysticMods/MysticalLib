@@ -17,7 +17,7 @@ public class ItemKnifeBase extends ItemToolBase {
   public static Set<Block> BLOCKS = Sets.newHashSet(Blocks.PLANKS, Blocks.LOG, Blocks.LOG2);
 
   public ItemKnifeBase(String name, ToolMaterial material) {
-    super(name, MaterialTypes.stats(material) != null ? MaterialTypes.stats(material).damage + 1.0f : 1.0f,
+    super(name, MaterialTypes.stats(material) != null ? (Math.max(1f, MaterialTypes.stats(material).damage - 1.0f)) : 1.0f,
         MaterialTypes.stats(material) != null ? MaterialTypes.stats(material).speed : -2.0f, material, BLOCKS);
   }
 
