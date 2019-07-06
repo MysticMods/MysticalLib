@@ -7,7 +7,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.MysticalLib;
-import epicsquid.mysticallib.proxy.ClientProxy;
+import epicsquid.mysticallib.setup.ClientProxy;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class FXRegistry {

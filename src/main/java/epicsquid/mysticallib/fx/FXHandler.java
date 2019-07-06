@@ -2,7 +2,7 @@ package epicsquid.mysticallib.fx;
 
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.event.RegisterFXEvent;
-import epicsquid.mysticallib.proxy.ClientProxy;
+import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;

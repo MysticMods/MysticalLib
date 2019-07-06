@@ -1,42 +1,36 @@
 package epicsquid.mysticallib;
 
-import epicsquid.mysticallib.proxy.CommonProxy;
 import epicsquid.mysticallib.recipe.RecipeRegistry;
+import epicsquid.mysticallib.setup.ClientProxy;
+import epicsquid.mysticallib.setup.IProxy;
+import epicsquid.mysticallib.setup.ModSetup;
+import epicsquid.mysticallib.setup.ServerProxy;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-@Mod(modid = MysticalLib.MODID, version = MysticalLib.VERSION, name = MysticalLib.MODNAME, dependencies = MysticalLib.DEPENDENCIES)
+@Mod("mysticallib")
 public class MysticalLib {
+
   public static final String MODID = "mysticallib";
-  public static final String VERSION = "@VERSION@";
-  public static final String MODNAME = "MysticalLib";
-  public static final String DEPENDENCIES = "after:*";
 
-  @SidedProxy(clientSide = "epicsquid.mysticallib.proxy.ClientProxy", serverSide = "epicsquid.mysticallib.proxy.CommonProxy") public static CommonProxy proxy;
+  // Sided setup
+  public static IProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
 
-  @Instance public static MysticalLib INSTANCE;
+  // Side agnostic setup
+  public static ModSetup setup = new ModSetup();
 
-  @EventHandler
-  public void preInit(FMLPreInitializationEvent event) {
-    MinecraftForge.EVENT_BUS.register(new LibRegistry());
-    MinecraftForge.EVENT_BUS.register(new LibEvents());
-    MinecraftForge.EVENT_BUS.register(new RecipeRegistry());
-    proxy.preInit(event);
+  public MysticalLib() {
+    // Register the setup method for mod loading
+    FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
   }
 
-  @EventHandler
-  public void init(FMLInitializationEvent event) {
-    proxy.init(event);
+  private void setup(final FMLCommonSetupEvent event) {
+    setup.init();
+    proxy.init();
   }
 
-  @EventHandler
-  public void postInit(FMLPostInitializationEvent event) {
-    proxy.postInit(event);
-  }
+
 }

@@ -10,7 +10,7 @@ import javax.annotation.Nonnull;
 import org.lwjgl.opengl.GL11;
 
 import epicsquid.mysticallib.MysticalLib;
-import epicsquid.mysticallib.proxy.ClientProxy;
+import epicsquid.mysticallib.setup.ClientProxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;

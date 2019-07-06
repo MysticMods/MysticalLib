@@ -8,13 +8,10 @@ import java.util.Map.Entry;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
-import epicsquid.mysticallib.network.PacketHandler;
 import epicsquid.mysticallib.particle.ParticleRegistry;
-import epicsquid.mysticallib.proxy.ClientProxy;
+import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.tile.IDelayedTileRenderer;
 import epicsquid.mysticallib.util.FluidTextureUtil;
-import epicsquid.mysticallib.world.GenerationData;
-import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -31,7 +28,6 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
