@@ -1,13 +1,12 @@
 package epicsquid.mysticallib.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraftforge.common.model.TRSRTransformation;
 
 import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
-
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraftforge.common.model.TRSRTransformation;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DefaultTransformations {
 
@@ -17,9 +16,9 @@ public class DefaultTransformations {
         TRSRTransformation.quatFromXYZDegrees(new Vector3f(rotateX, rotateY, rotateZ)), new Vector3f(scale, scale, scale), null);
   }
 
-  public static Map<TransformType, TRSRTransformation> itemTransforms = new HashMap<TransformType, TRSRTransformation>();
-  public static Map<TransformType, TRSRTransformation> blockTransforms = new HashMap<TransformType, TRSRTransformation>();
-  public static Map<TransformType, TRSRTransformation> handheldTransforms = new HashMap<TransformType, TRSRTransformation>();
+  public static Map<ItemCameraTransforms.TransformType, TRSRTransformation> itemTransforms = new HashMap<>();
+  public static Map<ItemCameraTransforms.TransformType, TRSRTransformation> blockTransforms = new HashMap<>();
+  public static Map<ItemCameraTransforms.TransformType, TRSRTransformation> handheldTransforms = new HashMap<>();
 
   public static TRSRTransformation ITEM_GROUND = create(0, 2, 0, 0, 0, 0, 0.5f);
   public static TRSRTransformation ITEM_HEAD = create(0, 13, 7, 0, 180, 0, 1);
@@ -42,29 +41,29 @@ public class DefaultTransformations {
   public static TRSRTransformation BLOCK_FIRST_PERSON_LEFT = create(0, 0, 0, 0, 225, 0, 0.4f);
 
   static {
-    itemTransforms.put(TransformType.FIXED, ITEM_FIXED);
-    itemTransforms.put(TransformType.GROUND, ITEM_GROUND);
-    itemTransforms.put(TransformType.HEAD, ITEM_HEAD);
-    itemTransforms.put(TransformType.THIRD_PERSON_RIGHT_HAND, ITEM_THIRD_PERSON_RIGHT);
-    itemTransforms.put(TransformType.THIRD_PERSON_LEFT_HAND, ITEM_THIRD_PERSON_LEFT);
-    itemTransforms.put(TransformType.FIRST_PERSON_RIGHT_HAND, ITEM_FIRST_PERSON_RIGHT);
-    itemTransforms.put(TransformType.FIRST_PERSON_LEFT_HAND, ITEM_FIRST_PERSON_LEFT);
+    itemTransforms.put(ItemCameraTransforms.TransformType.FIXED, ITEM_FIXED);
+    itemTransforms.put(ItemCameraTransforms.TransformType.GROUND, ITEM_GROUND);
+    itemTransforms.put(ItemCameraTransforms.TransformType.HEAD, ITEM_HEAD);
+    itemTransforms.put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, ITEM_THIRD_PERSON_RIGHT);
+    itemTransforms.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, ITEM_THIRD_PERSON_LEFT);
+    itemTransforms.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, ITEM_FIRST_PERSON_RIGHT);
+    itemTransforms.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, ITEM_FIRST_PERSON_LEFT);
 
-    handheldTransforms.put(TransformType.GROUND, ITEM_GROUND);
-    handheldTransforms.put(TransformType.HEAD, ITEM_HEAD);
-    handheldTransforms.put(TransformType.THIRD_PERSON_RIGHT_HAND, HANDHELD_THIRD_PERSON_RIGHT);
-    handheldTransforms.put(TransformType.THIRD_PERSON_LEFT_HAND, HANDHELD_THIRD_PERSON_LEFT);
-    handheldTransforms.put(TransformType.FIRST_PERSON_RIGHT_HAND, ITEM_FIRST_PERSON_RIGHT);
-    handheldTransforms.put(TransformType.FIRST_PERSON_LEFT_HAND, ITEM_FIRST_PERSON_LEFT);
+    handheldTransforms.put(ItemCameraTransforms.TransformType.GROUND, ITEM_GROUND);
+    handheldTransforms.put(ItemCameraTransforms.TransformType.HEAD, ITEM_HEAD);
+    handheldTransforms.put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, HANDHELD_THIRD_PERSON_RIGHT);
+    handheldTransforms.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, HANDHELD_THIRD_PERSON_LEFT);
+    handheldTransforms.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, ITEM_FIRST_PERSON_RIGHT);
+    handheldTransforms.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, ITEM_FIRST_PERSON_LEFT);
 
-    blockTransforms.put(TransformType.GUI, BLOCK_GUI);
-    blockTransforms.put(TransformType.GROUND, BLOCK_GROUND);
-    blockTransforms.put(TransformType.FIXED, BLOCK_FIXED);
-    blockTransforms.put(TransformType.HEAD, BLOCK_HEAD);
-    blockTransforms.put(TransformType.THIRD_PERSON_RIGHT_HAND, BLOCK_THIRD_PERSON_RIGHT);
-    blockTransforms.put(TransformType.THIRD_PERSON_LEFT_HAND, BLOCK_THIRD_PERSON_LEFT);
-    blockTransforms.put(TransformType.FIRST_PERSON_RIGHT_HAND, BLOCK_FIRST_PERSON_RIGHT);
-    blockTransforms.put(TransformType.FIRST_PERSON_LEFT_HAND, BLOCK_FIRST_PERSON_LEFT);
+    blockTransforms.put(ItemCameraTransforms.TransformType.GUI, BLOCK_GUI);
+    blockTransforms.put(ItemCameraTransforms.TransformType.GROUND, BLOCK_GROUND);
+    blockTransforms.put(ItemCameraTransforms.TransformType.FIXED, BLOCK_FIXED);
+    blockTransforms.put(ItemCameraTransforms.TransformType.HEAD, BLOCK_HEAD);
+    blockTransforms.put(ItemCameraTransforms.TransformType.THIRD_PERSON_RIGHT_HAND, BLOCK_THIRD_PERSON_RIGHT);
+    blockTransforms.put(ItemCameraTransforms.TransformType.THIRD_PERSON_LEFT_HAND, BLOCK_THIRD_PERSON_LEFT);
+    blockTransforms.put(ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND, BLOCK_FIRST_PERSON_RIGHT);
+    blockTransforms.put(ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, BLOCK_FIRST_PERSON_LEFT);
   }
 
 }

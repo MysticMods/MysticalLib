@@ -20,7 +20,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.client.renderer.block.model.BlockPart;
 import net.minecraft.client.renderer.block.model.BlockPartFace;
 import net.minecraft.client.renderer.block.model.BlockPartRotation;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.JsonUtils;
 
 public class BPDeserializer implements JsonDeserializer<BlockPart> {
@@ -29,7 +29,7 @@ public class BPDeserializer implements JsonDeserializer<BlockPart> {
     Vector3f vector3f = this.parsePositionFrom(jsonobject);
     Vector3f vector3f1 = this.parsePositionTo(jsonobject);
     BlockPartRotation blockpartrotation = this.parseRotation(jsonobject);
-    Map<EnumFacing, BlockPartFace> map = this.parseFacesCheck(p_deserialize_3_, jsonobject);
+    Map<Direction, BlockPartFace> map = this.parseFacesCheck(p_deserialize_3_, jsonobject);
 
     if (jsonobject.has("shade") && !JsonUtils.isBoolean(jsonobject, "shade")) {
       throw new JsonParseException("Expected shade to be a Boolean");
@@ -47,10 +47,10 @@ public class BPDeserializer implements JsonDeserializer<BlockPart> {
       JsonObject jsonobject = JsonUtils.getJsonObject(object, "rotation");
       Vector3f vector3f = this.parsePosition(jsonobject, "origin");
       vector3f.scale(0.0625F);
-      EnumFacing.Axis enumfacing$axis = this.parseAxis(jsonobject);
+      Direction.Axis Direction$axis = this.parseAxis(jsonobject);
       float f = this.parseAngle(jsonobject);
       boolean flag = JsonUtils.getBoolean(jsonobject, "rescale", false);
-      blockpartrotation = new BlockPartRotation(vector3f, enumfacing$axis, f, flag);
+      blockpartrotation = new BlockPartRotation(vector3f, Direction$axis, f, flag);
     }
 
     return blockpartrotation;
@@ -62,19 +62,19 @@ public class BPDeserializer implements JsonDeserializer<BlockPart> {
     return f;
   }
 
-  private EnumFacing.Axis parseAxis(JsonObject object) {
+  private Direction.Axis parseAxis(JsonObject object) {
     String s = JsonUtils.getString(object, "axis");
-    EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.byName(s.toLowerCase(Locale.ROOT));
+    Direction.Axis Direction$axis = Direction.Axis.byName(s.toLowerCase(Locale.ROOT));
 
-    if (enumfacing$axis == null) {
+    if (Direction$axis == null) {
       throw new JsonParseException("Invalid rotation axis: " + s);
     } else {
-      return enumfacing$axis;
+      return Direction$axis;
     }
   }
 
-  private Map<EnumFacing, BlockPartFace> parseFacesCheck(JsonDeserializationContext deserializationContext, JsonObject object) {
-    Map<EnumFacing, BlockPartFace> map = this.parseFaces(deserializationContext, object);
+  private Map<Direction, BlockPartFace> parseFacesCheck(JsonDeserializationContext deserializationContext, JsonObject object) {
+    Map<Direction, BlockPartFace> map = this.parseFaces(deserializationContext, object);
 
     if (map.isEmpty()) {
       throw new JsonParseException("Expected between 1 and 6 unique faces, got 0");
@@ -83,25 +83,25 @@ public class BPDeserializer implements JsonDeserializer<BlockPart> {
     }
   }
 
-  private Map<EnumFacing, BlockPartFace> parseFaces(JsonDeserializationContext deserializationContext, JsonObject object) {
-    Map<EnumFacing, BlockPartFace> map = Maps.newEnumMap(EnumFacing.class);
+  private Map<Direction, BlockPartFace> parseFaces(JsonDeserializationContext deserializationContext, JsonObject object) {
+    Map<Direction, BlockPartFace> map = Maps.newEnumMap(Direction.class);
     JsonObject jsonobject = JsonUtils.getJsonObject(object, "faces");
 
     for (Entry<String, JsonElement> entry : jsonobject.entrySet()) {
-      EnumFacing enumfacing = this.parseEnumFacing(entry.getKey());
-      map.put(enumfacing, (BlockPartFace) deserializationContext.deserialize(entry.getValue(), BlockPartFace.class));
+      Direction Direction = this.parseDirection(entry.getKey());
+      map.put(Direction, (BlockPartFace) deserializationContext.deserialize(entry.getValue(), BlockPartFace.class));
     }
 
     return map;
   }
 
-  private EnumFacing parseEnumFacing(String name) {
-    EnumFacing enumfacing = EnumFacing.byName(name);
+  private Direction parseDirection(String name) {
+    Direction Direction = Direction.byName(name);
 
-    if (enumfacing == null) {
+    if (Direction == null) {
       throw new JsonParseException("Unknown facing: " + name);
     } else {
-      return enumfacing;
+      return Direction;
     }
   }
 

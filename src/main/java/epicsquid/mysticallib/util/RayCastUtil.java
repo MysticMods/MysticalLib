@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.BlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -113,22 +113,22 @@ public class RayCastUtil {
             d5 = -1.0E-4D;
           }
 
-          EnumFacing enumfacing;
+          Direction Direction;
 
           if (d3 < d4 && d3 < d5) {
-            enumfacing = i > l ? EnumFacing.WEST : EnumFacing.EAST;
+            Direction = i > l ? Direction.WEST : Direction.EAST;
             vec31 = new Vec3d(d0, vec31.y + d7 * d3, vec31.z + d8 * d3);
           } else if (d4 < d5) {
-            enumfacing = j > i1 ? EnumFacing.DOWN : EnumFacing.UP;
+            Direction = j > i1 ? Direction.DOWN : Direction.UP;
             vec31 = new Vec3d(vec31.x + d6 * d4, d1, vec31.z + d8 * d4);
           } else {
-            enumfacing = k > j1 ? EnumFacing.NORTH : EnumFacing.SOUTH;
+            Direction = k > j1 ? Direction.NORTH : Direction.SOUTH;
             vec31 = new Vec3d(vec31.x + d6 * d5, vec31.y + d7 * d5, d2);
           }
 
-          l = MathHelper.floor(vec31.x) - (enumfacing == EnumFacing.EAST ? 1 : 0);
-          i1 = MathHelper.floor(vec31.y) - (enumfacing == EnumFacing.UP ? 1 : 0);
-          j1 = MathHelper.floor(vec31.z) - (enumfacing == EnumFacing.SOUTH ? 1 : 0);
+          l = MathHelper.floor(vec31.x) - (Direction == Direction.EAST ? 1 : 0);
+          i1 = MathHelper.floor(vec31.y) - (Direction == Direction.UP ? 1 : 0);
+          j1 = MathHelper.floor(vec31.z) - (Direction == Direction.SOUTH ? 1 : 0);
           blockpos = new BlockPos(l, i1, j1);
           BlockState BlockState1 = world.getBlockState(blockpos);
           Block block1 = BlockState1.getBlock();
@@ -141,7 +141,7 @@ public class RayCastUtil {
                 return raytraceresult1;
               }
             } else {
-              raytraceresult2 = new RayTraceResult(RayTraceResult.Type.MISS, vec31, enumfacing, blockpos);
+              raytraceresult2 = new RayTraceResult(RayTraceResult.Type.MISS, vec31, Direction, blockpos);
             }
           }
         }

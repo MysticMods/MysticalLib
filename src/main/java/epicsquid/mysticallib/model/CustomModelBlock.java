@@ -1,22 +1,20 @@
 package epicsquid.mysticallib.model;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import epicsquid.mysticallib.model.block.BakedModelBlock;
-import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.texture.ISprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.lang.reflect.Constructor;
+import java.util.function.Function;
 
 public class CustomModelBlock extends CustomModelBase {
   private Constructor<? extends BakedModelBlock> ctor;
@@ -56,16 +54,16 @@ public class CustomModelBlock extends CustomModelBase {
     }
   }
 
+  @Nullable
   @Override
-  @Nonnull
-  public IBakedModel bake(@Nullable IModelState state, @Nonnull VertexFormat format,
-      @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-    try {
-      return ctor.newInstance(state, format, bakedTextureGetter, this);
-    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-      e.printStackTrace();
-    }
-    return new BakedModelBlock(state, DefaultVertexFormats.BLOCK, bakedTextureGetter, this);
+  public IBakedModel bake(ModelBakery bakery, Function<ResourceLocation, TextureAtlasSprite> spriteGetter, ISprite sprite, VertexFormat format) {
+//    try {
+//      return ctor.newInstance(state, format, bakedTextureGetter, this);
+//    } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+//      e.printStackTrace();
+//    }
+//    return new BakedModelBlock(state, DefaultVertexFormats.BLOCK, bakedTextureGetter, this);
+    return super.bake(bakery, spriteGetter, sprite, format);
   }
 
   @Override

@@ -12,17 +12,17 @@ import com.google.gson.JsonParseException;
 
 import net.minecraft.client.renderer.block.model.BlockFaceUV;
 import net.minecraft.client.renderer.block.model.BlockPartFace;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.JsonUtils;
 
 public class BPFDeserializer implements JsonDeserializer<BlockPartFace> {
   public BlockPartFace deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException {
     JsonObject jsonobject = p_deserialize_1_.getAsJsonObject();
-    EnumFacing enumfacing = this.parseCullFace(jsonobject);
+    Direction Direction = this.parseCullFace(jsonobject);
     int i = this.parseTintIndex(jsonobject);
     String s = this.parseTexture(jsonobject);
     BlockFaceUV blockfaceuv = (BlockFaceUV) p_deserialize_3_.deserialize(jsonobject, BlockFaceUV.class);
-    return new BlockPartFace(enumfacing, i, s, blockfaceuv);
+    return new BlockPartFace(Direction, i, s, blockfaceuv);
   }
 
   protected int parseTintIndex(JsonObject object) {
@@ -34,8 +34,8 @@ public class BPFDeserializer implements JsonDeserializer<BlockPartFace> {
   }
 
   @Nullable
-  private EnumFacing parseCullFace(JsonObject object) {
+  private Direction parseCullFace(JsonObject object) {
     String s = JsonUtils.getString(object, "cullface", "");
-    return EnumFacing.byName(s);
+    return Direction.byName(s);
   }
 }
