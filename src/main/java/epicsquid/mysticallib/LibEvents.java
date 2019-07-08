@@ -3,7 +3,6 @@ package epicsquid.mysticallib;
 import com.mojang.blaze3d.platform.GlStateManager;
 import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.setup.ClientProxy;
-import epicsquid.mysticallib.tile.IDelayedTileRenderer;
 import epicsquid.mysticallib.util.FluidTextureUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
