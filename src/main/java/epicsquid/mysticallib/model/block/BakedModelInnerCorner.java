@@ -7,7 +7,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import epicsquid.mysticallib.block.BlockCornerBase;
+import epicsquid.mysticallib.block.BaseCornerBlock;
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Segment;
@@ -92,8 +92,8 @@ public class BakedModelInnerCorner extends BakedModelBlock {
       segm_down_pxpz_1.addToList(quads, side);
       segm_down_pxpz_2.addToList(quads, side);
     } else {
-      boolean up = state.getValue(BlockCornerBase.UP);
-      int dir = state.getValue(BlockCornerBase.DIR);
+      boolean up = state.getValue(BaseCornerBlock.UP);
+      int dir = state.getValue(BaseCornerBlock.DIR);
       if (!up) {
         switch (dir) {
         case 2:

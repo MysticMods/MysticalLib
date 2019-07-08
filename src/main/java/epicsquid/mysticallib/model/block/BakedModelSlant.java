@@ -6,7 +6,7 @@ import java.util.function.Function;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import epicsquid.mysticallib.block.BlockSlantBase;
+import epicsquid.mysticallib.block.BaseSlantBlock;
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Segment;
@@ -48,8 +48,8 @@ public class BakedModelSlant extends BakedModelBlock {
     if (state == null) {
       segm_down_south.addToList(quads, side);
     } else {
-      int vert = state.getValue(BlockSlantBase.VERT);
-      int dir = state.getValue(BlockSlantBase.DIR);
+      int vert = state.getValue(BaseSlantBlock.VERT);
+      int dir = state.getValue(BaseSlantBlock.DIR);
       if (vert == 0) {
         switch (dir) {
         case 0:

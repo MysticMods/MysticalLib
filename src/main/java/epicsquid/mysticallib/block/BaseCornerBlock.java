@@ -1,18 +1,24 @@
 package epicsquid.mysticallib.block;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IEnviromentBlockReader;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("deprecation")
-public class BlockCornerBase extends BlockBase {
+
+public class BaseCornerBlock extends BaseBlock {
   public static Map<Integer, List<VoxelShape>> boxes = new HashMap<>();
 
   public static final BooleanProperty UP = BooleanProperty.create("up");
@@ -23,43 +29,85 @@ public class BlockCornerBase extends BlockBase {
 //  protected @Nullable BlockState parent = null;
 
 
-  public BlockCornerBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name) {
-    super(mat, type, hardness, name);
+  public BaseCornerBlock(Properties props, @Nonnull String name) {
+    super(props, name);
   }
 
-//  public BlockCornerBase(@Nonnull BlockState parent, @Nonnull SoundType type, float hardness, @Nonnull String name, boolean inner) {
-//    this(parent.getMaterial(), type, hardness, name, inner);
-//    this.parent = parent;
-//  }
-//
-//  @Override
-//  @Nonnull
-//  public BlockStateContainer createBlockState() {
-//    return new BlockStateContainer(this, INNER, UP, DIR);
-//  }
-//
-//  @Override
-//  @Nonnull
-//  public BlockState getStateFromMeta(int meta) {
-//    return getDefaultState().withProperty(INNER, inner).withProperty(UP, (int) (meta / 4) > 0).withProperty(DIR, meta % 4);
-//  }
-//
-//  @Override
-//  public int getMetaFromState(@Nonnull BlockState state) {
-//    return (state.getValue(UP) ? 1 : 0) * 4 + state.getValue(DIR);
-//  }
-//
-//  @Override
-//  @Nonnull
-//  public BlockState withRotation(@Nonnull BlockState state, @Nonnull Rotation rot) {
-//    int newDir = (state.getValue(DIR) + rot.ordinal()) % 4;
-//    return state.withProperty(DIR, newDir);
-//  }
+  @Override
+  protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    super.fillStateContainer(builder);
+    builder.add(UP).add(DIR).add(INNER);
+  }
+
+  @Nullable
+  @Override
+  public BlockState getStateForPlacement(BlockItemUseContext context) {
+    double hitX = context.getHitVec().x;
+    double hitY = context.getHitVec().y;
+    double hitZ = context.getHitVec().z;
+
+    boolean up = (hitY > 0.5);
+    if (hitY == 1) {
+      up = false;
+    }
+    if (hitY == 0) {
+      up = true;
+    }
+    int dir = 0;
+    if (hitX > 0 && hitX < 1 && hitZ > 0 && hitZ < 1) {
+      if (hitX < 0.5 && hitZ < 0.5) {
+        dir = 0;
+      }
+      if (hitX >= 0.5 && hitZ < 0.5) {
+        dir = 1;
+      }
+      if (hitX >= 0.5 && hitZ >= 0.5) {
+        dir = 2;
+      }
+      if (hitX < 0.5 && hitZ >= 0.5) {
+        dir = 3;
+      }
+    }
+    if (hitX == 0) {
+      if (hitZ < 0.5) {
+        dir = 1;
+      }
+      if (hitZ >= 0.5) {
+        dir = 2;
+      }
+    }
+    if (hitZ == 0) {
+      if (hitX < 0.5) {
+        dir = 3;
+      }
+      if (hitX >= 0.5) {
+        dir = 2;
+      }
+    }
+    if (hitX == 1) {
+      if (hitZ < 0.5) {
+        dir = 0;
+      }
+      if (hitZ >= 0.5) {
+        dir = 3;
+      }
+    }
+    if (hitZ == 1) {
+      if (hitX < 0.5) {
+        dir = 0;
+      }
+      if (hitX > 0.5) {
+        dir = 1;
+      }
+    }
+    return getDefaultState().with(UP, up).with(DIR, dir);
+  }
+
 //
 //  @Override
 //  public void addCollisionBoxToList(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox,
 //      @Nonnull List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean advanced) {
-//    float box_precision = BlockSlantBase.box_precision;
+//    float box_precision = BaseSlantBlock.box_precision;
 //    List<AxisAlignedBB> temp = new ArrayList<>();
 //    boolean up = state.getValue(UP);
 //    int dir = state.getValue(DIR);
@@ -189,76 +237,12 @@ public class BlockCornerBase extends BlockBase {
 //    }
 //  }
 //
-//  @Override
-//  @Nonnull
-//  public BlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing face, float hitX, float hitY, float hitZ, int meta,
-//      @Nonnull EntityLivingBase placer) {
-//    boolean up = (hitY > 0.5f);
-//    if (hitY == 1) {
-//      up = false;
-//    }
-//    if (hitY == 0) {
-//      up = true;
-//    }
-//    int dir = 0;
-//    if (hitX > 0 && hitX < 1 && hitZ > 0 && hitZ < 1) {
-//      if (hitX < 0.5 && hitZ < 0.5) {
-//        dir = 0;
-//      }
-//      if (hitX >= 0.5 && hitZ < 0.5) {
-//        dir = 1;
-//      }
-//      if (hitX >= 0.5 && hitZ >= 0.5) {
-//        dir = 2;
-//      }
-//      if (hitX < 0.5 && hitZ >= 0.5) {
-//        dir = 3;
-//      }
-//    }
-//    if (hitX == 0) {
-//      if (hitZ < 0.5) {
-//        dir = 1;
-//      }
-//      if (hitZ >= 0.5) {
-//        dir = 2;
-//      }
-//    }
-//    if (hitZ == 0) {
-//      if (hitX < 0.5) {
-//        dir = 3;
-//      }
-//      if (hitX >= 0.5) {
-//        dir = 2;
-//      }
-//    }
-//    if (hitX == 1) {
-//      if (hitZ < 0.5) {
-//        dir = 0;
-//      }
-//      if (hitZ >= 0.5) {
-//        dir = 3;
-//      }
-//    }
-//    if (hitZ == 1) {
-//      if (hitX < 0.5) {
-//        dir = 0;
-//      }
-//      if (hitX > 0.5) {
-//        dir = 1;
-//      }
-//    }
-//    return getDefaultState().withProperty(UP, up).withProperty(DIR, dir);
-//  }
 //
-//  @Override
-//  public boolean shouldSideBeRendered(@Nonnull BlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
-//    return true;
-//  }
-//
-//  @Override
-//  public boolean doesSideBlockRendering(@Nonnull BlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing side) {
-//    return false;
-//  }
+
+  @Override
+  public boolean doesSideBlockRendering(BlockState state, IEnviromentBlockReader world, BlockPos pos, Direction face) {
+    return false;
+  }
 //
 //  // TODO: Look for a better way of doing this
 //  @Override

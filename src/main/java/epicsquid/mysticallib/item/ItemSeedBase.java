@@ -3,7 +3,7 @@ package epicsquid.mysticallib.item;
 import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.LibRegistry;
-import epicsquid.mysticallib.block.BlockCropBase;
+import epicsquid.mysticallib.block.BaseCropBlock;
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
@@ -29,7 +29,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
 
   private boolean hasCustomModel;
   private EnumPlantType plantType;
-  private BlockCropBase crop;
+  private BaseCropBlock crop;
   private Block base;
 
   /**
@@ -39,7 +39,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
    * @param crop Crop block to plant with the seed
    * @param base Block to grow the crop on
    */
-  public ItemSeedBase(@Nonnull String name, @Nonnull BlockCropBase crop, @Nonnull Block base) {
+  public ItemSeedBase(@Nonnull String name, @Nonnull BaseCropBlock crop, @Nonnull Block base) {
     super(crop, base);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
