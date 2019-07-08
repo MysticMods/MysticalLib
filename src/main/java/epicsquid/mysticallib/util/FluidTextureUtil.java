@@ -1,16 +1,12 @@
 package epicsquid.mysticallib.util;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.Maps;
-
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
+
+import javax.annotation.Nonnull;
+import java.util.Map;
 
 public class FluidTextureUtil {
   public static Map<Fluid, TextureAtlasSprite> stillTextures = Maps.newHashMap();
@@ -21,17 +17,17 @@ public class FluidTextureUtil {
   // FIXME when fluids freaking work
 
   public static void initTextures(@Nonnull AtlasTexture map) {
-    for (Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
-      if (fluid.getStill() != null) {
-        String still = fluid.getStill().toString();
-        TextureAtlasSprite sprite;
-        if (map.getTextureExtry(still) != null) {
-          sprite = map.getTextureExtry(still);
-        } else {
-          sprite = map.registerSprite(fluid.getStill());
-        }
-        stillTextures.put(fluid, sprite);
-      }
-    }
+//    for (Fluid fluid : FluidRegistry.getRegisteredFluids().values()) {
+//      if (fluid.getStill() != null) {
+//        String still = fluid.getStill().toString();
+//        TextureAtlasSprite sprite;
+//        if (map.getTextureExtry(still) != null) {
+//          sprite = map.getTextureExtry(still);
+//        } else {
+//          sprite = map.registerSprite(fluid.getStill());
+//        }
+//        stillTextures.put(fluid, sprite);
+//      }
+//    }
   }
 }
