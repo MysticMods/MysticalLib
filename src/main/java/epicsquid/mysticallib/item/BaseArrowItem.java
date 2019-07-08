@@ -10,9 +10,11 @@ import javax.annotation.Nonnull;
 
 public class BaseArrowItem extends ArrowItem {
 
-	public BaseArrowItem(Properties props, String name) {
+	private final double damage;
+
+	public BaseArrowItem(Properties props, double damage) {
 		super(props);
-		setRegistryName(name);
+		this.damage = damage;
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class BaseArrowItem extends ArrowItem {
 	public ArrowEntity createArrow(@Nonnull World worldIn, @Nonnull ItemStack stack, LivingEntity shooter) {
 		ArrowEntity entity = new ArrowEntity(worldIn, shooter);
 		entity.setPotionEffect(stack);
-		entity.setDamage(3.0D);
+		entity.setDamage(damage);
 		return entity;
 	}
 }

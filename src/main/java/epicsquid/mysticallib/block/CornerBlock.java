@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class BaseCornerBlock extends BaseBlock {
+public class CornerBlock extends Block {
   public static Map<Integer, List<VoxelShape>> boxes = new HashMap<>();
 
   public static final BooleanProperty UP = BooleanProperty.create("up");
@@ -29,8 +29,8 @@ public class BaseCornerBlock extends BaseBlock {
 //  protected @Nullable BlockState parent = null;
 
 
-  public BaseCornerBlock(Properties props, @Nonnull String name) {
-    super(props, name);
+  public CornerBlock(Properties props) {
+    super(props);
   }
 
   @Override
@@ -107,7 +107,7 @@ public class BaseCornerBlock extends BaseBlock {
 //  @Override
 //  public void addCollisionBoxToList(@Nonnull BlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox,
 //      @Nonnull List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean advanced) {
-//    float box_precision = BaseSlantBlock.box_precision;
+//    float box_precision = SlantBlock.box_precision;
 //    List<AxisAlignedBB> temp = new ArrayList<>();
 //    boolean up = state.getValue(UP);
 //    int dir = state.getValue(DIR);

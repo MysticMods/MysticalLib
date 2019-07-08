@@ -17,12 +17,9 @@ public class BaseCropBlock extends CropsBlock {
 
 	/**
 	 * Used for arbitrary crops
-	 *
-	 * @param name Name of the crop
 	 */
-	public BaseCropBlock(Properties props, @Nonnull String name, @Nonnull PlantType plantType) {
+	public BaseCropBlock(Properties props, @Nonnull PlantType plantType) {
 		super(props);
-		setRegistryName(name);
 		this.plantType = plantType;
 	}
 

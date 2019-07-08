@@ -8,9 +8,8 @@ public class BaseBowItem extends BowItem {
 
 	private final IItemTier tier;
 
-	public BaseBowItem(Properties props, IItemTier tier, String name) {
+	public BaseBowItem(Properties props, IItemTier tier) {
 		super(props);
-		setRegistryName(name);
 		this.tier = tier;
 	}
 

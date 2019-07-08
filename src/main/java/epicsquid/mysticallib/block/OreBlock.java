@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.block;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
@@ -10,14 +11,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BaseOreBlock extends BaseBlock {
+public class OreBlock extends Block {
 	private final int minXP;
 	private final int maxXP;
 	private final int level;
 	private final ToolType tool;
 
-	public BaseOreBlock(Properties props, @Nonnull String name, int level, int minXp, int maxXp, ToolType tool) {
-		super(props, name);
+	public OreBlock(Properties props, int level, int minXp, int maxXp, ToolType tool) {
+		super(props);
 		this.level = level;
 		this.tool = tool;
 		this.minXP = minXp;
@@ -41,7 +42,7 @@ public class BaseOreBlock extends BaseBlock {
 			return 0;
 
 		Random rand = world instanceof World ? ((World) world).rand : new Random();
-		return Math.min(minXP, maxXP);
+		return rand.nextInt(maxXP - minXP) + minXP;
 	}
 
 }

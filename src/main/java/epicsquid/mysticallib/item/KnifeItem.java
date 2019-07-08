@@ -8,11 +8,11 @@ import net.minecraft.item.ToolItem;
 
 import java.util.Set;
 
-public class BaseKnifeItem extends ToolItem {
+public class KnifeItem extends ToolItem {
 	public static Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.ACACIA_LOG, Blocks.BIRCH_LOG, Blocks.DARK_OAK_LOG, Blocks.JUNGLE_LOG, Blocks.OAK_LOG, Blocks.SPRUCE_LOG);
 
-	public BaseKnifeItem(IItemTier tier, int attackDamage, float attackSpeed, Properties props, String name) {
+	// TODO rework knives to strip logs of bark with right click, or drop bark by mining it
+	public KnifeItem(IItemTier tier, int attackDamage, float attackSpeed, Properties props) {
 		super(attackDamage, attackSpeed, tier, EFFECTIVE_BLOCKS, props);
-		setRegistryName(name);
 	}
 }
