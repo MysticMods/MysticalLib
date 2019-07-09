@@ -1,12 +1,10 @@
 package epicsquid.mysticallib.fx;
 
-import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.event.RegisterFXEvent;
 import epicsquid.mysticallib.setup.ClientLibRegistry;
 import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.util.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,7 +19,7 @@ public class FXHandler {
   public static int FX_BEAM, FX_SLASH, FX_BURST;
 
   @SubscribeEvent
-  public void onRegisterFX(RegisterFXEvent event) {
+  public static void onRegisterFX(RegisterFXEvent event) {
     FX_BEAM = FXRegistry.registerEffect(nbt -> {
       EffectBeam beam = new EffectBeam();
       beam.read(nbt);
