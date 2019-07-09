@@ -1,10 +1,9 @@
 package epicsquid.mysticallib.world;
 
 import epicsquid.mysticallib.MysticalLib;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
@@ -29,35 +28,35 @@ public class GenerationData extends WorldSavedData {
   }
 
   @Override
-  public void readFromNBT(@Nonnull NBTTagCompound nbt) {
-    NBTTagList list = nbt.getTagList("gen_data_nodes", Constants.NBT.TAG_COMPOUND);
-    for (int i = 0; i < list.tagCount(); i++) {
-      nodes.add(new GenerationNode(list.getCompoundTagAt(i)));
+  public void read(@Nonnull CompoundNBT nbt) {
+    ListNBT list = nbt.getList("gen_data_nodes", Constants.NBT.TAG_COMPOUND);
+    for (int i = 0; i < list.size(); i++) {
+      nodes.add(new GenerationNode(list.getCompound(i)));
     }
   }
 
   @Override
   @Nonnull
-  public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
-    NBTTagList list = new NBTTagList();
+  public CompoundNBT write(@Nonnull CompoundNBT compound) {
+    ListNBT list = new ListNBT();
     for (GenerationNode g : nodes) {
-      list.appendTag(g.writeToNBT());
+      list.add(g.write());
     }
-    compound.setTag("gen_data_nodes", list);
+    compound.put("gen_data_nodes", list);
     return compound;
   }
 
-  public static GenerationData get(@Nonnull World w) {
-    MapStorage s = w.getPerWorldStorage();
-    GenerationData d = (GenerationData) s.getOrLoadData(GenerationData.class, MysticalLib.MODID + "_generation_data");
-
-    if (d == null) {
-      d = new GenerationData();
-      s.setData(MysticalLib.MODID + "_generation_data", d);
-    }
-
-    return d;
-  }
+//  public static GenerationData get(@Nonnull World w) {
+//    MapStorage s = w.getPerWorldStorage();
+//    GenerationData d = (GenerationData) s.getOrLoadData(GenerationData.class, MysticalLib.MODID + "_generation_data");
+//
+//    if (d == null) {
+//      d = new GenerationData();
+//      s.setData(MysticalLib.MODID + "_generation_data", d);
+//    }
+//
+//    return d;
+//  }
 
   public void update(@Nonnull World world) {
     Set<GenerationNode> toDelete = new HashSet<>();
