@@ -1,11 +1,16 @@
 package epicsquid.mysticallib;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import epicsquid.mysticallib.particle.ParticleRegistry;
+import epicsquid.mysticallib.particle.ParticleRenderer;
 import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.util.FluidTextureUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -35,5 +40,12 @@ public class LibEvents {
 			ticks++;
 			ClientProxy.particleRenderer.updateParticles();
 		}
+	}
+
+	@SubscribeEvent
+	public void onRenderAfterWorld(RenderWorldLastEvent event) {
+		GlStateManager.pushMatrix();
+		ClientProxy.particleRenderer.renderParticles(event.getPartialTicks());
+		GlStateManager.popMatrix();
 	}
 }
