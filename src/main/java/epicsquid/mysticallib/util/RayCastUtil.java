@@ -1,19 +1,15 @@
 package epicsquid.mysticallib.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RayCastUtil {
 
@@ -32,9 +28,8 @@ public class RayCastUtil {
 				BlockState blockState = world.getBlockState(blockpos);
 				Block block = blockState.getBlock();
 
-				if ((blockState.getCollisionShape(world, blockpos) != VoxelShapes.empty()) && (blockState.getCollisionShape(world, blockpos) == VoxelShapes.fullCube() || allowNonfullCube) && block
-								.canCollideCheck(blockState, stopOnLiquid)) {
-					RayTraceResult raytraceresult = blockState.collisionRayTrace(world, blockpos, vec31, vec32);
+				if ((blockState.getCollisionShape(world, blockpos) != VoxelShapes.empty()) && (blockState.getCollisionShape(world, blockpos) == VoxelShapes.fullCube() || allowNonfullCube)) {
+					RayTraceResult raytraceresult = blockState.getRaytraceShape(world, blockpos).rayTrace(vec31, vec32, blockpos);
 
 					if (raytraceresult != null) {
 						return raytraceresult;
@@ -135,15 +130,16 @@ public class RayCastUtil {
 					BlockState BlockState1 = world.getBlockState(blockpos);
 					Block block1 = BlockState1.getBlock();
 
-					if (BlockState1.getMaterial() == Material.PORTAL || BlockState1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) {
-						if (block1.canCollideCheck(BlockState1, stopOnLiquid) && (blockState.isFullCube() || allowNonfullCube)) {
-							RayTraceResult raytraceresult1 = BlockState1.collisionRayTrace(world, blockpos, vec31, vec32);
+					if (BlockState1.getMaterial() == Material.PORTAL || BlockState1.getCollisionShape(world, blockpos) != VoxelShapes.empty()) {
+						if (blockState.getCollisionShape(world, blockpos) == VoxelShapes.fullCube() || allowNonfullCube) {
+							RayTraceResult raytraceresult1 = BlockState1.getRaytraceShape(world, blockpos).rayTrace(vec31, vec32, blockpos);
 
 							if (raytraceresult1 != null) {
 								return raytraceresult1;
 							}
 						} else {
-							raytraceresult2 = new RayTraceResult(RayTraceResult.Type.MISS, vec31, direction, blockpos);
+							// TODO find a new way to raytrace
+							raytraceresult2 = null;
 						}
 					}
 				}
