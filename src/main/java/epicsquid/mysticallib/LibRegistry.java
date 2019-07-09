@@ -9,7 +9,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = MysticalLib.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = MysticalLib.MODID)
 public class LibRegistry {
 
   private static ArrayList<SoundEvent> sounds = new ArrayList<>();

@@ -6,20 +6,8 @@ import net.minecraft.world.World;
 
 public class ServerProxy implements IProxy {
 
-  //  public void preInit(FMLPreInitializationEvent event) {
-  //    LibRegistry.initAll();
-  //    PacketHandler.registerMessages();
-  //    MinecraftForge.EVENT_BUS.post(new RegisterFXEvent());
-  //  }
-  //
-  //  public void init(FMLInitializationEvent event) {
-  //    MinecraftForge.EVENT_BUS.post(new RegisterWorldGenEvent());
-  //  }
-  //
-
   @Override
   public void init() {
-
   }
 
   @Override
