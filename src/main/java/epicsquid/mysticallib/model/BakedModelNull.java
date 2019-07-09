@@ -1,25 +1,23 @@
 package epicsquid.mysticallib.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.model.ItemOverrideList;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
-
-import org.apache.commons.lang3.tuple.Pair;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 public class BakedModelNull implements IBakedModel {
   protected Function<ResourceLocation, TextureAtlasSprite> getter;
@@ -32,7 +30,7 @@ public class BakedModelNull implements IBakedModel {
 
   @Override
   @Nonnull
-  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable EnumFacing side, long rand) {
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand) {
     return new ArrayList<>();
   }
 
@@ -59,19 +57,18 @@ public class BakedModelNull implements IBakedModel {
 
   @Override
   @Nonnull
-  public ItemOverrideList getOverrides() {
-    return new ItemOverrideList(Arrays.asList());
-  }
-
-  @Override
-  @Nonnull
   public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(@Nonnull ItemCameraTransforms.TransformType type) {
     Matrix4f matrix;
     if (DefaultTransformations.blockTransforms.containsKey(type)) {
-      matrix = DefaultTransformations.blockTransforms.get(type).getMatrix();
+      matrix = DefaultTransformations.blockTransforms.get(type).getMatrix(Direction.byIndex(0));
       return Pair.of(this, matrix);
     }
     return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, type);
   }
 
+  @Override
+  @Nonnull
+  public ItemOverrideList getOverrides() {
+    return ItemOverrideList.EMPTY;
+  }
 }

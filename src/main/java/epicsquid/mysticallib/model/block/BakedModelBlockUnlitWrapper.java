@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.model.block;
 
-import epicsquid.mysticallib.hax.Hax;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.model.BakedQuad;
@@ -39,11 +38,11 @@ public class BakedModelBlockUnlitWrapper implements IBakedModel {
 				list.addAll(internal.getQuads(state, null, rand));
 				for (int i = 0; i < list.size(); i++) {
 					// FIXME HAX
-					try {
-						Hax.bakedQuadFace.set(list.get(i), null);
-					} catch (IllegalArgumentException | IllegalAccessException e) {
-						e.printStackTrace();
-					}
+//					try {
+//						Hax.bakedQuadFace.set(list.get(i), null);
+//					} catch (IllegalArgumentException | IllegalAccessException e) {
+//						e.printStackTrace();
+//					}
 				}
 				quads.put(stateid, list);
 			}

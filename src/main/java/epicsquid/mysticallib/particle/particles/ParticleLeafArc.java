@@ -26,7 +26,7 @@ public class ParticleLeafArc extends ParticleBase {
     if (this.colorB > 1.0) {
       this.colorB = this.colorB / 255.0f;
     }
-    this.setRBGColorF(colorR, colorG, colorB);
+    this.setColor(colorR, colorG, colorB);
     this.setAlphaF((float) data[4]);
     this.initAlpha = (float) data[4];
     this.particleScale = (float) 1;
@@ -38,11 +38,11 @@ public class ParticleLeafArc extends ParticleBase {
   }
 
   @Override
-  public void onUpdate() {
-    super.onUpdateNoMotion();
+  public void tick() {
+    super.tickNoMotion();
     this.prevParticleAngle = particleAngle;
     this.particleAngle += this.angularVelocity;
-    float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
+    float lifeCoeff = (float) this.age / (float) this.maxAge;
     this.particleAlpha = initAlpha * (Math.max(1.0f - lifeCoeff, 0.6f));
     this.particleGravity += 0.001f;
     if (particleGravity > 0.45f) {

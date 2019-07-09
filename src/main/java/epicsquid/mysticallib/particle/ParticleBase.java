@@ -4,12 +4,17 @@ import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class ParticleBase extends Particle implements IParticle {
+// TODO Investigate vanilla IParticleFactory (see EnchantmentTableParticle)
+public class ParticleBase extends SpriteTexturedParticle implements IParticle {
 
   private int lifetime = 0;
 
@@ -21,35 +26,36 @@ public class ParticleBase extends Particle implements IParticle {
     if (data.length >= 1) {
       lifetime = (int) data[0];
     }
-    this.particleMaxAge = (int) (lifetime);
+    this.maxAge = lifetime;
     ResourceLocation texture = ParticleRegistry.particleTextures.get(Util.getLowercaseClassName(getClass()));
-    TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
-    this.setParticleTexture(sprite);
-    this.particleScale = 1.0f;
+    TextureAtlasSprite sprite = Minecraft.getInstance().getTextureMap().getAtlasSprite(texture.toString());
+    this.setSprite(sprite);
+    this.width = 1.0f;
     this.canCollide = false;
   }
 
   @Override
-  public void onUpdate() {
-    super.onUpdate();
+  @Nonnull
+  public IParticleRenderType getRenderType() {
+    return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+  }
+
+  @Override
+  public void tick() {
+    super.tick();
     this.motionX *= 0.95f;
     this.motionY *= 0.95f;
     this.motionZ *= 0.95f;
     lifetime--;
   }
 
-  protected void onUpdateNoMotion() {
-    super.onUpdate();
+  protected void tickNoMotion() {
+    super.tick();
     lifetime--;
   }
 
   protected void setDead() {
     this.lifetime = 0;
-  }
-
-  @Override
-  public int getFXLayer() {
-    return 1;
   }
 
   @Override

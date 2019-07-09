@@ -1,17 +1,18 @@
 package epicsquid.mysticallib.model;
 
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.model.item.BakedModelItem;
-import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.texture.ISprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.IModelState;
 import net.minecraftforge.common.model.TRSRTransformation;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.function.Function;
 
 public class CustomModelItem extends CustomModelBase {
   public boolean handheld;
@@ -23,11 +24,10 @@ public class CustomModelItem extends CustomModelBase {
     }
   }
 
+  @Nullable
   @Override
-  @Nonnull
-  public IBakedModel bake(@Nullable IModelState state, @Nonnull VertexFormat format,
-      @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
-    return new BakedModelItem(format, bakedTextureGetter, this);
+  public IBakedModel bake(ModelBakery bakery, Function<ResourceLocation, TextureAtlasSprite> spriteGetter, ISprite sprite, VertexFormat format) {
+    return new BakedModelItem(format, spriteGetter, this);
   }
 
   @Override

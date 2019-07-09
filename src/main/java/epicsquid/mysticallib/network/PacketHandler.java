@@ -1,42 +1,49 @@
 package epicsquid.mysticallib.network;
 
 import epicsquid.mysticallib.MysticalLib;
-import net.minecraft.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
+
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class PacketHandler {
-  public static SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(MysticalLib.MODID);
 
-  private static int id = 0;
+	private static final String PROTOCOL_VERSION = Integer.toString(2);
+	private static short index = 0;
 
-  public static void registerMessages() {
-  }
+	public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
+					.named(new ResourceLocation(MysticalLib.MODID, "main_network_channel"))
+					.clientAcceptedVersions(PROTOCOL_VERSION::equals)
+					.serverAcceptedVersions(PROTOCOL_VERSION::equals)
+					.networkProtocolVersion(() -> PROTOCOL_VERSION)
+					.simpleChannel();
 
-  public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> handler, Class<REQ> message,
-      Side side) {
-    INSTANCE.registerMessage(handler, message, id++, side);
-  }
+	private static int id = 0;
 
-  public static void sendToAllTracking(IMessage message, int dimension, BlockPos pos) {
-    INSTANCE.sendToAllTracking(message, new NetworkRegistry.TargetPoint(dimension, pos.getX(), pos.getY(), pos.getZ(), 0));
-  }
+	public static void registerMessages() {
+	}
 
-  public static void sendToAllTracking(IMessage message, TileEntity tile) {
-    sendToAllTracking(message, tile.getWorld(), tile.getPos());
-  }
+	public static void sendTo(Object msg, ServerPlayerEntity player) {
+		if (!(player instanceof FakePlayer))
+			HANDLER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+	}
 
-  public static void sendToAllTracking(IMessage message, World world, BlockPos pos) {
-    sendToAllTracking(message, world.provider.getDimension(), pos);
-  }
+	public static void sendToServer(Object msg) {
+		HANDLER.sendToServer(msg);
+	}
 
-  public static void sendToAllTracking(IMessage message, Entity entity) {
-    sendToAllTracking(message, entity.dimension, entity.getPosition());
-  }
+	private static <MSG> void registerMessage(Class<MSG> messageType, BiConsumer<MSG, PacketBuffer> encoder, Function<PacketBuffer, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> messageConsumer) {
+		HANDLER.registerMessage(index, messageType, encoder, decoder, messageConsumer);
+		index++;
+		if (index > 0xFF)
+			throw new RuntimeException("Too many messages!");
+	}
 }
