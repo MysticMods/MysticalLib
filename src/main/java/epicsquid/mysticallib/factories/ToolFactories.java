@@ -9,7 +9,25 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ToolFactories {
+
+	private static final Map<String, IItemFactory> FACTORIES = new HashMap<>();
+
+	public static Collection<IItemFactory> getFactories() {
+		return FACTORIES.values();
+	}
+
+	public static void addFactory(String name, IItemFactory factory) {
+		FACTORIES.putIfAbsent(name, factory);
+	}
+
+	public static void addOrReplaceFactory(String name, IItemFactory factory) {
+		FACTORIES.put(name, factory);
+	}
 
 	public static class SwordFactory implements IItemFactory {
 		@Override
