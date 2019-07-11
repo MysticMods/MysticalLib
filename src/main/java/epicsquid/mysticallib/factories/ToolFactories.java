@@ -8,6 +8,7 @@ import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
+import net.minecraftforge.common.ToolType;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -39,21 +40,21 @@ public class ToolFactories {
 	public static class PickaxeFactory implements IItemFactory {
 		@Override
 		public Item create(MaterialProperties props) {
-			return new PickaxeItem(props.getTier(), props.getDamage(), props.getAttackSpeed(), props.getItemProps()).setRegistryName(props.getName());
+			return new PickaxeItem(props.getTier(), props.getDamage(), props.getAttackSpeed(), props.getItemProps().addToolType(ToolType.PICKAXE, props.getTier().getHarvestLevel())).setRegistryName(props.getName());
 		}
 	}
 
 	public static class AxeFactory implements IItemFactory {
 		@Override
 		public Item create(MaterialProperties props) {
-			return new AxeItem(props.getTier(), props.getDamage("AXE"), props.getAttackSpeed("AXE"), props.getItemProps()).setRegistryName(props.getName());
+			return new AxeItem(props.getTier(), props.getDamage("AXE"), props.getAttackSpeed("AXE"), props.getItemProps().addToolType(ToolType.AXE, props.getTier().getHarvestLevel())).setRegistryName(props.getName());
 		}
 	}
 
 	public static class ShovelFactory implements IItemFactory {
 		@Override
 		public Item create(MaterialProperties props) {
-			return new ShovelItem(props.getTier(), props.getDamage(), props.getAttackSpeed(), props.getItemProps()).setRegistryName(props.getName());
+			return new ShovelItem(props.getTier(), props.getDamage(), props.getAttackSpeed(), props.getItemProps().addToolType(ToolType.SHOVEL, props.getTier().getHarvestLevel())).setRegistryName(props.getName());
 		}
 	}
 
