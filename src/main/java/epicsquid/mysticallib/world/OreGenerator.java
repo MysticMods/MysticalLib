@@ -20,7 +20,7 @@ public class OreGenerator {
 		for (Biome biome : ForgeRegistries.BIOMES) {
 			ConfiguredFeature<?> featureOverworld = Biome.createDecoratedFeature(Feature.ORE,
 							oreProperties.getOreFeature(), Placement.COUNT_RANGE, oreProperties.getCountRange());
-			biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionalOreFeature<>(featureOverworld, DimensionType.field_223227_a_));
+			biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionalOreFeature<>(featureOverworld, DimensionType.OVERWORLD));
 		}
 	}
 }
