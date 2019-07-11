@@ -31,9 +31,8 @@ public class SeedItem extends Item implements IPlantable {
 	 * @param crop Crop block to plant with the seed
 	 * @param base Block to grow the crop on
 	 */
-	public SeedItem(Properties props, @Nonnull String name, @Nonnull BaseCropBlock crop, @Nonnull Block base) {
+	public SeedItem(Properties props, @Nonnull BaseCropBlock crop, @Nonnull Block base) {
 		super(props);
-		setRegistryName(name);
 		this.plantType = crop.getPlantType(null, null);
 		this.crop = crop;
 	}
