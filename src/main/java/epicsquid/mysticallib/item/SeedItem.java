@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.item;
 
-import epicsquid.mysticallib.block.BaseCropBlock;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,18 +21,14 @@ import javax.annotation.Nonnull;
 public class SeedItem extends Item implements IPlantable {
 
 	private PlantType plantType;
-	private BaseCropBlock crop;
+	private Block crop;
 
 	/**
 	 * Creates a generic seed item with a given farmland and crop block
-	 *
-	 * @param name Name of the seed item
-	 * @param crop Crop block to plant with the seed
-	 * @param base Block to grow the crop on
 	 */
-	public SeedItem(Properties props, @Nonnull BaseCropBlock crop, @Nonnull Block base) {
+	public SeedItem(Properties props, @Nonnull Block crop, @Nonnull PlantType type) {
 		super(props);
-		this.plantType = crop.getPlantType(null, null);
+		this.plantType = type;
 		this.crop = crop;
 	}
 
@@ -54,7 +49,8 @@ public class SeedItem extends Item implements IPlantable {
 				CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity) player, pos.up(), stack);
 			}
 
-			stack.shrink(1);
+			if (!player.isCreative())
+				stack.shrink(1);
 			return ActionResultType.SUCCESS;
 		} else {
 			return ActionResultType.FAIL;
@@ -69,6 +65,6 @@ public class SeedItem extends Item implements IPlantable {
 
 	@Override
 	public BlockState getPlant(IBlockReader world, BlockPos pos) {
-		return null;
+		return crop.getDefaultState();
 	}
 }
