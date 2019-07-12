@@ -1,12 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -34,6 +27,12 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
+
 @SuppressWarnings("deprecation")
 public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
   private final @Nonnull Item itemBlock;
@@ -60,6 +59,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
+  @Nonnull
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
   }
@@ -219,6 +219,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     return this.layer;
   }
 
+  @Nonnull
   @Override
   public BlockPlanks.EnumType getWoodType(int meta) {
     return null;
@@ -268,6 +269,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     return NonNullList.withSize(1, new ItemStack(this, 1));
   }
 
+  @Nonnull
   @Override
   public IBlockState getStateFromMeta(int meta) {
     return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
@@ -287,4 +289,5 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
 
     return i;
   }
+
 }
