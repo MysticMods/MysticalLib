@@ -12,7 +12,7 @@ public class KnifeItem extends ToolItem {
 	public static Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.ACACIA_LOG, Blocks.BIRCH_LOG, Blocks.DARK_OAK_LOG, Blocks.JUNGLE_LOG, Blocks.OAK_LOG, Blocks.SPRUCE_LOG);
 
 	// TODO rework knives to strip logs of bark with right click, or drop bark by mining it
-	public KnifeItem(IItemTier tier, int attackDamage, float attackSpeed, Properties props) {
+	public KnifeItem(IItemTier tier, float attackDamage, float attackSpeed, Properties props) {
 		super(attackDamage, attackSpeed, tier, EFFECTIVE_BLOCKS, props);
 	}
 }
