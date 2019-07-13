@@ -57,6 +57,9 @@ public class LibRegistry {
 		if (mat.hasOre()) {
 			result.add(new BaseOreBlock(mat.getBlockOreProps()).setRegistryName(modid, mat.getName() + "_ore"));
 		}
+		for (Block res : result) {
+			registry.register(res);
+		}
 		return result;
 	}
 }
