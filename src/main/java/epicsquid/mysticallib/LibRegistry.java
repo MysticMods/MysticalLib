@@ -37,8 +37,12 @@ public class LibRegistry {
 	}
 
 	public static void registerMetalSetItems(IMaterial mat, IForgeRegistry<Item> registry, String modid) {
-		registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName() + "_ingot"));
-		registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName() + "_nugget"));
+		if (mat.isGem()) {
+			registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName()));
+		} else {
+			registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName() + "_ingot"));
+			registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName() + "_nugget"));
+		}
 		registry.register(new SwordItem(mat.getTier(), (int) mat.getAttackDamage(SWORD), mat.getAttackSpeed(SWORD), mat.getItemProps()).setRegistryName(modid, mat.getName() + "_sword"));
 		registry.register(new PickaxeItem(mat.getTier(), (int) mat.getAttackDamage(PICKAXE), mat.getAttackSpeed(PICKAXE), mat.getItemProps()).setRegistryName(modid, mat.getName() + "_pickaxe"));
 		registry.register(new AxeItem(mat.getTier(), mat.getAttackDamage(AXE), mat.getAttackSpeed(AXE), mat.getItemProps()).setRegistryName(modid, mat.getName() + "_axe"));

@@ -18,7 +18,13 @@ public interface IMaterial {
 
 	OreBlockProperties getBlockOreProps();
 
-	boolean hasOre();
+	default boolean hasOre() {
+		return false;
+	}
+
+	default boolean isGem() {
+		return false;
+	}
 
 	float getAttackSpeed(String name);
 
