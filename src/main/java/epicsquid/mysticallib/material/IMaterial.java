@@ -6,6 +6,8 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 
+import java.util.List;
+
 public interface IMaterial {
 
 	IItemTier getTier();
@@ -18,19 +20,15 @@ public interface IMaterial {
 
 	OreBlockProperties getBlockOreProps();
 
-	default boolean hasOre() {
-		return false;
-	}
-
-	default boolean isGem() {
-		return false;
-	}
-
-	default boolean isMetal() { return true; }
-
 	float getAttackSpeed(String name);
 
 	float getAttackDamage(String name);
 
 	String getName();
+
+	List<String> getWhitelist();
+
+	default boolean isBlacklist() {
+		return true;
+	}
 }
