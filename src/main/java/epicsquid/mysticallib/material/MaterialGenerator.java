@@ -41,11 +41,7 @@ public class MaterialGenerator {
 		itemFactories.forEach(factory -> registry.register(factory.create(material, modid)));
 	}
 
-	public void generateItems(IMaterial material, IForgeRegistry<Item> registry, String modid, List<String> whitelist) {
-		generateItems(material, registry, modid, false, whitelist);
-	}
-
-	public void generateItems(IMaterial material, IForgeRegistry<Item> registry, String modid, boolean isBlacklist, List<String> whitelist) {
+	private void generateItems(IMaterial material, IForgeRegistry<Item> registry, String modid, boolean isBlacklist, List<String> whitelist) {
 		itemFactories.stream()
 						.filter(factory -> isBlacklist != whitelist.contains(factory.getName()))
 						.forEach(factory -> registry.register(factory.create(material, modid)));
@@ -73,11 +69,7 @@ public class MaterialGenerator {
 		return result;
 	}
 
-	public List<Block> generateBlocks(IMaterial material, IForgeRegistry<Block> registry, String modid, List<String> whitelist) {
-		return generateBlocks(material, registry, modid, false, whitelist);
-	}
-
-	public List<Block> generateBlocks(IMaterial material, IForgeRegistry<Block> registry, String modid, boolean isBlacklist, List<String> whitelist) {
+	private List<Block> generateBlocks(IMaterial material, IForgeRegistry<Block> registry, String modid, boolean isBlacklist, List<String> whitelist) {
 		List<Block> result = new ArrayList<>();
 		blockFactories.stream()
 						.filter(factory -> isBlacklist != whitelist.contains(factory.getName()))

@@ -1,9 +1,7 @@
 package epicsquid.mysticallib.material.factory;
 
-import epicsquid.mysticallib.material.IItemMaterialFactory;
 import epicsquid.mysticallib.material.IMaterial;
 import net.minecraft.item.Item;
-import net.minecraft.item.SwordItem;
 
 public class ItemFactory implements IItemMaterialFactory {
 

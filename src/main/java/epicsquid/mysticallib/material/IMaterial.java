@@ -29,6 +29,6 @@ public interface IMaterial {
 	List<String> getWhitelist();
 
 	default boolean isBlacklist() {
-		return true;
+		return false;
 	}
 }

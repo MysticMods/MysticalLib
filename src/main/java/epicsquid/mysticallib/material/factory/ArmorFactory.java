@@ -1,10 +1,8 @@
 package epicsquid.mysticallib.material.factory;
 
-import epicsquid.mysticallib.material.IItemMaterialFactory;
 import epicsquid.mysticallib.material.IMaterial;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
-import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 
 public class ArmorFactory implements IItemMaterialFactory {

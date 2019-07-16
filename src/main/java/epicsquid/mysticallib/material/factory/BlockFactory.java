@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.material.factory;
 
-import epicsquid.mysticallib.material.IBlockMaterialFactory;
 import epicsquid.mysticallib.material.IMaterial;
 import net.minecraft.block.Block;
 
