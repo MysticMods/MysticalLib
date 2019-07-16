@@ -39,7 +39,7 @@ public class LibRegistry {
 	public static void registerMetalSetItems(IMaterial mat, IForgeRegistry<Item> registry, String modid) {
 		if (mat.isGem()) {
 			registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName()));
-		} else {
+		} else if(mat.isMetal()) {
 			registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName() + "_ingot"));
 			registry.register(new Item(mat.getItemProps()).setRegistryName(modid, mat.getName() + "_nugget"));
 		}

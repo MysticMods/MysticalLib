@@ -26,6 +26,8 @@ public interface IMaterial {
 		return false;
 	}
 
+	default boolean isMetal() { return true; }
+
 	float getAttackSpeed(String name);
 
 	float getAttackDamage(String name);
