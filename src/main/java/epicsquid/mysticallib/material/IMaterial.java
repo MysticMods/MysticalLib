@@ -31,4 +31,8 @@ public interface IMaterial {
 	default boolean isBlacklist() {
 		return false;
 	}
+
+	default int getDurability() {
+		return 0;
+	}
 }
