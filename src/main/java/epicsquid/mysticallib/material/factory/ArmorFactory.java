@@ -15,7 +15,7 @@ public class ArmorFactory implements IItemMaterialFactory {
 
 	@Override
 	public Item create(IMaterial material, String modid) {
-		return new ArmorItem(material.getArmor(), type, material.getItemProps()).setRegistryName(modid, material.getName() + getSuffix());
+		return new ArmorItem(material.getArmor(), type, material.getItemProps().maxDamage(material.getDurability())).setRegistryName(modid, material.getName() + getSuffix());
 	}
 
 	@Override
