@@ -1,8 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -11,17 +8,22 @@ import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.model.block.BakedModelBlock;
 import epicsquid.mysticallib.model.block.BakedModelStairs;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
 public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, ICustomModeledObject {
@@ -132,6 +134,7 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
     return null;
   }
 
+  @Nonnull
   @Override
   public IBlockState getStateFromMeta(int meta) {
     IBlockState state = this.getDefaultState();
@@ -175,8 +178,20 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
     return 0b1100;
   }
 
+  @Nonnull
   @Override
   protected BlockStateContainer createBlockState() {
-    return new BlockStateContainer(this, new IProperty[] { LOG_AXIS });
+    return new BlockStateContainer(this, LOG_AXIS);
+  }
+
+  @Override
+  public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face)
+  {
+    return 100;
+  }
+
+  @Override
+  public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
+    return 100;
   }
 }
