@@ -27,6 +27,7 @@ public class ModSetup {
 		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.FEET));
 		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.HEAD));
 		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.LEGS));
+		matGen.addItemFactory(new ItemFactory("dust"));
 	}
 
 	public void init() {

@@ -15,6 +15,7 @@ public interface IGemMaterial extends IMaterial {
 		List<String> result = new ArrayList<>();
 		result.add("ingot");
 		result.add("nugget");
+		result.add("dust");
 		return result;
 	}
 }
