@@ -1,6 +1,6 @@
 package epicsquid.mysticallib.material;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public interface IMetalMaterial extends IMaterial {
@@ -12,8 +12,6 @@ public interface IMetalMaterial extends IMaterial {
 
 	@Override
 	default List<String> getWhitelist() {
-		List<String> result = new ArrayList<>();
-		result.add("");
-		return result;
+		return Collections.singletonList("");
 	}
 }
