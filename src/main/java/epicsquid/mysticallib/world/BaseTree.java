@@ -26,7 +26,7 @@ public class BaseTree extends Tree {
 
 	@Nullable
 	@Override
-	protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {
+	public AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {
 		return new TreeFeature(NoFeatureConfig::deserialize, true, size, log.get().getDefaultState(), leaves.get().getDefaultState(), false);
 	}
 }
