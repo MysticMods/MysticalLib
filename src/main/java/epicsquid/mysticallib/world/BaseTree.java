@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
+import net.minecraft.world.gen.feature.BigTreeFeature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.TreeFeature;
 
@@ -26,6 +27,6 @@ public class BaseTree extends Tree {
 	@Nullable
 	@Override
 	protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {
-		return new TreeFeature(NoFeatureConfig::deserialize, true);
+		return new TreeFeature(NoFeatureConfig::deserialize, true, size, log.get().getDefaultState(), leaves.get().getDefaultState(), false);
 	}
 }
