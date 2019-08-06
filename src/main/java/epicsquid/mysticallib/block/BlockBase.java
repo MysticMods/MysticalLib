@@ -40,6 +40,7 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
   private boolean noCull = false;
+  private boolean isBeacon = false;
   // By default the blocks are made of wood and therefore flammable
   private boolean isFlammable = false;
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
@@ -60,6 +61,12 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   @Nonnull
   public BlockBase setFlammable(boolean flammable) {
     this.isFlammable = flammable;
+    return this;
+  }
+
+  @Nonnull
+  public BlockBase setIsBeacon (boolean beacon) {
+    this.isBeacon = beacon;
     return this;
   }
 
@@ -222,5 +229,10 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   @Nonnull
   protected Class<? extends BakedModelBlock> getModelClass(int type) {
     return BakedModelBlock.class;
+  }
+
+  @Override
+  public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+    return isBeacon;
   }
 }
