@@ -7,6 +7,7 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public interface IMaterial {
 
@@ -26,11 +27,7 @@ public interface IMaterial {
 
 	String getName();
 
-	List<String> getWhitelist();
-
-	default boolean isBlacklist() {
-		return false;
-	}
+	Predicate<IMaterialFactory<?>> matches();
 
 	default int getDurability() {
 		return 0;

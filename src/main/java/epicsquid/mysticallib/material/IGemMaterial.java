@@ -1,18 +1,13 @@
 package epicsquid.mysticallib.material;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.function.Predicate;
+
+import epicsquid.mysticallib.material.factory.FactoryPredicates;
 
 public interface IGemMaterial extends IMaterial {
 
 	@Override
-	default boolean isBlacklist() {
-		return true;
-	}
-
-	@Override
-	default List<String> getWhitelist() {
-		return Arrays.asList("ingot", "nugget", "dust");
+	default Predicate<IMaterialFactory<?>> matches() {
+		return FactoryPredicates.ARMOR.or(FactoryPredicates.TOOLS).or(FactoryPredicates.ITEM).or(FactoryPredicates.STORAGE_BLOCK).or(FactoryPredicates.ORE);
 	}
 }
