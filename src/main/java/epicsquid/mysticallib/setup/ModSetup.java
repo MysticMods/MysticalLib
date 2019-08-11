@@ -14,6 +14,15 @@ public class ModSetup {
 		MaterialGenerator matGen = MaterialGenerator.getInstance();
 		matGen.addBlockFactory(new BlockFactory("block"));
 		matGen.addBlockFactory(new OreFactory());
+		matGen.addBlockFactory(new SlabFactory());
+		matGen.addBlockFactory(new StairFactory());
+		matGen.addBlockFactory(new FenceFactory());
+		matGen.addBlockFactory(new GateFactory());
+		matGen.addBlockFactory(new PressurePlateFactory());
+		matGen.addBlockFactory(new StoneButtonFactory());
+		matGen.addBlockFactory(new WoodButtonFactory());
+		matGen.addBlockFactory(new WallFactory());
+
 		matGen.addItemFactory(new ItemFactory("ingot"));
 		matGen.addItemFactory(new ItemFactory("nugget"));
 		matGen.addItemFactory(new ItemFactory());

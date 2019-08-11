@@ -13,9 +13,9 @@ public class FactoryPredicates {
 	public static final Predicate<IMaterialFactory<?>> ORE = mat -> mat.getName().equals("ore");
 	public static final Predicate<IMaterialFactory<?>> METAL = mat -> mat.getName().equals("ingot") || mat.getName().equals("dust") || mat.getName().equals("nugget");
 	public static final Predicate<IMaterialFactory<?>> DECO = mat -> mat.getName().equals("slab") || mat.getName().equals("stair");
-	public static final Predicate<IMaterialFactory<?>> WALL = mat -> mat.getName().equals("wall") || mat.getName().equals("stair");
-	public static final Predicate<IMaterialFactory<?>> FENCE = mat -> mat.getName().equals("fence") || mat.getName().equals("stair");
-	public static final Predicate<IMaterialFactory<?>> BUTTON_WOOD = mat -> mat.getName().equals("button_wood");
-	public static final Predicate<IMaterialFactory<?>> BUTTON_STONE = mat -> mat.getName().equals("button_stone");
+	public static final Predicate<IMaterialFactory<?>> WALL = mat -> mat.getName().equals("wall");
+	public static final Predicate<IMaterialFactory<?>> FENCE = mat -> mat.getName().equals("fence") || mat.getName().equals("gate");
+	public static final Predicate<IMaterialFactory<?>> BUTTON_WOOD = mat -> mat.getName().equals("wood_button");
+	public static final Predicate<IMaterialFactory<?>> BUTTON_STONE = mat -> mat.getName().equals("stone_button");
 
 }
