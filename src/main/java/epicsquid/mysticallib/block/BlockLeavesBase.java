@@ -36,9 +36,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
-  private final @Nonnull Item itemBlock;
+  private final @Nonnull
+  Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
+  private boolean isFancy = true;
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
   private boolean noCull = true;
@@ -47,7 +49,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT_MIPPED;
   private int saplingChance;
-  public @Nonnull String name;
+  public @Nonnull
+  String name;
 
   public BlockLeavesBase(float hardness, @Nonnull String name, Supplier<ItemStack> sapling, int saplingChance) {
     super();
@@ -145,12 +148,6 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   }
 
   @Nonnull
-  public BlockLeavesBase setOpacity(boolean isOpaque) {
-    this.isOpaque = isOpaque;
-    return this;
-  }
-
-  @Nonnull
   public BlockLeavesBase setHasItem(boolean hasItem) {
     this.hasItems = hasItem;
     return this;
@@ -164,7 +161,12 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
 
   @Override
   public boolean isOpaqueCube(@Nonnull IBlockState state) {
-    return isOpaque;
+    return !this.leavesFancy;
+  }
+
+  @Override
+  public BlockRenderLayer getRenderLayer() {
+    return this.leavesFancy ? BlockRenderLayer.CUTOUT_MIPPED : BlockRenderLayer.SOLID;
   }
 
   public boolean hasCustomModel() {
@@ -173,7 +175,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
 
   @Override
   public boolean isFullCube(@Nonnull IBlockState state) {
-    return isOpaque;
+    return true;
   }
 
   @Override
@@ -210,13 +212,6 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     if (hasItems) {
       super.getSubBlocks(tab, items);
     }
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  @Nonnull
-  public BlockRenderLayer getRenderLayer() {
-    return this.layer;
   }
 
   @Override
