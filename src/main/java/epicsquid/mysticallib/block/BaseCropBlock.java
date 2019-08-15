@@ -13,22 +13,11 @@ import javax.annotation.Nonnull;
 
 public class BaseCropBlock extends CropsBlock {
 
-	private final PlantType plantType;
-
 	/**
 	 * Used for arbitrary crops
 	 */
-	public BaseCropBlock(Properties props, @Nonnull PlantType plantType) {
+	public BaseCropBlock(Properties props) {
 		super(props);
-		this.plantType = plantType;
-	}
-
-	/**
-	 * Controls the type of plant
-	 */
-	@Nonnull
-	public PlantType getPlantType() {
-		return plantType;
 	}
 
 	/**
