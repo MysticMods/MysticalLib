@@ -77,7 +77,7 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
 
   @Override
   public boolean isFullCube(@Nonnull IBlockState state) {
-    return false;
+    return true;
   }
 
   @Override
