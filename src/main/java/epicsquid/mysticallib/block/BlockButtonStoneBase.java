@@ -109,13 +109,6 @@ public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IM
   }
 
   @Override
-  public void getSubBlocks(CreativeTabs tab, NonNullList<ItemStack> list) {
-    if (tab == this.getCreativeTab()) {
-      list.add(new ItemStack(this, 1));
-    }
-  }
-
-  @Override
   public boolean isFlammable(@Nonnull IBlockAccess world, @Nonnull BlockPos pos, @Nonnull EnumFacing face) {
     return isFlammable || super.isFlammable(world, pos, face);
   }

@@ -137,7 +137,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
 
   @Override
   public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
-    if (tab == this.getCreativeTab()) {
+    if (tab == this.getCreativeTab() || tab == CreativeTabs.SEARCH) {
       list.add(new ItemStack(this, 1));
     }
   }

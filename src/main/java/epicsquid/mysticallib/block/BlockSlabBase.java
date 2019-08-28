@@ -91,7 +91,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
 
   @Override
   public void getSubBlocks(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
-    if (tab == this.getCreativeTab() && !this.isDouble) {
+    if ((tab == this.getCreativeTab() || tab == CreativeTabs.SEARCH) && !this.isDouble) {
       items.add(new ItemStack(this, 1));
     }
   }
