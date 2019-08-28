@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IModeledObject {
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -136,6 +136,12 @@ public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IM
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Override

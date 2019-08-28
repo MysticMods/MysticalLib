@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -39,7 +40,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, ICustomModeledObject {
 
   public static BlockSlabBase dummy = new BlockSlabBase(Material.AIR, SoundType.SNOW, 0f, "null", Blocks.AIR.getDefaultState(), false, Blocks.AIR);
-  private final Item itemBlock;
+  private Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -224,6 +225,12 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   @Nullable
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Override

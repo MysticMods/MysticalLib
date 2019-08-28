@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject, ICustomModeledObject {
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -171,6 +171,12 @@ public class BlockFenceBase extends BlockFence implements IBlock, IModeledObject
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Nonnull

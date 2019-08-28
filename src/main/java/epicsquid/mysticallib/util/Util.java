@@ -26,6 +26,7 @@ import net.minecraft.world.chunk.Chunk.EnumCreateEntityType;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.IItemHandler;
 
+@SuppressWarnings("unchecked")
 public class Util {
 
   public static Random rand = new Random();

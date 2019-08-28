@@ -32,7 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, ICustomModeledObject {
-  private final Item itemBlock;
+  private Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean isFlammable = false;
@@ -170,6 +170,12 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Nonnull

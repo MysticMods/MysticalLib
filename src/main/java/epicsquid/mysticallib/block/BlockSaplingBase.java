@@ -36,7 +36,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObject, IGrowable {
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
@@ -167,6 +167,12 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   @Override
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Nullable

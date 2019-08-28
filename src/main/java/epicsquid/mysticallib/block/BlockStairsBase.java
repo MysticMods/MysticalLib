@@ -29,8 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObject, ICustomModeledObject {
-
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -162,5 +161,11 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 }

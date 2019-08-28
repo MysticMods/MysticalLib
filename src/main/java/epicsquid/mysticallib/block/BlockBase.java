@@ -34,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 public class BlockBase extends Block implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
@@ -197,6 +197,13 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   public Item getItemBlock() {
     return itemBlock;
   }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
+  }
+
 
   @Nullable
   protected IBlockState getParentState() {

@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SuppressWarnings("deprecation")
 public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, ICustomModeledObject {
 
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
@@ -125,6 +125,12 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Nullable

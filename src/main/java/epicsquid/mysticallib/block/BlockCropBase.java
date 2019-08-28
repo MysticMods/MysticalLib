@@ -8,6 +8,7 @@ import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -58,6 +59,11 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
    */
   @Override
   public Item getItemBlock() {
+    return null;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
     return null;
   }
 }

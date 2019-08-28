@@ -33,7 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeledObject, ICustomModeledObject {
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -59,6 +59,12 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
   @Override
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Nonnull

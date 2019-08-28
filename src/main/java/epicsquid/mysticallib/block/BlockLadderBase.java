@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 
 public class BlockLadderBase extends BlockLadder implements IBlock, IModeledObject {
-  private final @Nonnull Item itemBlock;
+  private @Nonnull Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean hasCustomModel = false;
   private boolean isFlammable = false;
@@ -91,6 +91,12 @@ public class BlockLadderBase extends BlockLadder implements IBlock, IModeledObje
   @Nonnull
   public Item getItemBlock() {
     return itemBlock;
+  }
+
+  @Override
+  public ItemBlock setItemBlock(ItemBlock block) {
+    this.itemBlock = block;
+    return block;
   }
 
   @Override
