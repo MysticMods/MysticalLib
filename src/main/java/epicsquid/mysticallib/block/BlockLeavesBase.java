@@ -1,12 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -17,8 +10,10 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -34,12 +29,17 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
+
 @SuppressWarnings("deprecation")
 public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
-  private @Nonnull Item itemBlock;
+  private @Nonnull
+  Item itemBlock;
   private List<ItemStack> drops;
-  private boolean isOpaque = true;
-  private boolean isFancy = true;
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
   private boolean noCull = true;
@@ -160,12 +160,13 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
 
   @Override
   public boolean isOpaqueCube(@Nonnull IBlockState state) {
-    return !this.leavesFancy;
+    return Blocks.LEAVES.isOpaqueCube(state);
   }
 
   @Override
+  @SideOnly(Side.CLIENT)
   public BlockRenderLayer getRenderLayer() {
-    return this.leavesFancy ? BlockRenderLayer.CUTOUT_MIPPED : BlockRenderLayer.SOLID;
+    return Blocks.LEAVES.getRenderLayer();
   }
 
   public boolean hasCustomModel() {
