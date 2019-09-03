@@ -33,6 +33,10 @@ public class ItemToolBase extends ItemTool implements IModeledObject, ICustomMod
     ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "handlers"));
   }
 
+  public void addEffectiveBlock (Block block) {
+    this.effectiveBlocks.add(block);
+  }
+
   @Override
   public void initCustomModel() {
     if (this.hasCustomModel) {
