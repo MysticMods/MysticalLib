@@ -9,6 +9,8 @@ import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.world.StructureData;
 import net.minecraft.block.BlockMushroom;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -27,6 +29,7 @@ public class BlockMushroomBase extends BlockMushroom implements IBlock, IModeled
   public BlockMushroomBase(@Nonnull String name, @Nonnull StructureData hugeMushroom) {
     super();
     this.hugeMushroom = hugeMushroom;
+    setSoundType(SoundType.PLANT);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
   }
