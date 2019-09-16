@@ -48,6 +48,7 @@ public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomMo
     this.base = base;
   }
 
+  @Override
   public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     ItemStack itemstack = player.getHeldItem(hand);
     net.minecraft.block.state.IBlockState state = worldIn.getBlockState(pos);

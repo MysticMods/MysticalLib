@@ -1,9 +1,15 @@
 package epicsquid.mysticallib.util;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 // TODO: Move to lib
 public class ItemUtil {
@@ -60,6 +66,23 @@ public class ItemUtil {
     item.motionX = 0;
     item.motionY = 0;
     world.spawnEntity(item);
+  }
+
+  public static ItemStack stackFromState (IBlockState state) {
+    Block block = state.getBlock();
+    Item item = Item.getItemFromBlock(block);
+    int meta = block.getMetaFromState(state);
+    return new ItemStack(item, 1, meta);
+  }
+
+  @Nullable
+  @SuppressWarnings("deprecation")
+  public static IBlockState stateFromStack (ItemStack stack) {
+    Item item = stack.getItem();
+    if (!(item instanceof ItemBlock)) return null;
+
+    Block block = ((ItemBlock) item).getBlock();
+    return block.getStateFromMeta(stack.getMetadata());
   }
 
 }

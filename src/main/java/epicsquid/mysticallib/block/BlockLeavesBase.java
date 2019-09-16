@@ -62,6 +62,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
   }
 
+  @Override
   protected BlockStateContainer createBlockState() {
     return new BlockStateContainer(this, CHECK_DECAY, DECAYABLE);
   }

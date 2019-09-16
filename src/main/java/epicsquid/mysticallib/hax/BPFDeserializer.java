@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.JsonUtils;
 
 public class BPFDeserializer implements JsonDeserializer<BlockPartFace> {
+  @Override
   public BlockPartFace deserialize(JsonElement p_deserialize_1_, Type p_deserialize_2_, JsonDeserializationContext p_deserialize_3_) throws JsonParseException {
     JsonObject jsonobject = p_deserialize_1_.getAsJsonObject();
     EnumFacing enumfacing = this.parseCullFace(jsonobject);
