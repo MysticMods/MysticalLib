@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.block.model.ItemOverride;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelBlock;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 @SuppressWarnings("deprecation")
@@ -24,7 +25,7 @@ public class Hax {
   public static Field field_ModelBakery_blockModelShapes;
 
   public static void init() throws IllegalAccessException, NoSuchFieldException, SecurityException, IllegalArgumentException {
-    Field f = ReflectionHelper.findField(ModelBlock.class, "SERIALIZER", "field_178319_a");
+    Field f = ObfuscationReflectionHelper.findField(ModelBlock.class, "field_178319_a");
     f.setAccessible(true);
     Field modifiersField = Field.class.getDeclaredField("modifiers");
     modifiersField.setAccessible(true);
@@ -35,23 +36,14 @@ public class Hax {
             .registerTypeAdapter(BlockPartFace.class, new BPFDeserializer()).registerTypeAdapter(BlockFaceUV.class, new BFUVDeserializer())
             .registerTypeAdapter(ItemTransformVec3f.class, new ITV3FDeserializer()).registerTypeAdapter(ItemCameraTransforms.class, new ICTDeserializer())
             .registerTypeAdapter(ItemOverride.class, new IODeserializer()).create());
-    field_ModelBakery_blockModelShapes = ReflectionHelper.findField(ModelBakery.class, "blockModelShapes", "field_177610_k");
+    field_ModelBakery_blockModelShapes = ObfuscationReflectionHelper.findField(ModelBakery.class, "field_177610_k");
     field_ModelBakery_blockModelShapes.setAccessible(true);
 
-    bakedQuadFace = ReflectionHelper.findField(BakedQuad.class, "face", "field_178214_c");
+    bakedQuadFace = ObfuscationReflectionHelper.findField(BakedQuad.class, "field_178214_c");
     bakedQuadFace.setAccessible(true);
-    bakedQuadTint = ReflectionHelper.findField(BakedQuad.class, "tintIndex", "field_178213_b");
+    bakedQuadTint = ObfuscationReflectionHelper.findField(BakedQuad.class, "field_178213_b");
     bakedQuadTint.setAccessible(true);
-    bakedQuadDiffuse = ReflectionHelper.findField(BakedQuad.class, "applyDiffuseLighting", "field_178214_f");
+    bakedQuadDiffuse = ObfuscationReflectionHelper.findField(BakedQuad.class, "applyDiffuseLighting");
     bakedQuadDiffuse.setAccessible(true);
-  }
-
-  public static Class findClass(Class[] classes, String name) {
-    for (Class c : classes) {
-      if (c.getTypeName().contains(name)) {
-        return c;
-      }
-    }
-    return null;
   }
 }
