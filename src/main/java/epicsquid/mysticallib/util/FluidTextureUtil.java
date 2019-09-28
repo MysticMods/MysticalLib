@@ -3,7 +3,7 @@ package epicsquid.mysticallib.util;
 import com.google.common.collect.Maps;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraftforge.fluids.Fluid;
+import net.minecraft.fluid.Fluid;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
