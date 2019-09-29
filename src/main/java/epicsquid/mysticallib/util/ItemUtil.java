@@ -25,27 +25,27 @@ public class ItemUtil {
     }
   }
 
-  public static void spawnItem(World world, BlockPos pos, ItemStack stack) {
-    spawnItem(world, pos, stack, -1);
+  public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack) {
+    return spawnItem(world, pos, stack, -1);
   }
 
-  public static void spawnItem(World world, BlockPos pos, ItemStack stack, float hoverStart) {
-    spawnItem(world, pos, stack, true, -1, hoverStart);
+  public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack, float hoverStart) {
+    return spawnItem(world, pos, stack, true, -1, hoverStart);
   }
 
-  public static void spawnItem(World world, BlockPos pos, ItemStack stack, int ticks) {
-    spawnItem(world, pos, stack, true, ticks, -1);
+  public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack, int ticks) {
+    return spawnItem(world, pos, stack, true, ticks, -1);
   }
 
-  public static void spawnItem(World world, BlockPos pos, ItemStack stack, boolean offset) {
-    spawnItem(world, pos, stack, offset, -1, -1);
+  public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack, boolean offset) {
+    return spawnItem(world, pos, stack, offset, -1, -1);
   }
 
-  public static void spawnItem(World world, BlockPos pos, ItemStack stack, boolean offset, int ticks, float hoverStart) {
-    spawnItem(world, pos.getX(), pos.getY(), pos.getZ(), offset, stack, ticks, hoverStart);
+  public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack, boolean offset, int ticks, float hoverStart) {
+    return spawnItem(world, pos.getX(), pos.getY(), pos.getZ(), offset, stack, ticks, hoverStart);
   }
 
-  public static void spawnItem(World world, double x, double y, double z, boolean offset, ItemStack stack, int ticks, float hoverStart) {
+  public static EntityItem spawnItem(World world, double x, double y, double z, boolean offset, ItemStack stack, int ticks, float hoverStart) {
     if (offset) {
       x += 0.5;
       y += 0.5;
@@ -58,14 +58,15 @@ public class ItemUtil {
     if (hoverStart != -1) {
       item.hoverStart = hoverStart;
     }
-    spawnItem(world, item);
+    return spawnItem(world, item);
   }
 
-  public static void spawnItem(World world, EntityItem item) {
+  public static EntityItem spawnItem(World world, EntityItem item) {
     item.motionZ = 0;
     item.motionX = 0;
     item.motionY = 0;
     world.spawnEntity(item);
+    return item;
   }
 
   public static ItemStack stackFromState (IBlockState state) {
