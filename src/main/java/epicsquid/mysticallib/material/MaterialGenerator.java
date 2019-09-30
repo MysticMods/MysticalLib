@@ -56,7 +56,9 @@ public class MaterialGenerator {
 		blockFactories.stream()
 						.filter(material.matches())
 						.forEach(factory -> result.add(factory.create(material, modid)));
-		result.forEach(registry::register);
+		if (!result.isEmpty()) {
+			result.forEach(registry::register);
+		}
 		return result;
 	}
 }

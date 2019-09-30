@@ -5,25 +5,26 @@ import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
 
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class OreProperties {
 
-	private OreFeatureConfig oreFeature;
+	private Supplier<OreFeatureConfig> oreFeature;
 	private CountRangeConfig countRange;
 	private Predicate<Biome> match;
 
-	public OreProperties(OreFeatureConfig oreFeature, CountRangeConfig countRange, Predicate<Biome> match) {
+	public OreProperties(Supplier<OreFeatureConfig> oreFeature, CountRangeConfig countRange, Predicate<Biome> match) {
 		this.oreFeature = oreFeature;
 		this.countRange = countRange;
 		this.match = match;
 	}
 
-	public OreProperties(OreFeatureConfig oreFeature, CountRangeConfig countRange) {
+	public OreProperties(Supplier<OreFeatureConfig> oreFeature, CountRangeConfig countRange) {
 		this(oreFeature, countRange, x -> true);
 	}
 
 	public OreFeatureConfig getOreFeature() {
-		return oreFeature;
+		return oreFeature.get();
 	}
 
 	public CountRangeConfig getCountRange() {

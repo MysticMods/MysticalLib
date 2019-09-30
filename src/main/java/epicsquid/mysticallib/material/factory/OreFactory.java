@@ -12,6 +12,8 @@ public class OreFactory extends BlockFactory {
 
 	@Override
 	public Block create(IMaterial material, String modid) {
-		return new BaseOreBlock(material.getBlockOreProps()).setRegistryName(modid, material.getName() + getSuffix());
+		Block ore = new BaseOreBlock(material.getBlockOreProps()).setRegistryName(modid, material.getName() + getSuffix());
+		material.setOre(ore);
+		return ore;
 	}
 }

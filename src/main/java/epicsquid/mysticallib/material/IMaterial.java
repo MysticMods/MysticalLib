@@ -6,11 +6,25 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
+import net.minecraft.util.IItemProvider;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Predicate;
 
 public interface IMaterial {
+
+	default void setOre (Block ore) {
+	}
+
+	@Nullable
+	default Block getOre () {
+		return null;
+	}
+
+	default boolean hasOre () {
+		return getOre() != null;
+	}
 
 	IItemTier getTier();
 
