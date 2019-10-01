@@ -17,6 +17,7 @@ import net.minecraft.block.BlockDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -174,6 +175,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
     }
     if (!hasCustomModel) {
       ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "handlers"));
+      ModelLoader.setCustomStateMapper(this, (new StateMap.Builder()).ignore(POWERED).build());
     } else {
       ModelLoader.setCustomModelResourceLocation(itemBlock, 0, new ModelResourceLocation(getRegistryName(), "handler"));
     }
