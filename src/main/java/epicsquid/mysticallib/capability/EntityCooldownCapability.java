@@ -1,9 +1,13 @@
 package epicsquid.mysticallib.capability;
 
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+
 public class EntityCooldownCapability {
   private long cooldown = 0;
 
   public boolean canHarvest() {
+    System.out.println("Cooldown: " + cooldown + " < " + System.currentTimeMillis() + " = " + (cooldown <= System.currentTimeMillis()) + " difference: " + ((cooldown - System.currentTimeMillis()) / 1000));
     return cooldown <= System.currentTimeMillis();
   }
 
@@ -18,5 +22,20 @@ public class EntityCooldownCapability {
 
     cooldown = (cooldown / 20) * 1000;
     this.cooldown = System.currentTimeMillis() + cooldown;
+  }
+
+  public NBTTagCompound writeNBT() {
+    NBTTagCompound result = new NBTTagCompound();
+    result.setLong("cooldown", cooldown);
+    return result;
+  }
+
+  public void readNBT(NBTBase incoming) {
+    if (incoming instanceof NBTTagCompound) {
+      NBTTagCompound tag = (NBTTagCompound) incoming;
+      this.cooldown = tag.getLong("cooldown");
+    } else {
+      this.cooldown = 0;
+    }
   }
 }
