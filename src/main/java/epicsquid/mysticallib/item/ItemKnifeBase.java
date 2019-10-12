@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Sets;
 
 import epicsquid.mysticallib.material.MaterialTypes;
+import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
@@ -31,5 +32,15 @@ public class ItemKnifeBase extends ItemToolBase {
   @Nonnull
   public Set<String> getToolClasses(ItemStack stack) {
     return Collections.singleton("druidKnife");
+  }
+
+  @Override
+  public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+    return !ItemUtil.equalWithoutDamage(oldStack, newStack);
+  }
+
+  @Override
+  public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
+    return !ItemUtil.equalWithoutDamage(oldStack, newStack);
   }
 }

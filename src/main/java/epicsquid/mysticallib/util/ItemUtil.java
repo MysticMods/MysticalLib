@@ -25,6 +25,20 @@ public class ItemUtil {
     }
   }
 
+  public static boolean equalWithoutDamage(ItemStack item1, ItemStack item2) {
+    if (item1.getItem() != item2.getItem()) {
+      return false;
+    } else if (item1.getCount() != item2.getCount()) {
+      return false;
+    } else if (item1.getTagCompound() == null && item2.getTagCompound() != null) {
+      return false;
+    } else {
+      return (item1.getTagCompound() == null || item1.getTagCompound().equals(item2.getTagCompound())) && item1.areCapsCompatible(item2);
+    }
+  }
+
+
+
   public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack) {
     return spawnItem(world, pos, stack, -1);
   }
