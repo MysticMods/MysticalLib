@@ -12,37 +12,37 @@ import java.util.Map;
 
 public class Cube {
 
-	public Map<Direction, BakedQuad> quads = new EnumMap<>(Direction.class);
-	public List<BakedQuad> unculledQuads = new ArrayList<>();
+  public Map<Direction, BakedQuad> quads = new EnumMap<>(Direction.class);
+  public List<BakedQuad> unculledQuads = new ArrayList<>();
 
-	public Cube(@Nonnull BakedQuad west, @Nonnull BakedQuad east, @Nonnull BakedQuad down, @Nonnull BakedQuad up, @Nonnull BakedQuad north,
-							@Nonnull BakedQuad south) {
-		quads.put(Direction.WEST, west);
-		quads.put(Direction.EAST, east);
-		quads.put(Direction.DOWN, down);
-		quads.put(Direction.UP, up);
-		quads.put(Direction.NORTH, north);
-		quads.put(Direction.SOUTH, south);
-	}
+  public Cube(@Nonnull BakedQuad west, @Nonnull BakedQuad east, @Nonnull BakedQuad down, @Nonnull BakedQuad up, @Nonnull BakedQuad north,
+              @Nonnull BakedQuad south) {
+    quads.put(Direction.WEST, west);
+    quads.put(Direction.EAST, east);
+    quads.put(Direction.DOWN, down);
+    quads.put(Direction.UP, up);
+    quads.put(Direction.NORTH, north);
+    quads.put(Direction.SOUTH, south);
+  }
 
-	public void addToList(@Nonnull List<BakedQuad> list, @Nullable Direction face) {
-		if (face != null && quads.containsKey(face)) {
-			list.add(quads.get(face));
-		} else if (face == null) {
-			list.addAll(unculledQuads);
-		}
-	}
+  public void addToList(@Nonnull List<BakedQuad> list, @Nullable Direction face) {
+    if (face != null && quads.containsKey(face)) {
+      list.add(quads.get(face));
+    } else if (face == null) {
+      list.addAll(unculledQuads);
+    }
+  }
 
-	public Cube setNoCull() {
-		unculledQuads.addAll(quads.values());
-		quads.clear();
-		return this;
-	}
+  public Cube setNoCull() {
+    unculledQuads.addAll(quads.values());
+    quads.clear();
+    return this;
+  }
 
-	public Cube setNoCull(@Nonnull Direction face) {
-		BakedQuad quad = quads.get(face);
-		unculledQuads.add(quad);
-		quads.remove(face);
-		return this;
-	}
+  public Cube setNoCull(@Nonnull Direction face) {
+    BakedQuad quad = quads.get(face);
+    unculledQuads.add(quad);
+    quads.remove(face);
+    return this;
+  }
 }

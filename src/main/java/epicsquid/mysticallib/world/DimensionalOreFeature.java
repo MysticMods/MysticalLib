@@ -13,18 +13,18 @@ import java.util.Random;
 
 public class DimensionalOreFeature<F extends IFeatureConfig> extends ConfiguredFeature<F> {
 
-	private DimensionType dimType;
+  private DimensionType dimType;
 
-	public DimensionalOreFeature(ConfiguredFeature<F> feature, DimensionType dimension) {
-		super(feature.feature, feature.config);
-		this.dimType = dimension;
-	}
+  public DimensionalOreFeature(ConfiguredFeature<F> feature, DimensionType dimension) {
+    super(feature.feature, feature.config);
+    this.dimType = dimension;
+  }
 
-	@Override
-	public boolean place(@Nonnull IWorld world, @Nonnull ChunkGenerator<? extends GenerationSettings> chunk, @Nonnull Random rand, @Nonnull BlockPos pos) {
-		if (world.getDimension().getType().equals(dimType)) {
-			return super.place(world, chunk, rand, pos);
-		}
-		return false;
-	}
+  @Override
+  public boolean place(@Nonnull IWorld world, @Nonnull ChunkGenerator<? extends GenerationSettings> chunk, @Nonnull Random rand, @Nonnull BlockPos pos) {
+    if (world.getDimension().getType().equals(dimType)) {
+      return super.place(world, chunk, rand, pos);
+    }
+    return false;
+  }
 }

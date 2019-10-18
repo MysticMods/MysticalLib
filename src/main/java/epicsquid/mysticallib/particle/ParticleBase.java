@@ -1,17 +1,14 @@
 package epicsquid.mysticallib.particle;
 
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.IParticleRenderType;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 // TODO Investigate vanilla IParticleFactory (see EnchantmentTableParticle)
 public class ParticleBase extends SpriteTexturedParticle implements IParticle {

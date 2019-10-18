@@ -25,8 +25,8 @@ public class CustomModelBlock extends CustomModelBase {
   }
 
   public CustomModelBlock(@Nonnull Class<? extends BakedModelBlock> block, @Nonnull ResourceLocation particle, @Nonnull ResourceLocation west,
-      @Nonnull ResourceLocation east, @Nonnull ResourceLocation down, @Nonnull ResourceLocation up, @Nonnull ResourceLocation north,
-      @Nonnull ResourceLocation south) {
+                          @Nonnull ResourceLocation east, @Nonnull ResourceLocation down, @Nonnull ResourceLocation up, @Nonnull ResourceLocation north,
+                          @Nonnull ResourceLocation south) {
     try {
       ctor = block.getConstructor(IModelState.class, VertexFormat.class, Function.class, CustomModelBase.class);
     } catch (NoSuchMethodException | SecurityException e) {
@@ -42,7 +42,7 @@ public class CustomModelBlock extends CustomModelBase {
   }
 
   public CustomModelBlock(@Nonnull Class<? extends BakedModelBlock> block, @Nonnull ResourceLocation particle,
-      @Nonnull Pair<String, ResourceLocation>... textures) {
+                          @Nonnull Pair<String, ResourceLocation>... textures) {
     try {
       ctor = block.getConstructor(IModelState.class, VertexFormat.class, Function.class, CustomModelBase.class);
     } catch (NoSuchMethodException | SecurityException e) {

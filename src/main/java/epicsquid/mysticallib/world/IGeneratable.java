@@ -1,10 +1,10 @@
 package epicsquid.mysticallib.world;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 public interface IGeneratable {
 

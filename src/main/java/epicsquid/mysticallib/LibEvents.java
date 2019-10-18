@@ -17,32 +17,32 @@ import java.util.Map.Entry;
 @Mod.EventBusSubscriber(modid = MysticalLib.MODID, value = Dist.CLIENT)
 public class LibEvents {
 
-	public static int ticks = 0;
+  public static int ticks = 0;
 
-	@SubscribeEvent
-	public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
-		FluidTextureUtil.initTextures(event.getMap());
-	}
+  @SubscribeEvent
+  public static void onTextureStitchPre(TextureStitchEvent.Pre event) {
+    FluidTextureUtil.initTextures(event.getMap());
+  }
 
-	@SubscribeEvent
-	public static void onTextureStitch(TextureStitchEvent.Pre event) {
-		for (Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
-			event.addSprite(e.getValue());
-		}
-	}
+  @SubscribeEvent
+  public static void onTextureStitch(TextureStitchEvent.Pre event) {
+    for (Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
+      event.addSprite(e.getValue());
+    }
+  }
 
-	@SubscribeEvent
-	public static void onClientTick(TickEvent.ClientTickEvent event) {
-		if (event.phase == TickEvent.Phase.END) {
-			ticks++;
-			ClientProxy.particleRenderer.updateParticles();
-		}
-	}
+  @SubscribeEvent
+  public static void onClientTick(TickEvent.ClientTickEvent event) {
+    if (event.phase == TickEvent.Phase.END) {
+      ticks++;
+      ClientProxy.particleRenderer.updateParticles();
+    }
+  }
 
-	@SubscribeEvent
-	public static void onRenderAfterWorld(RenderWorldLastEvent event) {
-		GlStateManager.pushMatrix();
-		ClientProxy.particleRenderer.renderParticles(event.getPartialTicks());
-		GlStateManager.popMatrix();
-	}
+  @SubscribeEvent
+  public static void onRenderAfterWorld(RenderWorldLastEvent event) {
+    GlStateManager.pushMatrix();
+    ClientProxy.particleRenderer.renderParticles(event.getPartialTicks());
+    GlStateManager.popMatrix();
+  }
 }

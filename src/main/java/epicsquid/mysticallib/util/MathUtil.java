@@ -1,9 +1,9 @@
 package epicsquid.mysticallib.util;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+
+import javax.annotation.Nonnull;
 
 public class MathUtil {
 

@@ -19,10 +19,10 @@ pipeline {
         stage('Build and Deploy') {
             steps {
                 echo 'Building and Deploying to Maven'
-					sh './gradlew build publish'
-                }
+                sh './gradlew build publish'
             }
         }
+    }
     post {
         always {
             archive 'build/libs/**.jar'

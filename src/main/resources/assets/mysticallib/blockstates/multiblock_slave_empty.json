@@ -1,5 +1,7 @@
 {
-	"variants":{
-		"custom":{"model": "elulib:multiblock_slave_empty"}
-	}
+  "variants": {
+    "custom": {
+      "model": "elulib:multiblock_slave_empty"
+    }
+  }
 }

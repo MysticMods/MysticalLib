@@ -1,5 +1,7 @@
 {
-	"variants":{
-		"custom":{"model": "elulib:test_stairs"}
-	}
+  "variants": {
+    "custom": {
+      "model": "elulib:test_stairs"
+    }
+  }
 }

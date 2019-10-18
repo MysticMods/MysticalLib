@@ -17,20 +17,20 @@ import java.util.Random;
 import java.util.function.Function;
 
 public class BakedModelCube extends BakedModelBlock {
-	private Cube cube;
+  private Cube cube;
 
-	public BakedModelCube(VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, CustomModelBase model) {
-		super(format, bakedTextureGetter, model);
-		cube = ModelUtil
-						.makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth}, -1);
-	}
+  public BakedModelCube(VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, CustomModelBase model) {
+    super(format, bakedTextureGetter, model);
+    cube = ModelUtil
+        .makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth}, -1);
+  }
 
-	@Override
-	@Nonnull
-	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
-		List<BakedQuad> quads = super.getQuads(state, side, rand);
-		cube.addToList(quads, side);
-		return quads;
-	}
+  @Override
+  @Nonnull
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+    List<BakedQuad> quads = super.getQuads(state, side, rand);
+    cube.addToList(quads, side);
+    return quads;
+  }
 
 }

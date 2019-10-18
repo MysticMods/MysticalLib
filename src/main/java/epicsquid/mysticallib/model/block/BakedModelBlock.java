@@ -26,92 +26,92 @@ import java.util.function.Function;
 
 public class BakedModelBlock implements IBakedModel {
 
-	public Function<ResourceLocation, TextureAtlasSprite> getter;
-	public VertexFormat format;
-	public TextureAtlasSprite particle, texnorth, texsouth, texup, texdown, texeast, texwest;
-	private Cube cube;
+  public Function<ResourceLocation, TextureAtlasSprite> getter;
+  public VertexFormat format;
+  public TextureAtlasSprite particle, texnorth, texsouth, texup, texdown, texeast, texwest;
+  private Cube cube;
 
-	public BakedModelBlock(@Nullable IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-												 @Nonnull CustomModelBase model) {
-		this(format, bakedTextureGetter, model);
-	}
+  public BakedModelBlock(@Nullable IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
+                         @Nonnull CustomModelBase model) {
+    this(format, bakedTextureGetter, model);
+  }
 
-	protected BakedModelBlock(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-														@Nonnull CustomModelBase model) {
-		this.getter = bakedTextureGetter;
-		this.format = format;
-		particle = getter.apply(model.textures.get("particle"));
-		texnorth = getter.apply(model.textures.get("north"));
-		texsouth = getter.apply(model.textures.get("south"));
-		texup = getter.apply(model.textures.get("up"));
-		texdown = getter.apply(model.textures.get("down"));
-		texeast = getter.apply(model.textures.get("east"));
-		texwest = getter.apply(model.textures.get("west"));
-		cube = ModelUtil
-						.makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth}, 0);
-	}
+  protected BakedModelBlock(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
+                            @Nonnull CustomModelBase model) {
+    this.getter = bakedTextureGetter;
+    this.format = format;
+    particle = getter.apply(model.textures.get("particle"));
+    texnorth = getter.apply(model.textures.get("north"));
+    texsouth = getter.apply(model.textures.get("south"));
+    texup = getter.apply(model.textures.get("up"));
+    texdown = getter.apply(model.textures.get("down"));
+    texeast = getter.apply(model.textures.get("east"));
+    texwest = getter.apply(model.textures.get("west"));
+    cube = ModelUtil
+        .makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth}, 0);
+  }
 
-	// TODO Clean this up
-	@Override
-	@Nonnull
-	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
-		List<BakedQuad> finalQuads = new ArrayList<>();
-		if (state != null) {
-			TextureAtlasSprite[] sprites = new TextureAtlasSprite[]{getParticleTexture()};
-			for (int i = 0; i < sprites.length; i++) {
-				addGeometry(finalQuads, side, state, new TextureAtlasSprite[]{sprites[i], sprites[i], sprites[i], sprites[i], sprites[i], sprites[i]}, 1);
-			}
-		} else {
-			addItemModel(finalQuads, side);
-		}
+  // TODO Clean this up
+  @Override
+  @Nonnull
+  public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, Random rand) {
+    List<BakedQuad> finalQuads = new ArrayList<>();
+    if (state != null) {
+      TextureAtlasSprite[] sprites = new TextureAtlasSprite[]{getParticleTexture()};
+      for (int i = 0; i < sprites.length; i++) {
+        addGeometry(finalQuads, side, state, new TextureAtlasSprite[]{sprites[i], sprites[i], sprites[i], sprites[i], sprites[i], sprites[i]}, 1);
+      }
+    } else {
+      addItemModel(finalQuads, side);
+    }
 
-		return finalQuads;
-	}
+    return finalQuads;
+  }
 
-	public void addGeometry(@Nonnull List<BakedQuad> quads, @Nonnull Direction side, BlockState state, TextureAtlasSprite[] texes, int tintIndex) {
-		ModelUtil.makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, texes, tintIndex).addToList(quads, side);
-	}
+  public void addGeometry(@Nonnull List<BakedQuad> quads, @Nonnull Direction side, BlockState state, TextureAtlasSprite[] texes, int tintIndex) {
+    ModelUtil.makeCube(format, 0, 0, 0, 1, 1, 1, ModelUtil.FULL_FACES, texes, tintIndex).addToList(quads, side);
+  }
 
-	public void addItemModel(@Nonnull List<BakedQuad> quads, @Nonnull Direction side) {
-		cube.addToList(quads, side);
-	}
+  public void addItemModel(@Nonnull List<BakedQuad> quads, @Nonnull Direction side) {
+    cube.addToList(quads, side);
+  }
 
-	@Override
-	public boolean isAmbientOcclusion() {
-		return true;
-	}
+  @Override
+  public boolean isAmbientOcclusion() {
+    return true;
+  }
 
-	@Override
-	public boolean isGui3d() {
-		return true;
-	}
+  @Override
+  public boolean isGui3d() {
+    return true;
+  }
 
-	@Override
-	public boolean isBuiltInRenderer() {
-		return false;
-	}
+  @Override
+  public boolean isBuiltInRenderer() {
+    return false;
+  }
 
-	@Override
-	@Nonnull
-	public TextureAtlasSprite getParticleTexture() {
-		return particle;
-	}
+  @Override
+  @Nonnull
+  public TextureAtlasSprite getParticleTexture() {
+    return particle;
+  }
 
-	@Override
-	@Nonnull
-	public ItemOverrideList getOverrides() {
-		return ItemOverrideList.EMPTY;
-	}
+  @Override
+  @Nonnull
+  public ItemOverrideList getOverrides() {
+    return ItemOverrideList.EMPTY;
+  }
 
-	@Override
-	@Nonnull
-	public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(@Nonnull ItemCameraTransforms.TransformType type) {
-		Matrix4f matrix;
-		if (DefaultTransformations.blockTransforms.containsKey(type)) {
-			matrix = DefaultTransformations.blockTransforms.get(type).getMatrix(Direction.byIndex(0));
-			return Pair.of(this, matrix);
-		}
-		return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, type);
-	}
+  @Override
+  @Nonnull
+  public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(@Nonnull ItemCameraTransforms.TransformType type) {
+    Matrix4f matrix;
+    if (DefaultTransformations.blockTransforms.containsKey(type)) {
+      matrix = DefaultTransformations.blockTransforms.get(type).getMatrix(Direction.byIndex(0));
+      return Pair.of(this, matrix);
+    }
+    return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, type);
+  }
 
 }

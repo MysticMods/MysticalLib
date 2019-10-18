@@ -9,29 +9,29 @@ import java.util.function.Supplier;
 
 public class OreProperties {
 
-	private Supplier<OreFeatureConfig> oreFeature;
-	private CountRangeConfig countRange;
-	private Predicate<Biome> match;
+  private Supplier<OreFeatureConfig> oreFeature;
+  private CountRangeConfig countRange;
+  private Predicate<Biome> match;
 
-	public OreProperties(Supplier<OreFeatureConfig> oreFeature, CountRangeConfig countRange, Predicate<Biome> match) {
-		this.oreFeature = oreFeature;
-		this.countRange = countRange;
-		this.match = match;
-	}
+  public OreProperties(Supplier<OreFeatureConfig> oreFeature, CountRangeConfig countRange, Predicate<Biome> match) {
+    this.oreFeature = oreFeature;
+    this.countRange = countRange;
+    this.match = match;
+  }
 
-	public OreProperties(Supplier<OreFeatureConfig> oreFeature, CountRangeConfig countRange) {
-		this(oreFeature, countRange, x -> true);
-	}
+  public OreProperties(Supplier<OreFeatureConfig> oreFeature, CountRangeConfig countRange) {
+    this(oreFeature, countRange, x -> true);
+  }
 
-	public OreFeatureConfig getOreFeature() {
-		return oreFeature.get();
-	}
+  public OreFeatureConfig getOreFeature() {
+    return oreFeature.get();
+  }
 
-	public CountRangeConfig getCountRange() {
-		return countRange;
-	}
+  public CountRangeConfig getCountRange() {
+    return countRange;
+  }
 
-	public Predicate<Biome> getMatch() {
-		return match;
-	}
+  public Predicate<Biome> getMatch() {
+    return match;
+  }
 }

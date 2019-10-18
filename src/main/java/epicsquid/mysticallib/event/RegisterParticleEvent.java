@@ -6,11 +6,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.Event;
 
 public class RegisterParticleEvent extends Event {
-	public RegisterParticleEvent() {
-		super();
-	}
+  public RegisterParticleEvent() {
+    super();
+  }
 
-	public void registerParticle(String modid, Class<? extends ParticleBase> particleClass, ResourceLocation texture) {
-		ParticleRegistry.registerParticle(modid, particleClass, texture);
-	}
+  public void registerParticle(String modid, Class<? extends ParticleBase> particleClass, ResourceLocation texture) {
+    ParticleRegistry.registerParticle(modid, particleClass, texture);
+  }
 }

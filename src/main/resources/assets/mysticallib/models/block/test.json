@@ -1,29 +1,79 @@
 {
-    "parent": "elulib:block/multiblock3x3",
-    "ambientocclusion": "true",
-    "textures": {
-        "test": "elulib:blocks/test",
-        "particle": "elulib:blocks/test"
-    },
-    "elements": [
-        {
-            "name": "main",
-            "from": [-16, 0, -16],
-            "to": [32, 16, 32],
-            "faces": {
-                "north": {
-                    "uv": [0, 0, 16, 16],
-                    "texture": "#test"
-                },
-                "east": {"uv": [0, 0, 16, 16], "texture": "#test"},
-                "south": {
-                    "uv": [0, 0, 16, 16],
-                    "texture": "#test"
-                },
-                "west": {"uv": [0, 0, 16, 16], "texture": "#test"},
-                "up": {"uv": [0, 0, 16, 16], "texture": "#test"},
-                "down": {"uv": [0, 0, 16, 16], "texture": "#test"}
-            }
+  "parent": "elulib:block/multiblock3x3",
+  "ambientocclusion": "true",
+  "textures": {
+    "test": "elulib:blocks/test",
+    "particle": "elulib:blocks/test"
+  },
+  "elements": [
+    {
+      "name": "main",
+      "from": [
+        -16,
+        0,
+        -16
+      ],
+      "to": [
+        32,
+        16,
+        32
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#test"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#test"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#test"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#test"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#test"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#test"
         }
-    ]
+      }
+    }
+  ]
 }

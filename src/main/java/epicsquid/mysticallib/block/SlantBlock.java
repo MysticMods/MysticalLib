@@ -5,12 +5,12 @@ import net.minecraft.state.IntegerProperty;
 
 public class SlantBlock extends Block {
 
-	public static final IntegerProperty VERT = IntegerProperty.create("vert", 0, 2); //LOW, MID, HIGH
-	public static final IntegerProperty DIR = IntegerProperty.create("dir", 0, 3); //NSWE, for mod NXNZ -> NXPZ -> PXPZ -> PXNZ corner
+  public static final IntegerProperty VERT = IntegerProperty.create("vert", 0, 2); //LOW, MID, HIGH
+  public static final IntegerProperty DIR = IntegerProperty.create("dir", 0, 3); //NSWE, for mod NXNZ -> NXPZ -> PXPZ -> PXNZ corner
 
-	public SlantBlock(Properties props) {
-		super(props);
-	}
+  public SlantBlock(Properties props) {
+    super(props);
+  }
 
 //	@Override
 //	@Nonnull

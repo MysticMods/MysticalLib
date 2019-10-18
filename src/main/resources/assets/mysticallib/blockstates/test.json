@@ -1,5 +1,7 @@
 {
-	"variants":{
-		"normal":{"model": "elulib:test"}
-	}
+  "variants": {
+    "normal": {
+      "model": "elulib:test"
+    }
+  }
 }

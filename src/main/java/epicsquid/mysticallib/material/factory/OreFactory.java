@@ -6,14 +6,14 @@ import net.minecraft.block.Block;
 
 public class OreFactory extends BlockFactory {
 
-	public OreFactory() {
-		super("ore");
-	}
+  public OreFactory() {
+    super("ore");
+  }
 
-	@Override
-	public Block create(IMaterial material, String modid) {
-		Block ore = new BaseOreBlock(material.getBlockOreProps()).setRegistryName(modid, material.getName() + getSuffix());
-		material.setOre(ore);
-		return ore;
-	}
+  @Override
+  public Block create(IMaterial material, String modid) {
+    Block ore = new BaseOreBlock(material.getBlockOreProps()).setRegistryName(modid, material.getName() + getSuffix());
+    material.setOre(ore);
+    return ore;
+  }
 }

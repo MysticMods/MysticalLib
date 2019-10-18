@@ -31,11 +31,12 @@ public class BakedModelItem implements IBakedModel {
   protected ImmutableList.Builder<BakedQuad> quads = ImmutableList.builder();
   protected List<TextureAtlasSprite> layers = new ArrayList<>();
   protected CustomModelItem model;
-  protected @Nonnull List<BakedQuad> layerQuads = new ArrayList<>();
+  protected @Nonnull
+  List<BakedQuad> layerQuads = new ArrayList<>();
   protected TextureAtlasSprite particle = null;
 
   public BakedModelItem(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-      @Nonnull CustomModelItem model) {
+                        @Nonnull CustomModelItem model) {
     this.getter = bakedTextureGetter;
     this.format = format;
     int i = 0;

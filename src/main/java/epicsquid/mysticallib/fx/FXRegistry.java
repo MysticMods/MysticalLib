@@ -10,14 +10,14 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class FXRegistry {
-	public static Map<Integer, Function<CompoundNBT, Void>> effects = new HashMap<>();
+  public static Map<Integer, Function<CompoundNBT, Void>> effects = new HashMap<>();
 
-	private static int id = 0;
+  private static int id = 0;
 
-	public static int registerEffect(@Nonnull Function<CompoundNBT, Void> func) {
-		if (MysticalLib.proxy instanceof ClientProxy) {
-			effects.put(id, func);
-		}
-		return id++;
-	}
+  public static int registerEffect(@Nonnull Function<CompoundNBT, Void> func) {
+    if (MysticalLib.proxy instanceof ClientProxy) {
+      effects.put(id, func);
+    }
+    return id++;
+  }
 }

@@ -16,34 +16,34 @@ import java.util.function.Supplier;
 
 public class PacketHandler {
 
-	private static final String PROTOCOL_VERSION = Integer.toString(2);
-	private static short index = 0;
+  private static final String PROTOCOL_VERSION = Integer.toString(2);
+  private static short index = 0;
 
-	public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
-					.named(new ResourceLocation(MysticalLib.MODID, "main_network_channel"))
-					.clientAcceptedVersions(PROTOCOL_VERSION::equals)
-					.serverAcceptedVersions(PROTOCOL_VERSION::equals)
-					.networkProtocolVersion(() -> PROTOCOL_VERSION)
-					.simpleChannel();
+  public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
+      .named(new ResourceLocation(MysticalLib.MODID, "main_network_channel"))
+      .clientAcceptedVersions(PROTOCOL_VERSION::equals)
+      .serverAcceptedVersions(PROTOCOL_VERSION::equals)
+      .networkProtocolVersion(() -> PROTOCOL_VERSION)
+      .simpleChannel();
 
-	private static int id = 0;
+  private static int id = 0;
 
-	public static void registerMessages() {
-	}
+  public static void registerMessages() {
+  }
 
-	public static void sendTo(Object msg, ServerPlayerEntity player) {
-		if (!(player instanceof FakePlayer))
-			HANDLER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-	}
+  public static void sendTo(Object msg, ServerPlayerEntity player) {
+    if (!(player instanceof FakePlayer))
+      HANDLER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+  }
 
-	public static void sendToServer(Object msg) {
-		HANDLER.sendToServer(msg);
-	}
+  public static void sendToServer(Object msg) {
+    HANDLER.sendToServer(msg);
+  }
 
-	private static <MSG> void registerMessage(Class<MSG> messageType, BiConsumer<MSG, PacketBuffer> encoder, Function<PacketBuffer, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> messageConsumer) {
-		HANDLER.registerMessage(index, messageType, encoder, decoder, messageConsumer);
-		index++;
-		if (index > 0xFF)
-			throw new RuntimeException("Too many messages!");
-	}
+  private static <MSG> void registerMessage(Class<MSG> messageType, BiConsumer<MSG, PacketBuffer> encoder, Function<PacketBuffer, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> messageConsumer) {
+    HANDLER.registerMessage(index, messageType, encoder, decoder, messageConsumer);
+    index++;
+    if (index > 0xFF)
+      throw new RuntimeException("Too many messages!");
+  }
 }

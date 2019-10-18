@@ -14,24 +14,24 @@ import java.util.Set;
 
 public class WorldGenBase implements IWorldGenerator {
 
-	public float spawnChance = 0f;
-	public Set<Block> spawnable = new HashSet<>();
+  public float spawnChance = 0f;
+  public Set<Block> spawnable = new HashSet<>();
 
-	// TODO investigate new features system
-	public WorldGenBase(float chance) {
-		this.spawnChance = chance;
-	}
+  // TODO investigate new features system
+  public WorldGenBase(float chance) {
+    this.spawnChance = chance;
+  }
 
-	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, ChunkGenerator chunkGenerator, AbstractChunkProvider chunkProvider) {
-		Random rand = NoiseGenUtil.getRandom(chunkX, chunkZ, getClass().getTypeName().hashCode());
-		if (rand.nextFloat() < spawnChance) {
-			this.generateStruct(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
-		}
-	}
+  @Override
+  public void generate(Random random, int chunkX, int chunkZ, World world, ChunkGenerator chunkGenerator, AbstractChunkProvider chunkProvider) {
+    Random rand = NoiseGenUtil.getRandom(chunkX, chunkZ, getClass().getTypeName().hashCode());
+    if (rand.nextFloat() < spawnChance) {
+      this.generateStruct(random, chunkX, chunkZ, world, chunkGenerator, chunkProvider);
+    }
+  }
 
-	public void generateStruct(@Nonnull Random random, int chunkX, int chunkZ, @Nonnull World world, @Nonnull ChunkGenerator chunkGen,
-														 @Nonnull AbstractChunkProvider chunkProv) {
-	}
+  public void generateStruct(@Nonnull Random random, int chunkX, int chunkZ, @Nonnull World world, @Nonnull ChunkGenerator chunkGen,
+                             @Nonnull AbstractChunkProvider chunkProv) {
+  }
 
 }

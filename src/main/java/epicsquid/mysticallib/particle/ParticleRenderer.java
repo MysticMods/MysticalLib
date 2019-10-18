@@ -1,14 +1,6 @@
 package epicsquid.mysticallib.particle;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import org.lwjgl.opengl.GL11;
-
 import com.mojang.blaze3d.platform.GlStateManager;
-
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.setup.ClientProxy;
 import net.minecraft.client.Minecraft;
@@ -21,6 +13,12 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ParticleRenderer {
   private CopyOnWriteArrayList<Particle> particles = new CopyOnWriteArrayList<>();
@@ -56,7 +54,7 @@ public class ParticleRenderer {
     if (player != null) {
       // TODO: work out what this variable actually was
       int i = 0;
-      float f= MathHelper.cos(player.rotationYaw * 0.017453292F) * (float) (1 - i * 2);
+      float f = MathHelper.cos(player.rotationYaw * 0.017453292F) * (float) (1 - i * 2);
       float f1 = MathHelper.sin(player.rotationYaw * 0.017453292F) * (float) (1 - i * 2);
       float f2 = -f1 * MathHelper.sin(player.rotationPitch * 0.017453292F) * (float) (1 - i * 2);
       float f3 = f * MathHelper.sin(player.rotationPitch * 0.017453292F) * (float) (1 - i * 2);

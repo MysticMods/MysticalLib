@@ -6,50 +6,48 @@ import net.minecraft.block.BlockState;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
-import net.minecraft.util.IItemProvider;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.Predicate;
 
 public interface IMaterial {
 
-	default void setOre (Block ore) {
-	}
+  default void setOre(Block ore) {
+  }
 
-	@Nullable
-	default Block getOre () {
-		return null;
-	}
+  @Nullable
+  default Block getOre() {
+    return null;
+  }
 
-	default boolean hasOre () {
-		return getOre() != null;
-	}
+  default boolean hasOre() {
+    return getOre() != null;
+  }
 
-	IItemTier getTier();
+  IItemTier getTier();
 
-	IArmorMaterial getArmor();
+  IArmorMaterial getArmor();
 
-	Item.Properties getItemProps();
+  Item.Properties getItemProps();
 
-	Block.Properties getBlockProps();
+  Block.Properties getBlockProps();
 
-	OreBlockProperties getBlockOreProps();
+  OreBlockProperties getBlockOreProps();
 
-	float getAttackSpeed(String name);
+  float getAttackSpeed(String name);
 
-	float getAttackDamage(String name);
+  float getAttackDamage(String name);
 
-	String getName();
+  String getName();
 
-	Predicate<IMaterialFactory<?>> matches();
+  Predicate<IMaterialFactory<?>> matches();
 
-	default int getDurability() {
-		return 0;
-	}
+  default int getDurability() {
+    return 0;
+  }
 
-	// This is a necessary evil... thanks stairs
-	default BlockState getDecoBlockstate() {
-		return null;
-	}
+  // This is a necessary evil... thanks stairs
+  default BlockState getDecoBlockstate() {
+    return null;
+  }
 }

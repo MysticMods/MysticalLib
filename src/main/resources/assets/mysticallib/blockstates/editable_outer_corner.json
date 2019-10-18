@@ -1,5 +1,7 @@
 {
-	"variants":{
-		"custom":{"model": "elulib:editable_outer_corner"}
-	}
+  "variants": {
+    "custom": {
+      "model": "elulib:editable_outer_corner"
+    }
+  }
 }

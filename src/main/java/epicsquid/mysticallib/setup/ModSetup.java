@@ -10,37 +10,37 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ModSetup {
 
-	public ModSetup() {
-		MaterialGenerator matGen = MaterialGenerator.getInstance();
-		matGen.addBlockFactory(new BlockFactory("block"));
-		matGen.addBlockFactory(new OreFactory());
-		matGen.addBlockFactory(new SlabFactory());
-		matGen.addBlockFactory(new StairFactory());
-		matGen.addBlockFactory(new FenceFactory());
-		matGen.addBlockFactory(new GateFactory());
-		matGen.addBlockFactory(new PressurePlateFactory());
-		matGen.addBlockFactory(new StoneButtonFactory());
-		matGen.addBlockFactory(new WoodButtonFactory());
-		matGen.addBlockFactory(new WallFactory());
+  public ModSetup() {
+    MaterialGenerator matGen = MaterialGenerator.getInstance();
+    matGen.addBlockFactory(new BlockFactory("block"));
+    matGen.addBlockFactory(new OreFactory());
+    matGen.addBlockFactory(new SlabFactory());
+    matGen.addBlockFactory(new StairFactory());
+    matGen.addBlockFactory(new FenceFactory());
+    matGen.addBlockFactory(new GateFactory());
+    matGen.addBlockFactory(new PressurePlateFactory());
+    matGen.addBlockFactory(new StoneButtonFactory());
+    matGen.addBlockFactory(new WoodButtonFactory());
+    matGen.addBlockFactory(new WallFactory());
 
-		matGen.addItemFactory(new ItemFactory("ingot"));
-		matGen.addItemFactory(new ItemFactory("nugget"));
-		matGen.addItemFactory(new ItemFactory());
-		matGen.addItemFactory(new AxeFactory());
-		matGen.addItemFactory(new ShovelFactory());
-		matGen.addItemFactory(new PickaxeFactory());
-		matGen.addItemFactory(new HoeFactory());
-		matGen.addItemFactory(new SwordFactory());
-		matGen.addItemFactory(new KnifeFactory());
-		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.CHEST));
-		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.FEET));
-		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.HEAD));
-		matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.LEGS));
-		matGen.addItemFactory(new ItemFactory("dust"));
-	}
+    matGen.addItemFactory(new ItemFactory("ingot"));
+    matGen.addItemFactory(new ItemFactory("nugget"));
+    matGen.addItemFactory(new ItemFactory());
+    matGen.addItemFactory(new AxeFactory());
+    matGen.addItemFactory(new ShovelFactory());
+    matGen.addItemFactory(new PickaxeFactory());
+    matGen.addItemFactory(new HoeFactory());
+    matGen.addItemFactory(new SwordFactory());
+    matGen.addItemFactory(new KnifeFactory());
+    matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.CHEST));
+    matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.FEET));
+    matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.HEAD));
+    matGen.addItemFactory(new ArmorFactory(EquipmentSlotType.LEGS));
+    matGen.addItemFactory(new ItemFactory("dust"));
+  }
 
-	public void init() {
-		FMLJavaModLoadingContext.get().getModEventBus().post(new RegisterFXEvent());
-		GenerationRegistry.oreGen.forEach(OreGenerator::init);
-	}
+  public void init() {
+    FMLJavaModLoadingContext.get().getModEventBus().post(new RegisterFXEvent());
+    GenerationRegistry.oreGen.forEach(OreGenerator::init);
+  }
 }

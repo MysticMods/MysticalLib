@@ -1,5 +1,7 @@
 {
-	"variants":{
-		"custom":{"model": "elulib:test_wall"}
-	}
+  "variants": {
+    "custom": {
+      "model": "elulib:test_wall"
+    }
+  }
 }

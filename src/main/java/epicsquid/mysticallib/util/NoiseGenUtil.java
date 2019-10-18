@@ -1,17 +1,16 @@
 package epicsquid.mysticallib.util;
 
-import java.util.Random;
+import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
-
-import net.minecraft.util.math.MathHelper;
+import java.util.Random;
 
 public class NoiseGenUtil {
 
   private static Random random = new Random();
 
   public static double getNoise(long seed, int x, int y) {
-    random.setSeed(simple_hash(new int[] { (int) seed, (int) (seed << 32), (int) Math.signum(y) * 512 + 512, (int) Math.signum(x) * 512 + 512, x, y }, 5));
+    random.setSeed(simple_hash(new int[]{(int) seed, (int) (seed << 32), (int) Math.signum(y) * 512 + 512, (int) Math.signum(x) * 512 + 512, x, y}, 5));
     return random.nextDouble();
   }
 
@@ -21,7 +20,7 @@ public class NoiseGenUtil {
   }
 
   public static long getSeed(int seed, int x, int y) {
-    return simple_hash(new int[] { seed, (int) Math.signum(y) * 512 + 512, (int) Math.signum(x) * 512 + 512, x, y }, 5);
+    return simple_hash(new int[]{seed, (int) Math.signum(y) * 512 + 512, (int) Math.signum(x) * 512 + 512, x, y}, 5);
   }
 
   public static int simple_hash(int[] is, int count) {
@@ -36,7 +35,7 @@ public class NoiseGenUtil {
   }
 
   public static double get2DNoise(long seed, int x, int z) {
-    return (double) Math.pow(
+    return Math.pow(
         (80.0f * NoiseGenUtil.getOctave(seed, x, z, 112) + 20.0f * NoiseGenUtil.getOctave(seed, x, z, 68) + 6.0f * NoiseGenUtil.getOctave(seed, x, z, 34)
             + 4.0f * NoiseGenUtil.getOctave(seed, x, z, 21) + 2.0f * NoiseGenUtil.getOctave(seed, x, z, 11) + 1.0f * NoiseGenUtil.getOctave(seed, x, z, 4))
             / 93.0f, 1.6f);
@@ -52,9 +51,9 @@ public class NoiseGenUtil {
     }
 
     if (x < 0) {
-      return (double) (1.27323954 * x + .405284735 * x * x);
+      return (1.27323954 * x + .405284735 * x * x);
     } else {
-      return (double) (1.27323954 * x - 0.405284735 * x * x);
+      return (1.27323954 * x - 0.405284735 * x * x);
     }
   }
 
@@ -72,9 +71,9 @@ public class NoiseGenUtil {
     }
 
     if (x < 0) {
-      return (double) (1.27323954 * x + 0.405284735 * x * x);
+      return (1.27323954 * x + 0.405284735 * x * x);
     } else {
-      return (double) (1.27323954 * x - 0.405284735 * x * x);
+      return (1.27323954 * x - 0.405284735 * x * x);
     }
   }
 
@@ -103,6 +102,6 @@ public class NoiseGenUtil {
         getNoise(seed, (int) (Math.floor(x / dimen) * dimen + dimen), (int) (Math.floor(y / dimen) * dimen)),
         getNoise(seed, (int) (Math.floor(x / dimen) * dimen + dimen), (int) (Math.floor(y / dimen) * dimen + dimen)),
         getNoise(seed, (int) (Math.floor(x / dimen) * dimen), (int) (Math.floor(y / dimen) * dimen + dimen)),
-        Math.abs(((double) (((x) - Math.floor((x / dimen)) * dimen))) / (dimen)), Math.abs(((double) (((y) - Math.floor((y / dimen)) * dimen))) / (dimen)));
+        Math.abs(((x) - Math.floor((x / dimen)) * dimen) / (dimen)), Math.abs(((y) - Math.floor((y / dimen)) * dimen) / (dimen)));
   }
 }

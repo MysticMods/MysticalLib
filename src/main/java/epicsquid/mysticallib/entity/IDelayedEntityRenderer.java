@@ -1,8 +1,8 @@
 package epicsquid.mysticallib.entity;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.entity.Entity;
+
+import javax.annotation.Nonnull;
 
 public interface IDelayedEntityRenderer {
 

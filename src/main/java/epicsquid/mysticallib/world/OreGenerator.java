@@ -10,17 +10,17 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class OreGenerator {
 
-	private OreProperties oreProperties;
+  private OreProperties oreProperties;
 
-	public OreGenerator(OreProperties oreProperties) {
-		this.oreProperties = oreProperties;
-	}
+  public OreGenerator(OreProperties oreProperties) {
+    this.oreProperties = oreProperties;
+  }
 
-	public void init() {
-		for (Biome biome : ForgeRegistries.BIOMES) {
-			ConfiguredFeature<?> featureOverworld = Biome.createDecoratedFeature(Feature.ORE,
-							oreProperties.getOreFeature(), Placement.COUNT_RANGE, oreProperties.getCountRange());
-			biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionalOreFeature<>(featureOverworld, DimensionType.OVERWORLD));
-		}
-	}
+  public void init() {
+    for (Biome biome : ForgeRegistries.BIOMES) {
+      ConfiguredFeature<?> featureOverworld = Biome.createDecoratedFeature(Feature.ORE,
+          oreProperties.getOreFeature(), Placement.COUNT_RANGE, oreProperties.getCountRange());
+      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionalOreFeature<>(featureOverworld, DimensionType.OVERWORLD));
+    }
+  }
 }

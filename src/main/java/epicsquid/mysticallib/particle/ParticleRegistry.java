@@ -1,16 +1,15 @@
 package epicsquid.mysticallib.particle;
 
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ParticleRegistry {
 

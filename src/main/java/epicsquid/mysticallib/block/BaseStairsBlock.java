@@ -5,7 +5,7 @@ import net.minecraft.block.StairsBlock;
 
 public class BaseStairsBlock extends StairsBlock {
 
-	public BaseStairsBlock(BlockState state, Properties properties) {
-		super(state, properties);
-	}
+  public BaseStairsBlock(BlockState state, Properties properties) {
+    super(state, properties);
+  }
 }
