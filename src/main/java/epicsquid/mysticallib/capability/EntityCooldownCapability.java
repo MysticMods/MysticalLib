@@ -19,4 +19,8 @@ public class EntityCooldownCapability {
     cooldown = (cooldown / 20) * 1000;
     this.cooldown = System.currentTimeMillis() + cooldown;
   }
+
+  public void setActualCooldown (long cooldown) {
+    this.cooldown = cooldown;
+  }
 }
