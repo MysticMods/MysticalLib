@@ -7,14 +7,18 @@ import net.minecraft.util.JsonUtils;
 import net.minecraftforge.common.crafting.CompoundIngredient;
 import net.minecraftforge.common.crafting.IIngredientFactory;
 import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.oredict.OreIngredient;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MultiOreIngredient extends CompoundIngredient {
+  public MultiOreIngredient(String... names) {
+    this(Arrays.asList(names));
+  }
+
   public MultiOreIngredient(List<String> names) {
     super(names.stream().map(DelayedOreIngredient::new).collect(Collectors.toList()));
   }
