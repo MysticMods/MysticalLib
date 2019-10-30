@@ -35,6 +35,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
@@ -125,6 +126,10 @@ public class ModRegistry {
     this.chunkStatusRegistry = new DeferredRegister<>(ForgeRegistries.CHUNK_STATUS, modId);
     this.dimensionRegistry = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, modId);
     this.dataSerializerRegistry = new DeferredRegister<>(ForgeRegistries.DATA_SERIALIZERS, modId);
+  }
+
+  public void registerEventBus (IEventBus bus) {
+    this.activeRegistries.forEach(o -> o.register(bus));
   }
 
   public <T extends Item> RegistryObject<T> registerItem (final String name, final Supplier<T> supplier) {
