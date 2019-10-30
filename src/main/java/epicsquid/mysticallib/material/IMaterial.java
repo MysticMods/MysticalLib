@@ -32,7 +32,7 @@ public interface IMaterial {
 
   Block.Properties getBlockProps();
 
-  OreBlockProperties getBlockOreProps();
+  Block.Properties getBlockOreProps();
 
   float getAttackSpeed(String name);
 
