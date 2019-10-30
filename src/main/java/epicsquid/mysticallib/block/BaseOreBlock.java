@@ -9,10 +9,10 @@ public class BaseOreBlock extends OreBlock {
   private final int minXP;
   private final int maxXP;
 
-  public BaseOreBlock(OreBlockProperties props) {
-    super(props.getProps());
-    this.minXP = props.getMinXp();
-    this.maxXP = props.getMaxXp();
+  public BaseOreBlock(Properties props, int minXP, int maxXP) {
+    super(props);
+    this.minXP = minXP;
+    this.maxXP = maxXP;
   }
 
   @Override

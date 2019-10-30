@@ -31,6 +31,7 @@ public class StructureData implements IGeneratable {
     }
   }
 
+  @Override
   public void calcDimensions() {
     int minX = 0, minY = 0, minZ = 0, maxX = 0, maxY = 0, maxZ = 0;
     for (Vec3i v : data.keySet()) {
@@ -52,10 +53,12 @@ public class StructureData implements IGeneratable {
     length = maxZ - minZ;
   }
 
+  @Override
   public int getWidth() {
     return width;
   }
 
+  @Override
   public int getLength() {
     return length;
   }
