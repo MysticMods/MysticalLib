@@ -245,7 +245,7 @@ public class CornerBlock extends Block {
 //
 //  // TODO: Look for a better way of doing this
 //  @Override
-//  @SideOnly(Side.CLIENT)
+//  @OnlyIn(Dist.CLIENT)
 //  public void initCustomModel() {
 //    if (hasCustomModel()) {
 //      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
