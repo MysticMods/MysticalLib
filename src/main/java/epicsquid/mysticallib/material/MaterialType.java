@@ -294,12 +294,6 @@ public class MaterialType implements IItemTier, IArmorMaterial {
     return tier == null ? enchantability : tier.getEnchantability();
   }
 
-  // Hopefully this hack is enough to resolve the above method being disambiguated
-  // into only being the implementation for IItemTier.
-  public int func_200900_a() {
-    return material == null ? enchantability : material.getEnchantability();
-  }
-
   @Override
   public SoundEvent getSoundEvent() {
     return material == null ? soundEvent : this.material.getSoundEvent();
@@ -309,6 +303,15 @@ public class MaterialType implements IItemTier, IArmorMaterial {
   @Nonnull
   public Ingredient getRepairMaterial() {
     return tier == null ? repairMaterial.get() : tier.getRepairMaterial();
+  }
+
+  // IArmorMaterial overrides
+  public int func_200900_a() {
+    return material == null ? enchantability : material.getEnchantability();
+  }
+
+  public Ingredient func_200898_c() {
+    return material == null ? repairMaterial.get() : material.getRepairMaterial();
   }
 
   public enum Type {
