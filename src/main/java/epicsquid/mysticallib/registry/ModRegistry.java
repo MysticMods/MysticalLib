@@ -41,10 +41,7 @@ import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -130,6 +127,14 @@ public class ModRegistry {
 
   public void registerEventBus (IEventBus bus) {
     this.activeRegistries.forEach(o -> o.register(bus));
+  }
+
+  public Collection<RegistryObject<Block>> getBlocks () {
+    return blockRegistry.getEntries();
+  }
+
+  public Collection<RegistryObject<Item>> getItems () {
+    return itemRegistry.getEntries();
   }
 
   public <T extends Item> RegistryObject<T> registerItem (final String name, final Supplier<T> supplier) {
