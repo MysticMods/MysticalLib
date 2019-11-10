@@ -9,18 +9,17 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.IItemHandler;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -100,6 +99,11 @@ public class Util {
       }
     }
     return f;
+  }
+
+  public static String englishName(ResourceLocation location) {
+    String internalName = location.getPath();
+    return Arrays.stream(internalName.toLowerCase(Locale.ROOT).split("_")).map(StringUtils::capitalize).collect(Collectors.joining(" "));
   }
 
   public static int intColor(int r, int g, int b) {

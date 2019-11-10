@@ -140,6 +140,11 @@ public class ModRegistry {
     return itemRegistry.getEntries();
   }
 
+  public <T extends IRecipeSerializer<?>> RegistryObject<T> registerRecipeSerializer (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.recipeRegistry);
+    return this.recipeRegistry.register(name, supplier);
+  }
+
   public <T extends Item> RegistryObject<T> registerItem(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.itemRegistry);
     return this.itemRegistry.register(name, supplier);
