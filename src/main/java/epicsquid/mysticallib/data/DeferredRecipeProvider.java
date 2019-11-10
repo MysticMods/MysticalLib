@@ -9,6 +9,7 @@ import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
@@ -28,10 +29,35 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
     CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(source), result.get(), xp, 100).addCriterion("has_" + safeName(source.getId()), this.hasItem(source)).build(consumer, safeId(result.get()) + "_from_blasting");
   }
 
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Supplier<? extends T> source, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
+    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200)
+        .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
+        .build(consumer, safeId(result.get()) + "_from_smelting");
+    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 100)
+        .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
+        .build(consumer, safeId(result.get()) + "_from_blasting");
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Tag<Item> tag, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
+    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(tag), result.get(), xp, 200)
+        .addCriterion("has_" + safeName(result.get().getRegistryName()), this.hasItem(result.get()))
+        .build(consumer, safeId(result.get()) + "_from_smelting");
+    CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(tag), result.get(), xp, 100)
+        .addCriterion("has_" + safeName(result.get().getRegistryName()), this.hasItem(result.get()))
+        .build(consumer, safeId(result.get()) + "_from_blasting");
+  }
+
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void food(Supplier<? extends T> source, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
     CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200).addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get())).build(consumer);
     CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 100, IRecipeSerializer.SMOKING).addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get())).build(consumer, safeId(result.get()) + "_from_smoker");
     CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 600, IRecipeSerializer.CAMPFIRE_COOKING).addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get())).build(consumer, safeId(result.get()) + "_from_campfire");
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void smelting(Supplier<? extends T> source, Supplier<? extends T> result, float xp, boolean blast, Consumer<IFinishedRecipe> consumer) {
+    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200).addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get())).build(consumer, safeId(result.get()) + "_from_smelting");
+    if (blast) {
+      CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 100).addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get())).build(consumer, safeId(result.get()) + "_from_blasting");
+    }
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void storage(Supplier<? extends T> input, Supplier<? extends T> output, Consumer<IFinishedRecipe> consumer) {
@@ -70,6 +96,16 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void planks(Supplier<? extends T> source, Supplier<? extends T> result, Consumer<IFinishedRecipe> consumer) {
     singleItemUnfinished(source, result, 1, 4)
         .setGroup("planks")
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 4)
+        .patternLine("XX")
+        .patternLine("XX")
+        .key('X', source.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
         .build(consumer);
   }
 
@@ -208,6 +244,17 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .key('S', Tags.Items.RODS_WOODEN)
         .setGroup(group)
         .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void knife(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine(" X")
+        .patternLine("S ")
+        .key('X', material)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
         .build(consumer);
   }
 
