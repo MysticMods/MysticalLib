@@ -210,4 +210,58 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
         .build(consumer);
   }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void hoe(Supplier<? extends T> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XX ")
+        .patternLine(" S ")
+        .patternLine(" S ")
+        .key('X', material.get())
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void boots(Supplier<? extends T> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X X")
+        .patternLine("X X")
+        .key('X', material.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void legs(Supplier<? extends T> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XXX")
+        .patternLine("X X")
+        .patternLine("X X")
+        .key('X', material.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void chest(Supplier<? extends T> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X X")
+        .patternLine("XXX")
+        .patternLine("XXX")
+        .key('X', material.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void helmet(Supplier<? extends T> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XXX")
+        .patternLine("X X")
+        .key('X', material.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
 }
