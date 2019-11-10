@@ -14,7 +14,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class DeferredRecipeProvider extends RecipeProvider {
+public abstract class DeferredRecipeProvider extends RecipeProvider {
   public DeferredRecipeProvider(DataGenerator generatorIn) {
     super(generatorIn);
   }
