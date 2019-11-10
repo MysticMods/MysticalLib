@@ -1,10 +1,10 @@
 package epicsquid.mysticallib.registry;
 
-import epicsquid.mysticallib.block.BaseOreBlock;
+import epicsquid.mysticallib.block.*;
 import epicsquid.mysticallib.item.KnifeItem;
 import epicsquid.mysticallib.material.MaterialType;
-import net.minecraft.block.Block;
-import net.minecraft.block.OreBlock;
+import net.minecraft.block.*;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -41,7 +41,10 @@ import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -125,37 +128,98 @@ public class ModRegistry {
     this.dataSerializerRegistry = new DeferredRegister<>(ForgeRegistries.DATA_SERIALIZERS, modId);
   }
 
-  public void registerEventBus (IEventBus bus) {
+  public void registerEventBus(IEventBus bus) {
     this.activeRegistries.forEach(o -> o.register(bus));
   }
 
-  public Collection<RegistryObject<Block>> getBlocks () {
+  public Collection<RegistryObject<Block>> getBlocks() {
     return blockRegistry.getEntries();
   }
 
-  public Collection<RegistryObject<Item>> getItems () {
+  public Collection<RegistryObject<Item>> getItems() {
     return itemRegistry.getEntries();
   }
 
-  public <T extends Item> RegistryObject<T> registerItem (final String name, final Supplier<T> supplier) {
+  public <T extends Item> RegistryObject<T> registerItem(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.itemRegistry);
     return this.itemRegistry.register(name, supplier);
   }
 
-  public <T extends Block> RegistryObject<T> registerBlock (final String name, final Supplier<T> supplier, final Supplier<Item.Properties> itemblockProperties) {
+  public <T extends Block> RegistryObject<T> registerBlock(final String name, final Supplier<T> supplier, final Supplier<Item.Properties> itemblockProperties) {
     this.activeRegistries.add(this.itemRegistry);
     RegistryObject<T> result = registerBlockWithoutItem(name, supplier);
     this.itemRegistry.register(name, blockItem(result, itemblockProperties));
     return result;
   }
 
-  public <T extends Block> RegistryObject<T> registerBlockWithoutItem (final String name, final Supplier<T> supplier) {
+  public <T extends Block> RegistryObject<T> registerBlockWithoutItem(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.blockRegistry);
     return this.blockRegistry.register(name, supplier);
   }
 
   public <T extends Block> Supplier<T> block(Function<Block.Properties, T> creator, Supplier<Block.Properties> properties) {
     return () -> creator.apply(properties.get());
+  }
+
+  public Supplier<StairsBlock> stair(RegistryObject<? extends Block> source) {
+    return block(b -> new StairsBlock(source.lazyMap(Block::getDefaultState), b), fromBlock(source));
+  }
+
+  public Supplier<SlabBlock> slab(Supplier<? extends Block> source) {
+    return block(SlabBlock::new, fromBlock(source));
+  }
+
+  public Supplier<FenceBlock> fence(Supplier<? extends Block> source) {
+    return block(FenceBlock::new, fromBlock(source));
+  }
+
+  public Supplier<FenceGateBlock> fenceGate(Supplier<? extends Block> source) {
+    return block(FenceGateBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WallBlock> wall(Supplier<? extends Block> source) {
+    return block(WallBlock::new, fromBlock(source));
+  }
+
+  public Supplier<LogBlock> log(MaterialColor topColor, Supplier<Block.Properties> props) {
+    return block(b -> new LogBlock(topColor, b), props);
+  }
+
+  public Supplier<StoneButtonBlock> stoneButton (Supplier<? extends Block> source) {
+    return block(BaseStoneButtonBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WoodButtonBlock> woodButton (Supplier<? extends Block> source) {
+    return block(BaseWoodButtonBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WeightedPressurePlateBlock> weightedPressurePlate (Supplier<? extends Block> source, int maxWeight) {
+    return block(b -> new BaseWeightedPressurePlateBlock(maxWeight, b), fromBlock(source));
+  }
+
+  public Supplier<PressurePlateBlock> pressurePlate (Supplier<? extends Block> source, PressurePlateBlock.Sensitivity sensitivity) {
+    return block(b -> new BasePressurePlateBlock(sensitivity, b), fromBlock(source));
+  }
+
+  public Supplier<TrapDoorBlock> trapDoor (Supplier<? extends Block> source) {
+    return block(BaseTrapDoorBlock::new, fromBlock(source));
+  }
+
+  public Supplier<DoorBlock> door (Supplier<? extends Block> source) {
+    return block(BaseDoorBlock::new, fromBlock(source));
+  }
+
+  interface ComposingSupplier<T> extends Supplier<T> {
+    default <R> ComposingSupplier<R> then(Function<T, R> func) {
+      return () -> func.apply(get());
+    }
+  }
+
+  private ComposingSupplier<Block.Properties> fromBlock(Supplier<? extends Block> source) {
+    return () -> {
+      Objects.requireNonNull(source.get(), "Registered block is required");
+      return Block.Properties.from(source.get());
+    };
   }
 
   public <T extends Block> Supplier<BlockItem> blockItem(RegistryObject<T> block, Supplier<Item.Properties> properties) {
@@ -166,7 +230,7 @@ public class ModRegistry {
     return () -> new BlockNamedItem(block.get().get(), properties.get());
   }
 
-  public Supplier<BaseOreBlock> ore (OreBuilder<BaseOreBlock> creator, MaterialType material) {
+  public Supplier<BaseOreBlock> ore(OreBuilder<BaseOreBlock> creator, MaterialType material) {
     return () -> creator.apply(material.getOreBlockProperties().get(), material.getMinXP(), material.getMaxXP());
   }
 
@@ -182,7 +246,7 @@ public class ModRegistry {
     return () -> builder.get().build(name);
   }
 
-  public <T extends Item> Supplier<T> tool (ToolBuilder<T> builder, Type Q, MaterialType material, Supplier<Item.Properties> properties) {
+  public <T extends Item> Supplier<T> tool(ToolBuilder<T> builder, Type Q, MaterialType material, Supplier<Item.Properties> properties) {
     return () -> builder.apply(material, material.getDamage(Q), material.getSpeed(Q), properties.get());
   }
 
@@ -226,11 +290,11 @@ public class ModRegistry {
 
   @FunctionalInterface
   public interface ArmorBuilder<V extends Item> {
-    V apply (IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builder);
+    V apply(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builder);
   }
 
   @FunctionalInterface
   public interface OreBuilder<V extends OreBlock> {
-    V apply (Block.Properties properties, int maxXP, int minXP);
+    V apply(Block.Properties properties, int maxXP, int minXP);
   }
 }

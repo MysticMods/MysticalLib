@@ -40,6 +40,10 @@ public abstract class DeferredItemModelProvider extends ItemModelProvider {
         return withExistingParent(name(block), modLoc("block/" + name(block) + suffix));
     }
 
+    protected ItemModelBuilder blockWithInventoryModel (Supplier<? extends Block> block) {
+        return withExistingParent(name(block), modLoc("block/" + name(block) + "_inventory"));
+    }
+
     protected ItemModelBuilder generated(Supplier<? extends IItemProvider> item) {
         return generated(item, itemTexture(item));
     }
