@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.registry;
 
+import com.google.common.collect.ImmutableSet;
 import epicsquid.mysticallib.block.*;
 import epicsquid.mysticallib.item.KnifeItem;
 import epicsquid.mysticallib.material.MaterialType;
@@ -23,6 +24,8 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.stats.StatType;
+import net.minecraft.tileentity.FurnaceTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.village.PointOfInterestType;
@@ -45,6 +48,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -160,6 +164,15 @@ public class ModRegistry {
   public <T extends Block> RegistryObject<T> registerBlockWithoutItem(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.blockRegistry);
     return this.blockRegistry.register(name, supplier);
+  }
+
+  public <T extends TileEntityType<?>> RegistryObject<T> registerTileEntity (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.tileEntityRegistry);
+    return this.tileEntityRegistry.register(name, supplier);
+  }
+
+  public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> supplier) {
+    return () -> TileEntityType.Builder.create(creator, supplier.get()).build(null);
   }
 
   public <T extends Block> Supplier<T> block(Function<Block.Properties, T> creator, Supplier<Block.Properties> properties) {
