@@ -180,7 +180,6 @@ public class Util {
 
     if (stack.attemptDamageItem(amount, Util.rand, null)) {
       stack.shrink(1);
-      stack.setDamage(0);
     }
 
     return stack;
