@@ -23,6 +23,8 @@ import java.util.function.Supplier;
 
 public class MaterialType implements IItemTier, IArmorMaterial {
   public static final UUID[] ARMOR_MODIFIERS = new UUID[]{UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
+  public static final UUID MAIN_HAND_MODIFIER = UUID.fromString("0e2c39ce-5247-4095-abf7-d99bd7387a95");
+  public static final UUID OFF_HAND_MODIFIER = UUID.fromString("28ad5d13-618f-4c80-8f60-0e0469c1a046");
 
   private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
 

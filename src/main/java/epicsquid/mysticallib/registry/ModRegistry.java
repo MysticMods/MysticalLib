@@ -15,6 +15,7 @@ import net.minecraft.entity.ai.brain.schedule.Schedule;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.item.PaintingType;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
@@ -44,6 +45,7 @@ import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -169,6 +171,11 @@ public class ModRegistry {
   public <T extends TileEntityType<?>> RegistryObject<T> registerTileEntity (final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.tileEntityRegistry);
     return this.tileEntityRegistry.register(name, supplier);
+  }
+
+  public <T extends ContainerType<?>> RegistryObject<T> registerContainerType (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.containerRegistry);
+    return this.containerRegistry.register(name, supplier);
   }
 
   public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> supplier) {
