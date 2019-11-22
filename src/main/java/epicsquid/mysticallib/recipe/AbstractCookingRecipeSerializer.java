@@ -24,6 +24,7 @@ public abstract class AbstractCookingRecipeSerializer<T extends AbstractCookingR
     this.serializer = serializer;
   }
 
+  @Override
   public T read(ResourceLocation recipeId, JsonObject json) {
     String s = JSONUtils.getString(json, "group", "");
     JsonElement jsonelement = (JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient"));
@@ -48,6 +49,7 @@ public abstract class AbstractCookingRecipeSerializer<T extends AbstractCookingR
     return this.serializer.create(recipeId, s, ingredient, itemstack, f, i);
   }
 
+  @Override
   public T read(ResourceLocation recipeId, PacketBuffer buffer) {
     String s = buffer.readString(32767);
     Ingredient ingredient = Ingredient.read(buffer);
@@ -57,6 +59,7 @@ public abstract class AbstractCookingRecipeSerializer<T extends AbstractCookingR
     return this.serializer.create(recipeId, s, ingredient, itemstack, f, i);
   }
 
+  @Override
   public void write(PacketBuffer buffer, T recipe) {
     buffer.writeString(recipe.getGroup());
     recipe.getIngredients().forEach(o -> o.write(buffer));
