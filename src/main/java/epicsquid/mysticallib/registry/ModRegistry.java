@@ -28,6 +28,7 @@ import net.minecraft.stats.StatType;
 import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.biome.Biome;
@@ -53,6 +54,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import static epicsquid.mysticallib.material.MaterialType.Type;
 
@@ -146,6 +148,11 @@ public class ModRegistry {
     return itemRegistry.getEntries();
   }
 
+  public <T extends SoundEvent> RegistryObject<T> registerSoundEvent (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.soundRegistry);
+    return this.soundRegistry.register(name, supplier);
+  }
+
   public <T extends IRecipeSerializer<?>> RegistryObject<T> registerRecipeSerializer (final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.recipeRegistry);
     return this.recipeRegistry.register(name, supplier);
@@ -178,8 +185,16 @@ public class ModRegistry {
     return this.containerRegistry.register(name, supplier);
   }
 
+  public Supplier<SoundEvent> sound (ResourceLocation name) {
+    return () -> new SoundEvent(name);
+  }
+
   public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> supplier) {
     return () -> TileEntityType.Builder.create(creator, supplier.get()).build(null);
+  }
+
+  public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> ... supplier) {
+    return () -> TileEntityType.Builder.create(creator, Stream.of(supplier).map(Supplier::get).toArray(Block[]::new)).build(null);
   }
 
   public <T extends Block> Supplier<T> block(Function<Block.Properties, T> creator, Supplier<Block.Properties> properties) {
