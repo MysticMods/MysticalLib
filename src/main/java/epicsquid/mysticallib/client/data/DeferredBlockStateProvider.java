@@ -65,6 +65,10 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
     super.simpleBlock(block.get(), models);
   }
 
+  protected void simpleModel(Supplier<? extends Block> block) {
+    simpleBlock(block.get(), getExistingFile(blockTexture(block)));
+  }
+
   // Methods for stairs, etc, taken from Tropicraft
   protected void stairsBlock (Supplier<? extends StairsBlock> block, String name) {
     stairsBlock(block, name, name);
