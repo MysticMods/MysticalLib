@@ -2,16 +2,17 @@ package epicsquid.mysticallib.client.data;
 
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.fml.RegistryObject;
 
 import javax.annotation.Nonnull;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public abstract class DeferredBlockStateProvider extends BlockStateProvider {
   private final String name;
@@ -29,20 +30,24 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
 
   // Non-override helper functions
   // Taken from Tropicraft
-  protected String name (Supplier<? extends Block> block) {
+  protected String name(Supplier<? extends Block> block) {
     return block.get().getRegistryName().getPath();
   }
 
-  protected ResourceLocation blockTexture (Supplier<? extends Block> block) {
+  protected ResourceLocation blockModel(Supplier<? extends Block> block) {
+    return blockTexture(block);
+  }
+
+  protected ResourceLocation blockTexture(Supplier<? extends Block> block) {
     ResourceLocation base = block.get().getRegistryName();
     return new ResourceLocation(base.getNamespace(), folder + "/" + base.getPath());
   }
 
-  protected ResourceLocation modLocation (String texture) {
+  protected ResourceLocation modLocation(String texture) {
     return new ResourceLocation(modid, texture);
   }
 
-  protected ResourceLocation blockLocation (String texture) {
+  protected ResourceLocation blockLocation(String texture) {
     return modLocation("block/" + texture);
   }
 
@@ -66,35 +71,57 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
   }
 
   protected void simpleModel(Supplier<? extends Block> block) {
-    simpleBlock(block.get(), getExistingFile(blockTexture(block)));
+    simpleBlock(block, getExistingFile(blockModel(block)));
+  }
+
+  protected void horizontalBlock(Supplier<? extends Block> block, ModelFile model) {
+    horizontalBlock(block.get(), model);
+  }
+
+  protected void horizontalModel(Supplier<? extends Block> block) {
+    horizontalBlock(block, getExistingFile(blockModel(block)));
+  }
+
+  protected final Function<BlockState, String> booleanStateDescriptor(BooleanProperty prop) {
+    return (BlockState state) -> state.get(prop) ? "on" : "off";
+  }
+
+  protected final Function<Object[], ResourceLocation> booleanStateLoc(String base) {
+    return (Object[] args) -> new ResourceLocation(modid, String.format(base, args));
+  }
+
+  @SafeVarargs
+  protected final void horizontalBooleanStateBlock(Supplier<? extends Block> block, Function<Object[], ResourceLocation> rlSupplier, Function<BlockState, String>... descriptors) {
+    horizontalBlock(block.get(), (state) ->
+        getExistingFile(rlSupplier.apply(Stream.of(descriptors).map(o -> o.apply(state)).toArray(String[]::new))));
   }
 
   // Methods for stairs, etc, taken from Tropicraft
-  protected void stairsBlock (Supplier<? extends StairsBlock> block, String name) {
+  protected void stairsBlock(Supplier<? extends StairsBlock> block, String name) {
     stairsBlock(block, name, name);
   }
 
-  protected void stairsBlock (Supplier<? extends StairsBlock> block, String side, String topBottom) {
+  protected void stairsBlock(Supplier<? extends StairsBlock> block, String side, String topBottom) {
     stairsBlock(block, side, topBottom, topBottom);
   }
 
-  protected void stairsBlock (Supplier<? extends StairsBlock> block, String side, String top, String bottom) {
+  protected void stairsBlock(Supplier<? extends StairsBlock> block, String side, String top, String bottom) {
     stairsBlock(block.get(), blockLocation(side), blockLocation(top), blockLocation(bottom));
   }
 
-  protected void slabBlock (Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleBlock) {
+  protected void slabBlock(Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleBlock) {
     slabBlock(block, doubleBlock, name(doubleBlock));
   }
 
-  protected void slabBlock (Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleBlock, String texture) {
+  protected void slabBlock(Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleBlock, String texture) {
     slabBlock(block, doubleBlock, texture, texture);
   }
 
-  protected void slabBlock (Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleBlock, String side, String end) {
+  protected void slabBlock(Supplier<? extends SlabBlock> block, Supplier<? extends Block> doubleBlock, String side, String end) {
     slabBlock(block.get(), doubleBlock.get().getRegistryName(), blockLocation(side), blockLocation(end), blockLocation(end));
   }
 
-  protected void fenceBlock (Supplier<? extends FenceBlock> block, String texture) {
+  protected void fenceBlock(Supplier<? extends FenceBlock> block, String texture) {
     fenceBlock(block.get(), blockLocation(texture));
     fenceInventory(name(block) + "_inventory", blockLocation(texture));
   }
@@ -103,20 +130,20 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
     fenceGateBlock(block.get(), blockLocation(texture));
   }
 
-  protected void wallBlock (Supplier<? extends WallBlock> block, String texture) {
+  protected void wallBlock(Supplier<? extends WallBlock> block, String texture) {
     wallBlock(block.get(), blockLocation(texture));
     wallInventory(name(block) + "_inventory", blockLocation(texture));
   }
 
-  protected void doorBlock (Supplier<? extends DoorBlock> block) {
+  protected void doorBlock(Supplier<? extends DoorBlock> block) {
     doorBlock(block.get(), blockLocation(name(block) + "_bottom"), blockLocation(name(block) + "_top"));
   }
 
-  protected void trapDoorBlock (Supplier<? extends TrapDoorBlock> block) {
+  protected void trapDoorBlock(Supplier<? extends TrapDoorBlock> block) {
     trapdoorBlock(block.get(), blockTexture(block), true);
   }
 
-  protected void logBlock (Supplier<? extends LogBlock> block) {
+  protected void logBlock(Supplier<? extends LogBlock> block) {
     logBlock(block.get());
   }
 }
