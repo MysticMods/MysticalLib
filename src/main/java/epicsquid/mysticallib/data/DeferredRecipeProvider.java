@@ -38,6 +38,15 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer, safeId(result.get()) + "_from_blasting");
   }
 
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Supplier<? extends T> source, Supplier<? extends T> result, float xp, String namespace, Consumer<IFinishedRecipe> consumer) {
+    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200)
+        .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
+        .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_smelting"));
+    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 100)
+        .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
+        .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_blasting"));
+  }
+
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Tag<Item> tag, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
     CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(tag), result.get(), xp, 200)
         .addCriterion("has_" + safeName(result.get().getRegistryName()), this.hasItem(result.get()))
@@ -315,6 +324,108 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .key('X', material.get())
         .setGroup(group)
         .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void axe(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XX ")
+        .patternLine("XS ")
+        .patternLine(" S ")
+        .key('X', material)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void pickaxe(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XXX")
+        .patternLine(" S ")
+        .patternLine(" S ")
+        .key('X', material)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void shovel(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X")
+        .patternLine("S")
+        .patternLine("S")
+        .key('X', material)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void sword(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X")
+        .patternLine("X")
+        .patternLine("S")
+        .key('X', material)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void hoe(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XX ")
+        .patternLine(" S ")
+        .patternLine(" S ")
+        .key('X', material)
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void boots(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X X")
+        .patternLine("X X")
+        .key('X', material)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void legs(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XXX")
+        .patternLine("X X")
+        .patternLine("X X")
+        .key('X', material)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void chest(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X X")
+        .patternLine("XXX")
+        .patternLine("XXX")
+        .key('X', material)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
+        .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void helmet(Tag<Item> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("XXX")
+        .patternLine("X X")
+        .key('X', material)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(material.getId()), this.hasItem(material))
         .build(consumer);
   }
 }

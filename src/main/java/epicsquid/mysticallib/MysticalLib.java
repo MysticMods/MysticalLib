@@ -1,12 +1,9 @@
 package epicsquid.mysticallib;
 
-import epicsquid.mysticallib.event.OBJModelRegistrar;
 import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.setup.IProxy;
 import epicsquid.mysticallib.setup.ModSetup;
 import epicsquid.mysticallib.setup.ServerProxy;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -32,11 +29,6 @@ public class MysticalLib {
     // Register the setup method for mod loading
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
     bus.addListener(this::setup);
-
-    DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-      bus.addListener(OBJModelRegistrar::modelBake);
-      bus.addListener(OBJModelRegistrar::textureStitchPre);
-    });
   }
 
   private void setup(final FMLCommonSetupEvent event) {
