@@ -16,6 +16,7 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+@SuppressWarnings("ALL")
 public abstract class DeferredRecipeProvider extends RecipeProvider {
   private String modid;
 
@@ -41,10 +42,10 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Supplier<? extends T> source, Supplier<? extends T> result, float xp, String namespace, Consumer<IFinishedRecipe> consumer) {
     CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200)
         .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
-        .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_smelting"));
+        .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_smelting_" + safeName(source.get())));
     CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 100)
         .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
-        .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_blasting"));
+        .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_blasting_" + safeName(source.get())));
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Tag<Item> tag, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
@@ -293,6 +294,18 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .setGroup(group)
         .addCriterion("has_" + safeName(material.get()), this.hasItem(material.get()))
         .build(consumer);
+  }
+
+   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void spear(Supplier<? extends Item> sword, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
+        .patternLine("X")
+        .patternLine("S")
+        .patternLine("S")
+        .key('X', sword.get())
+        .key('S', Tags.Items.RODS_WOODEN)
+        .setGroup(group)
+        .addCriterion("has_" + safeName(sword.get()), this.hasItem(sword.get()))
+        .build(consumer, new ResourceLocation(modid, result.get().getRegistryName().getPath()));
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void legs(Supplier<? extends T> material, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {

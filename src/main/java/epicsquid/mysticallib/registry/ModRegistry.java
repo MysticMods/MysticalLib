@@ -3,6 +3,7 @@ package epicsquid.mysticallib.registry;
 import com.google.common.collect.ImmutableSet;
 import epicsquid.mysticallib.block.*;
 import epicsquid.mysticallib.item.KnifeItem;
+import epicsquid.mysticallib.item.SpearItem;
 import epicsquid.mysticallib.material.MaterialType;
 import net.minecraft.block.*;
 import net.minecraft.block.material.MaterialColor;
@@ -153,6 +154,10 @@ public class ModRegistry {
     return this.soundRegistry.register(name, supplier);
   }
 
+  public RegistryObject<SoundEvent> registerSoundEvent (final String name) {
+    return registerSoundEvent(name, sound(new ResourceLocation(modId, name)));
+  }
+
   public <T extends IRecipeSerializer<?>> RegistryObject<T> registerRecipeSerializer (final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.recipeRegistry);
     return this.recipeRegistry.register(name, supplier);
@@ -292,6 +297,10 @@ public class ModRegistry {
 
   public Supplier<SwordItem> sword(ToolBuilder<SwordItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
     return tool(builder, Type.SWORD, material, properties);
+  }
+
+  public Supplier<SpearItem> spear(ToolBuilder<SpearItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
+    return tool(builder, Type.SPEAR, material, properties);
   }
 
   public Supplier<PickaxeItem> pickaxe(ToolBuilder<PickaxeItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
