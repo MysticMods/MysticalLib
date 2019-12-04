@@ -14,10 +14,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
-@SuppressWarnings("NullableProblems")
+@SuppressWarnings("ALL")
 public abstract class AbstractCookingRecipeSerializer<T extends AbstractCookingRecipe> extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
-  private final int defaultCookTime;
-  private final IFactory<T> serializer;
+  protected final int defaultCookTime;
+  protected final IFactory<T> serializer;
 
   public AbstractCookingRecipeSerializer(IFactory<T> serializer, int defaultCookTime) {
     this.defaultCookTime = defaultCookTime;
