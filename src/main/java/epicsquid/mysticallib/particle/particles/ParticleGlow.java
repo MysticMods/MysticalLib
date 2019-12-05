@@ -39,9 +39,4 @@ public class ParticleGlow extends ParticleBase {
     this.particleAlpha = initAlpha * (1.0f - lifeCoeff);
   }
 
-  @Override
-  public boolean isAdditive() {
-    return true;
-  }
-
 }

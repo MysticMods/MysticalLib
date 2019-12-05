@@ -39,7 +39,6 @@ public class ParticleLeafArc extends ParticleBase {
 
   @Override
   public void tick() {
-    super.tickNoMotion();
     this.prevParticleAngle = particleAngle;
     this.particleAngle += this.angularVelocity;
     float lifeCoeff = (float) this.age / (float) this.maxAge;
@@ -48,11 +47,6 @@ public class ParticleLeafArc extends ParticleBase {
     if (particleGravity > 0.45f) {
       particleGravity = 0.45f;
     }
-  }
-
-  @Override
-  public boolean isAdditive() {
-    return true;
   }
 
 }
