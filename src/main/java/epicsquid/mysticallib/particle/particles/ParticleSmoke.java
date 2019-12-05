@@ -12,7 +12,7 @@ public class ParticleSmoke extends ParticleBase {
   public float initAlpha = 0;
   public float angularVelocity = 0;
 
-  public ParticleSmoke(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  public ParticleSmoke(World world, double x, double y, double z, double vx, double vy, double vz, float[] data) {
     super(world, x, y, z, vx, vy, vz, data);
     this.colorR = (float) data[1];
     this.colorG = (float) data[2];

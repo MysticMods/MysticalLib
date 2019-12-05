@@ -12,7 +12,7 @@ public class ParticleSpark extends ParticleBase {
   public float initAlpha = 0;
   public float angularVelocity = 0;
 
-  public ParticleSpark(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  public ParticleSpark(World world, double x, double y, double z, double vx, double vy, double vz, float[] data) {
     super(world, x, y, z, vx, vy, vz, data);
     this.colorR = (float) data[1];
     this.colorG = (float) data[2];
