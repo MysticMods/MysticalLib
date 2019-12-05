@@ -12,7 +12,7 @@ public class ParticleGlitter extends ParticleBase {
   public float initAlpha = 0;
   public float angularVelocity = 0;
 
-  public ParticleGlitter(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  public ParticleGlitter(World world, double x, double y, double z, double vx, double vy, double vz, float[] data) {
     super(world, x, y, z, vx, vy, vz, data);
     this.colorR = (float) data[1];
     this.colorG = (float) data[2];
@@ -44,11 +44,6 @@ public class ParticleGlitter extends ParticleBase {
     float lifeCoeff = (float) this.age / (float) this.maxAge;
     this.particleScale = initScale - initScale * lifeCoeff;
     this.particleAlpha = initAlpha * (1.0f - lifeCoeff);
-  }
-
-  @Override
-  public boolean isAdditive() {
-    return true;
   }
 
 }
