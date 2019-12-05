@@ -16,7 +16,7 @@ public class ParticleBase extends SpriteTexturedParticle implements IParticle {
 
   ResourceLocation textureLocation = new ResourceLocation("mysticallib:textures/particles/particle_glow.png");
 
-  public ParticleBase(@Nonnull World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  public ParticleBase(@Nonnull World world, double x, double y, double z, double vx, double vy, double vz, float[] data) {
     super(world, x, y, z, 0, 0, 0);
     this.motionX = vx;
     this.motionY = vy;

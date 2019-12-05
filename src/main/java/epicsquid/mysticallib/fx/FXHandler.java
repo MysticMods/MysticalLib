@@ -2,8 +2,6 @@ package epicsquid.mysticallib.fx;
 
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.event.RegisterFXEvent;
-import epicsquid.mysticallib.setup.ClientLibRegistry;
-import epicsquid.mysticallib.setup.ClientProxy;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -41,15 +39,17 @@ public class FXHandler {
         float vy = MathHelper.sin(pitch) * speed;
         float vz = MathHelper.cos(pitch) * MathHelper.cos(yaw) * speed;
         float solid = (Util.rand.nextFloat());
-        ClientProxy.particleRenderer
-            .spawnParticle(MysticalLib.proxy.getClientWorld(), ClientLibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx * 0.25f,
-                Math.abs(vy * 0.5f), vz * 0.25f, nbt.getInt("lifetime"), 0.25f * solid, 0.25f * solid, 0.25f * solid, 0.5f * solid,
-                nbt.getDouble("scale") * (0.5f + Util.rand.nextFloat() * 0.5f), 0.75f);
+        //todo:
+//        ClientProxy.particleRenderer
+//            .spawnParticle(MysticalLib.proxy.getClientWorld(), ClientLibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx * 0.25f,
+//                Math.abs(vy * 0.5f), vz * 0.25f, nbt.getInt("lifetime"), 0.25f * solid, 0.25f * solid, 0.25f * solid, 0.5f * solid,
+//                nbt.getDouble("scale") * (0.5f + Util.rand.nextFloat() * 0.5f), 0.75f);
         if (Util.rand.nextInt(4) == 0) {
-          ClientProxy.particleRenderer
-              .spawnParticle(MysticalLib.proxy.getClientWorld(), ClientLibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx,
-                  Math.abs(vy * 0.5f), vz, nbt.getInt("lifetime") * 0.5f, 0.25f, 0.25f, 1.0f, 1.0f,
-                  0.5f * Util.rand.nextFloat() * nbt.getDouble("scale") * (0.5f + Util.rand.nextFloat() * 0.5f), 1.5f);
+          //todo:
+//          ClientProxy.particleRenderer
+//              .spawnParticle(MysticalLib.proxy.getClientWorld(), ClientLibRegistry.PARTICLE_SMOKE, nbt.getDouble("x"), nbt.getDouble("y"), nbt.getDouble("z"), vx,
+//                  Math.abs(vy * 0.5f), vz, nbt.getInt("lifetime") * 0.5f, 0.25f, 0.25f, 1.0f, 1.0f,
+//                  0.5f * Util.rand.nextFloat() * nbt.getDouble("scale") * (0.5f + Util.rand.nextFloat() * 0.5f), 1.5f);
         }
       }
       return null;
