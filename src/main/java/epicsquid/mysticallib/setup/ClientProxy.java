@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.setup;
 
-import epicsquid.mysticallib.event.RegisterParticleEvent;
 import epicsquid.mysticallib.particle.ParticleRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -29,7 +28,6 @@ public class ClientProxy implements IProxy {
   //    OBJLoader.INSTANCE.addDomain(MysticalLib.MODID);
   //    MinecraftForge.EVENT_BUS.register(new EffectManager());
   //    ModelLoaderRegistry.registerLoader(new CustomModelLoader());
-  //    MinecraftForge.EVENT_BUS.post(new RegisterParticleEvent());
   //  }
   //
   //  @Override
@@ -41,7 +39,6 @@ public class ClientProxy implements IProxy {
   @Override
   public void init() {
     IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-    bus.post(new RegisterParticleEvent());
   }
 
   @Override
