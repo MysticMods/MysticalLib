@@ -12,7 +12,7 @@ public class ParticleLeafArc extends ParticleBase {
   public float initAlpha = 0;
   public float angularVelocity = 0;
 
-  public ParticleLeafArc(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  public ParticleLeafArc(World world, double x, double y, double z, double vx, double vy, double vz, float[] data) {
     super(world, x, y, z, vx, vy, vz, data);
     this.colorR = (float) data[1];
     this.colorG = (float) data[2];
@@ -39,7 +39,6 @@ public class ParticleLeafArc extends ParticleBase {
 
   @Override
   public void tick() {
-    super.tickNoMotion();
     this.prevParticleAngle = particleAngle;
     this.particleAngle += this.angularVelocity;
     float lifeCoeff = (float) this.age / (float) this.maxAge;
@@ -48,11 +47,6 @@ public class ParticleLeafArc extends ParticleBase {
     if (particleGravity > 0.45f) {
       particleGravity = 0.45f;
     }
-  }
-
-  @Override
-  public boolean isAdditive() {
-    return true;
   }
 
 }
