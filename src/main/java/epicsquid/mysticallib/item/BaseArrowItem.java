@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.item;
 
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ public class BaseArrowItem extends ArrowItem {
 
   @Override
   @Nonnull
-  public ArrowEntity createArrow(@Nonnull World worldIn, @Nonnull ItemStack stack, LivingEntity shooter) {
+  public AbstractArrowEntity createArrow(@Nonnull World worldIn, @Nonnull ItemStack stack, LivingEntity shooter) {
     ArrowEntity entity = new ArrowEntity(worldIn, shooter);
     entity.setPotionEffect(stack);
     entity.setDamage(damage);

@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.registry;
 
-import com.google.common.collect.ImmutableSet;
 import epicsquid.mysticallib.block.*;
 import epicsquid.mysticallib.item.KnifeItem;
 import epicsquid.mysticallib.item.SpearItem;
@@ -16,7 +15,6 @@ import net.minecraft.entity.ai.brain.schedule.Schedule;
 import net.minecraft.entity.ai.brain.sensor.SensorType;
 import net.minecraft.entity.item.PaintingType;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.inventory.container.ContainerType;
@@ -26,7 +24,6 @@ import net.minecraft.particles.ParticleType;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Potion;
 import net.minecraft.stats.StatType;
-import net.minecraft.tileentity.FurnaceTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
@@ -47,12 +44,10 @@ import net.minecraftforge.registries.DataSerializerEntry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
