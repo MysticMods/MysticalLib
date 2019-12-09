@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.network;
 
-import epicsquid.mysticallib.MysticalLib;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
@@ -15,37 +14,40 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class PacketHandler {
+public abstract class PacketHandler {
 
-  private static final String PROTOCOL_VERSION = Integer.toString(2);
-  private static short index = 0;
+  private final String PROTOCOL_VERSION = Integer.toString(2);
+  private short index = 0;
 
-  public static final SimpleChannel HANDLER = NetworkRegistry.ChannelBuilder
-      .named(new ResourceLocation(MysticalLib.MODID, "main_network_channel"))
-      .clientAcceptedVersions(PROTOCOL_VERSION::equals)
-      .serverAcceptedVersions(PROTOCOL_VERSION::equals)
-      .networkProtocolVersion(() -> PROTOCOL_VERSION)
-      .simpleChannel();
+  public final SimpleChannel HANDLER;
 
-  private static int id = 0;
-
-  public static void registerMessages() {
+  public PacketHandler(String modid) {
+    this.HANDLER = NetworkRegistry.ChannelBuilder
+        .named(new ResourceLocation(modid, "main_network_channel"))
+        .clientAcceptedVersions(PROTOCOL_VERSION::equals)
+        .serverAcceptedVersions(PROTOCOL_VERSION::equals)
+        .networkProtocolVersion(() -> PROTOCOL_VERSION)
+        .simpleChannel();
   }
 
-  public static void sendTo(Object msg, ServerPlayerEntity player) {
+  private int id = 0;
+
+  public abstract void registerMessages();
+
+  public void sendToInternal(Object msg, ServerPlayerEntity player) {
     if (!(player instanceof FakePlayer))
       HANDLER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
   }
 
-  public static void sendToServer(Object msg) {
+  public void sendToServerInternal(Object msg) {
     HANDLER.sendToServer(msg);
   }
 
-  public static <MSG> void send(PacketDistributor.PacketTarget target, MSG message) {
+  public <MSG> void sendInternal(PacketDistributor.PacketTarget target, MSG message) {
     HANDLER.send(target, message);
   }
 
-  public static <MSG> void registerMessage(Class<MSG> messageType, BiConsumer<MSG, PacketBuffer> encoder, Function<PacketBuffer, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> messageConsumer) {
+  public <MSG> void registerMessage(Class<MSG> messageType, BiConsumer<MSG, PacketBuffer> encoder, Function<PacketBuffer, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> messageConsumer) {
     HANDLER.registerMessage(index, messageType, encoder, decoder, messageConsumer);
     index++;
     if (index > 0xFF)
