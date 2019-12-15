@@ -3,6 +3,7 @@ package epicsquid.mysticallib.data;
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.Tag;
@@ -79,6 +80,25 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void storage(Supplier<? extends T> input, Supplier<? extends T> output, Consumer<IFinishedRecipe> consumer) {
     ShapedRecipeBuilder.shapedRecipe(output.get()).patternLine("###").patternLine("###").patternLine("###").key('#', input.get()).addCriterion("has_at_least_9_" + safeName(input.get()), this.hasItem(MinMaxBounds.IntBound.atLeast(9), input.get())).build(consumer);
     ShapelessRecipeBuilder.shapelessRecipe(input.get(), 9).addIngredient(output.get()).addCriterion("has_" + safeName(output.get()), this.hasItem(output.get())).build(consumer, safeId(input.get()) + "_from_" + safeName(output.get()));
+  }
+
+  protected Item getModElement (Tag<Item> input) {
+    Item last = Items.AIR;
+    for (Item item : input.getAllElements()) {
+      last = item;
+      if (item.getRegistryName().getNamespace().equals(modid)) {
+        return item;
+      }
+    }
+    return last;
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void storage(Tag<Item> input, Supplier<? extends T> output, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(output.get())
+        .patternLine("###")
+        .patternLine("###")
+        .patternLine("###").key('#', input).addCriterion("has_at_least_9_" + safeName(input.getId()), this.hasItem(input)).build(consumer);
+    ShapelessRecipeBuilder.shapelessRecipe(getModElement(input), 9).addIngredient(output.get()).addCriterion("has_" + safeName(output.get()), this.hasItem(output.get())).build(consumer, safeId(input.getId()) + "_from_" + safeName(output.get()));
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> ShapelessRecipeBuilder singleItemUnfinished(Supplier<? extends T> source, Supplier<? extends T> result, int required, int amount) {
