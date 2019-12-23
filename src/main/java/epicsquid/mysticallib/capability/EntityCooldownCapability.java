@@ -7,7 +7,6 @@ public class EntityCooldownCapability {
   private long cooldown = 0;
 
   public boolean canHarvest() {
-    System.out.println("Cooldown: " + cooldown + " < " + System.currentTimeMillis() + " = " + (cooldown <= System.currentTimeMillis()) + " difference: " + ((cooldown - System.currentTimeMillis()) / 1000));
     return cooldown <= System.currentTimeMillis();
   }
 

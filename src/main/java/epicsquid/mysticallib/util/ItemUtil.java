@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-// TODO: Move to lib
 public class ItemUtil {
   public static boolean equalWithoutSize(ItemStack item1, ItemStack item2) {
     if (item1.getItem() != item2.getItem()) {

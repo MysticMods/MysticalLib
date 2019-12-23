@@ -31,26 +31,6 @@ public class Util {
 
   public static Random rand = new Random();
 
-  @Nonnull
-  public static <T extends TileEntity> List<T> getTileEntitiesWithin(@Nonnull World world, @Nonnull Class<? extends T> teClass, BlockPos pos, int radius) {
-    List<T> tiles = new ArrayList<>();
-    for (int i = pos.getX() - radius; i <= pos.getX() + radius; i++) {
-      for (int j = pos.getY() - radius; j <= pos.getY() + radius; j++) {
-        for (int k = pos.getZ() - radius; k <= pos.getZ() + radius; k++) {
-          BlockPos p = new BlockPos(i, j, k);
-          Chunk c = world.getChunk(p);
-          if (c.isLoaded()) {
-            TileEntity t = world.getChunk(p).getTileEntity(p, EnumCreateEntityType.CHECK);
-            if (teClass.isInstance(t)) {
-              tiles.add((T) t);
-            }
-          }
-        }
-      }
-    }
-    return tiles;
-  }
-
   public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class<? extends T> classEntity, BlockPos pos, float xradius, float yradius,
       float zradius) {
     return world.getEntitiesWithinAABB(classEntity,
