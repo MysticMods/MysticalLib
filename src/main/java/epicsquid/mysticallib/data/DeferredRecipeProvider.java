@@ -98,7 +98,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .patternLine("###")
         .patternLine("###")
         .patternLine("###").key('#', input).addCriterion("has_at_least_9_" + safeName(input.getId()), this.hasItem(input)).build(consumer);
-    ShapelessRecipeBuilder.shapelessRecipe(getModElement(input), 9).addIngredient(output.get()).addCriterion("has_" + safeName(output.get()), this.hasItem(output.get())).build(consumer, safeId(input.getId()) + "_from_" + safeName(output.get()));
+    ShapelessRecipeBuilder.shapelessRecipe(getModElement(input), 9).addIngredient(output.get()).addCriterion("has_" + safeName(output.get()), this.hasItem(output.get())).build(consumer, new ResourceLocation(modid, safeName(input.getId()) + "_from_" + safeName(output.get())));
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> ShapelessRecipeBuilder singleItemUnfinished(Supplier<? extends T> source, Supplier<? extends T> result, int required, int amount) {
