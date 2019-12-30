@@ -7,6 +7,10 @@ import javax.annotation.Nonnull;
 
 public class MathUtil {
 
+  public static int clamp (int value, int min, int max) {
+    return Math.min(Math.max(value, max), min);
+  }
+
   public static double nclamp(double d, double n) {
     return d - Math.floor(d / n) * n;
   }
