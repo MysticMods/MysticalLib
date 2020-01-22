@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.fx;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.nbt.CompoundNBT;
 import org.lwjgl.opengl.GL11;
@@ -109,31 +110,31 @@ public class Effect {
 
   public void renderTotal(float pticks) {
     if (inited) {
-      GlStateManager.enableBlend();
-      GlStateManager.enableAlphaTest();
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, additive ? GlStateManager.DestFactor.ONE : GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-      GlStateManager.depthMask(false);
+      RenderSystem.enableBlend();
+      RenderSystem.enableAlphaTest();
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, additive ? GlStateManager.DestFactor.ONE : GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      RenderSystem.depthMask(false);
       int dfunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
-      GlStateManager.depthFunc(GL11.GL_LEQUAL);
+      RenderSystem.depthFunc(GL11.GL_LEQUAL);
       int func = GL11.glGetInteger(GL11.GL_ALPHA_TEST_FUNC);
       float ref = GL11.glGetFloat(GL11.GL_ALPHA_TEST_REF);
-      GlStateManager.alphaFunc(GL11.GL_ALWAYS, 0);
-      GlStateManager.disableCull();
-      GlStateManager.shadeModel(GL11.GL_SMOOTH);
+      RenderSystem.alphaFunc(GL11.GL_ALWAYS, 0);
+      RenderSystem.disableCull();
+      RenderSystem.shadeModel(GL11.GL_SMOOTH);
 
-      GlStateManager.pushMatrix();
-      GlStateManager
-          .translated(-TileEntityRendererDispatcher.staticPlayerX, -TileEntityRendererDispatcher.staticPlayerY, -TileEntityRendererDispatcher.staticPlayerZ);
+      RenderSystem.pushMatrix();
+      //Todo: fix this
+      //RenderSystem.translated(-TileEntityRendererDispatcher.staticPlayerX, -TileEntityRendererDispatcher.staticPlayerY, -TileEntityRendererDispatcher.staticPlayerZ);
 
       render(pticks);
 
-      GlStateManager.popMatrix();
+      RenderSystem.popMatrix();
 
-      GlStateManager.alphaFunc(func, ref);
-      GlStateManager.depthFunc(dfunc);
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-      GlStateManager.depthMask(true);
-      GlStateManager.disableBlend();
+      RenderSystem.alphaFunc(func, ref);
+      RenderSystem.depthFunc(dfunc);
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      RenderSystem.depthMask(true);
+      RenderSystem.disableBlend();
     }
   }
 

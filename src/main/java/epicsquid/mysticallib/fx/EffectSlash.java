@@ -1,6 +1,6 @@
 package epicsquid.mysticallib.fx;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import epicsquid.mysticallib.util.RenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -57,12 +57,12 @@ public class EffectSlash extends Effect {
     Minecraft.getInstance().textureManager.bindTexture(RenderUtil.glow_texture);
     Tessellator tess = Tessellator.getInstance();
     BufferBuilder buffer = tess.getBuffer();
-    GlStateManager.translated(getInterpX(pticks), getInterpY(pticks), getInterpZ(pticks));
-    GlStateManager.rotated(-yaw, 0, 1, 0);
-    GlStateManager.rotated(pitch, 1, 0, 0);
-    GlStateManager.rotated(-slashAngle, 0, 0, 1);
+    RenderSystem.translated(getInterpX(pticks), getInterpY(pticks), getInterpZ(pticks));
+    RenderSystem.rotatef(-yaw, 0, 1, 0);
+    RenderSystem.rotatef(pitch, 1, 0, 0);
+    RenderSystem.rotatef(-slashAngle, 0, 0, 1);
 
-    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR_NORMAL);
     RenderUtil.renderSlash(buffer, 0, 0, 0, r, g, b, a * getLifeCoeff(pticks), slashRadius, slashWidth, slashRange);
     tess.draw();
   }

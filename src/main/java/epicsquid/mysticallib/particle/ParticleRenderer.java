@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
@@ -11,30 +12,30 @@ import org.lwjgl.opengl.GL11;
 public class ParticleRenderer {
 
   private static void beginRenderGlobal(BufferBuilder buffer, TextureManager textureManager){
-    GlStateManager.enableAlphaTest();
-    GlStateManager.enableBlend();
-    GlStateManager.alphaFunc(516, 0.003921569F);
-    GlStateManager.disableCull();
-    GlStateManager.depthMask(false);
+    RenderSystem.enableAlphaTest();
+    RenderSystem.enableBlend();
+    RenderSystem.alphaFunc(516, 0.003921569F);
+    RenderSystem.disableCull();
+    RenderSystem.depthMask(false);
   }
 
   private static void finishRenderGlobal(Tessellator tess){
     tess.draw();
-    GlStateManager.enableDepthTest();
+    RenderSystem.enableDepthTest();
 
-    GlStateManager.enableCull();
-    GlStateManager.depthMask(true);
-    GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-    GlStateManager.disableBlend();
-    GlStateManager.alphaFunc(516, 0.1F);
-    GlStateManager.enableAlphaTest();
+    RenderSystem.enableCull();
+    RenderSystem.depthMask(true);
+    RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+    RenderSystem.disableBlend();
+    RenderSystem.alphaFunc(516, 0.1F);
+    RenderSystem.enableAlphaTest();
   }
 
   public static IParticleRenderType PARTICLE_IS_ADDITIVE = new IParticleRenderType() {
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
@@ -50,8 +51,8 @@ public class ParticleRenderer {
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
-      GlStateManager.disableDepthTest();
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+      RenderSystem.disableDepthTest();
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
@@ -67,8 +68,8 @@ public class ParticleRenderer {
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
-      GlStateManager.disableDepthTest();
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      RenderSystem.disableDepthTest();
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
@@ -84,7 +85,7 @@ public class ParticleRenderer {
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
