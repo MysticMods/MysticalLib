@@ -16,7 +16,8 @@ public class MysticalLib {
   public static final String MODID = "mysticallib";
   public static final String VERSION = "@VERSION@";
   public static final String MODNAME = "MysticalLib";
-  public static final String DEPENDENCIES = "after:*";
+  public static final String FORGE_VERSION = "14.23.5.2847";
+  public static final String DEPENDENCIES = "required-after:forge@[" + FORGE_VERSION + " ,);after:*";
 
   @SidedProxy(clientSide = "epicsquid.mysticallib.proxy.ClientProxy", serverSide = "epicsquid.mysticallib.proxy.CommonProxy") public static CommonProxy proxy;
 

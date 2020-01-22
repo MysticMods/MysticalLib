@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.block;
 
 import epicsquid.mysticallib.LibRegistry;
+import epicsquid.mysticallib.item.ItemBlockLeaves;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
@@ -60,7 +61,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setHardness(hardness);
-    itemBlock = new ItemBlock(this).setRegistryName(LibRegistry.getActiveModid(), name);
+    itemBlock = new ItemBlockLeaves(this).setRegistryName(LibRegistry.getActiveModid(), name);
+    this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, true).withProperty(DECAYABLE, true));
   }
 
   @Override
