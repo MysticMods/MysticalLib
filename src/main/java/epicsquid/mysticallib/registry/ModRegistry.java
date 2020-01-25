@@ -287,7 +287,7 @@ public class ModRegistry {
   }
 
   public <T extends Item> Supplier<T> tool(ToolBuilder<T> builder, Type Q, MaterialType material, Supplier<Item.Properties> properties) {
-    return () -> builder.apply(material, material.getDamage(Q), material.getSpeed(Q), properties.get());
+    return () -> builder.apply(material.getItemMaterial(), material.getDamage(Q), material.getSpeed(Q), properties.get());
   }
 
   public Supplier<SwordItem> sword(ToolBuilder<SwordItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
@@ -315,11 +315,11 @@ public class ModRegistry {
   }
 
   public Supplier<HoeItem> hoe(HoeBuilder<HoeItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return () -> builder.apply(material, material.getSpeed(Type.HOE), properties.get());
+    return () -> builder.apply(material.getItemMaterial(), material.getSpeed(Type.HOE), properties.get());
   }
 
   public Supplier<ArmorItem> armor(ArmorBuilder<ArmorItem> builder, MaterialType material, EquipmentSlotType slot, Supplier<Item.Properties> properties) {
-    return () -> builder.apply(material, slot, properties.get());
+    return () -> builder.apply(material.getArmorMaterial(), slot, properties.get());
   }
 
   @FunctionalInterface

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class MaterialType implements IItemTier, IArmorMaterial {
+public class MaterialType {
   public static final UUID[] ARMOR_MODIFIERS = new UUID[]{UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
   public static final UUID MAIN_HAND_MODIFIER = UUID.fromString("0e2c39ce-5247-4095-abf7-d99bd7387a95");
   public static final UUID OFF_HAND_MODIFIER = UUID.fromString("28ad5d13-618f-4c80-8f60-0e0469c1a046");
@@ -59,9 +59,20 @@ public class MaterialType implements IItemTier, IArmorMaterial {
 
   private List<Type> itemTypes;
 
+  private ArmorMaterial armorMaterial = new ArmorMaterial();
+  private ItemMaterial itemMaterial = new ItemMaterial();
+
   public MaterialType(String name) {
     this.name = name;
     this.putDamageSpeed(Type.SWORD, 3.0f, -2.4f, Type.SHOVEL, 1.5f, -3.0f, Type.PICKAXE, 1.0f, -2.8f, Type.HOE, 1.0f, -1.0f);
+  }
+
+  public ArmorMaterial getArmorMaterial () {
+    return armorMaterial;
+  }
+
+  public ItemMaterial getItemMaterial () {
+    return itemMaterial;
   }
 
   public MaterialType setModId(String modId) {
@@ -165,12 +176,6 @@ public class MaterialType implements IItemTier, IArmorMaterial {
     return this;
   }
 
-  @Override
-  @OnlyIn(Dist.CLIENT)
-  public String getName() {
-    return getModId() + ":" + getInternalName();
-  }
-
   public String getInternalName() {
     return name;
   }
@@ -228,6 +233,10 @@ public class MaterialType implements IItemTier, IArmorMaterial {
     return () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel());
   }
 
+  public int getHarvestLevel() {
+    return tier == null ? harvestLevel : tier.getHarvestLevel();
+  }
+
   public String gemName() {
     return name + "_gem";
   }
@@ -250,70 +259,6 @@ public class MaterialType implements IItemTier, IArmorMaterial {
 
   public String nuggetName() {
     return name + "_nugget";
-  }
-
-  /* Implementation of Material and Armor Material interfaces:
-   *   Note: the get-repair-item method inherently goes with the
-   *         item supplied by the item tier.                      */
-
-  @Override
-  public float getToughness() {
-    return this.material == null ? toughness : this.material.getToughness();
-  }
-
-  @Override
-  public int getMaxUses() {
-    return tier == null ? maxUses : tier.getMaxUses();
-  }
-
-  @Override
-  public float getEfficiency() {
-    return tier == null ? efficiency : tier.getEfficiency();
-  }
-
-  @Override
-  public float getAttackDamage() {
-    return tier == null ? attackDamage : tier.getAttackDamage();
-  }
-
-  @Override
-  public int getHarvestLevel() {
-    return tier == null ? harvestLevel : tier.getHarvestLevel();
-  }
-
-  @Override
-  public int getDurability(EquipmentSlotType slotIn) {
-    return material == null ? MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor : this.material.getDurability(slotIn);
-  }
-
-  @Override
-  public int getDamageReductionAmount(EquipmentSlotType slotIn) {
-    return material == null ? this.damageReductionAmountArray[slotIn.getIndex()] : this.material.getDamageReductionAmount(slotIn);
-  }
-
-  @Override
-  public int getEnchantability() {
-    return tier == null ? enchantability : tier.getEnchantability();
-  }
-
-  @Override
-  public SoundEvent getSoundEvent() {
-    return material == null ? soundEvent : this.material.getSoundEvent();
-  }
-
-  @Override
-  @Nonnull
-  public Ingredient getRepairMaterial() {
-    return tier == null ? repairMaterial.get() : tier.getRepairMaterial();
-  }
-
-  // IArmorMaterial overrides
-  public int func_200900_a() {
-    return material == null ? enchantability : material.getEnchantability();
-  }
-
-  public Ingredient func_200898_c() {
-    return material == null ? repairMaterial.get() : material.getRepairMaterial();
   }
 
   public enum Type {
@@ -344,6 +289,78 @@ public class MaterialType implements IItemTier, IArmorMaterial {
       }
 
       return null;
+    }
+  }
+
+  public class ArmorMaterial implements IArmorMaterial {
+    @Override
+    public int getDurability(EquipmentSlotType slotIn) {
+      return material == null ? MAX_DAMAGE_ARRAY[slotIn.getIndex()] * maxDamageFactor : material.getDurability(slotIn);
+    }
+
+    @Override
+    public int getDamageReductionAmount(EquipmentSlotType slotIn) {
+      return material == null ? damageReductionAmountArray[slotIn.getIndex()] : material.getDamageReductionAmount(slotIn);
+    }
+
+    @Override
+    public SoundEvent getSoundEvent() {
+      return material == null ? soundEvent : material.getSoundEvent();
+    }
+
+    @Override
+    public float getToughness() {
+      return material == null ? toughness : material.getToughness();
+    }
+
+    @Override
+    @Nonnull
+    public Ingredient getRepairMaterial() {
+      return tier == null ? repairMaterial.get() : tier.getRepairMaterial();
+    }
+
+    @Override
+    public int getEnchantability() {
+      return tier == null ? enchantability : tier.getEnchantability();
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public String getName() {
+      return getModId() + ":" + getInternalName();
+    }
+  }
+
+  public class ItemMaterial implements IItemTier {
+    @Override
+    public int getMaxUses() {
+      return tier == null ? maxUses : tier.getMaxUses();
+    }
+
+    @Override
+    public float getEfficiency() {
+      return tier == null ? efficiency : tier.getEfficiency();
+    }
+
+    @Override
+    public float getAttackDamage() {
+      return tier == null ? attackDamage : tier.getAttackDamage();
+    }
+
+    @Override
+    public int getHarvestLevel() {
+      return MaterialType.this.getHarvestLevel();
+    }
+
+    @Override
+    public int getEnchantability() {
+      return tier == null ? enchantability : tier.getEnchantability();
+    }
+
+    @Override
+    @Nonnull
+    public Ingredient getRepairMaterial() {
+      return tier == null ? repairMaterial.get() : tier.getRepairMaterial();
     }
   }
 }
