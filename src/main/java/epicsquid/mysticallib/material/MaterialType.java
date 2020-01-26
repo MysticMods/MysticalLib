@@ -230,7 +230,7 @@ public class MaterialType {
   }
 
   public Supplier<Block.Properties> getOreBlockProperties() {
-    return () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel());
+    return () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel() - 1);
   }
 
   public int getHarvestLevel() {
