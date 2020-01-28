@@ -135,14 +135,18 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer);
   }
 
-  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
-    ShapedRecipeBuilder.shapedRecipe(result.get(), 4)
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), count)
         .patternLine("XX")
         .patternLine("XX")
         .key('X', source.get())
         .setGroup(group)
         .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
         .build(consumer);
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    twoByTwo(source, result, group, 4, consumer);
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void stairs(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, boolean stone, Consumer<IFinishedRecipe> consumer) {
