@@ -177,6 +177,37 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
     }
   }
 
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void narrowPost(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, boolean stone, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 4)
+        .patternLine("X")
+        .patternLine("X")
+        .key('X', source.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
+        .build(consumer);
+    if (stone) {
+      SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(source.get()), result.get(), 2)
+          .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
+          .build(consumer, safeId(result.get()) + "_from_" + safeName(source.get()) + "_stonecutting");
+    }
+  }
+
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void widePost(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, boolean stone, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), 6)
+        .patternLine("X")
+        .patternLine("X")
+        .patternLine("X")
+        .key('X', source.get())
+        .setGroup(group)
+        .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
+        .build(consumer);
+    if (stone) {
+      SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(source.get()), result.get(), 2)
+          .addCriterion("has_" + safeName(source.get()), this.hasItem(source.get()))
+          .build(consumer, safeId(result.get()) + "_from_" + safeName(source.get()) + "_stonecutting");
+    }
+  }
+
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void fence(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
     ShapedRecipeBuilder.shapedRecipe(result.get(), 3)
         .patternLine("W#W").patternLine("W#W")

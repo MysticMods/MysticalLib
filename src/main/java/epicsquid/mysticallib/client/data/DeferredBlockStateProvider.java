@@ -1,5 +1,8 @@
 package epicsquid.mysticallib.client.data;
 
+import epicsquid.mysticallib.MysticalLib;
+import epicsquid.mysticallib.block.NarrowPostBlock;
+import epicsquid.mysticallib.block.WidePostBlock;
 import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.BooleanProperty;
@@ -133,6 +136,14 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
   protected void wallBlock(Supplier<? extends WallBlock> block, String texture) {
     wallBlock(block.get(), blockLocation(texture));
     wallInventory(name(block) + "_inventory", blockLocation(texture));
+  }
+
+  protected void widePostBlock(Supplier<? extends WidePostBlock> block, String texture) {
+    getVariantBuilder(block.get()).forAllStates(state -> ConfiguredModel.allRotations(singleTexture(name(block), new ResourceLocation(MysticalLib.MODID, BLOCK_FOLDER + "/wall_post"), "wall", modLoc(texture)), true));
+  }
+
+  protected void narrowPostBlock(Supplier<? extends NarrowPostBlock> block, String texture) {
+    getVariantBuilder(block.get()).forAllStates(state -> ConfiguredModel.allRotations(singleTexture(name(block), new ResourceLocation(MysticalLib.MODID, BLOCK_FOLDER + "/narrow_post"), "wall", modLoc(texture)), true));
   }
 
   protected void doorBlock(Supplier<? extends DoorBlock> block) {

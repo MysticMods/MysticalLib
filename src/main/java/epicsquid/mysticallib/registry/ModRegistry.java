@@ -163,6 +163,11 @@ public class ModRegistry {
     return this.itemRegistry.register(name, supplier);
   }
 
+  public <T extends Effect> RegistryObject<T> registerEffect (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.effectRegistry);
+    return this.effectRegistry.register(name, supplier);
+  }
+
   public <T extends Block> RegistryObject<T> registerBlock(final String name, final Supplier<T> supplier, final Supplier<Item.Properties> itemblockProperties) {
     this.activeRegistries.add(this.itemRegistry);
     RegistryObject<T> result = registerBlockWithoutItem(name, supplier);
@@ -219,6 +224,14 @@ public class ModRegistry {
 
   public Supplier<WallBlock> wall(Supplier<? extends Block> source) {
     return block(WallBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WidePostBlock> widePost(Supplier<? extends Block> source) {
+    return block(WidePostBlock::new, fromBlock(source));
+  }
+
+  public Supplier<NarrowPostBlock> narrowPost(Supplier<? extends Block> source) {
+    return block(NarrowPostBlock::new, fromBlock(source));
   }
 
   public Supplier<LogBlock> log(MaterialColor topColor, Supplier<Block.Properties> props) {
