@@ -1,7 +1,12 @@
 package epicsquid.mysticallib.item;
 
+import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.*;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.UseAction;
 import net.minecraft.world.World;
 
 @SuppressWarnings("NullableProblems")
@@ -17,7 +22,16 @@ public class DrinkItem extends Item {
 
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
-    super.onItemUseFinish(stack, world, entity);
-    return new ItemStack(Items.GLASS_BOTTLE);
+    ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
+    ItemStack result = super.onItemUseFinish(stack, world, entity);
+    if (result.isEmpty()) {
+      return bottle;
+    } else if (entity instanceof PlayerEntity) {
+      PlayerEntity player = (PlayerEntity) entity;
+      if (!player.addItemStackToInventory(bottle)) {
+        ItemUtil.spawnItem(world, player.getPosition(), bottle);
+      }
+    }
+    return result;
   }
 }
