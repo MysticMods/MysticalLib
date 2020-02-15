@@ -141,6 +141,23 @@ jar {
     }
 }
 
+processResources {
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "shoulders_version", shoulders_version
+    inputs.property "version", project.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mods_shoulders.toml'
+
+        expand 'version': project.version, 'shoulders_version': shoulders_version, 'mc_version': project.minecraft_version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mods_shoulders.toml'
+    }
+}
+
 shadowJar {
     configurations = [project.configurations.shade]
     relocate 'noobanidus.mods.shoulders', 'epicsquid.mysticallib.repack.shoulders'
@@ -148,19 +165,6 @@ shadowJar {
     exclude "META-INF/mods.toml"
     rename "mods_shoulders.toml", "META-INF/mods.toml"
 }
-
-task expander (type: Copy) {
-    from("src/main/resources") {
-        include "**/mods_shoulders.toml"
-        expand "shoulders_version": shoulders_version
-    }
-    from("src/main/resources") {
-        exclude "**/mods_shoulders.toml"
-    }
-    into 'build/resources'
-}
-
-shadowJar.dependsOn expander
 
 reobf {
     shadowJar {}

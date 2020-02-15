@@ -3,7 +3,7 @@ loaderVersion="[28,)" #mandatory (26 is current forge version)
 issueTrackerURL="https://github.com/EpicSquid/MysticalLib/issues" #optional
 [[mods]]
     modId="mysticallib" #mandatory
-    version="${file.jarVersion}" #mandatory
+    version="${version}" #mandatory
     displayName="Mystical Lib" #mandatory
     displayURL="https://minecraft.curseforge.com/projects/mysticallib" #optional
     credits="Elucent, for the original code in EluLib." #optional
@@ -25,7 +25,7 @@ issueTrackerURL="https://github.com/EpicSquid/MysticalLib/issues" #optional
         side="BOTH"
 [[mods]]
     modId="shoulders" #mandatory
-    version="1.14.4-0.0.0.8" #mandatory
+    version="${mc_version}-${shoulders_version}" #mandatory
     displayName="Shoulders" #mandatory
     displayURL="https://minecraft.curseforge.com/projects/shoulders" #optional
     authors="Noobanidus"
