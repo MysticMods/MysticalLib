@@ -119,7 +119,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
     compile "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:deobf"
-    shade "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:shade"
+    shade "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:embed"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
