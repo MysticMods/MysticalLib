@@ -169,12 +169,6 @@ reobf {
 
 build.dependsOn reobfShadowJar
 
-def reobfFile = file("$buildDir/reobfShadowJar/output.jar")
-def reobfArtifact = artifacts.add("default", reobfFile) {
-    type 'jar'
-    builtBy 'reobfShadowJar'
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -183,7 +177,9 @@ publishing {
             version project.version
             from components.java
 
-            artifact reobfArtifact
+            artifact deobfJar {
+                classifier 'deobf'
+            }
         }
     }
     repositories {
