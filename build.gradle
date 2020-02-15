@@ -180,6 +180,12 @@ publishing {
             artifact shadowJar {
                 classifier 'deobf'
             }
+            
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    dep -> dep.parent().remove(dep)
+                }
+            }            
         }
     }
     repositories {
