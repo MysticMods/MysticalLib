@@ -118,8 +118,8 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compile "noobanidus.mods.shoulders:Shoulders:1.14.4-0.0.0.1:deobf"
-    shade "noobanidus.mods.shoulders:Shoulders:1.14.4-0.0.0.1:embed"
+    compile "noobanidus.mods.shoulders:shoulders:1.14.4-0.0.0.1:deobf"
+    shade "noobanidus.mods.shoulders:shoulders:1.14.4-0.0.0.1:embed"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
