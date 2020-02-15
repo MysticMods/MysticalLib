@@ -177,15 +177,21 @@ def reobfArtifact = artifacts.add("default", reobfFile) {
     type 'jar'
     builtBy 'reobfShadowJar'
 }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+
             artifact reobfArtifact
         }
-        repositories(MavenPublication) {
-            maven {
-                url "file:///${project.projectDir}/mcmodsrepo"
-            }
+    }
+    repositories {
+        maven {
+            url "file:///" + System.getenv("local_maven")
         }
     }
 }
