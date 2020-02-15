@@ -26,9 +26,9 @@ apply plugin: 'maven-publish'
 
 
 version = "${minecraft_version}-${mod_version}"
-//if (System.getenv('BUILD_NUMBER') != null) {
-//    version = "${minecraft_version}-${mod_version}-" + System.getenv('BUILD_NUMBER')
-//}
+if (System.getenv('BUILD_NUMBER') != null) {
+    version = "${minecraft_version}-${mod_version}-" + System.getenv('BUILD_NUMBER')
+}
 group = 'epicsquid.mysticallib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'mysticallib'
 
