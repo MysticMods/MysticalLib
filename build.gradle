@@ -177,7 +177,7 @@ publishing {
             version project.version
             from components.java
 
-            artifact deobfJar {
+            artifact shadowJar {
                 classifier 'deobf'
             }
         }
