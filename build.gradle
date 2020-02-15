@@ -7,15 +7,23 @@ buildscript {
         maven {
             url 'https://dogforce-games.com/maven'
         }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.165-run-configs-rework', changing: true
     }
 }
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+
 
 version = "${minecraft_version}-${mod_version}"
 //if (System.getenv('BUILD_NUMBER') != null) {
@@ -91,15 +99,35 @@ minecraft {
     }
 }
 
+repositories {
+    maven {
+        url "https://maven.blamejared.com"
+    }
+    flatDir {
+        dir "libs"
+    }
+    flatDir {
+        dir "../libs"
+    }
+}
+
+configurations {
+    shade
+}
+
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    compile "noobanidus.mods.shoulders:Shoulders:1.14.4-0.0.0.1-deobf"
+    shade "noobanidus.mods.shoulders:Shoulders:1.14.4-0.0.0.1-embed"
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
+    classifier = "nodep"
     manifest {
         attributes([
                 "Specification-Title"     : "mysticallib",
@@ -113,77 +141,29 @@ jar {
     }
 }
 
-//processResources {
-//    // this will ensure that this task is redone when the versions change.
-//    inputs.property "version", project.version
-//    inputs.property "mcversion", project.minecraft_version
-//
-//    // replace stuff in mcmod.info, nothing else
-//    from(sourceSets.main.resources.srcDirs) {
-//        include 'mcmod.info'
-//
-//        // replace version and mcversion
-//        expand 'version': project.version, 'mcversion': project.minecraft_version
-//    }
-//
-//    // copy everything else except the mcmod.info
-//    from(sourceSets.main.resources.srcDirs) {
-//        exclude 'mcmod.info'
-//    }
-//}
-
-// Example configuration to allow publishing using the maven-publish task
-// we define a custom artifact that is sourced from the reobfJar output task
-// and then declare that to be published
-// Note you'll need to add a repository here
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact reobfArtifact
-        }
-    }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
+shadowJar {
+    configurations = [project.configurations.shade]
+    relocate 'noobanidus.mods.shoulders', 'epicsquid.mysticallib.repack.shoulders'
+    classifier ''
+    exclude "META-INF/mods.toml"
+    rename "mods_shoulders.toml", "META-INF/mods.toml"
 }
 
-// publishing {
+task expander (type: Copy) {
+    from("src/main/resources") {
+        include "**/mods_shoulders.toml"
+        expand "shoulders_version": shoulders_version
+    }
+    from("src/main/resources") {
+        exclude "**/mods_shoulders.toml"
+    }
+    into 'build/resources'
+}
 
-//     publications {
+shadowJar.dependsOn expander
 
-//         mavenJava(MavenPublication) {
+reobf {
+    shadowJar {}
+}
 
-//             groupId project.group
-//             artifactId project.archivesBaseName
-//             version project.version
-//             from components.java
-
-//             artifact deobfJar {
-
-//                 classifier 'deobf'
-//             }
-//         }
-//     }
-
-//     repositories {
-
-//         maven {
-
-//             url "file://" + System.getenv("local_maven")
-//         }
-//     }
-// }
-
-// task deobfJar(type: Jar) {
-//     from sourceSets.main.output
-//     classifier = 'deobf'
-// }
-
-// tasks.build.dependsOn deobfJar
+build.dependsOn reobfShadowJar

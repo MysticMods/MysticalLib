@@ -23,3 +23,12 @@ issueTrackerURL="https://github.com/EpicSquid/MysticalLib/issues" #optional
         versionRange="[1.14.4]"
         ordering="NONE"
         side="BOTH"
+[[mods]]
+    modId="shoulders" #mandatory
+    version="1.14.4-0.0.0.8" #mandatory
+    displayName="Shoulders" #mandatory
+    displayURL="https://minecraft.curseforge.com/projects/shoulders" #optional
+    authors="Noobanidus"
+    description='''
+    Shoulder-riding cuties!
+    '''
