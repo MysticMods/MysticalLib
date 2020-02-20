@@ -138,7 +138,7 @@ jar {
     }
 }
 
-processResources {
+/*processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "shoulders_version", shoulders_version
     inputs.property "version", project.version
@@ -153,7 +153,7 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mods_shoulders.toml'
     }
-}
+}*/
 
 shadowJar {
     configurations = [project.configurations.shade]
