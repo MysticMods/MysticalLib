@@ -118,13 +118,13 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    compile "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:deobf"
-    shade "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:embed"
+/*    compile "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:deobf"
+    shade "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:embed"*/
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    classifier = "nodep"
+    classifier = ""
     manifest {
         attributes([
                 "Specification-Title"     : "mysticallib",
@@ -158,9 +158,7 @@ processResources {
 shadowJar {
     configurations = [project.configurations.shade]
     relocate 'noobanidus.mods.shoulders', 'epicsquid.mysticallib.repack.shoulders'
-    classifier ''
-    exclude "META-INF/mods.toml"
-    rename "mods_shoulders.toml", "META-INF/mods.toml"
+/*    classifier ''*/
 }
 
 reobf {
@@ -178,7 +176,6 @@ publishing {
             from components.java
 
             artifact shadowJar {
-                classifier 'deobf'
             }
             
             pom.withXml {
