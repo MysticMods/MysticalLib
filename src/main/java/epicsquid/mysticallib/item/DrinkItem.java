@@ -10,7 +10,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.world.World;
 
 @SuppressWarnings("NullableProblems")
-public class DrinkItem extends Item {
+public class DrinkItem extends MultiReturnItem {
   public DrinkItem(Properties properties) {
     super(properties);
   }
@@ -21,17 +21,7 @@ public class DrinkItem extends Item {
   }
 
   @Override
-  public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
-    ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
-    ItemStack result = super.onItemUseFinish(stack, world, entity);
-    if (result.isEmpty()) {
-      return bottle;
-    } else if (entity instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) entity;
-      if (!player.addItemStackToInventory(bottle)) {
-        ItemUtil.spawnItem(world, player.getPosition(), bottle);
-      }
-    }
-    return result;
+  protected Item getReturnItem(ItemStack stack) {
+    return Items.GLASS_BOTTLE;
   }
 }
