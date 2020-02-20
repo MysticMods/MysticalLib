@@ -175,7 +175,7 @@ publishing {
             version project.version
             from components.java
 
-            artifact shadowJar {
+            artifact jar {
             }
             
             pom.withXml {
