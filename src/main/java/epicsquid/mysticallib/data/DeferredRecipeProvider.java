@@ -135,6 +135,8 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer);
   }
 
+  // TWO BY TWO: Items
+
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
     ShapedRecipeBuilder.shapedRecipe(result.get(), count)
         .patternLine("XX")
@@ -147,6 +149,24 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
     twoByTwo(source, result, group, 4, consumer);
+  }
+
+  // Two by Two using Two items
+
+  protected <T extends IIngredientProvider, V extends IItemProvider & IForgeRegistryEntry<?>> void twoTwoByTwo (T source1, T source2, Supplier<? extends V> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
+    ShapedRecipeBuilder.shapedRecipe(result.get(), count)
+        .patternLine("XY")
+        .patternLine("YX")
+        .key('X', source1.asIngredient())
+        .key('Y', source2.asIngredient())
+        .setGroup(group)
+        .addCriterion("has_" + source1.safeName(), source1.hasItem())
+        .addCriterion("has_" + source2.safeName(), source2.hasItem())
+        .build(consumer);
+  }
+
+  protected <T extends IIngredientProvider, V extends IItemProvider & IForgeRegistryEntry<?>> void twoTwoByTwo (T source1, T source2, Supplier<? extends V> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+    twoTwoByTwo(source1, source2, result, group, 4, consumer);
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void stairs(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, boolean stone, Consumer<IFinishedRecipe> consumer) {
