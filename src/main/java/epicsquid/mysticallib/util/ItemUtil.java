@@ -2,14 +2,21 @@ package epicsquid.mysticallib.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemUtil {
   public static boolean equalWithoutSize(ItemStack item1, ItemStack item2) {
@@ -99,4 +106,16 @@ public class ItemUtil {
     return block.getStateFromMeta(stack.getMetadata());
   }
 
+  @SideOnly(Side.CLIENT)
+  public static boolean shouldDisplayMore(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn, String shiftForMore, TextFormatting color) {
+    if (!GuiScreen.isShiftKeyDown()) {
+      tooltip.add("");
+      tooltip.add(color + I18n.format(shiftForMore));
+      return false;
+    } else {
+      tooltip.add("");
+    }
+
+    return true;
+  }
 }
