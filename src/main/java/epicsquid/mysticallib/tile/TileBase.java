@@ -56,8 +56,10 @@ public class TileBase extends TileEntity implements ITile {
 
   // TODO: I literally can't think of a better name for this function
   public void updatePacketViaState() {
-    IBlockState state = world.getBlockState(getPos());
-    world.notifyBlockUpdate(getPos(), state, state, 8);
+    if (world != null && !world.isRemote) {
+      IBlockState state = world.getBlockState(getPos());
+      world.notifyBlockUpdate(getPos(), state, state, 8);
+    }
   }
 
   protected boolean dropItemInInventory(ItemStackHandler inventory, int slot) {
