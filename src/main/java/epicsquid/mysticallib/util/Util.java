@@ -17,12 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.chunk.Chunk.EnumCreateEntityType;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.IItemHandler;
 
@@ -65,6 +62,22 @@ public class Util {
       }
     }
     return blockList;
+  }
+
+  public static List<BlockPos> getBlocksWithinCircle (BlockPos center, int r) {
+    List<BlockPos> positions = new ArrayList<>();
+    int x = center.getX();
+    int z = center.getZ();
+    int y = center.getY();
+    for (int i = z - r; i < z + r; i++) {
+      for (int j = x; (Math.pow((j-x),2) + Math.pow((i- z),2)) <= Math.pow(r, 2); j--) {
+        positions.add(new BlockPos(j, y, i));
+      }
+      for (int j = x+1; ((j-x)*(j-x) + (i- z)*(i- z)) <= r*r; j++) {
+        positions.add(new BlockPos(j, y, i));
+      }
+    }
+    return positions;
   }
 
   @Nonnull
