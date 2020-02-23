@@ -1,11 +1,7 @@
 package epicsquid.mysticallib;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -218,8 +214,8 @@ public class LibRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(@Nonnull TextureStitchEvent event) {
-    for (Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
-      event.getMap().registerSprite(e.getValue());
+    for (Entry<String, List<ResourceLocation>> e : ParticleRegistry.particleMultiTextures.entrySet()) {
+      e.getValue().forEach(event.getMap()::registerSprite);
     }
     for (Entry<ResourceLocation, IModel> e : CustomModelLoader.itemmodels.entrySet()) {
       for (ResourceLocation r : e.getValue().getTextures()) {
@@ -277,6 +273,6 @@ public class LibRegistry {
     PARTICLE_GLITTER = ParticleRegistry
         .registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
     PARTICLE_FLAME = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleFlame.class, new ResourceLocation("mysticallib:particle/particle_fire"));
-    PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, new ResourceLocation("mysticallib:particle/particle_leaf1"));
+    PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, new ResourceLocation("mysticallib:particle/particle_leaf1"), new ResourceLocation("mysticallib:particle/particle_leaf2"), new ResourceLocation("mysticallib:particle/particle_leaf3"), new ResourceLocation("mysticallib:particle/particle_leaf4"));
   }
 }

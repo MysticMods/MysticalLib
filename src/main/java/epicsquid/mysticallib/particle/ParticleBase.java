@@ -21,8 +21,8 @@ public class ParticleBase extends Particle implements IParticle {
     if (data.length >= 1) {
       lifetime = (int) data[0];
     }
-    this.particleMaxAge = (int) (lifetime);
-    ResourceLocation texture = ParticleRegistry.particleTextures.get(Util.getLowercaseClassName(getClass()));
+    this.particleMaxAge = lifetime;
+    ResourceLocation texture = ParticleRegistry.getTexture(Util.getLowercaseClassName(getClass()));
     TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
     this.setParticleTexture(sprite);
     this.particleScale = 1.0f;

@@ -53,8 +53,8 @@ public class LibEvents {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(TextureStitchEvent event) {
-    for (Entry<String, ResourceLocation> e : ParticleRegistry.particleTextures.entrySet()) {
-      event.getMap().registerSprite(e.getValue());
+    for (Entry<String, List<ResourceLocation>> e : ParticleRegistry.particleMultiTextures.entrySet()) {
+      e.getValue().forEach(event.getMap()::registerSprite);
     }
   }
 

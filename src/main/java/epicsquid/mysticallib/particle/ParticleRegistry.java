@@ -1,8 +1,7 @@
 package epicsquid.mysticallib.particle;
 
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 
@@ -14,20 +13,27 @@ import net.minecraft.world.World;
 
 public class ParticleRegistry {
 
-  public static Map<String, ResourceLocation> particleTextures = new HashMap<String, ResourceLocation>();
+  public static Map<String, List<ResourceLocation>> particleMultiTextures = new HashMap<>();
 
-  private static Map<String, Constructor<? extends ParticleBase>> particles = new HashMap<String, Constructor<? extends ParticleBase>>();
+  private static Map<String, Constructor<? extends ParticleBase>> particles = new HashMap<>();
 
-  public static String registerParticle(@Nonnull String modid, @Nonnull Class<? extends ParticleBase> particleClass, @Nonnull ResourceLocation texture) {
+  private static Random rand = new Random();
+
+  public static ResourceLocation getTexture (String name) {
+    List<ResourceLocation> textures = particleMultiTextures.get(name);
+    return textures.get(rand.nextInt(textures.size()));
+  }
+
+  public static String registerParticle(@Nonnull String modid, @Nonnull Class<? extends ParticleBase> particleClass, @Nonnull ResourceLocation ... textures) {
     String name = Util.getLowercaseClassName(particleClass);
     if (MysticalLib.proxy instanceof ClientProxy) {
       try {
-        if (particles.containsKey(name) || particleTextures.containsKey(name)) {
+        if (particles.containsKey(name) || particleMultiTextures.containsKey(name)) {
           System.out.println("WARNING: PARTICLE ALREADY REGISTERED WITH NAME \"" + name + "\"!");
         } else {
           particles.put(name,
               particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class, double[].class));
-          particleTextures.put(name, texture);
+            particleMultiTextures.put(name, Arrays.asList(textures));
         }
       } catch (NoSuchMethodException | SecurityException e) {
         e.printStackTrace();
