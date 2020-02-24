@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -64,7 +65,7 @@ public class Util {
     return blockList;
   }
 
-  public static List<BlockPos> getBlocksWithinCircle (BlockPos center, int r) {
+  public static List<BlockPos> getPositionsWithinCircle(BlockPos center, int r) {
     List<BlockPos> positions = new ArrayList<>();
     int x = center.getX();
     int z = center.getZ();
@@ -75,6 +76,38 @@ public class Util {
       }
       for (int j = x+1; ((j-x)*(j-x) + (i- z)*(i- z)) <= r*r; j++) {
         positions.add(new BlockPos(j, y, i));
+      }
+    }
+    return positions;
+  }
+
+  public static List<BlockPos> getBlocksWithinCircle(World world, BlockPos pos, int r, Block... block) {
+    List<Block> blocks = Arrays.asList(block);
+    return getBlocksWithinCircle(world, pos, r, (test) -> blocks.contains(world.getBlockState(test).getBlock()));
+  }
+
+  public static List<BlockPos> getBlocksWithinCircle(World world, BlockPos pos, int r, Block block) {
+    return getBlocksWithinCircle(world, pos, r, (test) -> world.getBlockState(test).getBlock() == block);
+  }
+
+  public static List<BlockPos> getBlocksWithinCircle (World world, BlockPos center, int r, Predicate<BlockPos> predicate) {
+    List<BlockPos> positions = new ArrayList<>();
+    int x = center.getX();
+    int z = center.getZ();
+    int y = center.getY();
+    BlockPos pos;
+    for (int i = z - r; i < z + r; i++) {
+      for (int j = x; (Math.pow((j-x),2) + Math.pow((i- z),2)) <= Math.pow(r, 2); j--) {
+        pos = new BlockPos(j, y, i);
+        if (predicate.test(pos)) {
+          positions.add(pos);
+        }
+      }
+      for (int j = x+1; ((j-x)*(j-x) + (i- z)*(i- z)) <= r*r; j++) {
+        pos = new BlockPos(j, y, i);
+        if (predicate.test(pos)) {
+          positions.add(pos);
+        }
       }
     }
     return positions;

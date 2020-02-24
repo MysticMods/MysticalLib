@@ -13,6 +13,7 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
@@ -47,5 +48,10 @@ public class ClientProxy extends CommonProxy {
   @Override
   public void postInit(FMLPostInitializationEvent event) {
     super.postInit(event);
+  }
+
+  @Override
+  public void loadComplete(FMLLoadCompleteEvent event) {
+    super.loadComplete(event);
   }
 }
