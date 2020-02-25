@@ -2,6 +2,7 @@ package epicsquid.mysticallib.particle;
 
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.proxy.ClientProxy;
+import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
@@ -15,6 +16,7 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,9 +134,14 @@ public class ParticleRenderer {
   public void spawnParticle(World world, Class<? extends ParticleBase> particle, double x, double y, double z, double vx, double vy, double vz, double... data) {
     if (MysticalLib.proxy instanceof ClientProxy) {
       try {
-        particles.add(ParticleRegistry.getParticles().get(particle).newInstance(world, x, y, z, vx, vy, vz, data));
-      } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-        e.printStackTrace();
+        Constructor<? extends ParticleBase> constructor = ParticleRegistry.getParticles().get(particle);
+        if (constructor == null) {
+          MysticalLib.logger.error("Unable to instantiable particle " + Util.getLowercaseClassName(particle) + " as it has not been registered.");
+          return;
+        }
+        particles.add(constructor.newInstance(world, x, y, z, vx, vy, vz, data));
+      } catch (Throwable e) {
+        MysticalLib.logger.error("Unable to instantiate particle " + Util.getLowercaseClassName(particle) + " for unknown reason", e);
       }
     }
   }

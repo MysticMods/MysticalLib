@@ -37,9 +37,31 @@ public class ParticleLeaf extends ParticleBase {
     this.particleGravity = 0.0f;
   }
 
+  private void standardUpdate () {
+    this.prevPosX = this.posX;
+    this.prevPosY = this.posY;
+    this.prevPosZ = this.posZ;
+
+    if (this.particleAge++ >= this.particleMaxAge) {
+      this.setExpired();
+    }
+
+    this.motionY -= 0.04D * (double) this.particleGravity;
+    this.move(this.motionX, this.motionY, this.motionZ);
+/*    this.motionX *= 0.9800000190734863D;
+    this.motionY *= 0.9800000190734863D;
+    this.motionZ *= 0.9800000190734863D;*/
+
+    if (this.onGround) {
+      this.motionX *= 0.699999988079071D;
+      this.motionZ *= 0.699999988079071D;
+    }
+  }
+
   @Override
   public void onUpdate() {
-    super.onUpdateNoMotion();
+    standardUpdate();
+    lifetime--;
     this.prevParticleAngle = particleAngle;
     this.particleAngle += this.angularVelocity;
     float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
@@ -48,6 +70,11 @@ public class ParticleLeaf extends ParticleBase {
     if (particleGravity > 0.45f) {
       particleGravity = 0.45f;
     }*/
+  }
+
+  protected void onUpdateNoMotion() {
+    standardUpdate();
+    lifetime--;
   }
 
   @Override

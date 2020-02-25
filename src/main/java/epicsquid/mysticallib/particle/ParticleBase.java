@@ -15,7 +15,7 @@ import java.util.Map;
 public class ParticleBase extends Particle implements IParticle {
   public static Map<ResourceLocation, TextureAtlasSprite> CACHE = new HashMap<>();
 
-  private int lifetime = 0;
+  protected int lifetime = 0;
 
   public ParticleBase(@Nonnull World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
     super(world, x, y, z, 0, 0, 0);
