@@ -9,6 +9,7 @@ public class ItemBlockLeaves extends ItemBlock {
     this.setMaxDamage(0);
   }
 
+  @Override
   public int getMetadata(int damage) {
     return damage | 4;
   }

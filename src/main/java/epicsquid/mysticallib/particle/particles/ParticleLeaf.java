@@ -72,6 +72,7 @@ public class ParticleLeaf extends ParticleBase {
     }*/
   }
 
+  @Override
   protected void onUpdateNoMotion() {
     standardUpdate();
     lifetime--;
