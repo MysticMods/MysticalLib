@@ -16,10 +16,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class CustomModelLoader implements ICustomModelLoader {
 
-  public static Map<ResourceLocation, IModel> blockmodels = new HashMap<ResourceLocation, IModel>();
-  public static Map<ResourceLocation, IModel> itemmodels = new HashMap<ResourceLocation, IModel>();
-
-  public static FaceBakery faceBakery = new FaceBakery();
+  public static Map<ResourceLocation, IModel> blockmodels = new HashMap<>();
+  public static Map<ResourceLocation, IModel> itemmodels = new HashMap<>();
 
   @Override
   public void onResourceManagerReload(@Nonnull IResourceManager resourceManager) {

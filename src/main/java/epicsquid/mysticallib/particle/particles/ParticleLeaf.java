@@ -4,7 +4,7 @@ import epicsquid.mysticallib.particle.ParticleBase;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.world.World;
 
-public class ParticleCloud extends ParticleBase {
+public class ParticleLeaf extends ParticleBase {
   public float colorR = 0;
   public float colorG = 0;
   public float colorB = 0;
@@ -12,7 +12,7 @@ public class ParticleCloud extends ParticleBase {
   public float initAlpha = 0;
   public float angularVelocity = 0;
 
-  public ParticleCloud(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
+  public ParticleLeaf(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
     super(world, x, y, z, vx, vy, vz, data);
     this.colorR = (float) data[1];
     this.colorG = (float) data[2];
@@ -31,24 +31,28 @@ public class ParticleCloud extends ParticleBase {
     this.initAlpha = (float) data[4];
     this.particleScale = (float) data[5];
     this.initScale = (float) data[5];
-    this.angularVelocity = (float) data[6] * (Util.rand.nextFloat() - 0.5f);
+    this.angularVelocity = 0.0f;
     this.prevParticleAngle = particleAngle;
-    this.particleAngle = (Util.rand.nextFloat() * 2.0f * (float) Math.PI);
+    this.particleAngle = Util.rand.nextFloat() * 2.0f * (float) Math.PI;
+    this.particleGravity = 0.0f;
   }
 
   @Override
   public void onUpdate() {
-    super.onUpdate();
-    motionY = 0;
-/*    this.prevParticleAngle = particleAngle;
+    super.onUpdateNoMotion();
+    this.prevParticleAngle = particleAngle;
     this.particleAngle += this.angularVelocity;
-    float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;*/
-    //this.particleScale = initScale - initScale * lifeCoeff;
-    //this.particleAlpha = initAlpha * (1.0f - lifeCoeff);
+    float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
+    this.particleAlpha = initAlpha * (Math.max(1.0f - lifeCoeff, 0.6f));
+/*    this.particleGravity += 0.001f;
+    if (particleGravity > 0.45f) {
+      particleGravity = 0.45f;
+    }*/
   }
 
   @Override
   public boolean isAdditive() {
     return false;
   }
+
 }

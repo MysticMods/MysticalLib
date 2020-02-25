@@ -11,6 +11,7 @@ import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.model.block.BakedModelBlockUnlitWrapper;
+import epicsquid.mysticallib.particle.ParticleBase;
 import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.particle.particles.*;
 import epicsquid.mysticallib.util.Util;
@@ -84,22 +85,11 @@ public class LibRegistry {
     tileEntityRenderMap.put(entity, render);
   }
 
-  public static void addSlabPair(Material material, SoundType type, float hardness, String name, IBlockState parent, Block[] refs, boolean customModels,
-                                 CreativeTabs tab) {
-    BlockSlabBase double_slab = new BlockSlabBase(material, type, hardness, name + "_double_slab", parent, true, null).setModelCustom(customModels);
-    BlockSlabBase slab = new BlockSlabBase(material, type, hardness, name + "_slab", parent, false, double_slab).setModelCustom(customModels);
+  public static void addSlabPair(Material material, SoundType type, float hardness, String name, IBlockState parent, Block[] refs, CreativeTabs tab) {
+    BlockSlabBase double_slab = new BlockSlabBase(material, type, hardness, name + "_double_slab", parent, true, null).setModelCustom(false);
+    BlockSlabBase slab = new BlockSlabBase(material, type, hardness, name + "_slab", parent, false, double_slab).setModelCustom(false);
     double_slab.slab = slab;
     slab.setCreativeTab(tab);
-    refs[0] = slab;
-    refs[1] = double_slab;
-    blocks.add(slab);
-    blocks.add(double_slab);
-  }
-
-  public static void addSlabPair(Material material, SoundType type, float hardness, String name, IBlockState parent, Block[] refs, boolean customModels) {
-    BlockSlabBase double_slab = new BlockSlabBase(material, type, hardness, name + "_double_slab", parent, true, null).setModelCustom(customModels);
-    BlockSlabBase slab = new BlockSlabBase(material, type, hardness, name + "_slab", parent, false, double_slab).setModelCustom(customModels);
-    double_slab.slab = slab;
     refs[0] = slab;
     refs[1] = double_slab;
     blocks.add(slab);
@@ -208,7 +198,7 @@ public class LibRegistry {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(@Nonnull TextureStitchEvent event) {
-    for (Entry<String, List<ResourceLocation>> e : ParticleRegistry.particleMultiTextures.entrySet()) {
+    for (Entry<Class<? extends ParticleBase>, List<ResourceLocation>> e : ParticleRegistry.particleMultiTextures.entrySet()) {
       e.getValue().forEach(event.getMap()::registerSprite);
     }
     for (Entry<ResourceLocation, IModel> e : CustomModelLoader.itemmodels.entrySet()) {
@@ -256,7 +246,7 @@ public class LibRegistry {
     }
   }
 
-  public static String PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_CLOUD, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME, PARTICLE_LEAF, PARTICLE_RAIN;
+  public static Class<? extends ParticleBase> PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_CLOUD, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME, PARTICLE_LEAF_ARC, PARTICLE_RAIN, PARTICLE_LEAF;
 
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
@@ -268,6 +258,7 @@ public class LibRegistry {
     PARTICLE_GLITTER = ParticleRegistry
         .registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
     PARTICLE_FLAME = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleFlame.class, new ResourceLocation("mysticallib:particle/particle_fire"));
+    PARTICLE_LEAF_ARC = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, new ResourceLocation("mysticallib:particle/particle_leaf1"), new ResourceLocation("mysticallib:particle/particle_leaf2"), new ResourceLocation("mysticallib:particle/particle_leaf3"), new ResourceLocation("mysticallib:particle/particle_leaf4"));
     PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, new ResourceLocation("mysticallib:particle/particle_leaf1"), new ResourceLocation("mysticallib:particle/particle_leaf2"), new ResourceLocation("mysticallib:particle/particle_leaf3"), new ResourceLocation("mysticallib:particle/particle_leaf4"));
     PARTICLE_RAIN = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleRain.class, new ResourceLocation("mysticallib:particle/particle_rain1"), new ResourceLocation("mysticallib:particle/particle_rain2"), new ResourceLocation("mysticallib:particle/particle_rain3"), new ResourceLocation("mysticallib:particle/particle_rain4"), new ResourceLocation("mysticallib:particle/particle_rain5"), new ResourceLocation("mysticallib:particle/particle_rain6"), new ResourceLocation("mysticallib:particle/particle_rain7"), new ResourceLocation("mysticallib:particle/particle_rain8"), new ResourceLocation("mysticallib:particle/particle_rain9"), new ResourceLocation("mysticallib:particle/particle_rain10"), new ResourceLocation("mysticallib:particle/particle_rain11"), new ResourceLocation("mysticallib:particle/particle_rain12"), new ResourceLocation("mysticallib:particle/particle_rain13"), new ResourceLocation("mysticallib:particle/particle_rain14"));
     ;

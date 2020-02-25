@@ -9,7 +9,11 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ParticleBase extends Particle implements IParticle {
+  public static Map<ResourceLocation, TextureAtlasSprite> CACHE = new HashMap<>();
 
   private int lifetime = 0;
 
@@ -22,8 +26,13 @@ public class ParticleBase extends Particle implements IParticle {
       lifetime = (int) data[0];
     }
     this.particleMaxAge = lifetime;
-    ResourceLocation texture = ParticleRegistry.getTexture(Util.getLowercaseClassName(getClass()));
-    TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
+    ResourceLocation texture = ParticleRegistry.getTexture(this.getClass());
+
+    TextureAtlasSprite sprite = CACHE.get(texture);
+    if (sprite == null) {
+      sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
+      CACHE.put(texture, sprite);
+    }
     this.setParticleTexture(sprite);
     this.particleScale = 1.0f;
     this.canCollide = false;

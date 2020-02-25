@@ -29,7 +29,7 @@ public class ParticleLeafArc extends ParticleBase {
     this.setRBGColorF(colorR, colorG, colorB);
     this.setAlphaF((float) data[4]);
     this.initAlpha = (float) data[4];
-    this.particleScale = (float) 1;
+    this.particleScale = (float) data[5];
     this.initScale = (float) data[5];
     this.angularVelocity = 0.0f;
     this.prevParticleAngle = particleAngle;

@@ -1,14 +1,5 @@
 package epicsquid.mysticallib.particle;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.annotation.Nonnull;
-
-import org.lwjgl.opengl.GL11;
-
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.proxy.ClientProxy;
 import net.minecraft.client.Minecraft;
@@ -21,6 +12,15 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import org.lwjgl.opengl.GL11;
+
+import javax.annotation.Nonnull;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ParticleRenderer {
   private CopyOnWriteArrayList<Particle> particles = new CopyOnWriteArrayList<>();
@@ -127,7 +127,9 @@ public class ParticleRenderer {
     }
   }
 
-  public void spawnParticle(World world, String particle, double x, double y, double z, double vx, double vy, double vz, double... data) {
+  private static Map<Class<? extends ParticleBase>, String> particleLookup = new HashMap<>();
+
+  public void spawnParticle(World world, Class<? extends ParticleBase> particle, double x, double y, double z, double vx, double vy, double vz, double... data) {
     if (MysticalLib.proxy instanceof ClientProxy) {
       try {
         particles.add(ParticleRegistry.getParticles().get(particle).newInstance(world, x, y, z, vx, vy, vz, data));

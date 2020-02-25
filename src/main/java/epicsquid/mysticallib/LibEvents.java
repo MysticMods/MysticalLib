@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 
 import epicsquid.mysticallib.entity.IDelayedEntityRenderer;
 import epicsquid.mysticallib.network.PacketHandler;
+import epicsquid.mysticallib.particle.ParticleBase;
 import epicsquid.mysticallib.particle.ParticleRegistry;
 import epicsquid.mysticallib.proxy.ClientProxy;
 import epicsquid.mysticallib.tile.IDelayedTileRenderer;
@@ -53,7 +54,7 @@ public class LibEvents {
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onTextureStitch(TextureStitchEvent event) {
-    for (Entry<String, List<ResourceLocation>> e : ParticleRegistry.particleMultiTextures.entrySet()) {
+    for (Entry<Class<? extends ParticleBase>, List<ResourceLocation>> e : ParticleRegistry.particleMultiTextures.entrySet()) {
       e.getValue().forEach(event.getMap()::registerSprite);
     }
   }
