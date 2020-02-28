@@ -11,6 +11,7 @@ public class ParticleLeaf extends ParticleBase {
   public float initScale = 0;
   public float initAlpha = 0;
   public float angularVelocity = 0;
+  public boolean additive = false;
 
   public ParticleLeaf(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
     super(world, x, y, z, vx, vy, vz, data);
@@ -31,6 +32,7 @@ public class ParticleLeaf extends ParticleBase {
     this.initAlpha = (float) data[4];
     this.particleScale = (float) data[5];
     this.initScale = (float) data[5];
+    this.additive = data[6] == 1;
     this.angularVelocity = 0.0f;
     this.prevParticleAngle = particleAngle;
     this.particleAngle = Util.rand.nextFloat() * 2.0f * (float) Math.PI;
@@ -48,9 +50,6 @@ public class ParticleLeaf extends ParticleBase {
 
     this.motionY -= 0.04D * (double) this.particleGravity;
     this.move(this.motionX, this.motionY, this.motionZ);
-/*    this.motionX *= 0.9800000190734863D;
-    this.motionY *= 0.9800000190734863D;
-    this.motionZ *= 0.9800000190734863D;*/
 
     if (this.onGround) {
       this.motionX *= 0.699999988079071D;
@@ -66,10 +65,6 @@ public class ParticleLeaf extends ParticleBase {
     this.particleAngle += this.angularVelocity;
     float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
     this.particleAlpha = initAlpha * (Math.max(1.0f - lifeCoeff, 0.6f));
-/*    this.particleGravity += 0.001f;
-    if (particleGravity > 0.45f) {
-      particleGravity = 0.45f;
-    }*/
   }
 
   @Override
@@ -80,7 +75,6 @@ public class ParticleLeaf extends ParticleBase {
 
   @Override
   public boolean isAdditive() {
-    return false;
+    return this.additive;
   }
-
 }

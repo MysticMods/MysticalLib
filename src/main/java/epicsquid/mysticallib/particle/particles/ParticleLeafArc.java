@@ -11,6 +11,7 @@ public class ParticleLeafArc extends ParticleBase {
   public float initScale = 0;
   public float initAlpha = 0;
   public float angularVelocity = 0;
+  public boolean additive;
 
   public ParticleLeafArc(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
     super(world, x, y, z, vx, vy, vz, data);
@@ -31,6 +32,7 @@ public class ParticleLeafArc extends ParticleBase {
     this.initAlpha = (float) data[4];
     this.particleScale = (float) data[5];
     this.initScale = (float) data[5];
+    this.additive = data[6] == 1;
     this.angularVelocity = 0.0f;
     this.prevParticleAngle = particleAngle;
     this.particleAngle = Util.rand.nextFloat() * 2.0f * (float) Math.PI;
@@ -52,7 +54,6 @@ public class ParticleLeafArc extends ParticleBase {
 
   @Override
   public boolean isAdditive() {
-    return true;
+    return additive;
   }
-
 }
