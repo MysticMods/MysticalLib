@@ -31,22 +31,22 @@ public class RenderUtil {
     double tY2 = width * (double) MathHelper.cos(pitch);
     double tZ2 = width * (double) MathHelper.cos(yaw) * -(double) MathHelper.sin(pitch);
 
-    buf.pos((x1 - tX1), (y1 - tY1), (z1 - tZ1)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tX1), (y1 - tY1), (z1 - tZ1)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tX1), (y2 - tY1), (z2 - tZ1)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tX1), (y2 - tY1), (z2 - tZ1)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tX1), (y2 + tY1), (z2 + tZ1)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tX1), (y2 + tY1), (z2 + tZ1)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tX1), (y1 + tY1), (z1 + tZ1)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tX1), (y1 + tY1), (z1 + tZ1)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
 
-    buf.pos((x1 - tX2), (y1 - tY2), (z1 - tZ2)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tX2), (y1 - tY2), (z1 - tZ2)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tX2), (y2 - tY2), (z2 - tZ2)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tX2), (y2 - tY2), (z2 - tZ2)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tX2), (y2 + tY2), (z2 + tZ2)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tX2), (y2 + tY2), (z2 + tZ2)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tX2), (y1 + tY2), (z1 + tZ2)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tX2), (y1 + tY2), (z1 + tZ2)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
   }
 
@@ -79,22 +79,22 @@ public class RenderUtil {
     double tYs2 = width2 * (tY1 * -as + tY2 * ac);
     double tZs2 = width2 * (tZ1 * -as + tZ2 * ac);
 
-    buf.pos((x1 - tXs1), (y1 - tYs1), (z1 - tZs1)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tXs1), (y1 - tYs1), (z1 - tZs1)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tXs2), (y2 - tYs2), (z2 - tZs2)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tXs2), (y2 - tYs2), (z2 - tZs2)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tXs2), (y2 + tYs2), (z2 + tZs2)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tXs2), (y2 + tYs2), (z2 + tZs2)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tXs1), (y1 + tYs1), (z1 + tZs1)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tXs1), (y1 + tYs1), (z1 + tZs1)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
 
-    buf.pos((x1 - tXc1), (y1 - tYc1), (z1 - tZc1)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tXc1), (y1 - tYc1), (z1 - tZc1)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tXc2), (y2 - tYc2), (z2 - tZc2)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tXc2), (y2 - tYc2), (z2 - tZc2)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tXc2), (y2 + tYc2), (z2 + tZc2)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tXc2), (y2 + tYc2), (z2 + tZc2)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tXc1), (y1 + tYc1), (z1 + tZc1)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tXc1), (y1 + tYc1), (z1 + tZc1)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
   }
 
@@ -121,22 +121,22 @@ public class RenderUtil {
     double tYs = tY1 * -as + tY2 * ac;
     double tZs = tZ1 * -as + tZ2 * ac;
 
-    buf.pos((x1 - tXs), (y1 - tYs), (z1 - tZs)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tXs), (y1 - tYs), (z1 - tZs)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tXs), (y2 - tYs), (z2 - tZs)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tXs), (y2 - tYs), (z2 - tZs)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tXs), (y2 + tYs), (z2 + tZs)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tXs), (y2 + tYs), (z2 + tZs)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tXs), (y1 + tYs), (z1 + tZs)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tXs), (y1 + tYs), (z1 + tZs)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
 
-    buf.pos((x1 - tXc), (y1 - tYc), (z1 - tZc)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tXc), (y1 - tYc), (z1 - tZc)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tXc), (y2 - tYc), (z2 - tZc)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tXc), (y2 - tYc), (z2 - tZc)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tXc), (y2 + tYc), (z2 + tZc)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tXc), (y2 + tYc), (z2 + tZc)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tXc), (y1 + tYc), (z1 + tZc)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tXc), (y1 + tYc), (z1 + tZc)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
   }
 
@@ -147,13 +147,13 @@ public class RenderUtil {
     double tX1 = -width * (double) MathHelper.sin(yaw);
     double tY1 = width * (double) MathHelper.cos(yaw);
 
-    buf.pos((x1 - tX1), (y1 - tY1), (double) (0)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tX1), (y1 - tY1), (double) (0)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x2 - tX1), (y2 - tY1), (double) (0)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 - tX1), (y2 - tY1), (double) (0)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x2 + tX1), (y2 + tY1), (double) (0)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x2 + tX1), (y2 + tY1), (double) (0)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r2, g2, b2, a2).endVertex();
-    buf.pos((x1 + tX1), (y1 + tY1), (double) (0)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tX1), (y1 + tY1), (double) (0)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
   }
 
@@ -164,9 +164,9 @@ public class RenderUtil {
     double tX1 = width * (double) MathHelper.cos(yaw2);
     double tY1 = -width * (double) MathHelper.sin(yaw2);
 
-    buf.pos((x1 - tX1), (y1 - tY1), (double) (0)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 - tX1), (y1 - tY1), (double) (0)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
-    buf.pos((x1 + tX1), (y1 + tY1), (double) (0)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+    buf.pos((x1 + tX1), (y1 + tY1), (double) (0)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
         .color(r1, g1, b1, a1).endVertex();
   }
 
@@ -183,14 +183,14 @@ public class RenderUtil {
     double tY2 = width * (double) MathHelper.cos(pitch2);
     double tZ2 = width * (double) MathHelper.cos(yaw2) * -(double) MathHelper.sin(pitch2);
     if (horiz) {
-      buf.pos((x1 - tX1), (y1 - tY1), (z1 - tZ1)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - tX1), (y1 - tY1), (z1 - tZ1)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x1 + tX1), (y1 + tY1), (z1 + tZ1)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + tX1), (y1 + tY1), (z1 + tZ1)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
     } else {
-      buf.pos((x1 - tX2), (y1 - tY2), (z1 - tZ2)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - tX2), (y1 - tY2), (z1 - tZ2)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x1 + tX2), (y1 + tY2), (z1 + tZ2)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + tX2), (y1 + tY2), (z1 + tZ2)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
     }
   }
@@ -215,17 +215,17 @@ public class RenderUtil {
       double tXc = tX1 * ac + tX2 * as;
       double tYc = tY1 * ac + tY2 * as;
       double tZc = tZ1 * ac + tZ2 * as;
-      buf.pos((x1 - tXc), (y1 - tYc), (z1 - tZc)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - tXc), (y1 - tYc), (z1 - tZc)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x1 + tXc), (y1 + tYc), (z1 + tZc)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + tXc), (y1 + tYc), (z1 + tZc)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
     } else {
       double tXs = tX1 * -as + tX2 * ac;
       double tYs = tY1 * -as + tY2 * ac;
       double tZs = tZ1 * -as + tZ2 * ac;
-      buf.pos((x1 - tXs), (y1 - tYs), (z1 - tZs)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - tXs), (y1 - tYs), (z1 - tZs)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x1 + tXs), (y1 + tYs), (z1 + tZs)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + tXs), (y1 + tYs), (z1 + tZs)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
     }
   }
@@ -307,41 +307,41 @@ public class RenderUtil {
     double tZ2 = 0.2 * (double) MathHelper.cos(yaw2) * -(double) MathHelper.sin(pitch2);
 
     if (Math.signum(tX1) != Math.signum(iX1) || Math.signum(tY1) != Math.signum(iY1) || Math.signum(tZ1) != Math.signum(iZ1)) {
-      buf.pos((x2 - tX1), (y2 - tY1), (z2 - tZ1)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 - tX1), (y2 - tY1), (z2 - tZ1)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
-      buf.pos((x1 + iX1), (y1 + iY1), (z1 + iZ1)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + iX1), (y1 + iY1), (z1 + iZ1)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x1 - iX1), (y1 - iY1), (z1 - iZ1)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - iX1), (y1 - iY1), (z1 - iZ1)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x2 + tX1), (y2 + tY1), (z2 + tZ1)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 + tX1), (y2 + tY1), (z2 + tZ1)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
     } else {
-      buf.pos((x1 - iX1), (y1 - iY1), (z1 - iZ1)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - iX1), (y1 - iY1), (z1 - iZ1)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x2 - tX1), (y2 - tY1), (z2 - tZ1)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 - tX1), (y2 - tY1), (z2 - tZ1)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
-      buf.pos((x2 + tX1), (y2 + tY1), (z2 + tZ1)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 + tX1), (y2 + tY1), (z2 + tZ1)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
-      buf.pos((x1 + iX1), (y1 + iY1), (z1 + iZ1)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + iX1), (y1 + iY1), (z1 + iZ1)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
     }
     if (Math.signum(tX2) != Math.signum(iX2) || Math.signum(tY2) != Math.signum(iY2) || Math.signum(tZ2) != Math.signum(iZ2)) {
-      buf.pos((x2 - tX2), (y2 - tY2), (z2 - tZ2)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 - tX2), (y2 - tY2), (z2 - tZ2)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
-      buf.pos((x1 + iX2), (y1 + iY2), (z1 + iZ2)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + iX2), (y1 + iY2), (z1 + iZ2)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x1 - iX2), (y1 - iY2), (z1 - iZ2)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - iX2), (y1 - iY2), (z1 - iZ2)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x2 + tX2), (y2 + tY2), (z2 + tZ2)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 + tX2), (y2 + tY2), (z2 + tZ2)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
     } else {
-      buf.pos((x1 - iX2), (y1 - iY2), (z1 - iZ2)).tex(0.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 - iX2), (y1 - iY2), (z1 - iZ2)).tex(0.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
-      buf.pos((x2 - tX2), (y2 - tY2), (z2 - tZ2)).tex(1.0, 0.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 - tX2), (y2 - tY2), (z2 - tZ2)).tex(1.0f, 0.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
-      buf.pos((x2 + tX2), (y2 + tY2), (z2 + tZ2)).tex(1.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x2 + tX2), (y2 + tY2), (z2 + tZ2)).tex(1.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r2, g2, b2, a2).endVertex();
-      buf.pos((x1 + iX2), (y1 + iY2), (z1 + iZ2)).tex(0.0, 1.0).lightmap(maxLightX, maxLightY)
+      buf.pos((x1 + iX2), (y1 + iY2), (z1 + iZ2)).tex(0.0f, 1.0f).lightmap(maxLightX, maxLightY)
           .color(r1, g1, b1, a1).endVertex();
     }
   }
@@ -354,7 +354,7 @@ public class RenderUtil {
                                      double radius) {
     for (double i = -Math.PI * 0.5; i <= Math.PI * 0.5; i += Math.PI * 0.125) {
       for (double j = 0; j < Math.PI * 2.0; j += Math.PI * (0.75 * (Math.abs(i / (Math.PI * 0.5))) + 0.25)) {
-        double si = ((float) (LibEvents.ticks) / 80.0f) * (0.375f + 0.773 * j / (Math.PI * 2.0)) * (0.25f + 1.225 * i / (Math.PI)) * Math.PI * 2.0;
+        double si = ((float) (LibEvents.ticks) / 80.0f) * (0.375f + 0.773 * j / (Math.PI * 2.0f)) * (0.25f + 1.225 * i / (Math.PI)) * Math.PI * 2.0;
         double sj = ((float) (LibEvents.ticks) / 57.0f) * (0.25f + 1.63 * i / (Math.PI * 0.5)) * (0.375f + 0.241 * j / (Math.PI)) * Math.PI * 2.0;
         double dx = radius * Math.sin(sj) * Math.cos(si);
         double dy = radius * Math.sin(si);
@@ -404,44 +404,44 @@ public class RenderUtil {
     Vec3d diff1 = new Vec3d(pos3X - pos1X, pos3Y - pos1Y, pos3Z - pos1Z);
     Vec3d diff2 = new Vec3d(pos2X - pos1X, pos2Y - pos1Y, pos2Z - pos1Z);
     Vec3d normal1 = new Vec3d(diff1.y * diff2.z - diff1.z * diff2.y, diff1.x * diff2.z - diff1.z * diff2.x, diff1.x * diff2.y - diff1.y * diff2.x).normalize()
-        .scale(-1.0);
-    Vec3d normal2 = new Vec3d(normal1.z, -normal1.y, normal1.x).scale(-1.0);
-    Vec3d normal3 = new Vec3d(-normal1.x, -normal1.y, -normal1.z).scale(-1.0);
-    Vec3d normal4 = new Vec3d(-normal1.z, -normal1.y, -normal1.x).scale(-1.0);
-    Vec3d normal5 = new Vec3d(normal1.x, normal1.y, normal1.z).scale(-1.0);
-    Vec3d normal6 = new Vec3d(normal1.z, normal1.y, normal1.x).scale(-1.0);
-    Vec3d normal7 = new Vec3d(-normal1.x, normal1.y, -normal1.z).scale(-1.0);
-    Vec3d normal8 = new Vec3d(-normal1.z, normal1.y, -normal1.x).scale(-1.0);
-    normal1 = new Vec3d(normal1.x, -normal1.y, normal1.z).scale(-1.0);
-    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(r, g, b, a).normal((float) normal1.x, (float) normal1.y, (float) normal1.z).endVertex();
+        .scale(-1.0f);
+    Vec3d normal2 = new Vec3d(normal1.z, -normal1.y, normal1.x).scale(-1.0f);
+    Vec3d normal3 = new Vec3d(-normal1.x, -normal1.y, -normal1.z).scale(-1.0f);
+    Vec3d normal4 = new Vec3d(-normal1.z, -normal1.y, -normal1.x).scale(-1.0f);
+    Vec3d normal5 = new Vec3d(normal1.x, normal1.y, normal1.z).scale(-1.0f);
+    Vec3d normal6 = new Vec3d(normal1.z, normal1.y, normal1.x).scale(-1.0f);
+    Vec3d normal7 = new Vec3d(-normal1.x, normal1.y, -normal1.z).scale(-1.0f);
+    Vec3d normal8 = new Vec3d(-normal1.z, normal1.y, -normal1.x).scale(-1.0f);
+    normal1 = new Vec3d(normal1.x, -normal1.y, normal1.z).scale(-1.0f);
+    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(r, g, b, a).normal((float) normal1.x, (float) normal1.y, (float) normal1.z).endVertex();
     buf.pos(pos2X, pos2Y, pos2Z).tex(minU, minV).color(r, g, b, a).normal((float) normal1.x, (float) normal1.y, (float) normal1.z).endVertex();
     buf.pos(pos3X, pos3Y, pos3Z).tex(maxU, minV).color(r, g, b, a).normal((float) normal1.x, (float) normal1.y, (float) normal1.z).endVertex();
 
-    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(r, g, b, a).normal((float) normal2.x, (float) normal2.y, (float) normal2.z).endVertex();
+    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(r, g, b, a).normal((float) normal2.x, (float) normal2.y, (float) normal2.z).endVertex();
     buf.pos(pos3X, pos3Y, pos3Z).tex(minU, minV).color(r, g, b, a).normal((float) normal2.x, (float) normal2.y, (float) normal2.z).endVertex();
     buf.pos(pos4X, pos4Y, pos4Z).tex(maxU, minV).color(r, g, b, a).normal((float) normal2.x, (float) normal2.y, (float) normal2.z).endVertex();
 
-    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(r, g, b, a).normal((float) normal3.x, (float) normal3.y, (float) normal3.z).endVertex();
+    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(r, g, b, a).normal((float) normal3.x, (float) normal3.y, (float) normal3.z).endVertex();
     buf.pos(pos4X, pos4Y, pos4Z).tex(minU, minV).color(r, g, b, a).normal((float) normal3.x, (float) normal3.y, (float) normal3.z).endVertex();
     buf.pos(pos5X, pos5Y, pos5Z).tex(maxU, minV).color(r, g, b, a).normal((float) normal3.x, (float) normal3.y, (float) normal3.z).endVertex();
 
-    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(r, g, b, a).normal((float) normal4.x, (float) normal4.y, (float) normal4.z).endVertex();
+    buf.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(r, g, b, a).normal((float) normal4.x, (float) normal4.y, (float) normal4.z).endVertex();
     buf.pos(pos5X, pos5Y, pos5Z).tex(minU, minV).color(r, g, b, a).normal((float) normal4.x, (float) normal4.y, (float) normal4.z).endVertex();
     buf.pos(pos2X, pos2Y, pos2Z).tex(maxU, minV).color(r, g, b, a).normal((float) normal4.x, (float) normal4.y, (float) normal4.z).endVertex();
 
-    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(r, g, b, a).normal((float) normal5.x, (float) normal5.y, (float) normal5.z).endVertex();
+    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(r, g, b, a).normal((float) normal5.x, (float) normal5.y, (float) normal5.z).endVertex();
     buf.pos(pos2X, pos2Y, pos2Z).tex(minU, maxV).color(r, g, b, a).normal((float) normal5.x, (float) normal5.y, (float) normal5.z).endVertex();
     buf.pos(pos3X, pos3Y, pos3Z).tex(maxU, maxV).color(r, g, b, a).normal((float) normal5.x, (float) normal5.y, (float) normal5.z).endVertex();
 
-    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(r, g, b, a).normal((float) normal6.x, (float) normal6.y, (float) normal6.z).endVertex();
+    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(r, g, b, a).normal((float) normal6.x, (float) normal6.y, (float) normal6.z).endVertex();
     buf.pos(pos3X, pos3Y, pos3Z).tex(minU, maxV).color(r, g, b, a).normal((float) normal6.x, (float) normal6.y, (float) normal6.z).endVertex();
     buf.pos(pos4X, pos4Y, pos4Z).tex(maxU, maxV).color(r, g, b, a).normal((float) normal6.x, (float) normal6.y, (float) normal6.z).endVertex();
 
-    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(r, g, b, a).normal((float) normal7.x, (float) normal7.y, (float) normal7.z).endVertex();
+    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(r, g, b, a).normal((float) normal7.x, (float) normal7.y, (float) normal7.z).endVertex();
     buf.pos(pos4X, pos4Y, pos4Z).tex(minU, maxV).color(r, g, b, a).normal((float) normal7.x, (float) normal7.y, (float) normal7.z).endVertex();
     buf.pos(pos5X, pos5Y, pos5Z).tex(maxU, maxV).color(r, g, b, a).normal((float) normal7.x, (float) normal7.y, (float) normal7.z).endVertex();
 
-    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(r, g, b, a).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();
+    buf.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(r, g, b, a).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();
     buf.pos(pos5X, pos5Y, pos5Z).tex(minU, maxV).color(r, g, b, a).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();
     buf.pos(pos2X, pos2Y, pos2Z).tex(maxU, maxV).color(r, g, b, a).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();
   }
@@ -473,51 +473,51 @@ public class RenderUtil {
     Vec3d diff1 = new Vec3d(pos3X - pos1X, pos3Y - pos1Y, pos3Z - pos1Z);
     Vec3d diff2 = new Vec3d(pos2X - pos1X, pos2Y - pos1Y, pos2Z - pos1Z);
     Vec3d normal1 = new Vec3d(diff1.y * diff2.z - diff1.z * diff2.y, diff1.x * diff2.z - diff1.z * diff2.x, diff1.x * diff2.y - diff1.y * diff2.x).normalize()
-        .scale(-1.0);
-    Vec3d normal2 = new Vec3d(normal1.z, -normal1.y, normal1.x).scale(-1.0);
-    Vec3d normal3 = new Vec3d(-normal1.x, -normal1.y, -normal1.z).scale(-1.0);
-    Vec3d normal4 = new Vec3d(-normal1.z, -normal1.y, -normal1.x).scale(-1.0);
-    Vec3d normal5 = new Vec3d(normal1.x, normal1.y, normal1.z).scale(-1.0);
-    Vec3d normal6 = new Vec3d(normal1.z, normal1.y, normal1.x).scale(-1.0);
-    Vec3d normal7 = new Vec3d(-normal1.x, normal1.y, -normal1.z).scale(-1.0);
-    Vec3d normal8 = new Vec3d(-normal1.z, normal1.y, -normal1.x).scale(-1.0);
-    normal1 = new Vec3d(normal1.x, -normal1.y, normal1.z).scale(-1.0);
-    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(255, 255, 255, 255).normal((float) normal1.x, (float) normal1.y, (float) normal1.z)
+        .scale(-1.0f);
+    Vec3d normal2 = new Vec3d(normal1.z, -normal1.y, normal1.x).scale(-1.0f);
+    Vec3d normal3 = new Vec3d(-normal1.x, -normal1.y, -normal1.z).scale(-1.0f);
+    Vec3d normal4 = new Vec3d(-normal1.z, -normal1.y, -normal1.x).scale(-1.0f);
+    Vec3d normal5 = new Vec3d(normal1.x, normal1.y, normal1.z).scale(-1.0f);
+    Vec3d normal6 = new Vec3d(normal1.z, normal1.y, normal1.x).scale(-1.0f);
+    Vec3d normal7 = new Vec3d(-normal1.x, normal1.y, -normal1.z).scale(-1.0f);
+    Vec3d normal8 = new Vec3d(-normal1.z, normal1.y, -normal1.x).scale(-1.0f);
+    normal1 = new Vec3d(normal1.x, -normal1.y, normal1.z).scale(-1.0f);
+    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(255, 255, 255, 255).normal((float) normal1.x, (float) normal1.y, (float) normal1.z)
         .endVertex();
     b.pos(pos2X, pos2Y, pos2Z).tex(minU, minV).color(255, 255, 255, 255).normal((float) normal1.x, (float) normal1.y, (float) normal1.z).endVertex();
     b.pos(pos3X, pos3Y, pos3Z).tex(maxU, minV).color(255, 255, 255, 255).normal((float) normal1.x, (float) normal1.y, (float) normal1.z).endVertex();
 
-    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(255, 255, 255, 255).normal((float) normal2.x, (float) normal2.y, (float) normal2.z)
+    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(255, 255, 255, 255).normal((float) normal2.x, (float) normal2.y, (float) normal2.z)
         .endVertex();
     b.pos(pos3X, pos3Y, pos3Z).tex(minU, minV).color(255, 255, 255, 255).normal((float) normal2.x, (float) normal2.y, (float) normal2.z).endVertex();
     b.pos(pos4X, pos4Y, pos4Z).tex(maxU, minV).color(255, 255, 255, 255).normal((float) normal2.x, (float) normal2.y, (float) normal2.z).endVertex();
 
-    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(255, 255, 255, 255).normal((float) normal3.x, (float) normal3.y, (float) normal3.z)
+    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(255, 255, 255, 255).normal((float) normal3.x, (float) normal3.y, (float) normal3.z)
         .endVertex();
     b.pos(pos4X, pos4Y, pos4Z).tex(minU, minV).color(255, 255, 255, 255).normal((float) normal3.x, (float) normal3.y, (float) normal3.z).endVertex();
     b.pos(pos5X, pos5Y, pos5Z).tex(maxU, minV).color(255, 255, 255, 255).normal((float) normal3.x, (float) normal3.y, (float) normal3.z).endVertex();
 
-    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0, maxV).color(255, 255, 255, 255).normal((float) normal4.x, (float) normal4.y, (float) normal4.z)
+    b.pos(pos1X, pos1Y, pos1Z).tex((minU + maxU) / 2.0f, maxV).color(255, 255, 255, 255).normal((float) normal4.x, (float) normal4.y, (float) normal4.z)
         .endVertex();
     b.pos(pos5X, pos5Y, pos5Z).tex(minU, minV).color(255, 255, 255, 255).normal((float) normal4.x, (float) normal4.y, (float) normal4.z).endVertex();
     b.pos(pos2X, pos2Y, pos2Z).tex(maxU, minV).color(255, 255, 255, 255).normal((float) normal4.x, (float) normal4.y, (float) normal4.z).endVertex();
 
-    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(255, 255, 255, 255).normal((float) normal5.x, (float) normal5.y, (float) normal5.z)
+    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(255, 255, 255, 255).normal((float) normal5.x, (float) normal5.y, (float) normal5.z)
         .endVertex();
     b.pos(pos2X, pos2Y, pos2Z).tex(minU, maxV).color(255, 255, 255, 255).normal((float) normal5.x, (float) normal5.y, (float) normal5.z).endVertex();
     b.pos(pos3X, pos3Y, pos3Z).tex(maxU, maxV).color(255, 255, 255, 255).normal((float) normal5.x, (float) normal5.y, (float) normal5.z).endVertex();
 
-    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(255, 255, 255, 255).normal((float) normal6.x, (float) normal6.y, (float) normal6.z)
+    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(255, 255, 255, 255).normal((float) normal6.x, (float) normal6.y, (float) normal6.z)
         .endVertex();
     b.pos(pos3X, pos3Y, pos3Z).tex(minU, maxV).color(255, 255, 255, 255).normal((float) normal6.x, (float) normal6.y, (float) normal6.z).endVertex();
     b.pos(pos4X, pos4Y, pos4Z).tex(maxU, maxV).color(255, 255, 255, 255).normal((float) normal6.x, (float) normal6.y, (float) normal6.z).endVertex();
 
-    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(255, 255, 255, 255).normal((float) normal7.x, (float) normal7.y, (float) normal7.z)
+    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(255, 255, 255, 255).normal((float) normal7.x, (float) normal7.y, (float) normal7.z)
         .endVertex();
     b.pos(pos4X, pos4Y, pos4Z).tex(minU, maxV).color(255, 255, 255, 255).normal((float) normal7.x, (float) normal7.y, (float) normal7.z).endVertex();
     b.pos(pos5X, pos5Y, pos5Z).tex(maxU, maxV).color(255, 255, 255, 255).normal((float) normal7.x, (float) normal7.y, (float) normal7.z).endVertex();
 
-    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0, minV).color(255, 255, 255, 255).normal((float) normal8.x, (float) normal8.y, (float) normal8.z)
+    b.pos(pos6X, pos6Y, pos6Z).tex((minU + maxU) / 2.0f, minV).color(255, 255, 255, 255).normal((float) normal8.x, (float) normal8.y, (float) normal8.z)
         .endVertex();
     b.pos(pos5X, pos5Y, pos5Z).tex(minU, maxV).color(255, 255, 255, 255).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();
     b.pos(pos2X, pos2Y, pos2Z).tex(maxU, maxV).color(255, 255, 255, 255).normal((float) normal8.x, (float) normal8.y, (float) normal8.z).endVertex();

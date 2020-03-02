@@ -24,7 +24,7 @@ public class ParticleRenderer {
 
     GlStateManager.enableCull();
     GlStateManager.depthMask(true);
-    GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+    GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
     GlStateManager.disableBlend();
     GlStateManager.alphaFunc(516, 0.1F);
     GlStateManager.enableAlphaTest();
@@ -34,7 +34,7 @@ public class ParticleRenderer {
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE.param);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
@@ -51,7 +51,7 @@ public class ParticleRenderer {
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
       GlStateManager.disableDepthTest();
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE.param);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
@@ -68,7 +68,7 @@ public class ParticleRenderer {
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
       GlStateManager.disableDepthTest();
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override
@@ -84,7 +84,7 @@ public class ParticleRenderer {
     @Override
     public void beginRender(BufferBuilder buffer, TextureManager textureManager) {
       beginRenderGlobal(buffer, textureManager);
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
       buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
     }
     @Override

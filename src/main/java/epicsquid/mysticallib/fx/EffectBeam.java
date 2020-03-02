@@ -58,7 +58,7 @@ public class EffectBeam extends Effect {
     BufferBuilder buffer = tess.getBuffer();
 
     Minecraft.getInstance().textureManager.bindTexture(RenderUtil.beam_texture);
-    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP);
     RenderUtil
         .renderBeam(buffer, x, y, z, x2 * 0.1 + x * 0.9, y2 * 0.1 + y * 0.9, z2 * 0.1 + z * 0.9, r, g, b, 0f, r, g, b, a * getLifeCoeff(pticks), thickness,
             30f);

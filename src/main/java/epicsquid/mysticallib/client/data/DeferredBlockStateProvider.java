@@ -7,10 +7,7 @@ import net.minecraft.block.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
-import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.*;
 
 import javax.annotation.Nonnull;
 import java.util.function.Function;
@@ -43,7 +40,7 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
 
   protected ResourceLocation blockTexture(Supplier<? extends Block> block) {
     ResourceLocation base = block.get().getRegistryName();
-    return new ResourceLocation(base.getNamespace(), folder + "/" + base.getPath());
+    return new ResourceLocation(base.getNamespace(), ModelProvider.BLOCK_FOLDER + "/" + base.getPath());
   }
 
   protected ResourceLocation libLod (String texture) {
@@ -51,15 +48,11 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
   }
 
   protected ResourceLocation libBlock (String texture) {
-    return new ResourceLocation(MysticalLib.MODID, BLOCK_FOLDER + "/" + texture);
-  }
-
-  protected ResourceLocation modLocation(String texture) {
-    return new ResourceLocation(modid, texture);
+    return new ResourceLocation(MysticalLib.MODID, ModelProvider.BLOCK_FOLDER + "/" + texture);
   }
 
   protected ResourceLocation blockLocation(String texture) {
-    return modLocation(BLOCK_FOLDER + "/" + texture);
+    return modLocation(ModelProvider.BLOCK_FOLDER + "/" + texture);
   }
 
 
@@ -147,11 +140,11 @@ public abstract class DeferredBlockStateProvider extends BlockStateProvider {
   }
 
   protected void widePostBlock(Supplier<? extends WidePostBlock> block, String texture) {
-    getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(getBuilder(name(block)).parent(getExistingFile(libBlock("wide_post"))).texture("wall", blockLocation(texture))));
+    getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(getVar(name(block)).parent(getExistingFile(libBlock("wide_post"))).texture("wall", blockLocation(texture))));
   }
 
   protected void narrowPostBlock(Supplier<? extends NarrowPostBlock> block, String texture) {
-    getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(getBuilder(name(block)).parent(getExistingFile(libBlock("narrow_post"))).texture("wall", blockLocation(texture))));
+    getVariantBuilder(block.get()).partialState().addModels(new ConfiguredModel(getMultipartBuilder(getName(block)).parent(getExistingFile(libBlock("narrow_post"))).texture("wall", blockLocation(texture))));
   }
 
   protected void doorBlock(Supplier<? extends DoorBlock> block) {

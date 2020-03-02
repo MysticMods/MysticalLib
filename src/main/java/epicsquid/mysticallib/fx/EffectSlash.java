@@ -58,11 +58,11 @@ public class EffectSlash extends Effect {
     Tessellator tess = Tessellator.getInstance();
     BufferBuilder buffer = tess.getBuffer();
     GlStateManager.translated(getInterpX(pticks), getInterpY(pticks), getInterpZ(pticks));
-    GlStateManager.rotated(-yaw, 0, 1, 0);
-    GlStateManager.rotated(pitch, 1, 0, 0);
-    GlStateManager.rotated(-slashAngle, 0, 0, 1);
+    GlStateManager.rotatef(-yaw, 0, 1, 0);
+    GlStateManager.rotatef(pitch, 1, 0, 0);
+    GlStateManager.rotatef(-slashAngle, 0, 0, 1);
 
-    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_LMAP_COLOR);
+    buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR_TEX_LIGHTMAP);
     RenderUtil.renderSlash(buffer, 0, 0, 0, r, g, b, a * getLifeCoeff(pticks), slashRadius, slashWidth, slashRange);
     tess.draw();
   }

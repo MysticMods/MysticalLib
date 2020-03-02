@@ -111,7 +111,7 @@ public class Effect {
     if (inited) {
       GlStateManager.enableBlend();
       GlStateManager.enableAlphaTest();
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, additive ? GlStateManager.DestFactor.ONE : GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, additive ? GlStateManager.DestFactor.ONE.param : GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
       GlStateManager.depthMask(false);
       int dfunc = GL11.glGetInteger(GL11.GL_DEPTH_FUNC);
       GlStateManager.depthFunc(GL11.GL_LEQUAL);
@@ -131,7 +131,7 @@ public class Effect {
 
       GlStateManager.alphaFunc(func, ref);
       GlStateManager.depthFunc(dfunc);
-      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA.param, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.param);
       GlStateManager.depthMask(true);
       GlStateManager.disableBlend();
     }

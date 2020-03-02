@@ -2,9 +2,7 @@ package epicsquid.mysticallib.world;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.trees.Tree;
-import net.minecraft.world.gen.feature.AbstractTreeFeature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.TreeFeature;
+import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -22,13 +20,13 @@ public class BaseTree extends Tree {
     this.leaves = leaves;
   }
 
-  public AbstractTreeFeature<NoFeatureConfig> getTreeFeaturePublic(Random rand) {
+  public AbstractTreeFeature<TreeFeatureConfig, ?> getTreeFeaturePublic(Random rand) {
     return getTreeFeature(rand);
   }
 
   @Nullable
   @Override
-  protected AbstractTreeFeature<NoFeatureConfig> getTreeFeature(Random random) {
-    return new TreeFeature(NoFeatureConfig::deserialize, true, size, log.get().getDefaultState(), leaves.get().getDefaultState(), false);
+  protected AbstractTreeFeature<TreeFeatureConfig> getTreeFeature(Random random) {
+    return new TreeFeature(TreeFeatureConfig::deserialize, true, size, log.get().getDefaultState(), leaves.get().getDefaultState(), false);
   }
 }

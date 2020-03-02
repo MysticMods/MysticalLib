@@ -163,7 +163,7 @@ public class Util {
     }
 
     for (String string : lines) {
-      lore.add(new StringNBT(string));
+      lore.add(StringNBT.valueOf(string));
     }
   }
 
