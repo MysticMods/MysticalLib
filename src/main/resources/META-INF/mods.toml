@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[28,)" #mandatory (26 is current forge version)
+loaderVersion="[31,)" #mandatory (26 is current forge version)
 issueTrackerURL="https://github.com/EpicSquid/MysticalLib/issues" #optional
 [[mods]]
     modId="mysticallib" #mandatory
@@ -14,12 +14,12 @@ issueTrackerURL="https://github.com/EpicSquid/MysticalLib/issues" #optional
 [[dependencies.mysticallib]]
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[28,)" #mandatory
+    versionRange="[31,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.mysticallib]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2]"
     ordering="NONE"
     side="BOTH"
