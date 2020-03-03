@@ -1,32 +1,28 @@
 package epicsquid.mysticallib.world;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.trees.Tree;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.TreeFeature;
+import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class BaseTree extends Tree {
 
-  private final int size;
-  private final Supplier<Block> log;
-  private final Supplier<Block> leaves;
+  private final TreeFeatureConfig config;
 
-  public BaseTree(int size, Supplier<Block> log, Supplier<Block> leaves) {
-    this.size = size;
-    this.log = log;
-    this.leaves = leaves;
+  public BaseTree(TreeFeatureConfig config) {
+    this.config = config;
   }
 
-  public AbstractTreeFeature<TreeFeatureConfig, ?> getTreeFeaturePublic(Random rand) {
-    return getTreeFeature(rand);
+  public ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeaturePublic(Random rand, boolean b) {
+    return getTreeFeature(rand, b);
   }
 
   @Nullable
   @Override
-  protected AbstractTreeFeature<TreeFeatureConfig> getTreeFeature(Random random) {
-    return new TreeFeature(TreeFeatureConfig::deserialize, true, size, log.get().getDefaultState(), leaves.get().getDefaultState(), false);
+  protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean b) {
+    return new TreeFeature(TreeFeatureConfig::func_227338_a_).withConfiguration(config);
   }
 }
