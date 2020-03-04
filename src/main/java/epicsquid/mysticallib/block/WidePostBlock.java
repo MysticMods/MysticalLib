@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import epicsquid.mysticallib.util.VoxelUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
