@@ -248,6 +248,8 @@ public class LibRegistry {
 
   public static Class<? extends ParticleBase> PARTICLE_GLOW, PARTICLE_SMOKE, PARTICLE_CLOUD, PARTICLE_SPARK, PARTICLE_GLITTER, PARTICLE_FLAME, PARTICLE_LEAF_ARC, PARTICLE_RAIN, PARTICLE_LEAF;
 
+  public static ResourceLocation[] LEAF_TEXTURES = new ResourceLocation[]{new ResourceLocation("mysticallib:particle/particle_leaf1"), new ResourceLocation("mysticallib:particle/particle_leaf2"), new ResourceLocation("mysticallib:particle/particle_leaf3"), new ResourceLocation("mysticallib:particle/particle_leaf4")};
+
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onRegisterCustomModels(@Nonnull RegisterParticleEvent event) {
@@ -258,8 +260,8 @@ public class LibRegistry {
     PARTICLE_GLITTER = ParticleRegistry
         .registerParticle(MysticalLib.MODID, ParticleGlitter.class, new ResourceLocation("mysticallib:particle/particle_sparkle"));
     PARTICLE_FLAME = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleFlame.class, new ResourceLocation("mysticallib:particle/particle_fire"));
-    PARTICLE_LEAF_ARC = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, new ResourceLocation("mysticallib:particle/particle_leaf1"), new ResourceLocation("mysticallib:particle/particle_leaf2"), new ResourceLocation("mysticallib:particle/particle_leaf3"), new ResourceLocation("mysticallib:particle/particle_leaf4"));
-    PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeaf.class, new ResourceLocation("mysticallib:particle/particle_leaf1"), new ResourceLocation("mysticallib:particle/particle_leaf2"), new ResourceLocation("mysticallib:particle/particle_leaf3"), new ResourceLocation("mysticallib:particle/particle_leaf4"));
+    PARTICLE_LEAF_ARC = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, LEAF_TEXTURES);
+    PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeaf.class, LEAF_TEXTURES);
     PARTICLE_RAIN = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleRain.class, new ResourceLocation("mysticallib:particle/particle_rain1"), new ResourceLocation("mysticallib:particle/particle_rain2"), new ResourceLocation("mysticallib:particle/particle_rain3"), new ResourceLocation("mysticallib:particle/particle_rain4"), new ResourceLocation("mysticallib:particle/particle_rain5"), new ResourceLocation("mysticallib:particle/particle_rain6"), new ResourceLocation("mysticallib:particle/particle_rain7"), new ResourceLocation("mysticallib:particle/particle_rain8"), new ResourceLocation("mysticallib:particle/particle_rain9"), new ResourceLocation("mysticallib:particle/particle_rain10"), new ResourceLocation("mysticallib:particle/particle_rain11"), new ResourceLocation("mysticallib:particle/particle_rain12"), new ResourceLocation("mysticallib:particle/particle_rain13"), new ResourceLocation("mysticallib:particle/particle_rain14"));
     ;
   }

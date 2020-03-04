@@ -10,13 +10,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemUtil {
@@ -107,6 +111,32 @@ public class ItemUtil {
     return block.getStateFromMeta(stack.getMetadata());
   }
 
+  public static ItemStack stackFromString (String[] parts) {
+    ResourceLocation loc = null;
+    int meta = 0;
+    if (parts.length == 1) {
+      loc = new ResourceLocation("minecraft", parts[0]);
+    } else if (parts.length >= 2) {
+      loc = new ResourceLocation(parts[0], parts[1]);
+    }
+    if (parts.length >= 3) {
+      try {
+        meta = Integer.parseInt(parts[2]);
+      } catch (NumberFormatException e) {
+        meta = 0;
+      }
+    }
+    if (loc == null) {
+      return ItemStack.EMPTY;
+    }
+    Item item = ForgeRegistries.ITEMS.getValue(loc);
+    if (item == null) {
+      return ItemStack.EMPTY;
+    }
+
+    return new ItemStack(item, 1, meta);
+  }
+
   @SideOnly(Side.CLIENT)
   public static boolean shouldDisplayMore(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn, String shiftForMore, TextFormatting color) {
     if (!GuiScreen.isShiftKeyDown()) {
@@ -127,5 +157,16 @@ public class ItemUtil {
       stack.setTagCompound(tag);
     }
     return tag;
+  }
+
+  public static List<ItemStack> transformContainers (List<ItemStack> items) {
+      List<ItemStack> result = new ArrayList<>();
+      for (ItemStack stack : items) {
+        ItemStack container = ForgeHooks.getContainerItem(stack);
+        if (!container.isEmpty()) {
+          result.add(container);
+        }
+      }
+      return result;
   }
 }
