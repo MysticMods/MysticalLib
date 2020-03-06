@@ -20,6 +20,7 @@ public class ItemShearsBase extends ItemShears implements ICustomModeledObject, 
     super();
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
+    setMaxStackSize(1);
   }
 
   public ItemShearsBase setModelCustom(boolean custom) {

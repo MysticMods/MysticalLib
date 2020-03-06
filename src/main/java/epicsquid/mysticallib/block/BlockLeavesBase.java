@@ -4,14 +4,11 @@ import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.item.ItemBlockLeaves;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
-import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
-import epicsquid.mysticallib.model.block.BakedModelBlock;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.creativetab.CreativeTabs;
@@ -38,17 +35,15 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 @SuppressWarnings("deprecation")
-public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
+public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObject, INoCullBlock {
   private @Nonnull
   Item itemBlock;
   private List<ItemStack> drops;
-  private boolean hasCustomModel = false;
   private boolean hasItems = true;
   private boolean noCull = true;
   private boolean isFlammable = false;
   private Supplier<ItemStack> sapling = null;
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
-  private BlockRenderLayer layer = BlockRenderLayer.CUTOUT_MIPPED;
   private int saplingChance;
   public @Nonnull
   String name;
@@ -115,33 +110,10 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     }
   }
 
-  @Nonnull
-  public BlockLeavesBase setBox(@Nonnull AxisAlignedBB box) {
-    this.box = box;
-    return this;
-  }
-
   @Override
   @Nonnull
   public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
     return box;
-  }
-
-  @Nonnull
-  public BlockLeavesBase setNoCull(boolean noCull) {
-    this.noCull = noCull;
-    return this;
-  }
-
-  @Override
-  public boolean noCull() {
-    return noCull;
-  }
-
-  @Nonnull
-  public BlockLeavesBase setModelCustom(boolean custom) {
-    this.hasCustomModel = custom;
-    return this;
   }
 
   @Nonnull
@@ -150,15 +122,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     return this;
   }
 
-  @Nonnull
-  public BlockLeavesBase setHasItem(boolean hasItem) {
-    this.hasItems = hasItem;
-    return this;
-  }
-
   @SideOnly(Side.CLIENT)
   public BlockLeavesBase setLayer(@Nonnull BlockRenderLayer layer) {
-    this.layer = layer;
     return this;
   }
 
@@ -173,10 +138,6 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     return Blocks.LEAVES.getRenderLayer();
   }
 
-  public boolean hasCustomModel() {
-    return hasCustomModel;
-  }
-
   @Override
   public boolean isFullCube(@Nonnull IBlockState state) {
     return true;
@@ -185,31 +146,8 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   @Override
   @SideOnly(Side.CLIENT)
   public void initModel() {
-    if (hasCustomModel) {
-      ModelLoader.setCustomStateMapper(this, new CustomStateMapper());
-    }
-    if (!hasCustomModel) {
-      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
-      ModelLoader.setCustomStateMapper(this, new StateMap.Builder().ignore(CHECK_DECAY).ignore(DECAYABLE).build());
-    } else {
-      ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
-    }
-  }
-
-  @Override
-  @SideOnly(Side.CLIENT)
-  public void initCustomModel() {
-    if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
-      if (getParentState() != null) {
-        defaultTex = new ResourceLocation(
-            getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
-      }
-      CustomModelLoader.blockmodels
-          .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-      CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),
-          new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
-    }
+    ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "handlers"));
+    ModelLoader.setCustomStateMapper(this, new StateMap.Builder().ignore(CHECK_DECAY).ignore(DECAYABLE).build());
   }
 
   @Override
@@ -235,11 +173,6 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     return block;
   }
 
-  @Nullable
-  protected IBlockState getParentState() {
-    return null;
-  }
-
   @Override
   public Item getItemDropped(IBlockState state, Random rand, int fortune) {
     if (drops != null && drops.size() > 0) {
@@ -256,16 +189,6 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   @Override
   public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
     return isFlammable ? 100 : super.getFlammability(world, pos, face);
-  }
-
-  @Nonnull
-  protected Class<? extends BakedModelBlock> getModelClass() {
-    return getModelClass(0);
-  }
-
-  @Nonnull
-  protected Class<? extends BakedModelBlock> getModelClass(int type) {
-    return BakedModelBlock.class;
   }
 
   @Nonnull
@@ -292,5 +215,16 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
     }
 
     return i;
+  }
+
+  @Override
+  public boolean noCull() {
+    return false;
+  }
+
+  @Override
+  @SideOnly(Side.CLIENT)
+  public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
+    return Blocks.LEAVES.shouldSideBeRendered(blockState, blockAccess, pos, side);
   }
 }
