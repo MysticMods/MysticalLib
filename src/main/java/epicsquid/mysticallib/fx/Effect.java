@@ -123,7 +123,7 @@ public class Effect {
 
       GlStateManager.pushMatrix();
       GlStateManager
-          .translated(-TileEntityRendererDispatcher.staticPlayerX, -TileEntityRendererDispatcher.staticPlayerY, -TileEntityRendererDispatcher.staticPlayerZ);
+          .translated(-TileEntityRendererDispatcher.instance.renderInfo.getBlockPos().getX(), -TileEntityRendererDispatcher.instance.renderInfo.getBlockPos().getY(), -TileEntityRendererDispatcher.instance.renderInfo.getBlockPos().getZ());
 
       render(pticks);
 
