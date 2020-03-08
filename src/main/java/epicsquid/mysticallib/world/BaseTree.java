@@ -2,6 +2,7 @@ package epicsquid.mysticallib.world;
 
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.TreeFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 
@@ -16,13 +17,11 @@ public class BaseTree extends Tree {
     this.config = config;
   }
 
-  public ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeaturePublic(Random rand, boolean b) {
-    return getTreeFeature(rand, b);
-  }
-
+  /**
+   * Get a {@link net.minecraft.world.gen.feature.ConfiguredFeature} of tree
+   */
   @Nullable
-  @Override
-  protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean b) {
-    return new TreeFeature(TreeFeatureConfig::func_227338_a_).withConfiguration(config);
+  protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean beeHive) {
+    return Feature.NORMAL_TREE.withConfiguration(config);
   }
 }
