@@ -1,11 +1,10 @@
 buildscript {
     repositories {
-        mavenLocal()
-        maven { url = 'http://files.minecraftforge.net/maven' }
-        jcenter()
         mavenCentral()
+        mavenLocal()
         maven {
-            url 'https://dogforce-games.com/maven'
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
         }
         maven {
             name = "sonatype"
@@ -13,17 +12,16 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.165-run-configs-rework', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.0.+', changing: true
     }
 }
 plugins {
     id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
-apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
 
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'maven-publish'
+apply plugin: 'eclipse'
 
 version = "${minecraft_version}-${mod_version}"
 if (System.getenv('BUILD_NUMBER') != null) {
@@ -106,6 +104,9 @@ repositories {
     flatDir {
         dir "libs"
     }
+    maven {
+        url "http://maven.tterrag.com"
+    }
 }
 
 configurations {
@@ -113,13 +114,11 @@ configurations {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-/*    compile "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:deobf"
-    shade "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:embed"*/
+    def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+    implementation fg.deobf(registrate)
+    shade registrate
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -138,27 +137,10 @@ jar {
     }
 }
 
-/*processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "shoulders_version", shoulders_version
-    inputs.property "version", project.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mods_shoulders.toml'
-
-        expand 'version': project.version, 'shoulders_version': shoulders_version, 'mc_version': project.minecraft_version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mods_shoulders.toml'
-    }
-}*/
-
 shadowJar {
     configurations = [project.configurations.shade]
-    relocate 'noobanidus.mods.shoulders', 'epicsquid.mysticallib.repack.shoulders'
-/*    classifier ''*/
+    relocate 'com.tterrag.registrate', 'epicsquid.mysticallib.repack.registrate'
+    classifier ''
 }
 
 reobf {

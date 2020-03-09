@@ -27,22 +27,3 @@
 /*.iws
 /atlassian-ide-plugin.xml
 /classes
-
-## gedit
-*~
-## most Windows editors
-*.bak
-## OSX
-.DS_Store
-
-## translation reports
-resources/assets/enderio/lang/*.lang.txt
-/ebin/
-
-## local user properties
-user.properties
-
-## temporary build files
-eiostore.jks
-
-build\.sh
