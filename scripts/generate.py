@@ -4,7 +4,7 @@ import sys
 import json
 import os
 
-TYPES = ["item", "block", "button", "door", "double_slab", "fence", "fence_gate", "log", "pressure_plate", "slab", "stairs", "trapdoor", "wall", "tool"]
+TYPES = ["item", "block", "button", "door", "double_slab", "fence", "fence_gate", "log", "pressure_plate", "slab", "stairs", "trapdoor", "wall", "tool", "runed_wood"]
 
 def main (args):
     if len(args) == 0:
@@ -42,9 +42,12 @@ def main (args):
 
         this_texture = texture_base + texture
 
-        texture_params = tuple([this_texture, ] * template_data.count("%s"))
+        if type == "log" or type == "runed_wood":
+            texture_params = tuple([model["log"], this_texture])
+        else:
+            texture_params = tuple([this_texture, ] * template_data.count("%s"))
 
-        if type == "block" or type == "item" or type == "tool":
+        if type == "block" or type == "item" or type == "tool" or type == "log" or type == "runed_wood":
             filename = os.path.join(directory, base + ".json")
         else:
             filename = os.path.join(directory, base + "_" + type + ".json")
