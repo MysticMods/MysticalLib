@@ -54,7 +54,7 @@ public class ToolOverlayRenderer {
       }
 
       RayTraceResult ray = BreakUtil.rayTrace(player.world, player);
-      if (ray.typeOfHit != RayTraceResult.Type.BLOCK) {
+      if (ray == null || ray.typeOfHit != RayTraceResult.Type.BLOCK) {
         return;
       }
 
