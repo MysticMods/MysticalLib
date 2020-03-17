@@ -2,6 +2,7 @@ package epicsquid.mysticallib.event.client;
 
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.item.tool.IEffectiveTool;
+import epicsquid.mysticallib.item.tool.ISizedTool;
 import epicsquid.mysticallib.util.BreakUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +49,8 @@ public class ToolOverlayRenderer {
       return;
     }
     ItemStack tool = player.getHeldItemMainhand();
-    if (tool.getItem() instanceof IEffectiveTool) {
+    Item toolItem = tool.getItem();
+    if (toolItem instanceof ISizedTool) {
       Entity renderEntity = Minecraft.getMinecraft().getRenderViewEntity();
       if (renderEntity == null) {
         return;
@@ -63,7 +66,9 @@ public class ToolOverlayRenderer {
         event.getContext().drawSelectionBox(player, new RayTraceResult(RayTraceResult.Type.BLOCK, new Vec3d(0, 0, 0), ray.sideHit, position), 0, mc.getRenderPartialTicks());
       }
 
-      if (controller.getIsHittingBlock()) {
+      boolean drawDamage = toolItem instanceof IEffectiveTool && ((IEffectiveTool) toolItem).displayBreak();
+
+      if (controller.getIsHittingBlock() && drawDamage) {
         drawBlockDamage(player.world, Tessellator.getInstance(), Tessellator.getInstance().getBuffer(), player, positions, ray.getBlockPos());
       }
     }

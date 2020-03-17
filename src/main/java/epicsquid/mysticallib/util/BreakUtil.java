@@ -2,6 +2,7 @@ package epicsquid.mysticallib.util;
 
 
 import epicsquid.mysticallib.item.tool.IEffectiveTool;
+import epicsquid.mysticallib.item.tool.ILimitAxis;
 import epicsquid.mysticallib.item.tool.ISizedTool;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -35,7 +36,7 @@ public class BreakUtil {
     RayTraceResult ray = rayTrace(world, player);
     world.setBlockState(pos, originalState);
 
-    if (ray.typeOfHit != RayTraceResult.Type.BLOCK) {
+    if (ray == null || ray.typeOfHit != RayTraceResult.Type.BLOCK) {
       return;
     }
 
@@ -62,8 +63,19 @@ public class BreakUtil {
 
   public static Set<BlockPos> nearbyBlocks(ItemStack tool, BlockPos origin, EnumFacing facing, World world, EntityPlayer player) {
     int width = ((ISizedTool) tool.getItem()).getWidth(tool);
+    if (width % 2 == 0) {
+      width /= 2;
+    } else {
+      width = (width - 1) / 2;
+    }
 
     Set<BlockPos> result = new HashSet<>();
+
+    if (tool.getItem() instanceof ILimitAxis) {
+      if (!((ILimitAxis) tool.getItem()).getLimits().contains(facing.getAxis())) {
+        return result;
+      }
+    }
 
     for (int x = -width; x < width + 1; x++) {
       for (int z = -width; z < width + 1; z++) {

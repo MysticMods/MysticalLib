@@ -48,7 +48,13 @@ public class ItemUtil {
     }
   }
 
-
+  public static boolean equalWithoutDamageOrNBT(ItemStack item1, ItemStack item2) {
+    if (item1.getItem() != item2.getItem()) {
+      return false;
+    } else {
+      return item1.getCount() == item2.getCount();
+    }
+  }
 
   public static EntityItem spawnItem(World world, BlockPos pos, ItemStack stack) {
     return spawnItem(world, pos, stack, -1);
