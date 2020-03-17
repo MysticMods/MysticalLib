@@ -23,10 +23,9 @@ public class ItemExcavatorBase extends ItemSizedTool {
   private static Set<String> TOOL_CLASSES = ImmutableSet.of("shovel", "excavator");
   private static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(Material.CLAY, Material.SAND, Material.SNOW, Material.GROUND);
 
-  public ItemExcavatorBase(String name, int maxDamage, int enchantability, ToolMaterial materialIn) {
+  public ItemExcavatorBase(String name, int maxDamage, ToolMaterial materialIn) {
     super(name, 13, -3f, materialIn);
     setMaxDamage(maxDamage);
-    setEnchantability(enchantability);
   }
 
   @Override

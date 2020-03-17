@@ -15,20 +15,13 @@ import net.minecraftforge.client.model.ModelLoader;
 public class ItemShovelBase extends ItemSpade implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
-  private final int enchantability;
 
-  public ItemShovelBase(ToolMaterial material, String name, int toolLevel, int maxDamage, int enchantability) {
+  public ItemShovelBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
     super(material);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setHarvestLevel("shovel", toolLevel);
     setMaxDamage(maxDamage);
-    this.enchantability = enchantability;
-  }
-
-  @Override
-  public int getItemEnchantability() {
-    return enchantability;
   }
 
   public ItemShovelBase setModelCustom(boolean custom) {

@@ -21,8 +21,8 @@ import net.minecraft.world.World;
 import java.util.Set;
 
 public class ItemPloughBase extends ItemHoeBase implements IEffectiveTool, ILimitAxis {
-  public ItemPloughBase(ToolMaterial material, String name, int toolLevel, int maxDamage, int enchantability) {
-    super(material, name, toolLevel, maxDamage, enchantability);
+  public ItemPloughBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
+    super(material, name, toolLevel, maxDamage);
   }
 
   @Override

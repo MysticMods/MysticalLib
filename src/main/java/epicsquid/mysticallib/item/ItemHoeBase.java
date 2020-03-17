@@ -15,20 +15,13 @@ import net.minecraftforge.client.model.ModelLoader;
 public class ItemHoeBase extends ItemHoe implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
-  private final int enchantability;
 
-  public ItemHoeBase(ToolMaterial material, String name, int toolLevel, int maxDamage, int enchantability) {
+  public ItemHoeBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
     super(material);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setHarvestLevel("pickaxe", toolLevel);
     setMaxDamage(maxDamage);
-    this.enchantability = enchantability;
-  }
-
-  @Override
-  public int getItemEnchantability() {
-    return enchantability;
   }
 
   public ItemHoeBase setModelCustom(boolean custom) {

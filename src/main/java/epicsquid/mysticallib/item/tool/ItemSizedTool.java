@@ -13,23 +13,8 @@ import net.minecraft.world.World;
 import java.util.Collections;
 
 public abstract class ItemSizedTool extends ItemToolBase implements IEffectiveTool {
-  protected int enchantability;
-
   public ItemSizedTool(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn) {
     super(name, attackDamageIn, attackSpeedIn, materialIn, Collections.emptySet());
-  }
-
-  public int getEnchantability() {
-    return enchantability;
-  }
-
-  public void setEnchantability(int enchantability) {
-    this.enchantability = enchantability;
-  }
-
-  @Override
-  public int getItemEnchantability() {
-    return getEnchantability();
   }
 
   @Override

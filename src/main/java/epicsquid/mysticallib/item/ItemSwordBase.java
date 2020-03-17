@@ -15,19 +15,12 @@ import net.minecraftforge.client.model.ModelLoader;
 public class ItemSwordBase extends ItemSword implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
-  private final int enchantability;
 
-  public ItemSwordBase(ToolMaterial material, String name, int toolLevel, int maxDamage, int enchantability) {
+  public ItemSwordBase(ToolMaterial material, String name, int maxDamage) {
     super(material);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setMaxDamage(maxDamage);
-    this.enchantability = enchantability;
-  }
-
-  @Override
-  public int getItemEnchantability() {
-    return enchantability;
   }
 
   public ItemSwordBase setModelCustom(boolean custom) {

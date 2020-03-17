@@ -15,20 +15,13 @@ import net.minecraftforge.client.model.ModelLoader;
 public class ItemAxeBase extends ItemAxe implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
-  private final int enchantability;
 
-  public ItemAxeBase(ToolMaterial material, String name, int toolLevel, int maxDamage, int enchantability) {
+  public ItemAxeBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
     super(material, 8.0f, -3.0f);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setHarvestLevel("axe", toolLevel);
     setMaxDamage(maxDamage);
-    this.enchantability = enchantability;
-  }
-
-  @Override
-  public int getItemEnchantability() {
-    return enchantability;
   }
 
   public ItemAxeBase setModelCustom(boolean custom) {
