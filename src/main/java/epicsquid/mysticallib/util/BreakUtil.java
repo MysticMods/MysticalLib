@@ -2,6 +2,7 @@ package epicsquid.mysticallib.util;
 
 
 import epicsquid.mysticallib.item.tool.ISizedTool;
+import epicsquid.mysticallib.item.tool.ItemPloughBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -40,6 +41,7 @@ public class BreakUtil {
     final Block block = state.getBlock();
     final String harvestTool = block.getHarvestTool(state);
     final Set<String> toolClasses = tool.getToolClasses(itemstack);
+    final boolean plough = tool instanceof ItemPloughBase;
     if (!(tool instanceof ISizedTool)) {
       return Collections.emptySet();
     }
@@ -77,9 +79,9 @@ public class BreakUtil {
 
     for (int x = -width; x < width + 1; x++) {
       for (int z = -width; z < width + 1; z++) {
-/*        if (x == 0 && z == 0) {
+        if (x == 0 && z == 0) {
           continue;
-        }*/
+        }
 
         BlockPos potential;
 
@@ -100,6 +102,10 @@ public class BreakUtil {
         final IBlockState potentialState = world.getBlockState(potential);
         final Material material = potentialState.getMaterial();
         final Block potentialBlock = potentialState.getBlock();
+        if (plough && ItemPloughBase.EFFECTIVE_BLOCKS.contains(potentialBlock)) {
+          result.add(potential);
+          continue;
+        }
         final boolean toolRequired = !material.isToolNotRequired();
         final String potentialHarvestTool = potentialBlock.getHarvestTool(potentialState);
         final boolean matchingTool = potentialHarvestTool == null || toolClasses.contains(potentialHarvestTool);
