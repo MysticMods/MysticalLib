@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material;
 import java.util.Set;
 
 public interface IEffectiveTool extends ISizedTool {
-  Set<Block> getEffectiveBlocks();
   Set<Material> getEffectiveMaterials();
 
   default boolean displayBreak () {

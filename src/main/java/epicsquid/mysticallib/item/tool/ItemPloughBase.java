@@ -21,6 +21,8 @@ import net.minecraft.world.World;
 import java.util.Set;
 
 public class ItemPloughBase extends ItemHoeBase implements IEffectiveTool, ILimitAxis {
+  private static Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.GRASS, Blocks.GRASS_PATH, Blocks.DIRT, Blocks.FARMLAND);
+
   public ItemPloughBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
     super(material, name, toolLevel, maxDamage);
   }
@@ -112,13 +114,6 @@ public class ItemPloughBase extends ItemHoeBase implements IEffectiveTool, ILimi
     } else {
       return EnumActionResult.PASS;
     }
-  }
-
-  private static Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.GRASS, Blocks.GRASS_PATH, Blocks.DIRT, Blocks.FARMLAND);
-
-  @Override
-  public Set<Block> getEffectiveBlocks() {
-    return EFFECTIVE_BLOCKS;
   }
 
   private static Set<Material> EFFECTIVE_MATERIALS = Sets.newHashSet(Material.GROUND);

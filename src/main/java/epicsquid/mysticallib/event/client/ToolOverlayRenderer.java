@@ -61,12 +61,15 @@ public class ToolOverlayRenderer {
         return;
       }
 
-      Set<BlockPos> positions = BreakUtil.nearbyBlocks(tool, ray.getBlockPos(), ray.sideHit, player.world, player);
+      final Set<BlockPos> positions = BreakUtil.nearbyBlocks(tool, ray.getBlockPos(), player);
+      if (positions.isEmpty()) {
+        return;
+      }
       for (BlockPos position : positions) {
         event.getContext().drawSelectionBox(player, new RayTraceResult(RayTraceResult.Type.BLOCK, new Vec3d(0, 0, 0), ray.sideHit, position), 0, mc.getRenderPartialTicks());
       }
 
-      boolean drawDamage = toolItem instanceof IEffectiveTool && ((IEffectiveTool) toolItem).displayBreak();
+      final boolean drawDamage = toolItem instanceof IEffectiveTool && ((IEffectiveTool) toolItem).displayBreak();
 
       if (controller.getIsHittingBlock() && drawDamage) {
         drawBlockDamage(player.world, Tessellator.getInstance(), Tessellator.getInstance().getBuffer(), player, positions, ray.getBlockPos());

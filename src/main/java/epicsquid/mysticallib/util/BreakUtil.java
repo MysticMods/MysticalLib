@@ -1,117 +1,186 @@
 package epicsquid.mysticallib.util;
 
 
-import epicsquid.mysticallib.item.tool.IEffectiveTool;
-import epicsquid.mysticallib.item.tool.ILimitAxis;
 import epicsquid.mysticallib.item.tool.ISizedTool;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Enchantments;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.play.client.CPacketPlayerDigging;
+import net.minecraft.network.play.server.SPacketBlockChange;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 // Concept based partially on ToolFunctions.java by astradamus from MIT Licensed Practical Tools
 // https://github.com/astradamus/PracticalTools/blob/master/src/main/java/com/alexanderstrada/practicaltools/ToolFunctions.java
 public class BreakUtil {
-  public static void breakNeighbours(ItemStack tool, World world, BlockPos pos, EntityPlayer player) {
-    if (world.isRemote) return;
-
-    if (tool.isEmpty()) return;
-
-    if (!(tool.getItem() instanceof IEffectiveTool)) return;
-
-    IBlockState originalState = world.getBlockState(pos);
-    world.setBlockState(pos, Blocks.GLASS.getDefaultState());
-    RayTraceResult ray = rayTrace(world, player);
-    world.setBlockState(pos, originalState);
-
-    if (ray == null || ray.typeOfHit != RayTraceResult.Type.BLOCK) {
-      return;
+  public static Set<BlockPos> nearbyBlocks(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+    final World world = player.world;
+    final IBlockState state = world.getBlockState(pos);
+    final Item tool = itemstack.getItem();
+    final Block block = state.getBlock();
+    final String harvestTool = block.getHarvestTool(state);
+    final Set<String> toolClasses = tool.getToolClasses(itemstack);
+    if (!(tool instanceof ISizedTool)) {
+      return Collections.emptySet();
+    }
+    if (state.getBlockHardness(world, pos) == 0.0f) {
+      return Collections.emptySet();
+    }
+    if (harvestTool != null && !toolClasses.contains(harvestTool)) {
+      return Collections.emptySet();
+    }
+    if (player.isSneaking()) {
+      return Collections.emptySet();
     }
 
-    EnumFacing facing = ray.sideHit;
-    int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, tool);
-    boolean silkTouch = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, tool) != 0;
+    final ISizedTool sized = (ISizedTool) tool;
 
-    for (BlockPos target : nearbyBlocks(tool, pos, facing, world, player)) {
-      IBlockState state = world.getBlockState(target);
-
-      if (tool.getItem() instanceof IEffectiveTool) {
-        IEffectiveTool toolItem = (IEffectiveTool) tool.getItem();
-        if (toolItem.getEffectiveBlocks().contains(state.getBlock()) || toolItem.getEffectiveMaterials().contains(state.getMaterial())) {
-          world.destroyBlock(target, false);
-          state.getBlock().harvestBlock(world, player, target, state, null, tool);
-          if (!silkTouch) {
-            state.getBlock().dropXpOnBlockBreak(world, target, state.getBlock().getExpDrop(state, world, target, fortune));
-          }
-          tool.damageItem(1, player);
-        }
-      }
+    float hardness = state.getPlayerRelativeBlockHardness(player, world, pos);
+    if (hardness == 0) {
+      return Collections.emptySet();
     }
-  }
 
-  public static Set<BlockPos> nearbyBlocks(ItemStack tool, BlockPos origin, EnumFacing facing, World world, EntityPlayer player) {
-    int width = ((ISizedTool) tool.getItem()).getWidth(tool);
+    RayTraceResult ray = BreakUtil.rayTrace(world, player);
+    if (ray == null || ray.sideHit == null) {
+      return Collections.emptySet();
+    }
+
+    int width = sized.getWidth(itemstack);
     if (width % 2 == 0) {
       width /= 2;
     } else {
       width = (width - 1) / 2;
     }
 
+    EnumFacing facing = ray.sideHit;
     Set<BlockPos> result = new HashSet<>();
-
-    if (tool.getItem() instanceof ILimitAxis) {
-      if (!((ILimitAxis) tool.getItem()).getLimits().contains(facing.getAxis())) {
-        return result;
-      }
-    }
 
     for (int x = -width; x < width + 1; x++) {
       for (int z = -width; z < width + 1; z++) {
-        if (x == z && z == 0) {
+/*        if (x == 0 && z == 0) {
           continue;
-        }
+        }*/
 
         BlockPos potential;
 
         switch (facing.getAxis()) {
           case X:
-            potential = origin.add(0, x, z);
+            potential = pos.add(0, x, z);
             break;
           case Y:
-            potential = origin.add(x, 0, z);
+            potential = pos.add(x, 0, z);
             break;
           case Z:
-            potential = origin.add(x, z, 0);
+            potential = pos.add(x, z, 0);
             break;
           default:
             continue;
         }
 
-        IBlockState state = world.getBlockState(potential);
-        if (!ForgeHooks.canHarvestBlock(state.getBlock(), player, world, potential)) {
+        final IBlockState potentialState = world.getBlockState(potential);
+        final Material material = potentialState.getMaterial();
+        final Block potentialBlock = potentialState.getBlock();
+        final boolean toolRequired = !material.isToolNotRequired();
+        final String potentialHarvestTool = potentialBlock.getHarvestTool(potentialState);
+        final boolean matchingTool = potentialHarvestTool == null || toolClasses.contains(potentialHarvestTool);
+        final boolean forge = ForgeHooks.canHarvestBlock(potentialState.getBlock(), player, world, potential);
+        final float destroySpeed = tool.getDestroySpeed(itemstack, potentialState);
+        if ((toolRequired && !matchingTool && !forge) || destroySpeed == 1.0f) {
           continue;
         }
 
-        IEffectiveTool toolItem = (IEffectiveTool) tool.getItem();
-        if (toolItem.getEffectiveBlocks().contains(state.getBlock()) || toolItem.getEffectiveMaterials().contains(state.getMaterial())) {
+        float potentialHardness = potentialState.getPlayerRelativeBlockHardness(player, world, potential);
+        if (potentialHardness > 0.0f && potentialHardness <= hardness) {
           result.add(potential);
         }
       }
     }
 
     return result;
+  }
+
+  public static boolean harvestBlock (World world, BlockPos pos, EntityPlayer player) {
+    if (world.isAirBlock(pos)) {
+      return false;
+    }
+
+    final ItemStack stack = player.getHeldItemMainhand();
+    final IBlockState state = world.getBlockState(pos);
+    final Block block = state.getBlock();
+    final Item tool = stack.getItem();
+    final String harvestTool = block.getHarvestTool(state);
+    final Set<String> harvestTools = tool.getToolClasses(stack);
+    final boolean matchingTool = harvestTool == null || harvestTools.contains(harvestTool);
+    final boolean toolRequired = state.getMaterial().isToolNotRequired();
+    if (toolRequired && !matchingTool && !ForgeHooks.canHarvestBlock(state.getBlock(), player, world, pos)) {
+      return false;
+    }
+
+    final EntityPlayerMP playerMP = (player instanceof EntityPlayerMP) ? (EntityPlayerMP) player : null;
+    final boolean creative = player.isCreative();
+    final GameType type = (playerMP == null) ? null : playerMP.interactionManager.getGameType();
+
+    int xp = 0;
+    if (playerMP != null) {
+      xp = ForgeHooks.onBlockBreakEvent(world, type, playerMP, pos);
+      if (xp == -1) {
+        return false;
+      }
+    }
+    if (!world.isRemote) {
+      if (playerMP == null) {
+        return false;
+      }
+      final TileEntity te = world.getTileEntity(pos);
+      if (block.removedByPlayer(state, world, pos, player, !creative)) {
+        block.onPlayerDestroy(world, pos, state);
+        if (!creative) {
+          block.harvestBlock(world, player, pos, state, te, stack);
+          if (xp > 0) {
+            block.dropXpOnBlockBreak(world, pos, xp);
+          }
+        }
+      }
+      playerMP.connection.sendPacket(new SPacketBlockChange(world, pos));
+    } else {
+      clientSideRemoval(state, world, pos, player);
+    }
+    return true;
+  }
+
+  @SideOnly(Side.CLIENT)
+  private static void clientSideRemoval(IBlockState state, World world, BlockPos pos, EntityPlayer player) {
+    final Block block = state.getBlock();
+    if (block.removedByPlayer(state, world, pos, player, !player.isCreative())) {
+      block.onPlayerDestroy(world, pos, state);
+    }
+    final Minecraft mc = Minecraft.getMinecraft();
+    final EnumFacing side = mc.objectMouseOver.sideHit;
+    final CPacketPlayerDigging packet = new CPacketPlayerDigging(CPacketPlayerDigging.Action.START_DESTROY_BLOCK, pos, side);
+    final NetHandlerPlayClient connection = mc.getConnection();
+    if (connection != null) {
+      connection.sendPacket(packet);
+    }
   }
 
   public static RayTraceResult rayTrace(World world, EntityPlayer player) {

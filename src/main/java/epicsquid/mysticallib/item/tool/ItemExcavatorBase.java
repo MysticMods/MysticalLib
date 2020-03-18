@@ -20,22 +20,12 @@ import java.util.Set;
 
 public class ItemExcavatorBase extends ItemSizedTool {
   private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
-  private static Set<String> TOOL_CLASSES = ImmutableSet.of("shovel", "excavator");
   private static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(Material.CLAY, Material.SAND, Material.SNOW, Material.GROUND);
 
   public ItemExcavatorBase(String name, int maxDamage, ToolMaterial materialIn) {
-    super(name, 13, -3f, materialIn);
+    super(name, 13, -3f, materialIn, EFFECTIVE_ON);
     setMaxDamage(maxDamage);
-  }
-
-  @Override
-  public Set<String> getToolClasses(ItemStack stack) {
-    return TOOL_CLASSES;
-  }
-
-  @Override
-  public Set<Block> getEffectiveBlocks() {
-    return EFFECTIVE_ON;
+    setHarvestLevel("shovel", materialIn.getHarvestLevel());
   }
 
   @Override
