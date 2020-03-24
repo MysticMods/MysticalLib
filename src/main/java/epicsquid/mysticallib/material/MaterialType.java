@@ -1,5 +1,6 @@
 package epicsquid.mysticallib.material;
 
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -225,12 +226,12 @@ public class MaterialType {
     return this;
   }
 
-  public Supplier<Block.Properties> getBlockProps() {
-    return () -> Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1);
+  public NonNullUnaryOperator<Block.Properties> getBlockProps() {
+    return (o) -> o.hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1);
   }
 
-  public Supplier<Block.Properties> getOreBlockProperties() {
-    return () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel() - 1);
+  public NonNullUnaryOperator<Block.Properties> getOreBlockProperties() {
+    return (o) -> o.hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel() - 1);
   }
 
   public int getHarvestLevel() {

@@ -283,10 +283,6 @@ public class ModRegistry {
     return () -> new BlockNamedItem(block.get().get(), properties.get());
   }
 
-  public Supplier<BaseOreBlock> ore(OreBuilder<BaseOreBlock> creator, MaterialType material) {
-    return () -> creator.apply(material.getOreBlockProperties().get(), material.getMinXP(), material.getMaxXP());
-  }
-
   public <T extends Item> Supplier<T> item(Function<Item.Properties, T> creator, Supplier<Item.Properties> properties) {
     return () -> creator.apply(properties.get());
   }
