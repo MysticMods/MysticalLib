@@ -295,56 +295,9 @@ public class ModRegistry {
     return () -> builder.get().build(name);
   }
 
-  public <T extends Item> Supplier<T> tool(ToolBuilder<T> builder, Type Q, MaterialType material, Supplier<Item.Properties> properties) {
-    return () -> builder.apply(material.getItemMaterial(), material.getDamage(Q), material.getSpeed(Q), properties.get());
-  }
 
-  public Supplier<SwordItem> sword(ToolBuilder<SwordItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return tool(builder, Type.SWORD, material, properties);
-  }
 
-  public Supplier<SpearItem> spear(ToolBuilder<SpearItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return tool(builder, Type.SPEAR, material, properties);
-  }
 
-  public Supplier<PickaxeItem> pickaxe(ToolBuilder<PickaxeItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return tool(builder, Type.PICKAXE, material, properties);
-  }
-
-  public Supplier<AxeItem> axe(ToolBuilder<AxeItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return tool(builder, Type.AXE, material, properties);
-  }
-
-  public Supplier<ShovelItem> shovel(ToolBuilder<ShovelItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return tool(builder, Type.SHOVEL, material, properties);
-  }
-
-  public Supplier<KnifeItem> knife(ToolBuilder<KnifeItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return tool(builder, Type.KNIFE, material, properties);
-  }
-
-  public Supplier<HoeItem> hoe(HoeBuilder<HoeItem> builder, MaterialType material, Supplier<Item.Properties> properties) {
-    return () -> builder.apply(material.getItemMaterial(), material.getSpeed(Type.HOE), properties.get());
-  }
-
-  public Supplier<ArmorItem> armor(ArmorBuilder<ArmorItem> builder, MaterialType material, EquipmentSlotType slot, Supplier<Item.Properties> properties) {
-    return () -> builder.apply(material.getArmorMaterial(), slot, properties.get());
-  }
-
-  @FunctionalInterface
-  public interface ToolBuilder<V extends Item> {
-    V apply(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builder);
-  }
-
-  @FunctionalInterface
-  public interface HoeBuilder<V extends Item> {
-    V apply(IItemTier tier, float attackSpeedIn, Item.Properties builder);
-  }
-
-  @FunctionalInterface
-  public interface ArmorBuilder<V extends Item> {
-    V apply(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builder);
-  }
 
   @FunctionalInterface
   public interface OreBuilder<V extends OreBlock> {
