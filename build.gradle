@@ -115,6 +115,10 @@ configurations {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    def registrate = "com.tterrag.registrate:Registrate:MC${minecraft_version}-${registrate_version}"
+    implementation fg.deobf(registrate)
+    shade registrate
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -135,6 +139,7 @@ jar {
 
 shadowJar {
     configurations = [project.configurations.shade]
+    relocate 'com.tterrag.registrate', 'epicsquid.mysticallib.repack.registrate'
     classifier ''
 }
 

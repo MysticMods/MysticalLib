@@ -1,0 +1,306 @@
+package epicsquid.mysticallib.registry;
+
+import epicsquid.mysticallib.block.*;
+import epicsquid.mysticallib.item.KnifeItem;
+import epicsquid.mysticallib.item.SpearItem;
+import epicsquid.mysticallib.material.MaterialType;
+import net.minecraft.block.*;
+import net.minecraft.block.material.MaterialColor;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
+import net.minecraft.entity.ai.brain.schedule.Activity;
+import net.minecraft.entity.ai.brain.schedule.Schedule;
+import net.minecraft.entity.ai.brain.sensor.SensorType;
+import net.minecraft.entity.item.PaintingType;
+import net.minecraft.entity.merchant.villager.VillagerProfession;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.particles.ParticleType;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.Potion;
+import net.minecraft.stats.StatType;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.village.PointOfInterestType;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.provider.BiomeProviderType;
+import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.gen.ChunkGeneratorType;
+import net.minecraft.world.gen.carver.WorldCarver;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
+import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DataSerializerEntry;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+import static epicsquid.mysticallib.material.MaterialType.Type;
+
+public class ModRegistry {
+  private final DeferredRegister<Block> blockRegistry;
+  private final DeferredRegister<Item> itemRegistry;
+  private final DeferredRegister<Fluid> fluidRegistry;
+  private final DeferredRegister<Biome> biomeRegistry;
+  private final DeferredRegister<SoundEvent> soundRegistry;
+  private final DeferredRegister<Enchantment> enchantmentRegistry;
+  private final DeferredRegister<Potion> potionRegistry;
+  private final DeferredRegister<Effect> effectRegistry;
+
+  private final DeferredRegister<EntityType<?>> entityRegistry;
+
+  private final DeferredRegister<TileEntityType<?>> tileEntityRegistry;
+  private final DeferredRegister<ContainerType<?>> containerRegistry;
+
+  private final DeferredRegister<IRecipeSerializer<?>> recipeRegistry;
+  private final DeferredRegister<StatType<?>> statRegistry;
+
+  private final DeferredRegister<ParticleType<?>> particleRegistry;
+  private final DeferredRegister<PaintingType> paintingRegistry;
+
+  private final DeferredRegister<VillagerProfession> professionRegistry;
+  private final DeferredRegister<PointOfInterestType> poiRegistry;
+  private final DeferredRegister<MemoryModuleType<?>> memoryRegistry;
+  private final DeferredRegister<SensorType<?>> sensorRegistry;
+  private final DeferredRegister<Schedule> scheduleRegistry;
+  private final DeferredRegister<Activity> activityRegistry;
+
+  private final DeferredRegister<WorldCarver<?>> carverRegistry;
+  private final DeferredRegister<SurfaceBuilder<?>> surfaceRegistry;
+  private final DeferredRegister<Feature<?>> featureRegistry;
+  private final DeferredRegister<Placement<?>> placementRegistry;
+  private final DeferredRegister<BiomeProviderType<?, ?>> biomeProviderRegistry;
+  private final DeferredRegister<ChunkGeneratorType<?, ?>> chunkGeneratorRegistry;
+  private final DeferredRegister<ChunkStatus> chunkStatusRegistry;
+
+  private final DeferredRegister<ModDimension> dimensionRegistry;
+  private final DeferredRegister<DataSerializerEntry> dataSerializerRegistry;
+
+  private final String modId;
+
+  private final Set<DeferredRegister<?>> activeRegistries = new HashSet<>();
+
+  public ModRegistry(String modId) {
+    this.modId = modId;
+
+    this.blockRegistry = new DeferredRegister<>(ForgeRegistries.BLOCKS, modId);
+    this.itemRegistry = new DeferredRegister<>(ForgeRegistries.ITEMS, modId);
+    this.fluidRegistry = new DeferredRegister<>(ForgeRegistries.FLUIDS, modId);
+    this.biomeRegistry = new DeferredRegister<>(ForgeRegistries.BIOMES, modId);
+    this.soundRegistry = new DeferredRegister<>(ForgeRegistries.SOUND_EVENTS, modId);
+    this.enchantmentRegistry = new DeferredRegister<>(ForgeRegistries.ENCHANTMENTS, modId);
+    this.potionRegistry = new DeferredRegister<>(ForgeRegistries.POTION_TYPES, modId);
+    this.effectRegistry = new DeferredRegister<>(ForgeRegistries.POTIONS, modId);
+    this.entityRegistry = new DeferredRegister<>(ForgeRegistries.ENTITIES, modId);
+    this.tileEntityRegistry = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, modId);
+    this.containerRegistry = new DeferredRegister<>(ForgeRegistries.CONTAINERS, modId);
+    this.recipeRegistry = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, modId);
+    this.statRegistry = new DeferredRegister<>(ForgeRegistries.STAT_TYPES, modId);
+    this.particleRegistry = new DeferredRegister<>(ForgeRegistries.PARTICLE_TYPES, modId);
+    this.paintingRegistry = new DeferredRegister<>(ForgeRegistries.PAINTING_TYPES, modId);
+    this.professionRegistry = new DeferredRegister<>(ForgeRegistries.PROFESSIONS, modId);
+    this.poiRegistry = new DeferredRegister<>(ForgeRegistries.POI_TYPES, modId);
+    this.memoryRegistry = new DeferredRegister<>(ForgeRegistries.MEMORY_MODULE_TYPES, modId);
+    this.sensorRegistry = new DeferredRegister<>(ForgeRegistries.SENSOR_TYPES, modId);
+    this.scheduleRegistry = new DeferredRegister<>(ForgeRegistries.SCHEDULES, modId);
+    this.activityRegistry = new DeferredRegister<>(ForgeRegistries.ACTIVITIES, modId);
+    this.carverRegistry = new DeferredRegister<>(ForgeRegistries.WORLD_CARVERS, modId);
+    this.surfaceRegistry = new DeferredRegister<>(ForgeRegistries.SURFACE_BUILDERS, modId);
+    this.featureRegistry = new DeferredRegister<>(ForgeRegistries.FEATURES, modId);
+    this.placementRegistry = new DeferredRegister<>(ForgeRegistries.DECORATORS, modId);
+    this.biomeProviderRegistry = new DeferredRegister<>(ForgeRegistries.BIOME_PROVIDER_TYPES, modId);
+    this.chunkGeneratorRegistry = new DeferredRegister<>(ForgeRegistries.CHUNK_GENERATOR_TYPES, modId);
+    this.chunkStatusRegistry = new DeferredRegister<>(ForgeRegistries.CHUNK_STATUS, modId);
+    this.dimensionRegistry = new DeferredRegister<>(ForgeRegistries.MOD_DIMENSIONS, modId);
+    this.dataSerializerRegistry = new DeferredRegister<>(ForgeRegistries.DATA_SERIALIZERS, modId);
+  }
+
+  public void registerEventBus(IEventBus bus) {
+    this.activeRegistries.forEach(o -> o.register(bus));
+  }
+
+  public Collection<RegistryObject<Block>> getBlocks() {
+    return blockRegistry.getEntries();
+  }
+
+  public Collection<RegistryObject<Item>> getItems() {
+    return itemRegistry.getEntries();
+  }
+
+  public <T extends SoundEvent> RegistryObject<T> registerSoundEvent (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.soundRegistry);
+    return this.soundRegistry.register(name, supplier);
+  }
+
+  public RegistryObject<SoundEvent> registerSoundEvent (final String name) {
+    return registerSoundEvent(name, sound(new ResourceLocation(modId, name)));
+  }
+
+  public <T extends IRecipeSerializer<?>> RegistryObject<T> registerRecipeSerializer (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.recipeRegistry);
+    return this.recipeRegistry.register(name, supplier);
+  }
+
+  public <T extends Item> RegistryObject<T> registerItem(final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.itemRegistry);
+    return this.itemRegistry.register(name, supplier);
+  }
+
+  public <T extends Effect> RegistryObject<T> registerEffect (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.effectRegistry);
+    return this.effectRegistry.register(name, supplier);
+  }
+
+  public <T extends Block> RegistryObject<T> registerBlock(final String name, final Supplier<T> supplier, final Supplier<Item.Properties> itemblockProperties) {
+    this.activeRegistries.add(this.itemRegistry);
+    RegistryObject<T> result = registerBlockWithoutItem(name, supplier);
+    this.itemRegistry.register(name, blockItem(result, itemblockProperties));
+    return result;
+  }
+
+  public <T extends Block> RegistryObject<T> registerBlockWithoutItem(final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.blockRegistry);
+    return this.blockRegistry.register(name, supplier);
+  }
+
+  public <T extends TileEntityType<?>> RegistryObject<T> registerTileEntity (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.tileEntityRegistry);
+    return this.tileEntityRegistry.register(name, supplier);
+  }
+
+  public <T extends ContainerType<?>> RegistryObject<T> registerContainerType (final String name, final Supplier<T> supplier) {
+    this.activeRegistries.add(this.containerRegistry);
+    return this.containerRegistry.register(name, supplier);
+  }
+
+  public Supplier<SoundEvent> sound (ResourceLocation name) {
+    return () -> new SoundEvent(name);
+  }
+
+  public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> supplier) {
+    return () -> TileEntityType.Builder.create(creator, supplier.get()).build(null);
+  }
+
+  public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> ... supplier) {
+    return () -> TileEntityType.Builder.create(creator, Stream.of(supplier).map(Supplier::get).toArray(Block[]::new)).build(null);
+  }
+
+  public <T extends Block> Supplier<T> block(Function<Block.Properties, T> creator, Supplier<Block.Properties> properties) {
+    return () -> creator.apply(properties.get());
+  }
+
+  public Supplier<StairsBlock> stair(RegistryObject<? extends Block> source) {
+    return block(b -> new StairsBlock(source.lazyMap(Block::getDefaultState), b), fromBlock(source));
+  }
+
+  public Supplier<SlabBlock> slab(Supplier<? extends Block> source) {
+    return block(SlabBlock::new, fromBlock(source));
+  }
+
+  public Supplier<FenceBlock> fence(Supplier<? extends Block> source) {
+    return block(FenceBlock::new, fromBlock(source));
+  }
+
+  public Supplier<FenceGateBlock> fenceGate(Supplier<? extends Block> source) {
+    return block(FenceGateBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WallBlock> wall(Supplier<? extends Block> source) {
+    return block(WallBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WidePostBlock> widePost(Supplier<? extends Block> source) {
+    return block(WidePostBlock::new, fromBlock(source));
+  }
+
+  public Supplier<NarrowPostBlock> narrowPost(Supplier<? extends Block> source) {
+    return block(NarrowPostBlock::new, fromBlock(source));
+  }
+
+  public Supplier<LogBlock> log(MaterialColor topColor, Supplier<Block.Properties> props) {
+    return block(b -> new LogBlock(topColor, b), props);
+  }
+
+  public Supplier<StoneButtonBlock> stoneButton (Supplier<? extends Block> source) {
+    return block(BaseStoneButtonBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WoodButtonBlock> woodButton (Supplier<? extends Block> source) {
+    return block(BaseWoodButtonBlock::new, fromBlock(source));
+  }
+
+  public Supplier<WeightedPressurePlateBlock> weightedPressurePlate (Supplier<? extends Block> source, int maxWeight) {
+    return block(b -> new BaseWeightedPressurePlateBlock(maxWeight, b), fromBlock(source));
+  }
+
+  public Supplier<PressurePlateBlock> pressurePlate (Supplier<? extends Block> source, PressurePlateBlock.Sensitivity sensitivity) {
+    return block(b -> new BasePressurePlateBlock(sensitivity, b), fromBlock(source));
+  }
+
+  public Supplier<TrapDoorBlock> trapDoor (Supplier<? extends Block> source) {
+    return block(BaseTrapDoorBlock::new, fromBlock(source));
+  }
+
+  public Supplier<DoorBlock> door (Supplier<? extends Block> source) {
+    return block(BaseDoorBlock::new, fromBlock(source));
+  }
+
+  interface ComposingSupplier<T> extends Supplier<T> {
+    default <R> ComposingSupplier<R> then(Function<T, R> func) {
+      return () -> func.apply(get());
+    }
+  }
+
+  private ComposingSupplier<Block.Properties> fromBlock(Supplier<? extends Block> source) {
+    return () -> {
+      Objects.requireNonNull(source.get(), "Registered block is required");
+      return Block.Properties.from(source.get());
+    };
+  }
+
+  public <T extends Block> Supplier<BlockItem> blockItem(RegistryObject<T> block, Supplier<Item.Properties> properties) {
+    return () -> new BlockItem(block.get(), properties.get());
+  }
+
+  public <T extends Block> Supplier<BlockNamedItem> blockNamedItem(Supplier<RegistryObject<T>> block, Supplier<Item.Properties> properties) {
+    return () -> new BlockNamedItem(block.get().get(), properties.get());
+  }
+
+  public <T extends Item> Supplier<T> item(Function<Item.Properties, T> creator, Supplier<Item.Properties> properties) {
+    return () -> creator.apply(properties.get());
+  }
+
+  public Supplier<DyeItem> dyeItem(DyeColor dye, Supplier<Item.Properties> properties) {
+    return () -> new DyeItem(dye, properties.get());
+  }
+
+  public <T extends Entity> Supplier<EntityType<T>> entity(String name, Supplier<EntityType.Builder<T>> builder) {
+    return () -> builder.get().build(name);
+  }
+
+
+
+
+
+  @FunctionalInterface
+  public interface OreBuilder<V extends OreBlock> {
+    V apply(Block.Properties properties, int maxXP, int minXP);
+  }
+}
