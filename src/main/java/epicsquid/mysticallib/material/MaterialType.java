@@ -181,6 +181,10 @@ public class MaterialType {
     return name;
   }
 
+  public String getIngotName () {
+    return name + "_ingot";
+  }
+
   public Supplier<? extends Item> getItem() {
     return item.get();
   }

@@ -17,6 +17,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.potion.Effect;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import java.util.function.Supplier;
@@ -66,6 +68,10 @@ public class CustomRegistrate extends AbstractRegistrate<CustomRegistrate> {
 
   // Containers
 
+  public <T extends Container> ContainerBuilder<T, CustomRegistrate> containerType(String name, ContainerType.IFactory<T> factory) {
+    return containerType(this, name, factory);
+  }
+
   public <T extends Container> ContainerBuilder<T, CustomRegistrate> containerType(ContainerType.IFactory<T> factory) {
     return containerType(this, factory);
   }
@@ -78,70 +84,25 @@ public class CustomRegistrate extends AbstractRegistrate<CustomRegistrate> {
     return entry(name, callback -> new ContainerBuilder<>(this, parent, name, callback, factory));
   }
 
-/*  private <T extends Block> Supplier<Material> blockMaterial(Supplier<RegistryEntry<T>> block) {
-    return () -> block.get().lazyMap(Block::getDefaultState).get().getMaterial();
+  public SoundEventBuilder<SoundEvent, CustomRegistrate> soundEvent () {
+    return soundEvent(currentName());
   }
 
-  @SuppressWarnings("unchecked")
-  private <T extends StairsBlock, V extends Block> NonNullFunction<Block.Properties, T> stairFactory (Supplier<RegistryEntry<V>> parent) {
-    return properties -> (T) new StairsBlock(parent.get().lazyMap(Block::getDefaultState), Block.Properties.from(parent.get().get()));
+  public SoundEventBuilder<SoundEvent, CustomRegistrate> soundEvent(String name) {
+    ResourceLocation rl = new ResourceLocation(this.getModid(), name);
+    Supplier<SoundEvent> factory = () -> new SoundEvent(rl); // TODO ???
+    return soundEvent(this, name, factory);
   }
 
-  public <T extends StairsBlock, V extends Block> BlockBuilder<T, CustomRegistrate> stairs(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.stairs(this.self(), name, stairFactory(parent), blockMaterial(parent));
+  public SoundEventBuilder<SoundEvent, CustomRegistrate> soundEvent (String name, String fullName) {
+    ResourceLocation fullNameRL = new ResourceLocation(this.getModid(), fullName);
+    Supplier<SoundEvent> factory = () -> new SoundEvent(fullNameRL);
+    return soundEvent(this, name, factory);
   }
 
-  public <T extends StairsBlock> BlockBuilder<T, CustomRegistrate> stairs(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<Material> material) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, factory, material.get()));
+  public <P> SoundEventBuilder<SoundEvent, P> soundEvent(P parent, String name, Supplier<SoundEvent> factory) {
+    return entry(name, callback -> new SoundEventBuilder<>(this, parent, name, callback, factory));
   }
-
-  public <V extends Block> BlockBuilder<SlabBlock, CustomRegistrate> slab(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.slab(this.self(), name, SlabBlock::new, parent);
-  }
-
-  public <T extends SlabBlock, V extends Block> BlockBuilder<T, CustomRegistrate> slab(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<RegistryEntry<V>> parentBlock) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, (o) -> factory.apply(Block.Properties.from(parentBlock.get().get())), blockMaterial(parentBlock).get()));
-  }
-
-  public <V extends Block> BlockBuilder<WallBlock, CustomRegistrate> wall(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.wall(this.self(), name, WallBlock::new, parent);
-  }
-
-  public <T extends WallBlock, V extends Block> BlockBuilder<T, CustomRegistrate> wall(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<RegistryEntry<V>> parentBlock) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, (o) -> factory.apply(Block.Properties.from(parentBlock.get().get())), blockMaterial(parentBlock).get()));
-  }
-
-  public <V extends Block> BlockBuilder<FenceBlock, CustomRegistrate> fence(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.fence(this.self(), name, FenceBlock::new, parent);
-  }
-
-  public <T extends FenceBlock, V extends Block> BlockBuilder<T, CustomRegistrate> fence(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<RegistryEntry<V>> parentBlock) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, (o) -> factory.apply(Block.Properties.from(parentBlock.get().get())), blockMaterial(parentBlock).get()));
-  }
-
-  public <V extends Block> BlockBuilder<FenceGateBlock, CustomRegistrate> gate(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.gate(this.self(), name, FenceGateBlock::new, parent);
-  }
-
-  public <T extends FenceGateBlock, V extends Block> BlockBuilder<T, CustomRegistrate> gate(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<RegistryEntry<V>> parentBlock) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, (o) -> factory.apply(Block.Properties.from(parentBlock.get().get())), blockMaterial(parentBlock).get()));
-  }
-
-  public <V extends Block> BlockBuilder<WidePostBlock, CustomRegistrate> widePost(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.widePost(this.self(), name, WidePostBlock::new, parent);
-  }
-
-  public <T extends WidePostBlock, V extends Block> BlockBuilder<T, CustomRegistrate> widePost(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<RegistryEntry<V>> parentBlock) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, (o) -> factory.apply(Block.Properties.from(parentBlock.get().get())), blockMaterial(parentBlock).get()));
-  }
-
-  public <V extends Block> BlockBuilder<NarrowPostBlock, CustomRegistrate> narrowPost(String name, Supplier<RegistryEntry<V>> parent) {
-    return this.narrowPost(this.self(), name, NarrowPostBlock::new, parent);
-  }
-
-  public <T extends NarrowPostBlock, V extends Block> BlockBuilder<T, CustomRegistrate> narrowPost(CustomRegistrate parent, String name, NonNullFunction<Block.Properties, T> factory, Supplier<RegistryEntry<V>> parentBlock) {
-    return this.entry(name, (callback) -> BlockBuilder.create(this, parent, name, callback, (o) -> factory.apply(Block.Properties.from(parentBlock.get().get())), blockMaterial(parentBlock).get()));
-  }*/
 
   public BlockBuilder<LogBlock, CustomRegistrate> log(String name, MaterialColor color) {
     return this.log(this.self(), name, (b) -> new LogBlock(color, b), Material.WOOD);
