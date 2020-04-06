@@ -1,10 +1,8 @@
 package epicsquid.mysticallib.material;
 
-import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
@@ -21,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
 
 public class MaterialType {
   public static final UUID[] ARMOR_MODIFIERS = new UUID[]{UUID.fromString("845DB27C-C624-495F-8C9F-6020A9A58B6B"), UUID.fromString("D8499B04-0E66-4726-AB29-64469D734E0D"), UUID.fromString("9F3D476D-C118-4544-8365-64846904B48E"), UUID.fromString("2AD3F246-FEE1-4E67-B886-69FD380BB150")};
@@ -68,11 +67,11 @@ public class MaterialType {
     this.putDamageSpeed(Type.SWORD, 3.0f, -2.4f, Type.SHOVEL, 1.5f, -3.0f, Type.PICKAXE, 1.0f, -2.8f, Type.HOE, 1.0f, -1.0f);
   }
 
-  public ArmorMaterial getArmorMaterial () {
+  public ArmorMaterial getArmorMaterial() {
     return armorMaterial;
   }
 
-  public ItemMaterial getItemMaterial () {
+  public ItemMaterial getItemMaterial() {
     return itemMaterial;
   }
 
@@ -181,7 +180,7 @@ public class MaterialType {
     return name;
   }
 
-  public String getIngotName () {
+  public String getIngotName() {
     return name + "_ingot";
   }
 
@@ -230,11 +229,11 @@ public class MaterialType {
     return this;
   }
 
-  public NonNullUnaryOperator<Block.Properties> getBlockProps() {
+  public UnaryOperator<Block.Properties> getBlockProps() {
     return (o) -> o.hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1);
   }
 
-  public NonNullUnaryOperator<Block.Properties> getOreBlockProperties() {
+  public UnaryOperator<Block.Properties> getOreBlockProperties() {
     return (o) -> o.hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel() - 1);
   }
 
