@@ -103,13 +103,6 @@ repositories {
     maven {
         url "https://maven.blamejared.com"
     }
-    flatDir {
-        dir "libs"
-    }
-}
-
-configurations {
-    shade
 }
 
 dependencies {
@@ -117,14 +110,10 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-/*    compile "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:deobf"
-    shade "noobanidus.mods.shoulders:shoulders:${minecraft_version}-${shoulders_version}-${shoulders_build}:embed"*/
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
-    classifier = ""
     manifest {
         attributes([
                 "Specification-Title"     : "mysticallib",
@@ -138,35 +127,6 @@ jar {
     }
 }
 
-/*processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "shoulders_version", shoulders_version
-    inputs.property "version", project.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mods_shoulders.toml'
-
-        expand 'version': project.version, 'shoulders_version': shoulders_version, 'mc_version': project.minecraft_version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mods_shoulders.toml'
-    }
-}*/
-
-shadowJar {
-    configurations = [project.configurations.shade]
-    relocate 'noobanidus.mods.shoulders', 'epicsquid.mysticallib.repack.shoulders'
-/*    classifier ''*/
-}
-
-reobf {
-    shadowJar {}
-}
-
-build.dependsOn reobfShadowJar
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -174,6 +134,9 @@ publishing {
             artifactId project.archivesBaseName
             version project.version
             from components.java
+
+            artifactId jar {
+            }
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
