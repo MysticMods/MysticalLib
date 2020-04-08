@@ -135,7 +135,7 @@ publishing {
             version project.version
             from components.java
 
-            artifactId jar {
+            artifact jar {
             }
 
             pom.withXml {
