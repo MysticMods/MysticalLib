@@ -54,18 +54,10 @@ public class IngredientProvider<T extends IItemProvider & IForgeRegistryEntry<?>
     }
   }
 
-  @Override
-  public InventoryChangeTrigger.Instance hasItem(MinMaxBounds.IntBound amount) {
-    return hasItem(hasItemInternal(amount).build());
-  }
 
   @Override
   public InventoryChangeTrigger.Instance hasItem() {
     return hasItem(hasItemInternal().build());
-  }
-
-  private ItemPredicate.Builder hasItemInternal(MinMaxBounds.IntBound amount) {
-    return hasItemInternal().count(amount);
   }
 
   private ItemPredicate.Builder hasItemInternal() {

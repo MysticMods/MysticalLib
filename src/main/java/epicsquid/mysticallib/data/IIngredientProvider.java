@@ -10,8 +10,6 @@ public interface IIngredientProvider {
 
   Ingredient asIngredient();
 
-  InventoryChangeTrigger.Instance hasItem(MinMaxBounds.IntBound amount);
-
   InventoryChangeTrigger.Instance hasItem();
 
   default InventoryChangeTrigger.Instance hasItem(ItemPredicate... predicates) {
