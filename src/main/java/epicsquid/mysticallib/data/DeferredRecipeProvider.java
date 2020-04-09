@@ -1,6 +1,5 @@
 package epicsquid.mysticallib.data;
 
-import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -10,7 +9,6 @@ import net.minecraft.tags.Tag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
@@ -31,7 +29,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
     CookingRecipeBuilder.blastingRecipe(Ingredient.fromTag(source), result.get(), xp, 100).addCriterion("has_" + safeName(source.getId()), this.hasItem(source)).build(consumer, safeId(result.get()) + "_from_blasting");
   }
 
-  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Supplier<? extends T> source, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle(Supplier<? extends T> source, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
     CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200)
         .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
         .build(consumer, safeId(result.get()) + "_from_smelting");
@@ -40,7 +38,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer, safeId(result.get()) + "_from_blasting");
   }
 
-  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Supplier<? extends T> source, Supplier<? extends T> result, float xp, String namespace, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle(Supplier<? extends T> source, Supplier<? extends T> result, float xp, String namespace, Consumer<IFinishedRecipe> consumer) {
     CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(source.get()), result.get(), xp, 200)
         .addCriterion("has_" + safeName(source.get().getRegistryName()), this.hasItem(source.get()))
         .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_smelting_" + safeName(source.get())));
@@ -49,7 +47,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer, new ResourceLocation(namespace, safeName(result.get()) + "_from_blasting_" + safeName(source.get())));
   }
 
-  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle (Tag<Item> tag, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void recycle(Tag<Item> tag, Supplier<? extends T> result, float xp, Consumer<IFinishedRecipe> consumer) {
     CookingRecipeBuilder.smeltingRecipe(Ingredient.fromTag(tag), result.get(), xp, 200)
         .addCriterion("has_" + safeName(result.get().getRegistryName()), this.hasItem(result.get()))
         .build(consumer, safeId(result.get()) + "_from_smelting");
@@ -78,11 +76,11 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
   }
 
   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void storage(Supplier<? extends T> input, Supplier<? extends T> output, Consumer<IFinishedRecipe> consumer) {
-    ShapedRecipeBuilder.shapedRecipe(output.get()).patternLine("###").patternLine("###").patternLine("###").key('#', input.get()).addCriterion("has_at_least_9_" + safeName(input.get()), this.hasItem(MinMaxBounds.IntBound.atLeast(9), input.get())).build(consumer);
+    ShapedRecipeBuilder.shapedRecipe(output.get()).patternLine("###").patternLine("###").patternLine("###").key('#', input.get()).addCriterion("has_at_least_9_" + safeName(input.get()), this.hasItem(input.get())).build(consumer);
     ShapelessRecipeBuilder.shapelessRecipe(input.get(), 9).addIngredient(output.get()).addCriterion("has_" + safeName(output.get()), this.hasItem(output.get())).build(consumer, safeId(input.get()) + "_from_" + safeName(output.get()));
   }
 
-  protected Item getModElement (Tag<Item> input) {
+  protected Item getModElement(Tag<Item> input) {
     Item last = Items.AIR;
     for (Item item : input.getAllElements()) {
       last = item;
@@ -137,7 +135,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
 
   // TWO BY TWO: Items
 
-  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
     ShapedRecipeBuilder.shapedRecipe(result.get(), count)
         .patternLine("XX")
         .patternLine("XX")
@@ -147,13 +145,13 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer);
   }
 
-  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo (Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void twoByTwo(Supplier<? extends T> source, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
     twoByTwo(source, result, group, 4, consumer);
   }
 
   // Two by Two using Two items
 
-  protected <T extends IIngredientProvider, V extends IItemProvider & IForgeRegistryEntry<?>> void twoTwoByTwo (T source1, T source2, Supplier<? extends V> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IIngredientProvider, V extends IItemProvider & IForgeRegistryEntry<?>> void twoTwoByTwo(T source1, T source2, Supplier<? extends V> result, @Nullable String group, int count, Consumer<IFinishedRecipe> consumer) {
     ShapedRecipeBuilder.shapedRecipe(result.get(), count)
         .patternLine("XY")
         .patternLine("YX")
@@ -165,7 +163,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer);
   }
 
-  protected <T extends IIngredientProvider, V extends IItemProvider & IForgeRegistryEntry<?>> void twoTwoByTwo (T source1, T source2, Supplier<? extends V> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IIngredientProvider, V extends IItemProvider & IForgeRegistryEntry<?>> void twoTwoByTwo(T source1, T source2, Supplier<? extends V> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
     twoTwoByTwo(source1, source2, result, group, 4, consumer);
   }
 
@@ -371,7 +369,7 @@ public abstract class DeferredRecipeProvider extends RecipeProvider {
         .build(consumer);
   }
 
-   protected <T extends IItemProvider & IForgeRegistryEntry<?>> void spear(Supplier<? extends Item> sword, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
+  protected <T extends IItemProvider & IForgeRegistryEntry<?>> void spear(Supplier<? extends Item> sword, Supplier<? extends T> result, @Nullable String group, Consumer<IFinishedRecipe> consumer) {
     ShapedRecipeBuilder.shapedRecipe(result.get(), 1)
         .patternLine("X")
         .patternLine("S")
