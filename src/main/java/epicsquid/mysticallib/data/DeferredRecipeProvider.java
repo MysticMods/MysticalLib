@@ -2,7 +2,6 @@ package epicsquid.mysticallib.data;
 
 import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.data.*;
-import net.minecraft.data.RecipeProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipeSerializer;
