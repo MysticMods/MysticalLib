@@ -16,7 +16,7 @@ public abstract class MultiReturnItem extends Item {
   @Override
   public abstract UseAction getUseAction(ItemStack stack);
 
-  protected abstract Item getReturnItem (ItemStack stack);
+  protected abstract Item getReturnItem(ItemStack stack);
 
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {

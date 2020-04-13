@@ -5,16 +5,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.WorkbenchContainer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
-import net.minecraft.stats.Stats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -27,11 +24,7 @@ import net.minecraftforge.items.IItemHandler;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.*;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -167,13 +160,14 @@ public class Util {
     }
   }
 
-  public static ItemStack damageItem (int amount, ItemStack stack, CraftingInventory inventory) {
+  public static ItemStack damageItem(int amount, ItemStack stack, CraftingInventory inventory) {
     Container container = ObfuscationReflectionHelper.getPrivateValue(CraftingInventory.class, inventory, "field_70465_c");
     if (container instanceof WorkbenchContainer) {
       WorkbenchContainer wb = (WorkbenchContainer) container;
       PlayerEntity player = ObfuscationReflectionHelper.getPrivateValue(WorkbenchContainer.class, wb, "field_192390_i");
       if (player != null) {
-        stack.damageItem(amount, player, (p) -> {});
+        stack.damageItem(amount, player, (p) -> {
+        });
         return stack;
       }
     }

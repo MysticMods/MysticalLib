@@ -67,11 +67,11 @@ public class MaterialType {
     this.putDamageSpeed(Type.SWORD, 3.0f, -2.4f, Type.SHOVEL, 1.5f, -3.0f, Type.PICKAXE, 1.0f, -2.8f, Type.HOE, 1.0f, -1.0f);
   }
 
-  public ArmorMaterial getArmorMaterial () {
+  public ArmorMaterial getArmorMaterial() {
     return armorMaterial;
   }
 
-  public ItemMaterial getItemMaterial () {
+  public ItemMaterial getItemMaterial() {
     return itemMaterial;
   }
 

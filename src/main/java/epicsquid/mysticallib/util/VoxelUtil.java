@@ -4,7 +4,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
 public class VoxelUtil {
-  public static VoxelShape multiOr (VoxelShape base, VoxelShape ... shapes) {
+  public static VoxelShape multiOr(VoxelShape base, VoxelShape... shapes) {
     VoxelShape result = base;
 
     for (VoxelShape shape : shapes) {

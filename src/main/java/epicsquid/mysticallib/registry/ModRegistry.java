@@ -144,16 +144,16 @@ public class ModRegistry {
     return itemRegistry.getEntries();
   }
 
-  public <T extends SoundEvent> RegistryObject<T> registerSoundEvent (final String name, final Supplier<T> supplier) {
+  public <T extends SoundEvent> RegistryObject<T> registerSoundEvent(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.soundRegistry);
     return this.soundRegistry.register(name, supplier);
   }
 
-  public RegistryObject<SoundEvent> registerSoundEvent (final String name) {
+  public RegistryObject<SoundEvent> registerSoundEvent(final String name) {
     return registerSoundEvent(name, sound(new ResourceLocation(modId, name)));
   }
 
-  public <T extends IRecipeSerializer<?>> RegistryObject<T> registerRecipeSerializer (final String name, final Supplier<T> supplier) {
+  public <T extends IRecipeSerializer<?>> RegistryObject<T> registerRecipeSerializer(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.recipeRegistry);
     return this.recipeRegistry.register(name, supplier);
   }
@@ -163,7 +163,7 @@ public class ModRegistry {
     return this.itemRegistry.register(name, supplier);
   }
 
-  public <T extends Effect> RegistryObject<T> registerEffect (final String name, final Supplier<T> supplier) {
+  public <T extends Effect> RegistryObject<T> registerEffect(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.effectRegistry);
     return this.effectRegistry.register(name, supplier);
   }
@@ -180,25 +180,25 @@ public class ModRegistry {
     return this.blockRegistry.register(name, supplier);
   }
 
-  public <T extends TileEntityType<?>> RegistryObject<T> registerTileEntity (final String name, final Supplier<T> supplier) {
+  public <T extends TileEntityType<?>> RegistryObject<T> registerTileEntity(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.tileEntityRegistry);
     return this.tileEntityRegistry.register(name, supplier);
   }
 
-  public <T extends ContainerType<?>> RegistryObject<T> registerContainerType (final String name, final Supplier<T> supplier) {
+  public <T extends ContainerType<?>> RegistryObject<T> registerContainerType(final String name, final Supplier<T> supplier) {
     this.activeRegistries.add(this.containerRegistry);
     return this.containerRegistry.register(name, supplier);
   }
 
-  public Supplier<SoundEvent> sound (ResourceLocation name) {
+  public Supplier<SoundEvent> sound(ResourceLocation name) {
     return () -> new SoundEvent(name);
   }
 
-  public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> supplier) {
+  public <T extends TileEntity> Supplier<TileEntityType<T>> tile(Supplier<T> creator, Supplier<? extends Block> supplier) {
     return () -> TileEntityType.Builder.create(creator, supplier.get()).build(null);
   }
 
-  public <T extends TileEntity> Supplier<TileEntityType<T>> tile (Supplier<T> creator, Supplier<? extends Block> ... supplier) {
+  public <T extends TileEntity> Supplier<TileEntityType<T>> tile(Supplier<T> creator, Supplier<? extends Block>... supplier) {
     return () -> TileEntityType.Builder.create(creator, Stream.of(supplier).map(Supplier::get).toArray(Block[]::new)).build(null);
   }
 
@@ -238,27 +238,27 @@ public class ModRegistry {
     return block(b -> new LogBlock(topColor, b), props);
   }
 
-  public Supplier<StoneButtonBlock> stoneButton (Supplier<? extends Block> source) {
+  public Supplier<StoneButtonBlock> stoneButton(Supplier<? extends Block> source) {
     return block(BaseStoneButtonBlock::new, fromBlock(source));
   }
 
-  public Supplier<WoodButtonBlock> woodButton (Supplier<? extends Block> source) {
+  public Supplier<WoodButtonBlock> woodButton(Supplier<? extends Block> source) {
     return block(BaseWoodButtonBlock::new, fromBlock(source));
   }
 
-  public Supplier<WeightedPressurePlateBlock> weightedPressurePlate (Supplier<? extends Block> source, int maxWeight) {
+  public Supplier<WeightedPressurePlateBlock> weightedPressurePlate(Supplier<? extends Block> source, int maxWeight) {
     return block(b -> new BaseWeightedPressurePlateBlock(maxWeight, b), fromBlock(source));
   }
 
-  public Supplier<PressurePlateBlock> pressurePlate (Supplier<? extends Block> source, PressurePlateBlock.Sensitivity sensitivity) {
+  public Supplier<PressurePlateBlock> pressurePlate(Supplier<? extends Block> source, PressurePlateBlock.Sensitivity sensitivity) {
     return block(b -> new BasePressurePlateBlock(sensitivity, b), fromBlock(source));
   }
 
-  public Supplier<TrapDoorBlock> trapDoor (Supplier<? extends Block> source) {
+  public Supplier<TrapDoorBlock> trapDoor(Supplier<? extends Block> source) {
     return block(BaseTrapDoorBlock::new, fromBlock(source));
   }
 
-  public Supplier<DoorBlock> door (Supplier<? extends Block> source) {
+  public Supplier<DoorBlock> door(Supplier<? extends Block> source) {
     return block(BaseDoorBlock::new, fromBlock(source));
   }
 

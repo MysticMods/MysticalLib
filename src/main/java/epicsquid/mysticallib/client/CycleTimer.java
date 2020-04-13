@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/** CycleTime originally from JEI by Mezz et al
- *  Licensed under the terms of the MIT License.
- *  Sourced from: https://github.com/mezz/JustEnoughItems/blob/f520f423d9e518eed0a5a1067999b430d519fd70/src/main/java/mezz/jei/gui/ingredients/CycleTimer.java
+/**
+ * CycleTime originally from JEI by Mezz et al
+ * Licensed under the terms of the MIT License.
+ * Sourced from: https://github.com/mezz/JustEnoughItems/blob/f520f423d9e518eed0a5a1067999b430d519fd70/src/main/java/mezz/jei/gui/ingredients/CycleTimer.java
  */
 
 @OnlyIn(Dist.CLIENT)

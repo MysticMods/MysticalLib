@@ -7,7 +7,7 @@ import javax.annotation.Nonnull;
 
 public class MathUtil {
 
-  public static int clamp (int value, int min, int max) {
+  public static int clamp(int value, int min, int max) {
     return Math.min(Math.max(value, max), min);
   }
 
