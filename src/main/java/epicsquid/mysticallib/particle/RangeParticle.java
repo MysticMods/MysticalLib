@@ -20,14 +20,14 @@ import javax.annotation.Nonnull;
 public class RangeParticle<T extends TileEntity & RenderUtil.IRanged> extends Particle {
 
   private static final int INIT_TIME = 20;
-  private static final int AGE_LIMIT = 20 * 20; // 60 seconds * 10; // 10 minutes
+  private static final int AGE_LIMIT = 20 * 20 * 5; // 60 seconds * 10; // 10 minutes
 
   private final T owner;
   private final Vec4f color;
   private int age = 0;
 
   public RangeParticle(T owner) {
-    this(owner, new Vec4f(0.78f, 0.54f, 0.19f, 0.4f));
+    this(owner, new Vec4f(0.019f, 0.40f, 0.0314f, 0.4f));
   }
 
   public RangeParticle(T owner, Vec4f color) {
