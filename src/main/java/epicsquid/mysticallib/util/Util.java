@@ -156,7 +156,7 @@ public class Util {
     }
 
     for (String string : lines) {
-      lore.add(StringNBT.valueOf(string));
+      lore.add(StringNBT.of(string));
     }
   }
 

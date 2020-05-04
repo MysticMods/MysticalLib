@@ -16,11 +16,8 @@ public class BaseTree extends Tree {
     this.config = config;
   }
 
-  /**
-   * Get a {@link net.minecraft.world.gen.feature.ConfiguredFeature} of tree
-   */
   @Nullable
-  protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean beeHive) {
-    return Feature.NORMAL_TREE.withConfiguration(config);
+  protected ConfiguredFeature<TreeFeatureConfig, ?> createTreeFeature(Random random, boolean beeHive) {
+    return Feature.NORMAL_TREE.configure(config);
   }
 }
