@@ -225,12 +225,20 @@ public class MaterialType {
     return this;
   }
 
+  public Block.Properties getBlockProps (Block.Properties props) {
+    return props.hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1);
+  }
+
   public Supplier<Block.Properties> getBlockProps() {
-    return () -> Block.Properties.create(Material.IRON).hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL).harvestTool(ToolType.PICKAXE).harvestLevel(1);
+    return () -> getBlockProps(Block.Properties.create(Material.IRON));
+  }
+
+  public Block.Properties getOreBlockProperties (Block.Properties props) {
+    return props.hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel() - 1);
   }
 
   public Supplier<Block.Properties> getOreBlockProperties() {
-    return () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(3.0f, 3.0f).harvestTool(ToolType.PICKAXE).harvestLevel(getHarvestLevel() - 1);
+    return () -> getOreBlockProperties(Block.Properties.create(Material.ROCK));
   }
 
   public int getHarvestLevel() {
