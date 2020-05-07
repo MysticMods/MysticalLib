@@ -2,6 +2,7 @@ package epicsquid.mysticallib.world;
 
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 import net.minecraft.world.gen.placement.CountRangeConfig;
@@ -11,21 +12,21 @@ import java.util.function.Supplier;
 
 public class OreProperties {
 
-  private Supplier<ConfiguredFeature<OreFeatureConfig, OreFeature>> oreFeature;
+  private Supplier<ConfiguredFeature<OreFeatureConfig, ?>> oreFeature;
   private CountRangeConfig countRange;
   private Predicate<Biome> match;
 
-  public OreProperties(Supplier<ConfiguredFeature<OreFeatureConfig, OreFeature>> oreFeature, CountRangeConfig countRange, Predicate<Biome> match) {
+  public OreProperties(Supplier<ConfiguredFeature<OreFeatureConfig, ?>> oreFeature, CountRangeConfig countRange, Predicate<Biome> match) {
     this.oreFeature = oreFeature;
     this.countRange = countRange;
     this.match = match;
   }
 
-  public OreProperties(Supplier<ConfiguredFeature<OreFeatureConfig, OreFeature>> oreFeature, CountRangeConfig countRange) {
+  public OreProperties(Supplier<ConfiguredFeature<OreFeatureConfig, ?>> oreFeature, CountRangeConfig countRange) {
     this(oreFeature, countRange, x -> true);
   }
 
-  public ConfiguredFeature<OreFeatureConfig, OreFeature> getOreFeature() {
+  public ConfiguredFeature<OreFeatureConfig, ?> getOreFeature() {
     return oreFeature.get();
   }
 
