@@ -5,18 +5,16 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationSettings;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class DimensionalOreFeature<FC extends IFeatureConfig, F extends Feature<FC>> extends ConfiguredFeature<FC, F> {
+public class DimensionalOreFeature extends ConfiguredFeature<OreFeatureConfig, OreFeature> {
 
   private DimensionType dimType;
 
-  public DimensionalOreFeature(ConfiguredFeature<FC, F> feature, DimensionType dimension) {
+  public DimensionalOreFeature(ConfiguredFeature<OreFeatureConfig, OreFeature> feature, DimensionType dimension) {
     super(feature.feature, feature.config);
     this.dimType = dimension;
   }
