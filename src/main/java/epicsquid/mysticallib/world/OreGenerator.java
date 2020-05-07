@@ -14,7 +14,7 @@ public class OreGenerator {
 
   public void init() {
     for (Biome biome : ForgeRegistries.BIOMES) {
-      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.configure(oreProperties.getOreFeature()));
+      biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, oreProperties.getOreFeature());
     }
   }
 }
