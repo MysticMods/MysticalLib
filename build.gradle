@@ -136,9 +136,6 @@ publishing {
             version project.version
             from components.java
 
-            artifact jar {
-            }
-
             pom.withXml {
                 asNode().dependencies.dependency.each {
                     dep -> dep.parent().remove(dep)
