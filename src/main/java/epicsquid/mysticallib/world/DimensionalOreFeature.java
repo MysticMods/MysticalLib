@@ -10,11 +10,11 @@ import net.minecraft.world.gen.feature.*;
 import javax.annotation.Nonnull;
 import java.util.Random;
 
-public class DimensionalOreFeature extends ConfiguredFeature<OreFeatureConfig, OreFeature> {
+public class DimensionalOreFeature extends ConfiguredFeature<OreFeatureConfig, Feature<OreFeatureConfig>> {
 
   private DimensionType dimType;
 
-  public DimensionalOreFeature(ConfiguredFeature<OreFeatureConfig, OreFeature> feature, DimensionType dimension) {
+  public DimensionalOreFeature(ConfiguredFeature<OreFeatureConfig, ?> feature, DimensionType dimension) {
     super(feature.feature, feature.config);
     this.dimType = dimension;
   }
