@@ -99,15 +99,13 @@ public class LibRegistry {
   public static void registerEntity(Class<? extends Entity> entity, int eggColor1, int eggColor2) {
     String[] nameParts = entity.getTypeName().split("\\.");
     String className = nameParts[nameParts.length - 1];
-    EntityRegistry.registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++,
-        MysticalLib.INSTANCE, 64, 1, true, eggColor1, eggColor2);
+    EntityRegistry.registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++, MysticalLib.INSTANCE, 64, 1, true, eggColor1, eggColor2);
   }
 
   public static void registerEntity(Class<? extends Entity> entity) {
     String[] nameParts = entity.getTypeName().split("\\.");
     String className = nameParts[nameParts.length - 1];
-    EntityRegistry.registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++,
-        MysticalLib.INSTANCE, 64, 1, true);
+    EntityRegistry.registerModEntity(new ResourceLocation(activeModid + ":" + Util.lowercase(className)), entity, Util.lowercase(className), entityId++, MysticalLib.INSTANCE, 64, 1, true);
   }
 
   /**
