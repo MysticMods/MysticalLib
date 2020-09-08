@@ -29,6 +29,10 @@ public class Util {
 
   public static Random rand = new Random();
 
+  public static int floatChance (float chance) {
+    return ((int) chance) + ((rand.nextFloat() < (chance % 1)) ? 1 : 0);
+  }
+
   public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class<? extends T> classEntity, BlockPos pos, float xradius, float yradius,
       float zradius) {
     return world.getEntitiesWithinAABB(classEntity,
