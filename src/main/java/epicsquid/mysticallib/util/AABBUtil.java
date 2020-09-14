@@ -33,4 +33,8 @@ public class AABBUtil {
   public static Iterable<BlockPos> unique (AxisAlignedBB box) {
    return BlockPos.getAllInBox((int) box.maxX, (int) box.maxY, (int) box.maxZ, (int) box.minX, (int) box.minY, (int) box.minZ);
   }
+
+  public static Iterable<BlockPos.MutableBlockPos> uniqueMutable (AxisAlignedBB box) {
+   return BlockPos.getAllInBoxMutable((int) box.maxX, (int) box.maxY, (int) box.maxZ, (int) box.minX, (int) box.minY, (int) box.minZ);
+  }
 }

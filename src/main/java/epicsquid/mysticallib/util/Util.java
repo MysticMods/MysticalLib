@@ -1,14 +1,12 @@
 package epicsquid.mysticallib.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -47,7 +45,11 @@ public class Util {
   }
 
   public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Block... block) {
-    List<Block> blocks = Arrays.asList(block);
+    Set<Block> blocks = Sets.newHashSet(block);
+    return getBlocksWithinRadius(world, pos, xradius, yradius, zradius, blocks);
+  }
+
+  public static List<BlockPos> getBlocksWithinRadius(World world, BlockPos pos, float xradius, float yradius, float zradius, Set<Block> blocks) {
     return getBlocksWithinRadius(world, pos, xradius, yradius, zradius, (test) -> blocks.contains(world.getBlockState(test).getBlock()));
   }
 

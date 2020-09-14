@@ -1,28 +1,25 @@
 package epicsquid.mysticallib.util;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
+import com.google.common.base.Predicates;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class RayCastUtil {
 
   @Nullable
-  public static RayTraceResult rayTraceBlocks(@Nonnull World world, @Nonnull Vec3d vec31, @Nonnull Vec3d vec32, boolean stopOnLiquid,
-      boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock, boolean allowNonfullCube) {
+  public static RayTraceResult rayTraceBlocks(@Nonnull World world, @Nonnull Vec3d vec31, @Nonnull Vec3d vec32, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock, boolean allowNonfullCube) {
     if (!Double.isNaN(vec31.x) && !Double.isNaN(vec31.y) && !Double.isNaN(vec31.z)) {
       if (!Double.isNaN(vec32.x) && !Double.isNaN(vec32.y) && !Double.isNaN(vec32.z)) {
         int i = MathHelper.floor(vec32.x);
@@ -157,6 +154,119 @@ public class RayCastUtil {
       }
     } else {
       return null;
+    }
+  }
+
+  @Nullable
+  public static Entity mouseOverEntity (EntityLivingBase entity) {
+    return mouseOverEntity(entity, 3.0);
+  }
+
+  @Nullable
+  public static Entity mouseOverEntity (EntityLivingBase entity, double maxReach) {
+    RayTraceAndEntityResult result = rayTraceMouseOver(entity, maxReach);
+    return result.getPointedEntity();
+  }
+
+  public static RayTraceAndEntityResult rayTraceMouseOver(EntityLivingBase traceEntity) {
+    return rayTraceMouseOver(traceEntity, 3.0d);
+  }
+
+  public static RayTraceAndEntityResult rayTraceMouseOver(EntityLivingBase traceEntity, double maxEntity) {
+    World world = traceEntity.world;
+    Entity pointedEntity = null;
+    RayTraceResult objectMouseOver;
+    boolean player = traceEntity instanceof EntityPlayer;
+    Vec3d eyePos = traceEntity.getPositionEyes(1);
+    Vec3d lookVec = traceEntity.getLook(1.0F);
+    double reach = player ? traceEntity.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue() : 5;
+    Vec3d modifiedLookVec = eyePos.add(lookVec.x * reach, lookVec.y * reach, lookVec.z * reach);
+    objectMouseOver = world.rayTraceBlocks(eyePos, modifiedLookVec, false, false, true);
+    boolean flag = false;
+    double distance = reach;
+
+    if (player && ((EntityPlayer) traceEntity).isCreative()) {
+      distance = 6.0D;
+    } else {
+      if (reach > maxEntity) {
+        flag = true;
+      }
+    }
+
+    if (objectMouseOver != null) {
+      distance = objectMouseOver.hitVec.distanceTo(eyePos);
+    }
+
+    Vec3d hitVec = null;
+    @SuppressWarnings("Guava") List<Entity> list = world.getEntitiesInAABBexcluding(traceEntity, traceEntity.getEntityBoundingBox().expand(modifiedLookVec.x, modifiedLookVec.y, modifiedLookVec.z).grow(1.0D, 1.0D, 1.0D), Predicates.and(EntitySelectors.NOT_SPECTATING, e -> e != null && e.canBeCollidedWith()));
+    double distance2 = distance;
+
+    for (Entity entity : list) {
+      AxisAlignedBB axisalignedbb = entity.getEntityBoundingBox().grow((double) entity.getCollisionBorderSize());
+      RayTraceResult raytraceresult = axisalignedbb.calculateIntercept(eyePos, modifiedLookVec);
+
+      if (axisalignedbb.contains(eyePos)) {
+        if (distance2 >= 0.0D) {
+          pointedEntity = entity;
+          hitVec = raytraceresult == null ? eyePos : raytraceresult.hitVec;
+          distance2 = 0.0D;
+        }
+      } else if (raytraceresult != null) {
+        double d3 = eyePos.distanceTo(raytraceresult.hitVec);
+
+        if (d3 < distance2 || distance2 == 0.0D) {
+          if (entity.getLowestRidingEntity() == traceEntity.getLowestRidingEntity() && !entity.canRiderInteract()) {
+            if (distance2 == 0.0D) {
+              pointedEntity = entity;
+              hitVec = raytraceresult.hitVec;
+            }
+          } else {
+            pointedEntity = entity;
+            hitVec = raytraceresult.hitVec;
+            distance2 = d3;
+          }
+        }
+      }
+    }
+
+    if (pointedEntity != null && flag && eyePos.distanceTo(hitVec) > maxEntity) {
+      pointedEntity = null;
+      //noinspection ConstantConditions
+      objectMouseOver = new RayTraceResult(RayTraceResult.Type.MISS, hitVec, null, new BlockPos(hitVec));
+    }
+
+    if (pointedEntity != null && (distance2 < distance || objectMouseOver == null)) {
+      objectMouseOver = new RayTraceResult(pointedEntity, hitVec);
+    }
+
+    return new RayTraceAndEntityResult(objectMouseOver, pointedEntity);
+  }
+
+  public static class RayTraceAndEntityResult {
+    private RayTraceResult result;
+    private Entity pointedEntity;
+
+    public RayTraceAndEntityResult(RayTraceResult result, Entity pointedEntity) {
+      this.result = result;
+      this.pointedEntity = pointedEntity;
+    }
+
+    @Nullable
+    public RayTraceResult getResult() {
+      return result;
+    }
+
+    @Nullable
+    public void setResult(RayTraceResult result) {
+      this.result = result;
+    }
+
+    public Entity getPointedEntity() {
+      return pointedEntity;
+    }
+
+    public void setPointedEntity(Entity pointedEntity) {
+      this.pointedEntity = pointedEntity;
     }
   }
 }
