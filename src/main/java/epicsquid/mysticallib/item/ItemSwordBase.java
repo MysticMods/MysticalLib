@@ -5,22 +5,28 @@ import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+
+import java.util.function.Supplier;
 
 public class ItemSwordBase extends ItemSword implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
+  protected Supplier<Ingredient> repairIngredient;
 
-  public ItemSwordBase(ToolMaterial material, String name, int maxDamage) {
+  public ItemSwordBase(ToolMaterial material, String name, int maxDamage, Supplier<Ingredient> repairIngredient) {
     super(material);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setMaxDamage(maxDamage);
+    this.repairIngredient = repairIngredient;
   }
 
   public ItemSwordBase setModelCustom(boolean custom) {
@@ -49,5 +55,10 @@ public class ItemSwordBase extends ItemSword implements IModeledObject, ICustomM
   @Override
   public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
     return !ItemUtil.equalWithoutDamage(oldStack, newStack);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    return repairIngredient.get().test(repair);
   }
 }

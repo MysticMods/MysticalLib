@@ -1,20 +1,23 @@
 package epicsquid.mysticallib.item.tool;
 
 import epicsquid.mysticallib.item.ItemToolBase;
+import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.BreakUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 public abstract class ItemSizedTool extends ItemToolBase implements IEffectiveTool {
-  public ItemSizedTool(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn, Set<Block> effectiveBlocks) {
-    super(name, attackDamageIn, attackSpeedIn, materialIn, effectiveBlocks);
+  public ItemSizedTool(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn, Set<Block> effectiveBlocks, Supplier<Ingredient> repair) {
+    super(name, attackDamageIn, attackSpeedIn, materialIn, effectiveBlocks, repair);
   }
 
   @Override

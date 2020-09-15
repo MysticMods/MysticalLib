@@ -5,23 +5,29 @@ import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+
+import java.util.function.Supplier;
 
 public class ItemPickaxeBase extends ItemPickaxe implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
+  protected Supplier<Ingredient> repairIngredient;
 
-  public ItemPickaxeBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
+  public ItemPickaxeBase(ToolMaterial material, String name, int toolLevel, int maxDamage, Supplier<Ingredient> repairIngredient) {
     super(material);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
     setHarvestLevel("pickaxe", toolLevel);
     setMaxDamage(maxDamage);
+    this.repairIngredient = repairIngredient;
   }
 
   public ItemPickaxeBase setModelCustom(boolean custom) {
@@ -50,5 +56,10 @@ public class ItemPickaxeBase extends ItemPickaxe implements IModeledObject, ICus
   @Override
   public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
     return !ItemUtil.equalWithoutDamage(oldStack, newStack);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    return repairIngredient.get().test(repair);
   }
 }

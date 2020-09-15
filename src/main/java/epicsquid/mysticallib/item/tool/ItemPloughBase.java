@@ -2,6 +2,7 @@ package epicsquid.mysticallib.item.tool;
 
 import com.google.common.collect.Sets;
 import epicsquid.mysticallib.item.ItemHoeBase;
+import epicsquid.mysticallib.types.OneTimeSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFarmland;
@@ -11,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -19,12 +21,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 public class ItemPloughBase extends ItemHoeBase implements IEffectiveTool, ILimitAxis {
   public static Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.GRASS, Blocks.GRASS_PATH, Blocks.DIRT, Blocks.FARMLAND);
 
-  public ItemPloughBase(ToolMaterial material, String name, int toolLevel, int maxDamage) {
-    super(material, name, toolLevel, maxDamage);
+  public ItemPloughBase(ToolMaterial material, String name, int toolLevel, int maxDamage, Supplier<Ingredient> repair) {
+    super(material, name, toolLevel, maxDamage, repair);
     setHarvestLevel("shovel", material.getHarvestLevel());
   }
 

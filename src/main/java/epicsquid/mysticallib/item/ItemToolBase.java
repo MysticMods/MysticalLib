@@ -1,28 +1,33 @@
 package epicsquid.mysticallib.item;
 
 import java.util.Set;
+import java.util.function.Supplier;
 
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
+import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 
 public class ItemToolBase extends ItemTool implements IModeledObject, ICustomModeledObject {
 
   private boolean hasCustomModel = false;
+  protected Supplier<Ingredient> repairIngredient;
 
-  protected ItemToolBase(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn, Set<Block> effectiveBlocksIn) {
+  protected ItemToolBase(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn, Set<Block> effectiveBlocksIn, Supplier<Ingredient> repairIngredient) {
     super(attackDamageIn, attackSpeedIn, materialIn, effectiveBlocksIn);
     setTranslationKey(name);
     setRegistryName(LibRegistry.getActiveModid(), name);
+    this.repairIngredient = repairIngredient;
   }
 
   public ItemToolBase setModelCustom(boolean custom) {
@@ -55,5 +60,10 @@ public class ItemToolBase extends ItemTool implements IModeledObject, ICustomMod
   @Override
   public boolean shouldCauseBlockBreakReset(ItemStack oldStack, ItemStack newStack) {
     return !ItemUtil.equalWithoutDamage(oldStack, newStack);
+  }
+
+  @Override
+  public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
+    return repairIngredient.get().test(repair);
   }
 }
