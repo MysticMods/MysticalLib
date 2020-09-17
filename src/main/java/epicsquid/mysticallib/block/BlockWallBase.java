@@ -40,7 +40,7 @@ public class BlockWallBase extends BlockWall implements IBlock, IModeledObject, 
   protected boolean hasCustomModel = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   protected Block parent;
-  public String name = "";
+  public String name;
 
   public BlockWallBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base);

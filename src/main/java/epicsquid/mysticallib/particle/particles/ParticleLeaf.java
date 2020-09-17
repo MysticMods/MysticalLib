@@ -5,13 +5,13 @@ import epicsquid.mysticallib.util.Util;
 import net.minecraft.world.World;
 
 public class ParticleLeaf extends ParticleBase {
-  public float colorR = 0;
-  public float colorG = 0;
-  public float colorB = 0;
-  public float initScale = 0;
-  public float initAlpha = 0;
-  public float angularVelocity = 0;
-  public boolean additive = false;
+  public float colorR;
+  public float colorG;
+  public float colorB;
+  public float initScale;
+  public float initAlpha;
+  public float angularVelocity;
+  public boolean additive;
 
   public ParticleLeaf(World world, double x, double y, double z, double vx, double vy, double vz, double[] data) {
     super(world, x, y, z, vx, vy, vz, data);

@@ -42,7 +42,7 @@ public class BlockLeavesBase extends BlockLeaves implements IBlock, IModeledObje
   private boolean hasItems = true;
   private boolean noCull = true;
   private boolean isFlammable = false;
-  private Supplier<ItemStack> sapling = null;
+  private Supplier<ItemStack> sapling;
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private int saplingChance;
   public @Nonnull

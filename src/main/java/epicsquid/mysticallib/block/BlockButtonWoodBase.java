@@ -33,7 +33,7 @@ public class BlockButtonWoodBase extends BlockButtonWood implements IBlock, IMod
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Block parent;
-  public String name = "";
+  public String name;
 
   public BlockButtonWoodBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super();

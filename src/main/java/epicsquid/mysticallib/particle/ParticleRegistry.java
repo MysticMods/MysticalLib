@@ -12,8 +12,6 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 
 public class ParticleRegistry {
-  public static EnumParticleTypes RAIN = null;
-
   public static Map<Class<? extends ParticleBase>, List<ResourceLocation>> particleMultiTextures = new HashMap<>();
 
   private static Map<Class<? extends ParticleBase>, Constructor<? extends ParticleBase>> particles = new HashMap<>();

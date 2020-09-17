@@ -40,7 +40,7 @@ public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeled
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Block parent;
-  public String name = "";
+  public String name;
 
   public BlockTrapDoorBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base.getDefaultState().getMaterial());

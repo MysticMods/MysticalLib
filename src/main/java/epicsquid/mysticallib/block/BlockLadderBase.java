@@ -27,7 +27,7 @@ public class BlockLadderBase extends BlockLadder implements IBlock, IModeledObje
   private boolean hasCustomModel = false;
   private boolean isFlammable = false;
   private Block parent;
-  public String name = "";
+  public String name;
 
   public BlockLadderBase(@Nonnull Block base, float hardness, @Nonnull String name) {
     super();

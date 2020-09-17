@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenBase implements IWorldGenerator {
 
-  public float spawnChance = 0f;
+  public float spawnChance;
   public Set<Block> spawnable = new HashSet<>();
 
   public WorldGenBase(float chance) {

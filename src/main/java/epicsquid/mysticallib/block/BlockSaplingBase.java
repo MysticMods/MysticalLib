@@ -45,7 +45,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   // By default the blocks are made of wood and therefore flammable
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
-  private Supplier<WorldGenAbstractTree> treeGenerator = null;
+  private Supplier<WorldGenAbstractTree> treeGenerator;
   public @Nonnull String name;
 
   public BlockSaplingBase(@Nonnull String name, Supplier<WorldGenAbstractTree> treeGenerator) {

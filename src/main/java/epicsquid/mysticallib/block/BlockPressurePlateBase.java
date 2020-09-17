@@ -44,7 +44,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Block parent;
-  public String name = "";
+  public String name;
 
   private final PressurePlateType plateType;
 

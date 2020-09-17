@@ -36,7 +36,7 @@ public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObje
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   private IBlockState parent;
-  public String name = "";
+  public String name;
 
   public BlockStairsBase(@Nonnull IBlockState base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base);

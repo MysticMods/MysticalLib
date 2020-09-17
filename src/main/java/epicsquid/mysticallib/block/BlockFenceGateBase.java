@@ -36,7 +36,7 @@ public class BlockFenceGateBase extends BlockFenceGate implements IBlock, IModel
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
   private Block parent;
-  public String name = "";
+  public String name;
 
   public BlockFenceGateBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(BlockPlanks.EnumType.OAK);

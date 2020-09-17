@@ -33,7 +33,7 @@ public class BlockButtonStoneBase extends BlockButtonStone implements IBlock, IM
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Block parent;
-  public String name = "";
+  public String name;
 
   public BlockButtonStoneBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super();

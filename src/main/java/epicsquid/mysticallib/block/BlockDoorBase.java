@@ -43,7 +43,7 @@ public class BlockDoorBase extends BlockDoor implements IBlock, IModeledObject, 
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Block parent;
-  public String name = "";
+  public String name;
 
   public BlockDoorBase(@Nonnull Block base, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(base.getDefaultState().getMaterial());

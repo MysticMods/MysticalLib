@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterModRecipesEvent extends Event {
-  IForgeRegistry<IRecipe> registry = null;
+  IForgeRegistry<IRecipe> registry;
 
   public RegisterModRecipesEvent(IForgeRegistry<IRecipe> registry) {
     this.registry = registry;

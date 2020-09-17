@@ -39,7 +39,7 @@ public class BlockCornerBase extends BlockBase {
   public static final PropertyInteger DIR = PropertyInteger.create("dir", 0, 3); //NXNZ -> PXNZ -> PXPZ -> NXPZ corner
   public static final PropertyBool INNER = PropertyBool.create("inner");
 
-  public boolean inner = false;
+  public boolean inner;
   protected @Nullable IBlockState parent = null;
 
   public BlockCornerBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, boolean inner) {
