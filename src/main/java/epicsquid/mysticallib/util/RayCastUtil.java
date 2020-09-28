@@ -19,6 +19,30 @@ import java.util.List;
 public class RayCastUtil {
 
   @Nullable
+  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale) {
+    return rayTraceBlocksSight(world, entity, scale, false);
+  }
+
+  @Nullable
+  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid) {
+    return rayTraceBlocksSight(world, entity, scale, fluid, false);
+  }
+
+  @Nullable
+  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid, boolean bounding) {
+    return rayTraceBlocksSight(world, entity, scale, fluid, bounding, false);
+  }
+
+  @Nullable
+  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid, boolean bounding, boolean lastBlock) {
+    Vec3d position = entity.getPositionVector();
+    float eyeHeight = entity.getEyeHeight();
+    Vec3d vec1 = position.add(0, eyeHeight, 0);
+    Vec3d vec2 = entity.getLookVec().scale(scale).add(vec1);
+    return world.rayTraceBlocks(vec1, vec2, fluid, bounding, lastBlock);
+  }
+
+  @Nullable
   public static RayTraceResult rayTraceBlocks(@Nonnull World world, @Nonnull Vec3d vec31, @Nonnull Vec3d vec32, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock, boolean allowNonfullCube) {
     if (!Double.isNaN(vec31.x) && !Double.isNaN(vec31.y) && !Double.isNaN(vec31.z)) {
       if (!Double.isNaN(vec32.x) && !Double.isNaN(vec32.y) && !Double.isNaN(vec32.z)) {
