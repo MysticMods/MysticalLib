@@ -14,10 +14,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class RayCastUtil {
 
@@ -301,7 +298,7 @@ public class RayCastUtil {
     return rayTraceEntities(clazz, traceTarget, distance, 0.1);
   }
 
-  public static <T extends Entity> List<T> rayTraceEntities (Class<T> clazz, Entity traceTarget, double distance, double width) {
+  public static List<Vec3d> rayTraceEntitiesPositions (Entity traceTarget, double distance) {
     float eyes = traceTarget.getEyeHeight();
     Vec3d pos = traceTarget.getPositionVector();
     Vec3d posEyes = pos.add(0, eyes, 0);
@@ -317,10 +314,17 @@ public class RayCastUtil {
     } else {
       stopPosition = result.hitVec;
     }
+    return Arrays.asList(startPosition, stopPosition);
+  }
+
+  public static <T extends Entity> List<T> rayTraceEntities (Class<T> clazz, Entity traceTarget, double distance, double width) {
+    List<Vec3d> positions = rayTraceEntitiesPositions(traceTarget, distance);
+    Vec3d startPosition = positions.get(0);
+    Vec3d stopPosition = positions.get(1);
     Set<T> entities = new HashSet<>();
-    double bx = Math.abs(stopPosition.x - startPosition.x * width);
-    double by = Math.abs(stopPosition.y - startPosition.y * width);
-    double bz = Math.abs(stopPosition.z - startPosition.z * width);
+    double bx = Math.abs(stopPosition.x - startPosition.x) * width;
+    double by = Math.abs(stopPosition.y - startPosition.y) * width;
+    double bz = Math.abs(stopPosition.z - startPosition.z) * width;
     for (float i = 0; i < 1; i += 0.1f) {
       double x = startPosition.x * (1.0f - i) + stopPosition.x * i;
       double y = startPosition.y * (1.0f - i) + stopPosition.y * i;
