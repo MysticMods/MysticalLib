@@ -14,7 +14,10 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RayCastUtil {
 
@@ -292,5 +295,40 @@ public class RayCastUtil {
     public void setPointedEntity(Entity pointedEntity) {
       this.pointedEntity = pointedEntity;
     }
+  }
+
+  public static <T extends Entity> List<T> rayTraceEntities (Class<T> clazz, Entity traceTarget, double distance) {
+    return rayTraceEntities(clazz, traceTarget, distance, 0.1);
+  }
+
+  public static <T extends Entity> List<T> rayTraceEntities (Class<T> clazz, Entity traceTarget, double distance, double width) {
+    float eyes = traceTarget.getEyeHeight();
+    Vec3d pos = traceTarget.getPositionVector();
+    Vec3d posEyes = pos.add(0, eyes, 0);
+    Vec3d lookVec = traceTarget.getLookVec();
+    double yaw = Math.toRadians(-90 - traceTarget.rotationYaw);
+    double offX = 0.5 * Math.sin(yaw);
+    double offZ = 0.5 * Math.cos(yaw);
+    Vec3d startPosition = new Vec3d(traceTarget.posX + offX, traceTarget.posY + eyes, traceTarget.posZ + offZ);
+    RayTraceResult result = traceTarget.world.rayTraceBlocks(posEyes, posEyes.add(lookVec.scale(distance)), false, true, true);
+    Vec3d stopPosition;
+    if (result == null) {
+      stopPosition = posEyes.add(lookVec.scale(distance));
+    } else {
+      stopPosition = result.hitVec;
+    }
+    Set<T> entities = new HashSet<>();
+    double bx = Math.abs(stopPosition.x - startPosition.x * width);
+    double by = Math.abs(stopPosition.y - startPosition.y * width);
+    double bz = Math.abs(stopPosition.z - startPosition.z * width);
+    for (float i = 0; i < 1; i += 0.1f) {
+      double x = startPosition.x * (1.0f - i) + stopPosition.x * i;
+      double y = startPosition.y * (1.0f - i) + stopPosition.y * i;
+      double z = startPosition.z * (1.0f - i) + stopPosition.z * i;
+      entities.addAll(traceTarget.world.getEntitiesWithinAABB(clazz, new AxisAlignedBB(x - bx, y - by, z - bz, x + bx, y + by, z + bz), o -> o != traceTarget));
+    }
+    List<T> res = new ArrayList<>(entities);
+    res.sort((o1, o2) -> Float.compare(o1.getDistance(traceTarget), o2.getDistance(traceTarget)));
+    return res;
   }
 }
