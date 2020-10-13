@@ -34,13 +34,12 @@ public class Util {
   public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class<? extends T> classEntity, BlockPos pos, float xradius, float yradius,
       float zradius) {
     return world.getEntitiesWithinAABB(classEntity,
-        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius));
+        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + 1 + + xradius, pos.getY() + 1 + yradius, pos.getZ() + 1 + zradius));
   }
 
-  public static List<EntityLiving> getEntitiesWithinRadius(World world, Predicate<Entity> comparison, BlockPos pos, float xradius, float yradius,
-      float zradius) {
+  public static List<EntityLiving> getEntitiesWithinRadius(World world, Predicate<Entity> comparison, BlockPos pos, float xradius, float yradius, float zradius) {
     return world.getEntitiesWithinAABB(EntityLiving.class,
-        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + xradius, pos.getY() + yradius, pos.getZ() + zradius))
+        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + 1 + xradius, pos.getY() + 1 + yradius, pos.getZ() + 1 + zradius))
         .stream().filter(comparison).collect(Collectors.toList());
   }
 
@@ -71,16 +70,25 @@ public class Util {
     return blockList;
   }
 
+  public static BlockPos getRandomWithinRadius (BlockPos pos, int xradius, int yradius, int zradius) {
+    int x = pos.getX() - xradius + Util.rand.nextInt(xradius*2+1);
+    int y = pos.getY() - yradius + Util.rand.nextInt(yradius*2+1);
+    int z = pos.getZ() - zradius + Util.rand.nextInt(zradius*2+1);
+    return new BlockPos(x, y, z);
+  }
+
+
   public static List<BlockPos> getPositionsWithinCircle(BlockPos center, int r) {
     List<BlockPos> positions = new ArrayList<>();
     int x = center.getX();
     int z = center.getZ();
     int y = center.getY();
+    int r2 = r * r;
     for (int i = z - r; i < z + r; i++) {
-      for (int j = x; (Math.pow((j-x),2) + Math.pow((i- z),2)) <= Math.pow(r, 2); j--) {
+      for (int j = x; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j--) {
         positions.add(new BlockPos(j, y, i));
       }
-      for (int j = x+1; ((j-x)*(j-x) + (i- z)*(i- z)) <= r*r; j++) {
+      for (int j = x+1; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j++) {
         positions.add(new BlockPos(j, y, i));
       }
     }
@@ -102,14 +110,15 @@ public class Util {
     int z = center.getZ();
     int y = center.getY();
     BlockPos pos;
+    int r2 = r * r;
     for (int i = z - r; i < z + r; i++) {
-      for (int j = x; (Math.pow((j-x),2) + Math.pow((i- z),2)) <= Math.pow(r, 2); j--) {
+      for (int j = x; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j--) {
         pos = new BlockPos(j, y, i);
         if (predicate.test(pos)) {
           positions.add(pos);
         }
       }
-      for (int j = x+1; ((j-x)*(j-x) + (i- z)*(i- z)) <= r*r; j++) {
+      for (int j = x+1; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j++) {
         pos = new BlockPos(j, y, i);
         if (predicate.test(pos)) {
           positions.add(pos);

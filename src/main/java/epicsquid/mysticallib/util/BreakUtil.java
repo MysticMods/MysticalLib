@@ -28,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 // Concept based partially on ToolFunctions.java by astradamus from MIT Licensed Practical Tools
@@ -125,7 +124,7 @@ public class BreakUtil {
     return result;
   }
 
-  public static boolean harvestBlock (World world, BlockPos pos, EntityPlayer player) {
+  public static boolean harvestBlock(World world, BlockPos pos, EntityPlayer player) {
     if (world.isAirBlock(pos)) {
       return false;
     }
