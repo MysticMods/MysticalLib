@@ -1,36 +1,28 @@
 package epicsquid.mysticallib.item.tool;
 
-import epicsquid.mysticallib.item.ItemToolBase;
-import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.BreakUtil;
-import net.minecraft.block.Block;
+import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Set;
-import java.util.function.Supplier;
 
-public abstract class ItemSizedTool extends ItemToolBase implements IEffectiveTool {
-  public ItemSizedTool(String name, float attackDamageIn, float attackSpeedIn, ToolMaterial materialIn, Set<Block> effectiveBlocks, Supplier<Ingredient> repair) {
-    super(name, attackDamageIn, attackSpeedIn, materialIn, effectiveBlocks, repair);
-  }
+public interface IItemSizedTool extends IEffectiveTool {
+  float getEfficiency();
 
-  @Override
-  public float getDestroySpeed(ItemStack stack, IBlockState state) {
+  default float getSizedDestroySpeed(ItemStack stack, IBlockState state) {
     Material material = state.getMaterial();
     if (getEffectiveMaterials().contains(material)) {
-      return this.efficiency;
+      return this.getEfficiency();
     }
-    return super.getDestroySpeed(stack, state);
+    return -999;
   }
 
-  @Override
-  public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+  default boolean onSizedBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
     final Set<BlockPos> breakableBlocks = BreakUtil.nearbyBlocks(itemstack, pos, player);
     if (breakableBlocks.isEmpty()) {
       maybeDamage(itemstack, 1, player);
@@ -44,14 +36,14 @@ public abstract class ItemSizedTool extends ItemToolBase implements IEffectiveTo
         }
       }
       if (count > 0) {
-        final int dam = Math.max(3, itemRand.nextInt(Math.max(1, count - 3)));
+        final int dam = Math.max(3, Util.rand.nextInt(Math.max(1, count - 3)));
         maybeDamage(itemstack, dam, player);
       }
       return false;
     }
   }
 
-  private void maybeDamage(ItemStack stack, int amount, EntityPlayer player) {
+  default void maybeDamage(ItemStack stack, int amount, EntityPlayer player) {
     if (!player.isCreative()) {
       stack.damageItem(amount, player);
     }

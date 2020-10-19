@@ -21,12 +21,11 @@ import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class ItemExcavatorBase extends ItemSizedTool {
-  private static final Set<Block> EFFECTIVE_ON = Sets.newHashSet(Blocks.CLAY, Blocks.DIRT, Blocks.FARMLAND, Blocks.GRASS, Blocks.GRAVEL, Blocks.MYCELIUM, Blocks.SAND, Blocks.SNOW, Blocks.SNOW_LAYER, Blocks.SOUL_SAND, Blocks.GRASS_PATH, Blocks.CONCRETE_POWDER);
+public class ItemExcavatorBase extends ItemShovelBase implements IItemSizedTool {
   private static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(Material.CLAY, Material.SAND, Material.SNOW, Material.GROUND);
 
   public ItemExcavatorBase(String name, int maxDamage, ToolMaterial materialIn, Supplier<Ingredient> repair) {
-    super(name, 13, -3f, materialIn, EFFECTIVE_ON, repair);
+    super(materialIn, name, materialIn.getHarvestLevel(), maxDamage, repair);
     setMaxDamage(maxDamage);
     setHarvestLevel("shovel", materialIn.getHarvestLevel());
   }
@@ -39,5 +38,24 @@ public class ItemExcavatorBase extends ItemSizedTool {
   @Override
   public int getWidth(ItemStack stack) {
     return 3;
+  }
+
+  @Override
+  public float getEfficiency() {
+    return efficiency;
+  }
+
+  @Override
+  public float getDestroySpeed(ItemStack stack, IBlockState state) {
+    float destroy = getSizedDestroySpeed(stack, state);
+    if (destroy != -999) {
+      return destroy;
+    }
+    return super.getDestroySpeed(stack, state);
+  }
+
+  @Override
+  public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+    return onSizedBlockStartBreak(itemstack, pos, player);
   }
 }
