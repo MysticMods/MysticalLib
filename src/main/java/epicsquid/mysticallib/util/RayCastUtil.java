@@ -19,22 +19,22 @@ import java.util.*;
 public class RayCastUtil {
 
   @Nullable
-  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale) {
+  public static RayTraceResult rayTraceBlocksSight(@Nonnull World world, @Nonnull Entity entity, float scale) {
     return rayTraceBlocksSight(world, entity, scale, false);
   }
 
   @Nullable
-  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid) {
+  public static RayTraceResult rayTraceBlocksSight(@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid) {
     return rayTraceBlocksSight(world, entity, scale, fluid, false);
   }
 
   @Nullable
-  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid, boolean bounding) {
+  public static RayTraceResult rayTraceBlocksSight(@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid, boolean bounding) {
     return rayTraceBlocksSight(world, entity, scale, fluid, bounding, false);
   }
 
   @Nullable
-  public static RayTraceResult rayTraceBlocksSight (@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid, boolean bounding, boolean lastBlock) {
+  public static RayTraceResult rayTraceBlocksSight(@Nonnull World world, @Nonnull Entity entity, float scale, boolean fluid, boolean bounding, boolean lastBlock) {
     Vec3d position = entity.getPositionVector();
     float eyeHeight = entity.getEyeHeight();
     Vec3d vec1 = position.add(0, eyeHeight, 0);
@@ -56,8 +56,7 @@ public class RayCastUtil {
         IBlockState iblockstate = world.getBlockState(blockpos);
         Block block = iblockstate.getBlock();
 
-        if ((iblockstate.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) && (iblockstate.isFullCube() || allowNonfullCube) && block
-            .canCollideCheck(iblockstate, stopOnLiquid)) {
+        if (((!ignoreBlockWithoutBoundingBox || iblockstate.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB)) && block.canCollideCheck(iblockstate, stopOnLiquid) || (!block.isAir(iblockstate, world, blockpos) && !block.canCollideCheck(iblockstate, stopOnLiquid) && allowNonfullCube)) {
           RayTraceResult raytraceresult = iblockstate.collisionRayTrace(world, blockpos, vec31, vec32);
 
           if (raytraceresult != null) {
@@ -158,9 +157,8 @@ public class RayCastUtil {
           blockpos = new BlockPos(l, i1, j1);
           IBlockState iblockstate1 = world.getBlockState(blockpos);
           Block block1 = iblockstate1.getBlock();
-
-          if (iblockstate1.getMaterial() == Material.PORTAL || iblockstate1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB) {
-            if (block1.canCollideCheck(iblockstate1, stopOnLiquid) && (iblockstate.isFullCube() || allowNonfullCube)) {
+          if (!ignoreBlockWithoutBoundingBox || iblockstate1.getMaterial() == Material.PORTAL || iblockstate1.getCollisionBoundingBox(world, blockpos) != Block.NULL_AABB || block.canCollideCheck(iblockstate, stopOnLiquid) && (!block.isAir(iblockstate, world, blockpos) && !block.canCollideCheck(iblockstate, stopOnLiquid) && allowNonfullCube)) {
+            if (block1.canCollideCheck(iblockstate1, stopOnLiquid) || allowNonfullCube) {
               RayTraceResult raytraceresult1 = iblockstate1.collisionRayTrace(world, blockpos, vec31, vec32);
 
               if (raytraceresult1 != null) {
@@ -182,12 +180,12 @@ public class RayCastUtil {
   }
 
   @Nullable
-  public static Entity mouseOverEntity (EntityLivingBase entity) {
+  public static Entity mouseOverEntity(EntityLivingBase entity) {
     return mouseOverEntity(entity, 3.0);
   }
 
   @Nullable
-  public static Entity mouseOverEntity (EntityLivingBase entity, double maxReach) {
+  public static Entity mouseOverEntity(EntityLivingBase entity, double maxReach) {
     RayTraceAndEntityResult result = rayTraceMouseOver(entity, maxReach);
     return result.getPointedEntity();
   }
@@ -294,11 +292,11 @@ public class RayCastUtil {
     }
   }
 
-  public static <T extends Entity> List<T> rayTraceEntities (Class<T> clazz, Entity traceTarget, double distance) {
+  public static <T extends Entity> List<T> rayTraceEntities(Class<T> clazz, Entity traceTarget, double distance) {
     return rayTraceEntities(clazz, traceTarget, distance, 0.1);
   }
 
-  public static List<Vec3d> rayTraceEntitiesPositions (Entity traceTarget, double distance) {
+  public static List<Vec3d> rayTraceEntitiesPositions(Entity traceTarget, double distance) {
     float eyes = traceTarget.getEyeHeight();
     Vec3d pos = traceTarget.getPositionVector();
     Vec3d posEyes = pos.add(0, eyes, 0);
@@ -317,7 +315,7 @@ public class RayCastUtil {
     return Arrays.asList(startPosition, stopPosition);
   }
 
-  public static <T extends Entity> List<T> rayTraceEntities (Class<T> clazz, Entity traceTarget, double distance, double width) {
+  public static <T extends Entity> List<T> rayTraceEntities(Class<T> clazz, Entity traceTarget, double distance, double width) {
     List<Vec3d> positions = rayTraceEntitiesPositions(traceTarget, distance);
     Vec3d startPosition = positions.get(0);
     Vec3d stopPosition = positions.get(1);
