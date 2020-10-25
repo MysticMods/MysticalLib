@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.item;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -12,8 +14,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
 
 public class ItemBlockMultiblock extends ItemBlock {
 
@@ -31,7 +31,7 @@ public class ItemBlockMultiblock extends ItemBlock {
   @Override
   @Nonnull
   public EnumActionResult onItemUse(@Nonnull EntityPlayer player, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull EnumHand hand,
-                                    @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
+      @Nonnull EnumFacing facing, float hitX, float hitY, float hitZ) {
     IBlockState iblockstate = worldIn.getBlockState(pos);
     Block block = iblockstate.getBlock();
 

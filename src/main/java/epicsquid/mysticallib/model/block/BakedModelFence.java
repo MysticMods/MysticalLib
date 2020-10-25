@@ -1,5 +1,12 @@
 package epicsquid.mysticallib.model.block;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Cube;
@@ -13,20 +20,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.IModelState;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
 public class BakedModelFence extends BakedModelBlock {
 
   private Cube post_right, post_left, west, west_top, north, north_top, south, south_top, east, east_top, post;
 
   public BakedModelFence(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-                         @Nonnull CustomModelBase model) {
+      @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
-    TextureAtlasSprite[] texes = new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth};
+    TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
     post_right = makePostCube(format, 0, 0, 0.375, 0.25, 1, 0.25, null, texes, 0);
     post_left = makePostCube(format, 0.75, 0, 0.375, 0.25, 1, 0.25, null, texes, 0);
     north = ModelUtil.makeCube(format, 0.4375, 0.375, 0, 0.125, 0.1875, 0.375, null, texes, 0);
@@ -84,12 +85,12 @@ public class BakedModelFence extends BakedModelBlock {
   }
 
   private Cube makePostCube(VertexFormat format, double x, double y, double z, double w, double h, double l, Vec4f[] uv, TextureAtlasSprite[] sprites,
-                            int tintIndex) {
-    uv = new Vec4f[]{new Vec4f((float) z * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) l * 16.0F, (float) h * 16.0F),
+      int tintIndex) {
+    uv = new Vec4f[] { new Vec4f((float) z * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) l * 16.0F, (float) h * 16.0F),
         new Vec4f(16.0F - (float) l * 16.0F - (float) z * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) l * 16.0F, (float) h * 16.0F),
         new Vec4f(5f, 5f, 6f, 6f), new Vec4f(5f, 5f, 6f, 6f),
         new Vec4f(16.0F - (float) w * 16.0F - (float) x * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) w * 16.0F, (float) h * 16.0F),
-        new Vec4f((float) x * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) w * 16.0F, (float) h * 16.0F)};
+        new Vec4f((float) x * 16.0F, (float) (-y) * 16.0F + (16.0F - (float) h * 16.0F), (float) w * 16.0F, (float) h * 16.0F) };
     return ModelUtil.makeCube(format, x, y, z, w, h, l, uv, sprites, tintIndex);
   }
 }

@@ -1,10 +1,15 @@
 package epicsquid.mysticallib.hax;
 
-import com.google.gson.*;
+import java.lang.reflect.Type;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
-
-import java.lang.reflect.Type;
 
 @SuppressWarnings("deprecation")
 public class ICTDeserializer implements JsonDeserializer<ItemCameraTransforms> {

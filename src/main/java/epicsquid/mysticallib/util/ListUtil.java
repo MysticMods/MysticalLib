@@ -1,14 +1,14 @@
 package epicsquid.mysticallib.util;
 
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 public class ListUtil {
   public static class StateComparator implements Comparator<IBlockState> {

@@ -1,8 +1,9 @@
 package epicsquid.mysticallib.world;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
 
 public class StructureRegistry {
 

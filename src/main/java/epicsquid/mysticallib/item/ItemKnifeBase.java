@@ -1,18 +1,21 @@
 package epicsquid.mysticallib.item;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Sets;
+
 import epicsquid.mysticallib.material.MaterialTypes;
+import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-
-import javax.annotation.Nonnull;
-import java.util.Collections;
-import java.util.Set;
-import java.util.function.Supplier;
 
 public class ItemKnifeBase extends ItemToolBase {
   public static Set<Block> BLOCKS = Sets.newHashSet(Blocks.PLANKS, Blocks.LOG, Blocks.LOG2);

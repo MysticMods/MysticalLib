@@ -1,5 +1,11 @@
 package epicsquid.mysticallib.block;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.util.Util;
@@ -16,11 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public class BlockTEDoorBase extends BlockDoorBase implements ITileEntityProvider {
@@ -44,7 +45,7 @@ public class BlockTEDoorBase extends BlockDoorBase implements ITileEntityProvide
 
   @Override
   public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
-                                  @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
+      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     if ((player.getHeldItemMainhand().isEmpty() || Block.getBlockFromItem(player.getHeldItemMainhand().getItem()) == Blocks.AIR) && !player.isSneaking()) {
       return super.onBlockActivated(world, pos, state, player, hand, face, hitX, hitY, hitZ);
     }

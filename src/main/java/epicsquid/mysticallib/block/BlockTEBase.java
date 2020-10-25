@@ -1,5 +1,11 @@
 package epicsquid.mysticallib.block;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.util.Util;
@@ -15,11 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashSet;
-import java.util.Set;
 
 @SuppressWarnings("deprecation")
 public class BlockTEBase extends BlockBase implements ITileEntityProvider {
@@ -43,7 +44,7 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
 
   @Override
   public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
-                                  @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
+      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       return ((ITile) t).activate(world, pos, state, player, hand, face, hitX, hitY, hitZ);

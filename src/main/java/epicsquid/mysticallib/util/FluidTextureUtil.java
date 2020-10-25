@@ -1,13 +1,15 @@
 package epicsquid.mysticallib.util;
 
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Maps;
+
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-
-import javax.annotation.Nonnull;
-import java.util.Map;
 
 public class FluidTextureUtil {
   public static Map<Fluid, TextureAtlasSprite> stillTextures = Maps.newHashMap();

@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.particle.particles;
 
 import epicsquid.mysticallib.particle.ParticleBase;
+import epicsquid.mysticallib.util.Util;
 import net.minecraft.world.World;
 
 public class ParticleRain extends ParticleBase {

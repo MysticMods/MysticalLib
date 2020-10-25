@@ -1,5 +1,12 @@
 package epicsquid.mysticallib.block;
 
+import java.util.List;
+import java.util.Random;
+import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import epicsquid.mysticallib.model.block.BakedModelBlock;
@@ -28,15 +35,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
-
 public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObject, IGrowable {
-  private @Nonnull
-  Item itemBlock;
+  private @Nonnull Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
@@ -46,8 +46,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Supplier<WorldGenAbstractTree> treeGenerator;
-  public @Nonnull
-  String name;
+  public @Nonnull String name;
 
   public BlockSaplingBase(@Nonnull String name, Supplier<WorldGenAbstractTree> treeGenerator) {
     super();

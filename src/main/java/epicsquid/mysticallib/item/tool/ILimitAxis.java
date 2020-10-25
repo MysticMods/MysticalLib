@@ -5,5 +5,5 @@ import net.minecraft.util.EnumFacing;
 import java.util.Set;
 
 public interface ILimitAxis {
-  Set<EnumFacing.Axis> getLimits();
+  Set<EnumFacing.Axis> getLimits ();
 }

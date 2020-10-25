@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.item;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.block.BlockCropBase;
 import epicsquid.mysticallib.model.CustomModelItem;
@@ -22,8 +24,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.EnumPlantType;
-
-import javax.annotation.Nonnull;
 
 public class ItemSeedBase extends ItemSeeds implements IModeledObject, ICustomModeledObject {
 

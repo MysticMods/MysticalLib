@@ -11,12 +11,12 @@ public class DelayedOreIngredient extends Ingredient {
   private OreIngredient delayed = null;
   private String oreName;
 
-  public DelayedOreIngredient(String oreName) {
+  public DelayedOreIngredient (String oreName) {
     super(0);
     this.oreName = oreName;
   }
 
-  private void resolve() {
+  private void resolve () {
     if (delayed == null) {
       delayed = new OreIngredient(oreName);
     }

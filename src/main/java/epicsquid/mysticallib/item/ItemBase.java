@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.item;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -9,8 +11,6 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-
-import javax.annotation.Nonnull;
 
 public class ItemBase extends Item implements IModeledObject, ICustomModeledObject {
 

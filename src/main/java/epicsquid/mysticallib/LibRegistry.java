@@ -261,5 +261,6 @@ public class LibRegistry {
     PARTICLE_LEAF_ARC = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeafArc.class, LEAF_TEXTURES);
     PARTICLE_LEAF = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleLeaf.class, LEAF_TEXTURES);
     PARTICLE_RAIN = ParticleRegistry.registerParticle(MysticalLib.MODID, ParticleRain.class, new ResourceLocation("mysticallib:particle/particle_rain1"), new ResourceLocation("mysticallib:particle/particle_rain2"), new ResourceLocation("mysticallib:particle/particle_rain3"), new ResourceLocation("mysticallib:particle/particle_rain4"), new ResourceLocation("mysticallib:particle/particle_rain5"), new ResourceLocation("mysticallib:particle/particle_rain6"), new ResourceLocation("mysticallib:particle/particle_rain7"), new ResourceLocation("mysticallib:particle/particle_rain8"), new ResourceLocation("mysticallib:particle/particle_rain9"), new ResourceLocation("mysticallib:particle/particle_rain10"), new ResourceLocation("mysticallib:particle/particle_rain11"), new ResourceLocation("mysticallib:particle/particle_rain12"), new ResourceLocation("mysticallib:particle/particle_rain13"), new ResourceLocation("mysticallib:particle/particle_rain14"));
+    ;
   }
 }

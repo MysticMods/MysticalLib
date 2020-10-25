@@ -1,12 +1,14 @@
 package epicsquid.mysticallib.particle;
 
+import javax.annotation.Nonnull;
+
+import epicsquid.mysticallib.util.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 

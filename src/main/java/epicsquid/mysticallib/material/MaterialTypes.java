@@ -1,10 +1,10 @@
 package epicsquid.mysticallib.material;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
 
 public class MaterialTypes {
   public static Map<String, Item.ToolMaterial> materialMap = new HashMap<>();
@@ -27,7 +27,7 @@ public class MaterialTypes {
     return materialMap.get(name);
   }
 
-  public static ItemArmor.ArmorMaterial armor(String name) {
+  public static ItemArmor.ArmorMaterial armor (String name) {
     return armorMaterialMap.get(name);
   }
 

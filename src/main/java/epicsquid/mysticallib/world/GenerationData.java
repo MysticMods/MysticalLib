@@ -1,5 +1,10 @@
 package epicsquid.mysticallib.world;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.MysticalLib;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -7,10 +12,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
-
-import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GenerationData extends WorldSavedData {
   private Set<GenerationNode> nodes = new HashSet<>();

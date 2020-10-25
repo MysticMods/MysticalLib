@@ -1,16 +1,18 @@
 package epicsquid.mysticallib.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.event.RegisterCustomModelsEvent;
+import net.minecraft.client.renderer.block.model.FaceBakery;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.common.MinecraftForge;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CustomModelLoader implements ICustomModelLoader {
 

@@ -100,7 +100,7 @@ public class ItemUtil {
     return item;
   }
 
-  public static ItemStack stackFromState(IBlockState state) {
+  public static ItemStack stackFromState (IBlockState state) {
     Block block = state.getBlock();
     Item item = Item.getItemFromBlock(block);
     int meta = block.getMetaFromState(state);
@@ -109,7 +109,7 @@ public class ItemUtil {
 
   @Nullable
   @SuppressWarnings("deprecation")
-  public static IBlockState stateFromStack(ItemStack stack) {
+  public static IBlockState stateFromStack (ItemStack stack) {
     Item item = stack.getItem();
     if (!(item instanceof ItemBlock)) return null;
 
@@ -117,7 +117,7 @@ public class ItemUtil {
     return block.getStateFromMeta(stack.getMetadata());
   }
 
-  public static ItemStack stackFromString(String[] parts) {
+  public static ItemStack stackFromString (String[] parts) {
     ResourceLocation loc = null;
     int meta = 0;
     if (parts.length == 1) {
@@ -156,7 +156,7 @@ public class ItemUtil {
     return true;
   }
 
-  public static NBTTagCompound getOrCreateTag(ItemStack stack) {
+  public static NBTTagCompound getOrCreateTag (ItemStack stack) {
     NBTTagCompound tag = stack.getTagCompound();
     if (tag == null) {
       tag = new NBTTagCompound();
@@ -165,14 +165,14 @@ public class ItemUtil {
     return tag;
   }
 
-  public static List<ItemStack> transformContainers(List<ItemStack> items) {
-    List<ItemStack> result = new ArrayList<>();
-    for (ItemStack stack : items) {
-      ItemStack container = ForgeHooks.getContainerItem(stack);
-      if (!container.isEmpty()) {
-        result.add(container);
+  public static List<ItemStack> transformContainers (List<ItemStack> items) {
+      List<ItemStack> result = new ArrayList<>();
+      for (ItemStack stack : items) {
+        ItemStack container = ForgeHooks.getContainerItem(stack);
+        if (!container.isEmpty()) {
+          result.add(container);
+        }
       }
-    }
-    return result;
+      return result;
   }
 }

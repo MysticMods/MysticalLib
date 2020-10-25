@@ -33,7 +33,7 @@ import org.lwjgl.opengl.GL11;
 import java.util.Map;
 import java.util.Set;
 
-@Mod.EventBusSubscriber(value = Side.CLIENT, modid = MysticalLib.MODID)
+@Mod.EventBusSubscriber(value= Side.CLIENT, modid= MysticalLib.MODID)
 public class ToolOverlayRenderer {
   @SubscribeEvent(priority = EventPriority.LOW)
   public static void renderExtraBlockStuff(RenderWorldLastEvent event) {

@@ -1,5 +1,8 @@
 package epicsquid.mysticallib.tile;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
@@ -15,15 +18,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 public class TileBase extends TileEntity implements ITile {
   public boolean dirty = false;
 
   @Override
   public boolean activate(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
-                          @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
+      @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     return false;
   }
 

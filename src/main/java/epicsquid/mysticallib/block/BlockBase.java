@@ -1,5 +1,11 @@
 package epicsquid.mysticallib.block;
 
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -26,15 +32,9 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
-
 @SuppressWarnings("deprecation")
 public class BlockBase extends Block implements IBlock, IModeledObject, ICustomModeledObject, INoCullBlock {
-  private @Nonnull
-  Item itemBlock;
+  private @Nonnull Item itemBlock;
   private List<ItemStack> drops;
   private boolean isOpaque = true;
   private boolean hasCustomModel = false;
@@ -45,8 +45,7 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   private boolean isFlammable = false;
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
-  public @Nonnull
-  String name;
+  public @Nonnull String name;
 
   public BlockBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name) {
     super(mat);
@@ -66,7 +65,7 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   }
 
   @Nonnull
-  public BlockBase setIsBeacon(boolean beacon) {
+  public BlockBase setIsBeacon (boolean beacon) {
     this.isBeacon = beacon;
     return this;
   }

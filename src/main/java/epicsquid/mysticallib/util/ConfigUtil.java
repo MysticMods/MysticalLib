@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 public class ConfigUtil {
   @Nullable
-  public static ItemStack parseItemStack(String itemStack) {
+  public static ItemStack parseItemStack (String itemStack) {
     String[] split = itemStack.split(":");
     if (split.length < 2) {
       return null;
@@ -39,7 +39,7 @@ public class ConfigUtil {
   }
 
   @Nullable
-  public static Block parseBlock(String blockRL) {
+  public static Block parseBlock (String blockRL) {
     String[] split = blockRL.split(":");
 
     if (split.length != 2) {
@@ -51,16 +51,16 @@ public class ConfigUtil {
     return ForgeRegistries.BLOCKS.getValue(rl);
   }
 
-  public static boolean parseBoolean(String bool) {
+  public static boolean parseBoolean (String bool) {
     return bool.trim().equalsIgnoreCase("true");
   }
 
   @Nullable
-  public static ResourceLocation parseResourceLocation(String rl) {
+  public static ResourceLocation parseResourceLocation (String rl) {
     return new ResourceLocation(rl);
   }
 
-  public static <V, T extends Collection<V>> T parseLines(T result, Function<String, V> converter, String[] input) {
+  public static <V, T extends Collection<V>> T parseLines (T result, Function<String, V> converter, String[] input) {
     result.clear();
     for (String line : input) {
       V potential = converter.apply(line);
@@ -71,7 +71,7 @@ public class ConfigUtil {
     return result;
   }
 
-  public static <T, V> Map<T, V> parseMap(Map<T, V> result, Function<String, T> converter1, Function<String, V> converter2, String separator, String[] input) {
+  public static <T, V> Map<T, V> parseMap (Map<T, V> result, Function<String, T> converter1, Function<String, V> converter2, String separator, String[] input) {
     result.clear();
     for (String line : input) {
       String[] split = line.split(separator);
@@ -85,31 +85,31 @@ public class ConfigUtil {
     return result;
   }
 
-  public static Set<ItemStack> parseItemStacksSet(String[] input) {
+  public static Set<ItemStack> parseItemStacksSet (String[] input) {
     return parseLines(new HashSet<>(), ConfigUtil::parseItemStack, input);
   }
 
-  public static List<ItemStack> parseItemStacks(String[] input) {
+  public static List<ItemStack> parseItemStacks (String[] input) {
     return parseLines(new ArrayList<>(), ConfigUtil::parseItemStack, input);
   }
 
-  public static Set<Block> parseBlocksSet(String[] input) {
+  public static Set<Block> parseBlocksSet (String[] input) {
     return parseLines(new HashSet<>(), ConfigUtil::parseBlock, input);
   }
 
-  public static List<Block> parseBlocks(String[] input) {
+  public static List<Block> parseBlocks (String[] input) {
     return parseLines(new ArrayList<>(), ConfigUtil::parseBlock, input);
   }
 
-  public static List<ResourceLocation> parseLocations(String[] input) {
+  public static List<ResourceLocation> parseLocations (String[] input) {
     return parseLines(new ArrayList<>(), ConfigUtil::parseResourceLocation, input);
   }
 
-  public static Set<ResourceLocation> parseLocationsSet(String[] input) {
+  public static Set<ResourceLocation> parseLocationsSet (String[] input) {
     return parseLines(new HashSet<>(), ConfigUtil::parseResourceLocation, input);
   }
 
-  public static boolean setContainsItemStack(Set<ItemStack> set, ItemStack checkFor) {
+  public static boolean setContainsItemStack (Set<ItemStack> set, ItemStack checkFor) {
     for (ItemStack checking : set) {
       if (ItemUtil.equalWithoutSize(checking, checkFor)) {
         return true;

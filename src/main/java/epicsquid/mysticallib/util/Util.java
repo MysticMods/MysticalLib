@@ -1,7 +1,14 @@
 package epicsquid.mysticallib.util;
 
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import javax.annotation.Nonnull;
+
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
@@ -15,24 +22,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.IItemHandler;
 
-import javax.annotation.Nonnull;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 @SuppressWarnings("unchecked")
 public class Util {
 
   public static Random rand = new Random();
 
-  public static int floatChance(float chance) {
+  public static int floatChance (float chance) {
     return ((int) chance) + ((rand.nextFloat() < (chance % 1)) ? 1 : 0);
   }
 
   public static <T extends Entity> List<T> getEntitiesWithinRadius(World world, Class<? extends T> classEntity, BlockPos pos, float xradius, float yradius,
-                                                                   float zradius) {
+      float zradius) {
     return world.getEntitiesWithinAABB(classEntity,
-        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + 1 + +xradius, pos.getY() + 1 + yradius, pos.getZ() + 1 + zradius));
+        new AxisAlignedBB(pos.getX() - xradius, pos.getY() - yradius, pos.getZ() - zradius, pos.getX() + 1 + + xradius, pos.getY() + 1 + yradius, pos.getZ() + 1 + zradius));
   }
 
   public static List<EntityLiving> getEntitiesWithinRadius(World world, Predicate<Entity> comparison, BlockPos pos, float xradius, float yradius, float zradius) {
@@ -68,10 +70,10 @@ public class Util {
     return blockList;
   }
 
-  public static BlockPos getRandomWithinRadius(BlockPos pos, int xradius, int yradius, int zradius) {
-    int x = pos.getX() - xradius + Util.rand.nextInt(xradius * 2 + 1);
-    int y = pos.getY() - yradius + Util.rand.nextInt(yradius * 2 + 1);
-    int z = pos.getZ() - zradius + Util.rand.nextInt(zradius * 2 + 1);
+  public static BlockPos getRandomWithinRadius (BlockPos pos, int xradius, int yradius, int zradius) {
+    int x = pos.getX() - xradius + Util.rand.nextInt(xradius*2+1);
+    int y = pos.getY() - yradius + Util.rand.nextInt(yradius*2+1);
+    int z = pos.getZ() - zradius + Util.rand.nextInt(zradius*2+1);
     return new BlockPos(x, y, z);
   }
 
@@ -83,10 +85,10 @@ public class Util {
     int y = center.getY();
     int r2 = r * r;
     for (int i = z - r; i < z + r; i++) {
-      for (int j = x; (j - x) * (j - x) + (i - z) * (i - z) <= r2; j--) {
+      for (int j = x; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j--) {
         positions.add(new BlockPos(j, y, i));
       }
-      for (int j = x + 1; (j - x) * (j - x) + (i - z) * (i - z) <= r2; j++) {
+      for (int j = x+1; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j++) {
         positions.add(new BlockPos(j, y, i));
       }
     }
@@ -102,7 +104,7 @@ public class Util {
     return getBlocksWithinCircle(world, pos, r, (test) -> world.getBlockState(test).getBlock() == block);
   }
 
-  public static List<BlockPos> getBlocksWithinCircle(World world, BlockPos center, int r, Predicate<BlockPos> predicate) {
+  public static List<BlockPos> getBlocksWithinCircle (World world, BlockPos center, int r, Predicate<BlockPos> predicate) {
     List<BlockPos> positions = new ArrayList<>();
     int x = center.getX();
     int z = center.getZ();
@@ -110,13 +112,13 @@ public class Util {
     BlockPos pos;
     int r2 = r * r;
     for (int i = z - r; i < z + r; i++) {
-      for (int j = x; (j - x) * (j - x) + (i - z) * (i - z) <= r2; j--) {
+      for (int j = x; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j--) {
         pos = new BlockPos(j, y, i);
         if (predicate.test(pos)) {
           positions.add(pos);
         }
       }
-      for (int j = x + 1; (j - x) * (j - x) + (i - z) * (i - z) <= r2; j++) {
+      for (int j = x+1; (j-x)*(j-x) + (i-z)*(i-z) <= r2; j++) {
         pos = new BlockPos(j, y, i);
         if (predicate.test(pos)) {
           positions.add(pos);

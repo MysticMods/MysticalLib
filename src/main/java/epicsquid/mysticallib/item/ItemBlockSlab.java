@@ -1,5 +1,7 @@
 package epicsquid.mysticallib.item;
 
+import javax.annotation.Nonnull;
+
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -18,8 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
 
 @SuppressWarnings("deprecation")
 public class ItemBlockSlab extends ItemBlock implements IModeledObject {
@@ -54,7 +54,7 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
   @Override
   @Nonnull
   public EnumActionResult onItemUse(@Nonnull EntityPlayer playerIn, @Nonnull World worldIn, @Nonnull BlockPos pos, @Nonnull EnumHand hand,
-                                    @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
+      @Nonnull EnumFacing side, float hitX, float hitY, float hitZ) {
     ItemStack stack = playerIn.getHeldItem(hand);
     if (stack.getCount() == 0) {
       return EnumActionResult.FAIL;
@@ -88,7 +88,7 @@ public class ItemBlockSlab extends ItemBlock implements IModeledObject {
   @Override
   @SideOnly(Side.CLIENT)
   public boolean canPlaceBlockOnSide(@Nonnull World worldIn, @Nonnull BlockPos posIn, @Nonnull EnumFacing faceIn, @Nonnull EntityPlayer playerIn,
-                                     @Nonnull ItemStack stackIn) {
+      @Nonnull ItemStack stackIn) {
     BlockPos blockpos1 = posIn;
     IBlockState iblockstate = worldIn.getBlockState(posIn);
 

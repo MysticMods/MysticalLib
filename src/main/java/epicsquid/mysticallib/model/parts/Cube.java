@@ -1,14 +1,15 @@
 package epicsquid.mysticallib.model.parts;
 
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.util.EnumFacing;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.util.EnumFacing;
 
 public class Cube {
 
@@ -16,7 +17,7 @@ public class Cube {
   public List<BakedQuad> unculledQuads = new ArrayList<>();
 
   public Cube(@Nonnull BakedQuad west, @Nonnull BakedQuad east, @Nonnull BakedQuad down, @Nonnull BakedQuad up, @Nonnull BakedQuad north,
-              @Nonnull BakedQuad south) {
+      @Nonnull BakedQuad south) {
     quads.put(EnumFacing.WEST, west);
     quads.put(EnumFacing.EAST, east);
     quads.put(EnumFacing.DOWN, down);

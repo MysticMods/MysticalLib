@@ -39,7 +39,7 @@ public class ParticleLeaf extends ParticleBase {
     this.particleGravity = 0.0f;
   }
 
-  private void standardUpdate() {
+  private void standardUpdate () {
     this.prevPosX = this.posX;
     this.prevPosY = this.posY;
     this.prevPosZ = this.posZ;
