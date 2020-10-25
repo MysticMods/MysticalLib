@@ -101,7 +101,7 @@ public class BlockSlantBase extends BlockBase {
   @Override
   @Nonnull
   public IBlockState getStateFromMeta(int meta) {
-    return getDefaultState().withProperty(VERT, (int) (meta / 4)).withProperty(DIR, meta % 4);
+    return getDefaultState().withProperty(VERT, (meta / 4)).withProperty(DIR, meta % 4);
   }
 
   @Override
