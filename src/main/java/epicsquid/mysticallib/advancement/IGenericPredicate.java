@@ -1,10 +1,9 @@
 package epicsquid.mysticallib.advancement;
 
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonElement;
-
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import javax.annotation.Nullable;
 
 public interface IGenericPredicate<T> {
   boolean test(EntityPlayerMP player, T condition);

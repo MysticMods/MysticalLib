@@ -1,16 +1,5 @@
 package epicsquid.mysticallib.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.vecmath.Matrix4f;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -20,6 +9,15 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.vecmath.Matrix4f;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 public class BakedModelNull implements IBakedModel {
   protected Function<ResourceLocation, TextureAtlasSprite> getter;

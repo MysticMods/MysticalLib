@@ -1,23 +1,14 @@
 package epicsquid.mysticallib.item.tool;
 
 import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
 import epicsquid.mysticallib.item.ItemShovelBase;
-import epicsquid.mysticallib.types.OneTimeSupplier;
-import epicsquid.mysticallib.util.BreakUtil;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.function.Supplier;
 

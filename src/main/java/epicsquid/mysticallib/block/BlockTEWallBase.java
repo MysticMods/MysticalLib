@@ -1,8 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.tile.ITile;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -16,6 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class BlockTEWallBase extends BlockWallBase implements ITileEntityProvider {
   private Class<? extends TileEntity> teClass;
 
@@ -27,7 +27,7 @@ public class BlockTEWallBase extends BlockWallBase implements ITileEntityProvide
 
   @Override
   public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
-      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
+                                  @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       return ((ITile) t).activate(world, pos, state, player, hand, face, hitX, hitY, hitZ);

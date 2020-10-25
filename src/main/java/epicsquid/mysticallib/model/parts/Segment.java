@@ -1,21 +1,20 @@
 package epicsquid.mysticallib.model.parts;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import net.minecraft.client.renderer.block.model.BakedQuad;
+import net.minecraft.util.EnumFacing;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.util.EnumFacing;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 public class Segment {
 
   public Map<EnumFacing, BakedQuad> quads = new EnumMap<>(EnumFacing.class);
 
   public Segment(@Nonnull BakedQuad west, @Nonnull BakedQuad east, @Nonnull BakedQuad down, @Nonnull BakedQuad up, @Nonnull BakedQuad north,
-      @Nonnull BakedQuad south, boolean[] cull) {
+                 @Nonnull BakedQuad south, boolean[] cull) {
     if (cull[0])
       quads.put(EnumFacing.WEST, west);
     if (cull[1])

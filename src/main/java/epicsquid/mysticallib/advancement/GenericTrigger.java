@@ -1,22 +1,20 @@
 package epicsquid.mysticallib.advancement;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nonnull;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class GenericTrigger<T> implements ICriterionTrigger<GenericTrigger.Instance<T>> {
   private final ResourceLocation id;

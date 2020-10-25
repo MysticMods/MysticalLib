@@ -1,14 +1,5 @@
 package epicsquid.mysticallib.model.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import epicsquid.mysticallib.hax.Hax;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -18,6 +9,13 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.EnumFacing;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TreeMap;
 
 public class BakedModelBlockUnlitWrapper implements IBakedModel {
 

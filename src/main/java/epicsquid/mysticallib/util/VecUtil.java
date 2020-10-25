@@ -5,15 +5,15 @@ import net.minecraft.util.math.Vec3d;
 import java.util.Iterator;
 
 public class VecUtil {
-  public static Iterable<Vec3d> pointsBetween (Vec3d start, Vec3d stop) {
+  public static Iterable<Vec3d> pointsBetween(Vec3d start, Vec3d stop) {
     return pointsBetween(start, stop, -1);
   }
 
-  public static Iterable<Vec3d> pointsBetween (Vec3d start, Vec3d stop, int maxLength) {
+  public static Iterable<Vec3d> pointsBetween(Vec3d start, Vec3d stop, int maxLength) {
     return new VecIterable(start, stop, maxLength);
   }
 
-  public static Iterable<Vec3d> pointsFrom (Vec3d start, Vec3d vec) {
+  public static Iterable<Vec3d> pointsFrom(Vec3d start, Vec3d vec) {
     return pointsBetween(start, start.add(vec), (int) vec.length());
   }
 

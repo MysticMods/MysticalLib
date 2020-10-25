@@ -8,23 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AABBUtil {
-  public static AxisAlignedBB fromRadius (int radius_x, int radius_y, int radius_z) {
-    return new AxisAlignedBB(-radius_x, -radius_y, -radius_z, radius_x+1, radius_y+1, radius_z+1);
+  public static AxisAlignedBB fromRadius(int radius_x, int radius_y, int radius_z) {
+    return new AxisAlignedBB(-radius_x, -radius_y, -radius_z, radius_x + 1, radius_y + 1, radius_z + 1);
   }
 
-  public static AxisAlignedBB buildFromEntity (Entity entity) {
+  public static AxisAlignedBB buildFromEntity(Entity entity) {
     return new AxisAlignedBB(entity.posX, entity.posY, entity.posZ, entity.posX, entity.posY, entity.posZ);
   }
 
-  public static BlockPos max (AxisAlignedBB box) {
+  public static BlockPos max(AxisAlignedBB box) {
     return new BlockPos(box.maxX, box.maxY, box.maxZ);
   }
 
-  public static BlockPos min (AxisAlignedBB box) {
+  public static BlockPos min(AxisAlignedBB box) {
     return new BlockPos(box.minX, box.minY, box.minZ);
   }
 
-  public static List<BlockPos> uniqueZX (AxisAlignedBB box) {
+  public static List<BlockPos> uniqueZX(AxisAlignedBB box) {
     List<BlockPos> result = new ArrayList<>();
     for (double x = box.minX; x < box.maxX; x++) {
       for (double z = box.minZ; z < box.maxZ; z++) {
@@ -34,7 +34,7 @@ public class AABBUtil {
     return result;
   }
 
-  public static List<BlockPos> unique (AxisAlignedBB box) {
+  public static List<BlockPos> unique(AxisAlignedBB box) {
     List<BlockPos> result = new ArrayList<>();
     for (double x = box.minX; x <= box.maxX; x++) {
       for (double z = box.minZ; z <= box.maxZ; z++) {
@@ -50,7 +50,7 @@ public class AABBUtil {
    return BlockPos.getAllInBox((int) box.maxX, (int) box.maxY, (int) box.maxZ, (int) box.minX, (int) box.minY, (int) box.minZ);
   }*/
 
-  public static Iterable<BlockPos.MutableBlockPos> uniqueMutable (AxisAlignedBB box) {
-   return BlockPos.getAllInBoxMutable((int) box.maxX, (int) box.maxY, (int) box.maxZ, (int) box.minX, (int) box.minY, (int) box.minZ);
+  public static Iterable<BlockPos.MutableBlockPos> uniqueMutable(AxisAlignedBB box) {
+    return BlockPos.getAllInBoxMutable((int) box.maxX, (int) box.maxY, (int) box.maxZ, (int) box.minX, (int) box.minY, (int) box.minZ);
   }
 }

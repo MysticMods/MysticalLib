@@ -23,7 +23,7 @@ public interface NullableSupplier<T> {
   @Nullable
   T get();
 
-  default boolean isNull () {
+  default boolean isNull() {
     return false;
   }
 }

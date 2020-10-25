@@ -1,11 +1,11 @@
 package epicsquid.mysticallib.entity;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
+
+import javax.annotation.Nonnull;
 
 /**
  * Renders an empty entity

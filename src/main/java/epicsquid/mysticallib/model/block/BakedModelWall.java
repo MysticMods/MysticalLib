@@ -1,12 +1,5 @@
 package epicsquid.mysticallib.model.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Cube;
@@ -19,13 +12,19 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.IModelState;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 public class BakedModelWall extends BakedModelBlock {
   private Cube post, north, south, west, east;
 
   public BakedModelWall(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-      @Nonnull CustomModelBase model) {
+                        @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
-    TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
+    TextureAtlasSprite[] texes = new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth};
     post = ModelUtil.makeCube(format, 0.25, 0, 0.25, 0.5, 1, 0.5, null, texes, -1);
     north = ModelUtil.makeCube(format, 0.3125, 0, 0, 0.375, 0.875, 0.5, null, texes, -1);
     south = ModelUtil.makeCube(format, 0.3125, 0, 0.5, 0.375, 0.875, 0.5, null, texes, -1);

@@ -3,7 +3,6 @@ package epicsquid.mysticallib.particle;
 import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.proxy.ClientProxy;
 import epicsquid.mysticallib.util.Util;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 

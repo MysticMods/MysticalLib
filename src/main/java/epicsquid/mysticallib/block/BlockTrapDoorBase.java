@@ -1,10 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -17,13 +12,11 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -32,8 +25,13 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class BlockTrapDoorBase extends BlockTrapDoor implements IBlock, IModeledObject, ICustomModeledObject {
-  private @Nonnull Item itemBlock;
+  private @Nonnull
+  Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;

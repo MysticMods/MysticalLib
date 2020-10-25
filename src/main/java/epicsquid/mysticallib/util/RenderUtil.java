@@ -1,13 +1,11 @@
 package epicsquid.mysticallib.util;
 
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.MysticalLib;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+
+import javax.annotation.Nonnull;
 
 public class RenderUtil {
 
@@ -17,7 +15,7 @@ public class RenderUtil {
   public static int maxLightY = 0xF000F0;
 
   public static void renderBeam(@Nonnull BufferBuilder buf, double x1, double y1, double z1, double x2, double y2, double z2, float r1, float g1, float b1,
-      float a1, float r2, float g2, float b2, float a2, double width, double angle) {
+                                float a1, float r2, float g2, float b2, float a2, double width, double angle) {
     float rads = (float) Math.toRadians(angle);
     double ac = MathHelper.cos(rads);
     double as = MathHelper.sin(rads);
@@ -59,7 +57,7 @@ public class RenderUtil {
   }
 
   public static void renderSlash(@Nonnull BufferBuilder buf, double x0, double y0, double z0, float r, float g, float b, float a, float radius, float width,
-      float angleRange) {
+                                 float angleRange) {
     for (float i = -angleRange / 2.0f; i < angleRange / 2.0f; i += angleRange / 16.0f) {
       float coeff1 = 1.0f - Math.abs(i) / (angleRange / 2.0f);
       float coeff2 = 1.0f - Math.abs(i + angleRange / 16.0f) / (angleRange / 2.0f);

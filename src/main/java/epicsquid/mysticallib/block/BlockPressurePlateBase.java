@@ -1,9 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -16,7 +12,6 @@ import net.minecraft.block.BlockPressurePlate;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -26,7 +21,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -36,8 +30,12 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import java.util.List;
+
 public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock, IModeledObject, ICustomModeledObject {
-  private @Nonnull Item itemBlock;
+  private @Nonnull
+  Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
@@ -193,20 +191,20 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
     List<? extends Entity> list;
 
     switch (this.plateType) {
-    case ALL:
-      list = worldIn.getEntitiesWithinAABBExcludingEntity(null, axisalignedbb);
-      break;
-    case MOBS:
-      list = worldIn.<Entity>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
-      break;
-    case ITEMS:
-      list = worldIn.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
-      break;
-    case PLAYER:
-      list = worldIn.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
-      break;
-    default:
-      return 0;
+      case ALL:
+        list = worldIn.getEntitiesWithinAABBExcludingEntity(null, axisalignedbb);
+        break;
+      case MOBS:
+        list = worldIn.<Entity>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);
+        break;
+      case ITEMS:
+        list = worldIn.getEntitiesWithinAABB(EntityItem.class, axisalignedbb);
+        break;
+      case PLAYER:
+        list = worldIn.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb);
+        break;
+      default:
+        return 0;
     }
 
     if (!list.isEmpty()) {
@@ -225,7 +223,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
     return BakedModelPressurePlate.class;
   }
 
-  public static enum PressurePlateType {
+  public enum PressurePlateType {
     ALL, ITEMS, MOBS, PLAYER
   }
 }

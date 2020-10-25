@@ -2,9 +2,7 @@ package epicsquid.mysticallib;
 
 import epicsquid.mysticallib.proxy.CommonProxy;
 import epicsquid.mysticallib.recipe.RecipeRegistry;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -25,9 +23,11 @@ public class MysticalLib {
   public static final String FORGE_VERSION = "14.23.5.2847";
   public static final String DEPENDENCIES = "required-after:forge@[" + FORGE_VERSION + " ,);after:*";
 
-  @SidedProxy(clientSide = "epicsquid.mysticallib.proxy.ClientProxy", serverSide = "epicsquid.mysticallib.proxy.CommonProxy") public static CommonProxy proxy;
+  @SidedProxy(clientSide = "epicsquid.mysticallib.proxy.ClientProxy", serverSide = "epicsquid.mysticallib.proxy.CommonProxy")
+  public static CommonProxy proxy;
 
-  @Instance public static MysticalLib INSTANCE;
+  @Instance
+  public static MysticalLib INSTANCE;
 
   @EventHandler
   public void preInit(FMLPreInitializationEvent event) {
@@ -48,7 +48,7 @@ public class MysticalLib {
   }
 
   @EventHandler
-  public void loadComplete (FMLLoadCompleteEvent event) {
+  public void loadComplete(FMLLoadCompleteEvent event) {
     proxy.loadComplete(event);
   }
 }

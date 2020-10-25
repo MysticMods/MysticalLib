@@ -20,7 +20,7 @@ public class PacketHandler {
   }
 
   public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> handler, Class<REQ> message,
-      Side side) {
+                                                                                    Side side) {
     INSTANCE.registerMessage(handler, message, id++, side);
   }
 

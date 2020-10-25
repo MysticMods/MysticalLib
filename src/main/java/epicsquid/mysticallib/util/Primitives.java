@@ -1,14 +1,13 @@
 package epicsquid.mysticallib.util;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.struct.Vec4d;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class Primitives {
 
@@ -51,7 +50,7 @@ public class Primitives {
   }
 
   public static void addCubeToBuffer(@Nonnull BufferBuilder buff, double x1, double y1, double z1, double x2, double y2, double z2, @Nonnull Vec4d[] uv,
-      float r, float g, float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west) {
+                                     float r, float g, float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west) {
     if (north) {
       buff.pos(x1, y1, z1).tex(uv[0].x, uv[0].y).color(r, g, b, a).normal(0, 0, -1.0f).endVertex();
       buff.pos(x2, y1, z1).tex(uv[0].x + uv[0].z, uv[0].y).color(r, g, b, a).normal(0, 0, -1.0f).endVertex();
@@ -91,7 +90,7 @@ public class Primitives {
   }
 
   public static void addCubeToBuffer(@Nonnull BufferBuilder buff, double x1, double y1, double z1, double x2, double y2, double z2, @Nonnull Vec4d[] uv,
-      float r, float g, float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west, int lightx, int lighty) {
+                                     float r, float g, float b, float a, boolean north, boolean south, boolean up, boolean down, boolean east, boolean west, int lightx, int lighty) {
     if (north) {
       buff.pos(x1, y1, z1).tex(uv[0].x, uv[0].y).lightmap(lightx, lighty).color(r, g, b, a).endVertex();
       buff.pos(x2, y1, z1).tex(uv[0].x + uv[0].z, uv[0].y).lightmap(lightx, lighty).color(r, g, b, a).endVertex();

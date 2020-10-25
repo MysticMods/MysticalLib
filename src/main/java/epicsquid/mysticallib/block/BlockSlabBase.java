@@ -1,10 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.item.ItemBlockSlab;
 import epicsquid.mysticallib.model.CustomModelBlock;
@@ -36,6 +31,10 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
+
 @SuppressWarnings("deprecation")
 public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, ICustomModeledObject {
 
@@ -44,7 +43,8 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
-  private @Nonnull BlockRenderLayer layer = BlockRenderLayer.SOLID;
+  private @Nonnull
+  BlockRenderLayer layer = BlockRenderLayer.SOLID;
   private boolean isFlammable = false;
   private boolean isDouble;
   private IBlockState parent;
@@ -52,7 +52,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   public Block slab;
 
   public BlockSlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull IBlockState parent, boolean isDouble,
-      @Nullable Block slab) {
+                       @Nullable Block slab) {
     super(mat);
     this.isDouble = isDouble;
     setTranslationKey(name);

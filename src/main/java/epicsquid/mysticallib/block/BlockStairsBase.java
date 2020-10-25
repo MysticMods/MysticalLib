@@ -1,9 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.List;
-
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -27,9 +23,13 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import java.util.List;
+
 @SuppressWarnings("deprecation")
 public class BlockStairsBase extends BlockStairs implements IBlock, IModeledObject, ICustomModeledObject {
-  private @Nonnull Item itemBlock;
+  private @Nonnull
+  Item itemBlock;
   public List<ItemStack> drops = null;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;

@@ -1,13 +1,13 @@
 package epicsquid.mysticallib.world;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 public class GenerationNode {
   private String structure = "";
@@ -23,7 +23,7 @@ public class GenerationNode {
   }
 
   public GenerationNode(@Nonnull BlockPos pos, @Nonnull String structure, @Nonnull Rotation rotation, @Nonnull Mirror mirror, boolean replaceWithAir,
-      boolean force) {
+                        boolean force) {
     this.pos = pos;
     this.structure = structure;
     this.rotation = rotation;

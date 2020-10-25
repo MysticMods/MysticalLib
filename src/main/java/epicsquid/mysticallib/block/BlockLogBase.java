@@ -1,8 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
@@ -23,10 +20,14 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 @SuppressWarnings("deprecation")
 public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, ICustomModeledObject {
 
-  private @Nonnull Item itemBlock;
+  private @Nonnull
+  Item itemBlock;
   private boolean isOpaque = false;
   private boolean hasCustomModel = false;
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
@@ -143,21 +144,21 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
     IBlockState state = this.getDefaultState();
 
     switch (meta & 0b1100) {
-    case 0b0000:
-      state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
-      break;
+      case 0b0000:
+        state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
+        break;
 
-    case 0b0100:
-      state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
-      break;
+      case 0b0100:
+        state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
+        break;
 
-    case 0b1000:
-      state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
-      break;
+      case 0b1000:
+        state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
+        break;
 
-    case 0b1100:
-      state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
-      break;
+      case 0b1100:
+        state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+        break;
     }
 
     return state;
@@ -169,20 +170,20 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
   @Override
   public int getMetaFromState(IBlockState state) {
     switch (state.getValue(LOG_AXIS)) {
-    case X:
-      return 0b0100;
-    case Y:
-      return 0b0000;
-    case Z:
-      return 0b1000;
-    case NONE:
-      return 0b1100;
+      case X:
+        return 0b0100;
+      case Y:
+        return 0b0000;
+      case Z:
+        return 0b1000;
+      case NONE:
+        return 0b1100;
     }
     return 0b1100;
   }
 
   @Override
   protected BlockStateContainer createBlockState() {
-    return new BlockStateContainer(this, new IProperty[] { LOG_AXIS });
+    return new BlockStateContainer(this, LOG_AXIS);
   }
 }

@@ -1,19 +1,6 @@
 package epicsquid.mysticallib.model.item;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.vecmath.Matrix4f;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.google.common.collect.ImmutableList;
-
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.DefaultTransformations;
 import net.minecraft.block.state.IBlockState;
@@ -26,6 +13,16 @@ import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ItemLayerModel;
+import org.apache.commons.lang3.tuple.Pair;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.vecmath.Matrix4f;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 public class BakedModelItem implements IBakedModel {
 
@@ -34,11 +31,12 @@ public class BakedModelItem implements IBakedModel {
   protected ImmutableList.Builder<BakedQuad> quads = ImmutableList.builder();
   protected List<TextureAtlasSprite> layers = new ArrayList<>();
   protected CustomModelItem model;
-  protected @Nonnull List<BakedQuad> layerQuads = new ArrayList<>();
+  protected @Nonnull
+  List<BakedQuad> layerQuads = new ArrayList<>();
   protected TextureAtlasSprite particle = null;
 
   public BakedModelItem(@Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter,
-      @Nonnull CustomModelItem model) {
+                        @Nonnull CustomModelItem model) {
     this.getter = bakedTextureGetter;
     this.format = format;
     int i = 0;

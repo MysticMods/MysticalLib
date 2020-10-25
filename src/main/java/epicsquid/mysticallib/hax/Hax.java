@@ -1,21 +1,11 @@
 package epicsquid.mysticallib.hax;
 
+import com.google.gson.GsonBuilder;
+import net.minecraft.client.renderer.block.model.*;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
-import com.google.gson.GsonBuilder;
-
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockFaceUV;
-import net.minecraft.client.renderer.block.model.BlockPart;
-import net.minecraft.client.renderer.block.model.BlockPartFace;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.block.model.ItemOverride;
-import net.minecraft.client.renderer.block.model.ItemTransformVec3f;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelBlock;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 @SuppressWarnings("deprecation")
 public class Hax {

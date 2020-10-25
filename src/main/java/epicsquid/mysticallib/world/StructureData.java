@@ -1,11 +1,5 @@
 package epicsquid.mysticallib.world;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.annotation.Nonnull;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.Mirror;
@@ -13,6 +7,11 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class StructureData implements IGeneratable {
   public Map<Vec3i, String> data = new HashMap<>();
@@ -65,7 +64,7 @@ public class StructureData implements IGeneratable {
 
   @Override
   public void generateIn(@Nonnull World world, int x, int y, int z, @Nonnull Rotation rotation, @Nonnull Mirror doMirror, boolean replaceWithAir,
-      boolean force) {
+                         boolean force) {
     calcDimensions();
     for (Entry<Vec3i, String> e : data.entrySet()) {
       Vec3i v = e.getKey();
@@ -86,7 +85,7 @@ public class StructureData implements IGeneratable {
   }
 
   private void placeBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Rotation rotation, @Nonnull Mirror mirror,
-      boolean replaceWithAir, boolean force) {
+                          boolean replaceWithAir, boolean force) {
     IBlockState at = world.getBlockState(pos);
     if (world.isAirBlock(pos) || at.getBlock().isReplaceable(world, pos) || force) {
       if (state.getBlock() != Blocks.AIR || state.getBlock() == Blocks.AIR && replaceWithAir) {

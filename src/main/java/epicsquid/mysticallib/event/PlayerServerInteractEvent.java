@@ -1,16 +1,19 @@
 package epicsquid.mysticallib.event;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
+import javax.annotation.Nonnull;
+
 public class PlayerServerInteractEvent extends Event {
-  protected @Nonnull EntityPlayer player;
-  protected @Nonnull EnumHand hand;
-  protected @Nonnull ItemStack stack;
+  protected @Nonnull
+  EntityPlayer player;
+  protected @Nonnull
+  EnumHand hand;
+  protected @Nonnull
+  ItemStack stack;
 
   public PlayerServerInteractEvent(@Nonnull EntityPlayer player, @Nonnull EnumHand hand, @Nonnull ItemStack stack) {
     this.player = player;

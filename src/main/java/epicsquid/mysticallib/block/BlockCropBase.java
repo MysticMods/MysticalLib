@@ -1,8 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.IModeledObject;
 import net.minecraft.block.BlockCrops;
@@ -14,10 +11,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.EnumPlantType;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 @SuppressWarnings("deprecation")
 public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject {
 
-  private final @Nonnull EnumPlantType plantType;
+  private final @Nonnull
+  EnumPlantType plantType;
 
   /**
    * Used for arbitrary crops
@@ -47,7 +48,7 @@ public class BlockCropBase extends BlockCrops implements IBlock, IModeledObject 
   @Override
   @Nonnull
   public AxisAlignedBB getBoundingBox(@Nonnull IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos) {
-    return new AxisAlignedBB(0, 0, 0, 1, 0.125f * (state.getValue(this.AGE) + 1), 1);
+    return new AxisAlignedBB(0, 0, 0, 1, 0.125f * (state.getValue(AGE) + 1), 1);
   }
 
   @Override

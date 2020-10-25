@@ -1,8 +1,8 @@
 package epicsquid.mysticallib.tile;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.tileentity.TileEntity;
+
+import javax.annotation.Nonnull;
 
 public interface IDelayedTileRenderer {
 

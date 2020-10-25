@@ -1,13 +1,12 @@
 package epicsquid.mysticallib.model;
 
-import java.util.HashMap;
-import java.util.Map;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
+import net.minecraftforge.common.model.TRSRTransformation;
 
 import javax.annotation.Nonnull;
 import javax.vecmath.Vector3f;
-
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraftforge.common.model.TRSRTransformation;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DefaultTransformations {
 

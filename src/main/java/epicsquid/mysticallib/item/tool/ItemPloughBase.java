@@ -2,7 +2,6 @@ package epicsquid.mysticallib.item.tool;
 
 import com.google.common.collect.Sets;
 import epicsquid.mysticallib.item.ItemHoeBase;
-import epicsquid.mysticallib.types.OneTimeSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockFarmland;

@@ -1,14 +1,10 @@
 package epicsquid.mysticallib.item;
 
-import java.util.Set;
-import java.util.function.Supplier;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.model.CustomModelItem;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.ICustomModeledObject;
 import epicsquid.mysticallib.model.IModeledObject;
-import epicsquid.mysticallib.types.OneTimeSupplier;
 import epicsquid.mysticallib.util.ItemUtil;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -17,6 +13,9 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+
+import java.util.Set;
+import java.util.function.Supplier;
 
 public class ItemToolBase extends ItemTool implements IModeledObject, ICustomModeledObject {
 
@@ -40,7 +39,7 @@ public class ItemToolBase extends ItemTool implements IModeledObject, ICustomMod
     ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "handlers"));
   }
 
-  public void addEffectiveBlock (Block block) {
+  public void addEffectiveBlock(Block block) {
     this.effectiveBlocks.add(block);
   }
 

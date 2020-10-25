@@ -1,13 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.model.CustomModelBlock;
 import epicsquid.mysticallib.model.CustomModelLoader;
 import epicsquid.mysticallib.model.block.BakedModelBlock;
@@ -31,6 +23,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @SuppressWarnings("deprecation")
 public class BlockCornerBase extends BlockBase {
   public static Map<Integer, List<AxisAlignedBB>> boxes = new HashMap<>();
@@ -40,7 +39,8 @@ public class BlockCornerBase extends BlockBase {
   public static final PropertyBool INNER = PropertyBool.create("inner");
 
   public boolean inner;
-  protected @Nullable IBlockState parent = null;
+  protected @Nullable
+  IBlockState parent = null;
 
   public BlockCornerBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, boolean inner) {
     super(mat, type, hardness, name);
@@ -82,7 +82,7 @@ public class BlockCornerBase extends BlockBase {
 
   @Override
   public void addCollisionBoxToList(@Nonnull IBlockState state, @Nonnull World world, @Nonnull BlockPos pos, @Nonnull AxisAlignedBB entityBox,
-      @Nonnull List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean advanced) {
+                                    @Nonnull List<AxisAlignedBB> collidingBoxes, @Nullable Entity entity, boolean advanced) {
     float box_precision = BlockSlantBase.box_precision;
     List<AxisAlignedBB> temp = new ArrayList<>();
     boolean up = state.getValue(UP);
@@ -90,121 +90,121 @@ public class BlockCornerBase extends BlockBase {
     if (inner) {
       if (!up) {
         switch (dir) {
-        case 0:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, i, 1.0, i + box_precision, 1.0));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(i, i, 0, 1.0, i + box_precision, 1.0));
-          }
-          break;
-        case 1:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, i, 1.0, i + box_precision, 1.0));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, 0, 1.0 - i, i + box_precision, 1.0));
-          }
-          break;
-        case 2:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, 0, 1.0, i + box_precision, 1.0 - i));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, 0, 1.0 - i, i + box_precision, 1.0));
-          }
-          break;
-        case 3:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, 0, 1.0, i + box_precision, 1.0 - i));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(i, i, 0, 1.0, i + box_precision, 1.0));
-          }
-          break;
+          case 0:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, i, 1.0, i + box_precision, 1.0));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(i, i, 0, 1.0, i + box_precision, 1.0));
+            }
+            break;
+          case 1:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, i, 1.0, i + box_precision, 1.0));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, 0, 1.0 - i, i + box_precision, 1.0));
+            }
+            break;
+          case 2:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, 0, 1.0, i + box_precision, 1.0 - i));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, 0, 1.0 - i, i + box_precision, 1.0));
+            }
+            break;
+          case 3:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, 0, 1.0, i + box_precision, 1.0 - i));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(i, i, 0, 1.0, i + box_precision, 1.0));
+            }
+            break;
         }
       } else {
         switch (dir) {
-        case 0:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, i, 1.0, (1.0 - box_precision) - i, 1.0));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(i, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0));
-          }
-          break;
-        case 1:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, i, 1.0, (1.0 - box_precision) - i, 1.0));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0 - i, (1.0 - box_precision) - i, 1.0));
-          }
-          break;
-        case 2:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0 - i));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0 - i, (1.0 - box_precision) - i, 1.0));
-          }
-          break;
-        case 3:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0 - i));
-          }
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(i, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0));
-          }
-          break;
+          case 0:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, i, 1.0, (1.0 - box_precision) - i, 1.0));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(i, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0));
+            }
+            break;
+          case 1:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, i, 1.0, (1.0 - box_precision) - i, 1.0));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0 - i, (1.0 - box_precision) - i, 1.0));
+            }
+            break;
+          case 2:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0 - i));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0 - i, (1.0 - box_precision) - i, 1.0));
+            }
+            break;
+          case 3:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0 - i));
+            }
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(i, 1.0 - i, 0, 1.0, (1.0 - box_precision) - i, 1.0));
+            }
+            break;
         }
       }
     } else {
       if (!up) {
         switch (dir) {
-        case 0:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, 0, 1.0 - i, i + box_precision, 1.0 - i));
-          }
-          break;
-        case 1:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(1.0, i, 0, i, i + box_precision, 1.0 - i));
-          }
-          break;
-        case 2:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(1.0, i, 1.0, i, i + box_precision, i));
-          }
-          break;
-        case 3:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, i, 1.0, 1.0 - i, i + box_precision, i));
-          }
-          break;
+          case 0:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, 0, 1.0 - i, i + box_precision, 1.0 - i));
+            }
+            break;
+          case 1:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(1.0, i, 0, i, i + box_precision, 1.0 - i));
+            }
+            break;
+          case 2:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(1.0, i, 1.0, i, i + box_precision, i));
+            }
+            break;
+          case 3:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, i, 1.0, 1.0 - i, i + box_precision, i));
+            }
+            break;
         }
       } else {
         switch (dir) {
-        case 0:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0 - i, (1.0 - i) - box_precision, 1.0 - i));
-          }
-          break;
-        case 1:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(1.0, 1.0 - i, 0, i, (1.0 - i) - box_precision, 1.0 - i));
-          }
-          break;
-        case 2:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(1.0, 1.0 - i, 1.0, i, (1.0 - i) - box_precision, i));
-          }
-          break;
-        case 3:
-          for (float i = 0; i < 1; i += box_precision) {
-            temp.add(new AxisAlignedBB(0, 1.0 - i, 1.0, 1.0 - i, (1.0 - i) - box_precision, i));
-          }
-          break;
+          case 0:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, 0, 1.0 - i, (1.0 - i) - box_precision, 1.0 - i));
+            }
+            break;
+          case 1:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(1.0, 1.0 - i, 0, i, (1.0 - i) - box_precision, 1.0 - i));
+            }
+            break;
+          case 2:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(1.0, 1.0 - i, 1.0, i, (1.0 - i) - box_precision, i));
+            }
+            break;
+          case 3:
+            for (float i = 0; i < 1; i += box_precision) {
+              temp.add(new AxisAlignedBB(0, 1.0 - i, 1.0, 1.0 - i, (1.0 - i) - box_precision, i));
+            }
+            break;
         }
       }
     }
@@ -216,7 +216,7 @@ public class BlockCornerBase extends BlockBase {
   @Override
   @Nonnull
   public IBlockState getStateForPlacement(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull EnumFacing face, float hitX, float hitY, float hitZ, int meta,
-      @Nonnull EntityLivingBase placer) {
+                                          @Nonnull EntityLivingBase placer) {
     boolean up = (hitY > 0.5f);
     if (hitY == 1) {
       up = false;

@@ -1,12 +1,5 @@
 package epicsquid.mysticallib.model.block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.model.CustomModelBase;
 import epicsquid.mysticallib.model.ModelUtil;
 import epicsquid.mysticallib.model.parts.Cube;
@@ -19,14 +12,20 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.model.IModelState;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
 public class BakedModelTrapDoor extends BakedModelBlock {
 
   private Cube cube_down, cube_up, cube_east, cube_west, cube_south, cube_north;
 
   public BakedModelTrapDoor(@Nonnull IModelState state, @Nonnull VertexFormat format,
-      @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
+                            @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter, @Nonnull CustomModelBase model) {
     super(format, bakedTextureGetter, model);
-    TextureAtlasSprite[] texes = new TextureAtlasSprite[] { texwest, texeast, texdown, texup, texnorth, texsouth };
+    TextureAtlasSprite[] texes = new TextureAtlasSprite[]{texwest, texeast, texdown, texup, texnorth, texsouth};
     cube_down = ModelUtil.makeCube(format, 0, 0, 0, 1, 0.1875, 1, null, texes, 0).setNoCull(EnumFacing.DOWN);
     cube_up = ModelUtil.makeCube(format, 0, 0.8125, 0, 1, 0.1875, 1, null, texes, 0).setNoCull(EnumFacing.UP);
     cube_west = ModelUtil.makeCube(format, 0.8125, 0, 0, 0.1875, 1, 1, null, texes, 0).setNoCull(EnumFacing.WEST);
@@ -57,18 +56,18 @@ public class BakedModelTrapDoor extends BakedModelBlock {
         }
       } else {
         switch (state.getValue(BlockTrapDoor.FACING)) {
-        case EAST:
-          cube_east.addToList(quads, side);
-          break;
-        case SOUTH:
-          cube_south.addToList(quads, side);
-          break;
-        case WEST:
-          cube_west.addToList(quads, side);
-          break;
-        case NORTH:
-          cube_north.addToList(quads, side);
-          break;
+          case EAST:
+            cube_east.addToList(quads, side);
+            break;
+          case SOUTH:
+            cube_south.addToList(quads, side);
+            break;
+          case WEST:
+            cube_west.addToList(quads, side);
+            break;
+          case NORTH:
+            cube_north.addToList(quads, side);
+            break;
         }
       }
     }

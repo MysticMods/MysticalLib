@@ -1,7 +1,5 @@
 package epicsquid.mysticallib.recipe;
 
-import javax.annotation.Nonnull;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.event.RegisterModRecipesEvent;
 import net.minecraft.item.ItemStack;
@@ -14,6 +12,8 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import javax.annotation.Nonnull;
+
 public class RecipeRegistry {
 
   public static ResourceLocation getRL(@Nonnull String s) {
@@ -21,17 +21,17 @@ public class RecipeRegistry {
   }
 
   public static void registerShaped(@Nonnull IForgeRegistry<IRecipe> registry, @Nonnull String name, @Nonnull ItemStack result,
-      @Nonnull Object... ingredients) {
+                                    @Nonnull Object... ingredients) {
     registry.register(new ShapedOreRecipe(getRL(name), result, ingredients).setRegistryName(getRL(name)));
   }
 
   public static void registerShapedMirrored(@Nonnull IForgeRegistry<IRecipe> registry, @Nonnull String name, @Nonnull ItemStack result,
-      @Nonnull Object... ingredients) {
+                                            @Nonnull Object... ingredients) {
     registry.register(new ShapedOreRecipe(getRL(name), result, ingredients).setMirrored(true).setRegistryName(getRL(name)));
   }
 
   public static void registerShapeless(@Nonnull IForgeRegistry<IRecipe> registry, @Nonnull String name, @Nonnull ItemStack result,
-      @Nonnull Object... ingredients) {
+                                       @Nonnull Object... ingredients) {
     registry.register(new ShapelessOreRecipe(getRL(name), result, ingredients).setRegistryName(getRL(name)));
   }
 
