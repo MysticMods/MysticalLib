@@ -112,12 +112,12 @@ public class ModelUtil {
   public static Cube makeCube(@Nonnull VertexFormat format, float x, float y, float z, float w, float h, float l, @Nullable Vec4f[] uv,
       @Nonnull TextureAtlasSprite[] sprites, int tintIndex) {
     if (uv == null) {
-      uv = new Vec4f[] { new Vec4f((z * 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), l * 16f, h * 16f),
-          new Vec4f((float) MathUtil.nclamp(l * 16f - z * 16f, 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), l * 16f, h * 16f),
-          new Vec4f((x * 16f), (float) MathUtil.nclamp(z * 16f, 16f), w * 16f, l * 16f),
-          new Vec4f((x * 16f), (float) MathUtil.nclamp(l * 16f - z * 16f, 16f), w * 16f, l * 16f),
-          new Vec4f((float) MathUtil.nclamp(w * 16f - x * 16f, 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), w * 16f, h * 16f),
-          new Vec4f((x * 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), w * 16f, h * 16f) };
+      uv = new Vec4f[] { new Vec4f((float) (z * 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) l * 16f, (float) h * 16f),
+          new Vec4f((float) MathUtil.nclamp(l * 16f - z * 16f, 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) l * 16f, (float) h * 16f),
+          new Vec4f((float) (x * 16f), (float) MathUtil.nclamp(z * 16f, 16f), (float) w * 16f, (float) l * 16f),
+          new Vec4f((float) (x * 16f), (float) MathUtil.nclamp(l * 16f - z * 16f, 16f), (float) w * 16f, (float) l * 16f),
+          new Vec4f((float) MathUtil.nclamp(w * 16f - x * 16f, 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) w * 16f, (float) h * 16f),
+          new Vec4f((float) (x * 16f), (float) MathUtil.nclamp(h * 16f - y * 16f, 16f), (float) w * 16f, (float) h * 16f) };
     }
     return new Cube(makeCubeFace(format, EnumFacing.WEST, x, y, z, w, h, l, uv[0].x, uv[0].y, uv[0].z, uv[0].w, sprites[0], tintIndex),
         makeCubeFace(format, EnumFacing.EAST, x, y, z, w, h, l, uv[1].x, uv[1].y, uv[1].z, uv[1].w, sprites[1], tintIndex),

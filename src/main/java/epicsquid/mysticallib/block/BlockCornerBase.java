@@ -65,7 +65,7 @@ public class BlockCornerBase extends BlockBase {
   @Override
   @Nonnull
   public IBlockState getStateFromMeta(int meta) {
-    return getDefaultState().withProperty(INNER, inner).withProperty(UP, (meta / 4) > 0).withProperty(DIR, meta % 4);
+    return getDefaultState().withProperty(INNER, inner).withProperty(UP, (int) (meta / 4) > 0).withProperty(DIR, meta % 4);
   }
 
   @Override

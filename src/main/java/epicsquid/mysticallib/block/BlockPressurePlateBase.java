@@ -194,7 +194,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
 
     switch (this.plateType) {
     case ALL:
-      list = worldIn.getEntitiesWithinAABBExcludingEntity(null, axisalignedbb);
+      list = worldIn.getEntitiesWithinAABBExcludingEntity((Entity) null, axisalignedbb);
       break;
     case MOBS:
       list = worldIn.<Entity>getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb);

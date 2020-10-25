@@ -56,7 +56,8 @@ public class RangeParticle<T extends TileEntity & RenderUtil.IRanged> extends Pa
   }
 
   @Override
-  public void renderParticle(@Nonnull BufferBuilder worldRendererIn, @Nonnull Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+  public void renderParticle(
+      @Nonnull BufferBuilder worldRendererIn, @Nonnull Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 
     GlStateManager.pushMatrix();
     GlStateManager.enableLighting();
