@@ -49,6 +49,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -85,9 +86,18 @@ public class LibRegistry {
     tileEntityRenderMap.put(entity, render);
   }
 
+  @FunctionalInterface
+  public interface SlabBuilder {
+    BlockSlabBase build(Material mat, SoundType type, float hardness, String name, IBlockState parent, boolean isDouble, @Nullable Block slab);
+  }
+
   public static void addSlabPair(Material material, SoundType type, float hardness, String name, IBlockState parent, Block[] refs, CreativeTabs tab) {
-    BlockSlabBase double_slab = new BlockSlabBase(material, type, hardness, name + "_double_slab", parent, true, null).setModelCustom(false);
-    BlockSlabBase slab = new BlockSlabBase(material, type, hardness, name + "_slab", parent, false, double_slab).setModelCustom(false);
+    addSlabPair(material, type, hardness, name, parent, refs, tab, BlockSlabBase::new);
+  }
+
+  public static void addSlabPair(Material material, SoundType type, float hardness, String name, IBlockState parent, Block[] refs, CreativeTabs tab, SlabBuilder builder) {
+    BlockSlabBase double_slab = builder.build(material, type, hardness, name + "_double_slab", parent, true, null).setModelCustom(false);
+    BlockSlabBase slab = builder.build(material, type, hardness, name + "_slab", parent, false, double_slab).setModelCustom(false);
     double_slab.slab = slab;
     slab.setCreativeTab(tab);
     refs[0] = slab;

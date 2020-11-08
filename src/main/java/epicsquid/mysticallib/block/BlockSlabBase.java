@@ -51,8 +51,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   public String name = "";
   public Block slab;
 
-  public BlockSlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull IBlockState parent, boolean isDouble,
-      @Nullable Block slab) {
+  public BlockSlabBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull IBlockState parent, boolean isDouble, @Nullable Block slab) {
     super(mat);
     this.isDouble = isDouble;
     setTranslationKey(name);
