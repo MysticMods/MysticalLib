@@ -25,7 +25,7 @@ public interface IItemSizedTool extends IEffectiveTool {
   default boolean onSizedBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
     final Set<BlockPos> breakableBlocks = BreakUtil.nearbyBlocks(itemstack, pos, player);
     if (breakableBlocks.isEmpty()) {
-      maybeDamage(itemstack, 1, player);
+      //maybeDamage(itemstack, 1, player);
       return false;
     } else {
       int count = 0;
