@@ -1,6 +1,7 @@
 package epicsquid.mysticallib.util;
 
 
+import epicsquid.mysticallib.MysticalLib;
 import epicsquid.mysticallib.item.tool.ISizedTool;
 import epicsquid.mysticallib.item.tool.ItemPloughBase;
 import net.minecraft.block.Block;
@@ -25,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import scala.reflect.internal.Mirrors;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -114,10 +116,7 @@ public class BreakUtil {
           continue;
         }
 
-        float potentialHardness = potentialState.getPlayerRelativeBlockHardness(player, world, potential);
-        if (potentialHardness > 0.0f && potentialHardness <= hardness) {
-          result.add(potential);
-        }
+        result.add(potential);
       }
     }
 
