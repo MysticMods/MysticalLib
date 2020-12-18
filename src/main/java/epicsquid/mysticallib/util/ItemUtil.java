@@ -128,8 +128,7 @@ public class ItemUtil {
     if (parts.length >= 3) {
       try {
         meta = Integer.parseInt(parts[2]);
-      } catch (NumberFormatException e) {
-        meta = 0;
+      } catch (NumberFormatException ignored) {
       }
     }
     if (loc == null) {
