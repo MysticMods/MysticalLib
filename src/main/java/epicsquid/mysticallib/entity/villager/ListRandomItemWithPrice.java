@@ -22,25 +22,38 @@ public class ListRandomItemWithPrice implements EntityVillager.ITradeList {
     ItemAndPriceInfo info = itemsList[random.nextInt(itemsList.length)];
 
     int price = info.getPrice(random);
+    ItemStack stack = info.getItem(random);
 
-    recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, price, 0), new ItemStack(info.getItem())));
+    recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, price, 0), stack));
   }
 
   public static class ItemAndPriceInfo {
     private EntityVillager.PriceInfo price;
     private Item item;
+    private int minCount = 1;
+    private int maxCount = 1;
 
     public ItemAndPriceInfo(Item item, int lower, int upper) {
       this.price = new EntityVillager.PriceInfo(lower, upper);
       this.item = item;
     }
 
+    public ItemAndPriceInfo(Item item, int minCount, int maxCount, int lower, int upper) {
+      this.price = new EntityVillager.PriceInfo(lower, upper);
+      this.item = item;
+      this.minCount = minCount;
+      this.maxCount = maxCount;
+    }
+
     public int getPrice(Random random) {
       return price.getPrice(random);
     }
 
-    public Item getItem() {
-      return item;
+    public ItemStack getItem (Random random) {
+      if (minCount == maxCount && maxCount == 1) {
+        return new ItemStack(item);
+      }
+      return new ItemStack(item, minCount + random.nextInt(maxCount - minCount));
     }
   }
 }
