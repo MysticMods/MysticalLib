@@ -48,11 +48,11 @@ public class ItemBowlBase extends ItemFoodBase {
 
   @Override
   public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
-    ItemStack returned = new ItemStack(Items.BOWL);
     ItemStack result = super.onItemUseFinish(stack, world, entity);
+    ItemStack returned = new ItemStack(Items.BOWL);
     if (result.isEmpty()) {
       return returned;
-    } else if (entity instanceof EntityPlayer) {
+    } else if (entity instanceof EntityPlayer && !world.isRemote) {
       EntityPlayer player = (EntityPlayer) entity;
       if (!player.addItemStackToInventory(returned)) {
         ItemUtil.spawnItem(world, player.getPosition(), returned);
