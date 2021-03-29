@@ -99,3 +99,9 @@ task deobfJar(type: Jar) {
 }
 
 tasks.build.dependsOn deobfJar
+
+idea {
+    module {
+        inheritOutputDirs = true
+    }
+}
