@@ -97,10 +97,10 @@ public class BlockLogBase extends BlockLog implements IBlock, IModeledObject, IC
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
+      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":thaumcraft.blocks/" + getRegistryName().getPath());
       if (getParentState() != null) {
         defaultTex = new ResourceLocation(
-            getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
+            getParentState().getBlock().getRegistryName().getNamespace() + ":thaumcraft.blocks/" + getParentState().getBlock().getRegistryName().getPath());
       }
       CustomModelLoader.blockmodels
           .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));

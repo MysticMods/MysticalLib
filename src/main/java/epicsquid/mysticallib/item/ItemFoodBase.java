@@ -39,7 +39,7 @@ public class ItemFoodBase extends ItemFood implements IModeledObject, ICustomMod
   @Override
   public void initCustomModel() {
     if (this.hasCustomModel) {
-      ResourceLocation texture = new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath());
+      ResourceLocation texture = new ResourceLocation(getRegistryName().getNamespace() + ":thaumcraft.items/" + getRegistryName().getPath());
       CustomModelItem item = new CustomModelItem(false, texture);
       item.addTexture("particle", texture);
       CustomModelLoader.itemmodels.put(getRegistryName(), item);

@@ -1,118 +1,46 @@
-buildscript {
-    repositories {
-        // jcenter()
-        mavenCentral()
-        maven {
-            name = "jitpack"
-            url = "https://jitpack.io/"
-        }
-        maven {
-            name = "forge"
-            url = "https://maven.minecraftforge.net/"
-        }
-    }
-    dependencies {
-        classpath("com.github.DStrand1:ForgeGradle:FG_2.3-SNAPSHOT") {
-            changing = true
-        }
-    }
+plugins {
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
-apply plugin: "net.minecraftforge.gradle.forge"
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'maven-publish'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply from: 'gradle/property_helper.gradle'
+apply from: 'gradle/property_loader.gradle'
 
-version = "${minecraft_version}-${mod_version}"
-if (System.getenv('BUILD_NUMBER') != null) {
-    version = "${minecraft_version}-${mod_version}-"+ System.getenv('BUILD_NUMBER')
-}
-group = "epicsquid.mysticallib" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "mysticallib"
+// Load mod related properties
+ext.modName = getRequiredString('mod_name')
+ext.modAuthor = getRequiredString('mod_author')
+ext.modId = getRequiredString('mod_id')
+ext.modCredits = getDefaultString('mod_credits', ext.modAuthor)
+ext.modDescription = getOptionalString('mod_description')
+ext.modChangelog = getOptionalString('mod_changelog')
+ext.modHomepage = getOptionalString('mod_homepage')
+ext.modSource = getOptionalString('mod_source')
+ext.modIssues = getOptionalString('mod_issues')
+ext.modLicense = getOptionalString('mod_license')
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+// Load Minecraft specific properties
+ext.mcVersion = getRequiredString('minecraft_version')
 
-minecraft {
-    version = "1.12.2-14.23.5.2847"
-    runDir = "run"
+// Load build-time modules
+apply from: 'gradle/build_number.gradle'
+apply from: 'gradle/git_changelog.gradle'
+apply from: 'gradle/patreon.gradle'
+apply from: 'gradle/common_manifest.gradle'
+apply from: 'gradle/common_artifacts.gradle'
+apply from: 'gradle/api.gradle'
+apply from: 'gradle/forge.gradle'
+apply from: 'gradle/shadow.gradle'
+apply from: 'gradle/patchouli.gradle'
+apply from: 'gradle/jei.gradle'
+apply from: 'gradle/top.gradle'
+apply from: 'gradle/hwyla.gradle'
+apply from: 'gradle/dynamic_trees.gradle'
+apply from: 'gradle/mysticalworld.gradle'
+apply from: 'gradle/minify_jsons.gradle'
 
-    mappings = "stable_39"
-
-    replace "@VERSION@", project.version
-    replaceIn "MysticalLib.java"
-}
-
-dependencies {
-}
-
-repositories {
-}
-
-processResources {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
-
-    rename '(.+_at.cfg)', 'META-INF/$1'
-}
-
-jar {
-    manifest {
-        attributes 'FMLAT': 'mysticallib_at.cfg'
-    }
-}
-
-publishing {
-
-    publications {
-
-        mavenJava(MavenPublication) {
-
-            groupId project.group
-            artifactId project.archivesBaseName
-            version project.version
-            from components.java
-
-            artifact deobfJar {
-
-                classifier 'deobf'
-            }
-        }
-    }
-
-    repositories {
-
-        maven {
-
-            url "file://" + System.getenv("local_maven")
-        }
-    }
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'deobf'
-}
-
-tasks.build.dependsOn deobfJar
-
-idea {
-    module {
-        inheritOutputDirs = true
-    }
-}
+// Load publishing modules
+apply from: 'gradle/maven.gradle'
+apply from: 'gradle/signing.gradle'
+apply from: 'gradle/curseforge.gradle'
+apply from: 'gradle/version_checker.gradle'

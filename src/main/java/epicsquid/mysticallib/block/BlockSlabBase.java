@@ -184,7 +184,7 @@ public class BlockSlabBase extends BlockSlab implements IBlock, IModeledObject, 
   public void initCustomModel() {
     if (hasCustomModel) {
       ResourceLocation defaultTex = new ResourceLocation(
-          parent.getBlock().getRegistryName().getNamespace() + ":blocks/" + parent.getBlock().getRegistryName().getPath());
+          parent.getBlock().getRegistryName().getNamespace() + ":thaumcraft.blocks/" + parent.getBlock().getRegistryName().getPath());
       if (isDouble) {
         CustomModelLoader.blockmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + getRegistryName().getPath()),
             new CustomModelBlock(getModelClass(1), defaultTex, defaultTex));

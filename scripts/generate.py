@@ -23,8 +23,8 @@ def main (args):
 
     directory = data["directory"]
     texture_base = data["texture_base"]
-    blocks = data["blocks"]
-    items = data["items"]
+    blocks = data["thaumcraft.blocks"]
+    items = data["thaumcraft.items"]
 
     for model in data["models"]:
         base = model["base"]
@@ -56,11 +56,11 @@ def main (args):
             with open(os.path.join(blocks, base + "_wall_post.json"), "w") as o:
                 o.write(wall_post % tuple([this_texture2, ] * wall_post.count("%s")))
 
-            this_texture2 = texture_base.replace("blocks/", "") + base
+            this_texture2 = texture_base.replace("thaumcraft.blocks/", "") + base
             with open(filename, "w") as o:
                 o.write(wall_template % tuple([this_texture2, ] * wall_template.count("%s")))
 
-            this_texture2 = texture_base.replace("blocks", "block") + base
+            this_texture2 = texture_base.replace("thaumcraft.blocks", "block") + base
             with open(os.path.join(items, base + "_wall.json"), "w") as o:
                 o.write(wall_inventory_item % tuple([this_texture2, ] * wall_inventory_item.count("%s")))
         else:

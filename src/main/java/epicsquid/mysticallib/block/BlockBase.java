@@ -41,7 +41,7 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   private boolean hasItems = true;
   private boolean noCull = false;
   private boolean isBeacon = false;
-  // By default the blocks are made of wood and therefore flammable
+  // By default the thaumcraft.blocks are made of wood and therefore flammable
   private boolean isFlammable = false;
   private AxisAlignedBB box = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
   private BlockRenderLayer layer = BlockRenderLayer.SOLID;
@@ -167,10 +167,10 @@ public class BlockBase extends Block implements IBlock, IModeledObject, ICustomM
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
+      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":thaumcraft.blocks/" + getRegistryName().getPath());
       if (getParentState() != null) {
         defaultTex = new ResourceLocation(
-            getParentState().getBlock().getRegistryName().getNamespace() + ":blocks/" + getParentState().getBlock().getRegistryName().getPath());
+            getParentState().getBlock().getRegistryName().getNamespace() + ":thaumcraft.blocks/" + getParentState().getBlock().getRegistryName().getPath());
       }
       CustomModelLoader.blockmodels
           .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));

@@ -264,9 +264,9 @@ public class BlockSlantBase extends BlockBase {
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel()) {
-      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":blocks/" + getRegistryName().getPath());
+      ResourceLocation defaultTex = new ResourceLocation(getRegistryName().getNamespace() + ":thaumcraft.blocks/" + getRegistryName().getPath());
       if (parent != null) {
-        defaultTex = new ResourceLocation(parent.getBlock().getRegistryName().getNamespace() + ":blocks/" + parent.getBlock().getRegistryName().getPath());
+        defaultTex = new ResourceLocation(parent.getBlock().getRegistryName().getNamespace() + ":thaumcraft.blocks/" + parent.getBlock().getRegistryName().getPath());
       }
       CustomModelLoader.blockmodels
           .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));

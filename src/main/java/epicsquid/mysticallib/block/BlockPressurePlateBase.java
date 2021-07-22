@@ -179,7 +179,7 @@ public class BlockPressurePlateBase extends BlockPressurePlate implements IBlock
   @SideOnly(Side.CLIENT)
   public void initCustomModel() {
     if (hasCustomModel) {
-      ResourceLocation defaultTex = new ResourceLocation(parent.getRegistryName().getNamespace() + ":blocks/" + parent.getRegistryName().getPath());
+      ResourceLocation defaultTex = new ResourceLocation(parent.getRegistryName().getNamespace() + ":thaumcraft.blocks/" + parent.getRegistryName().getPath());
       CustomModelLoader.blockmodels
           .put(new ResourceLocation(getRegistryName().getNamespace() + ":models/block/" + name), new CustomModelBlock(getModelClass(), defaultTex, defaultTex));
       CustomModelLoader.itemmodels.put(new ResourceLocation(getRegistryName().getNamespace() + ":" + name + "#handlers"),

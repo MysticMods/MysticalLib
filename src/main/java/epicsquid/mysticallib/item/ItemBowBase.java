@@ -43,7 +43,7 @@ public class ItemBowBase extends ItemBow implements IModeledObject, ICustomModel
   public void initCustomModel() {
     if (this.hasCustomModel) {
       CustomModelLoader.itemmodels
-          .put(getRegistryName(), new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":items/" + getRegistryName().getPath())));
+          .put(getRegistryName(), new CustomModelItem(false, new ResourceLocation(getRegistryName().getNamespace() + ":thaumcraft.items/" + getRegistryName().getPath())));
     }
   }
 

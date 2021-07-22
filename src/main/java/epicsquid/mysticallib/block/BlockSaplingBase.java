@@ -42,7 +42,7 @@ public class BlockSaplingBase extends BlockBush implements IBlock, IModeledObjec
   private boolean hasCustomModel = false;
   private boolean hasItems = true;
   private AxisAlignedBB box;
-  // By default the blocks are made of wood and therefore flammable
+  // By default the thaumcraft.blocks are made of wood and therefore flammable
   private boolean isFlammable = false;
   private BlockRenderLayer layer = BlockRenderLayer.CUTOUT;
   private Supplier<WorldGenAbstractTree> treeGenerator;

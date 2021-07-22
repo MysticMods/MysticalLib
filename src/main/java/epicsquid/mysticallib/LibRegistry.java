@@ -119,7 +119,7 @@ public class LibRegistry {
   }
 
   /**
-   * Sets the current mod to register the blocks/items/entities/tes under
+   * Sets the current mod to register the thaumcraft.blocks/thaumcraft.items/thaumcraft.entities/tes under
    *
    * @param modid     ID Of the mod (e.g. "MysticalLib")
    * @param container The instance of the ModContainer
