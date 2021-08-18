@@ -115,6 +115,6 @@ idea {
         inheritOutputDirs = true
     }
 }
-sourceSets {
+/*sourceSets {
     main.output.resourcesDir = main.java.outputDir
-}
+}*/
