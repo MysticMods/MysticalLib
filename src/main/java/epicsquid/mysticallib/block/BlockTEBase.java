@@ -29,9 +29,15 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   public static Set<Class<? extends TileEntity>> classes = new HashSet<>();
 
   public BlockTEBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
+    this(mat, type, hardness, name, teClass, true);
+  }
+
+  public BlockTEBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass, boolean register) {
     super(mat, type, hardness, name);
-    this.teClass = teClass;
-    attemptRegistry(teClass);
+    if (register) {
+      this.teClass = teClass;
+      attemptRegistry(teClass);
+    }
   }
 
   public static void attemptRegistry(@Nonnull Class<? extends TileEntity> c) {
