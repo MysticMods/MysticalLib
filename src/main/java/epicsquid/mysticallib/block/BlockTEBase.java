@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
@@ -38,7 +39,7 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
       String[] nameParts = c.getTypeName().split("\\.");
       String className = nameParts[nameParts.length - 1];
       String modid = LibRegistry.getActiveModid();
-      GameRegistry.registerTileEntity(c, modid + ":" + Util.lowercase(className));
+      GameRegistry.registerTileEntity(c, new ResourceLocation(modid, Util.lowercase(className)));
     }
   }
 
