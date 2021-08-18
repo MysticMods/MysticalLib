@@ -1,11 +1,5 @@
 package epicsquid.mysticallib.block;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import epicsquid.mysticallib.LibRegistry;
 import epicsquid.mysticallib.tile.ITile;
 import epicsquid.mysticallib.util.Util;
@@ -23,25 +17,29 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.HashSet;
+import java.util.Set;
+
 @SuppressWarnings("deprecation")
 public class BlockTEBase extends BlockBase implements ITileEntityProvider {
   protected Class<? extends TileEntity> teClass;
   public static Set<Class<? extends TileEntity>> classes = new HashSet<>();
 
   public BlockTEBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass) {
-    this(mat, type, hardness, name, teClass, true);
+    super(mat, type, hardness, name);
+    this.teClass = teClass;
+    attemptRegistry(teClass, name);
   }
 
-  public BlockTEBase(@Nonnull Material mat, @Nonnull SoundType type, float hardness, @Nonnull String name, @Nonnull Class<? extends TileEntity> teClass, boolean register) {
-    super(mat, type, hardness, name);
-    if (register) {
-      this.teClass = teClass;
-      attemptRegistry(teClass);
-    }
+  public void attemptRegistry(@Nonnull Class<? extends TileEntity> c, String name) {
+    attemptRegistry(c);
   }
 
   public static void attemptRegistry(@Nonnull Class<? extends TileEntity> c) {
     if (!classes.contains(c)) {
+      classes.add(c);
       String[] nameParts = c.getTypeName().split("\\.");
       String className = nameParts[nameParts.length - 1];
       String modid = LibRegistry.getActiveModid();
@@ -51,7 +49,7 @@ public class BlockTEBase extends BlockBase implements ITileEntityProvider {
 
   @Override
   public boolean onBlockActivated(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player, @Nonnull EnumHand hand,
-      @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
+                                  @Nonnull EnumFacing face, float hitX, float hitY, float hitZ) {
     TileEntity t = world.getTileEntity(pos);
     if (t instanceof ITile) {
       return ((ITile) t).activate(world, pos, state, player, hand, face, hitX, hitY, hitZ);
