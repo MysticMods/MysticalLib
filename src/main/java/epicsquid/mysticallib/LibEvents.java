@@ -40,7 +40,7 @@ public class LibEvents {
     if (MysticalLib.proxy instanceof ClientProxy) {
       GlStateManager.pushMatrix();
       //noinspection ConstantConditions
-      ClientProxy.particleRenderer.renderParticles(Minecraft.getMinecraft() != null ? Minecraft.getMinecraft().player : null, event.getPartialTicks());
+      ClientProxy.particleRenderer.renderParticles(MysticalLib.proxy.getPlayer(), event.getPartialTicks());
       GlStateManager.popMatrix();
     }
   }

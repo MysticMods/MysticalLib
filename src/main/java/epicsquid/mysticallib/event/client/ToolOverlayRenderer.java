@@ -44,7 +44,10 @@ public class ToolOverlayRenderer {
       return;
     }
 
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    EntityPlayer player = MysticalLib.proxy.getPlayer();
+    if (player == null) {
+      return;
+    }
     if (player.isSneaking()) {
       return;
     }

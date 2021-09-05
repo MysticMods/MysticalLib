@@ -57,7 +57,7 @@ public class ParticleRenderer {
     float f2 = ActiveRenderInfo.getRotationYZ();
     float f3 = ActiveRenderInfo.getRotationXY();
     float f4 = ActiveRenderInfo.getRotationXZ();
-    EntityPlayer player = Minecraft.getMinecraft().player;
+    EntityPlayer player = MysticalLib.proxy.getPlayer();
     if (player != null) {
       Particle.interpPosX = player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks;
       Particle.interpPosY = player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks;
