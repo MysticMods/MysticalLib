@@ -20,10 +20,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class ItemPloughBase extends ItemHoeBase implements IEffectiveTool, ILimitAxis {
+public abstract class ItemPloughBase extends ItemHoeBase implements IEffectiveTool, ILimitAxis, IBlacklistingTool {
   public static Set<Block> EFFECTIVE_BLOCKS = Sets.newHashSet(Blocks.GRASS, Blocks.GRASS_PATH, Blocks.DIRT, Blocks.FARMLAND);
 
   public ItemPloughBase(ToolMaterial material, String name, int toolLevel, int maxDamage, Supplier<Ingredient> repair) {

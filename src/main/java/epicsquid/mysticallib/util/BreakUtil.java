@@ -2,6 +2,7 @@ package epicsquid.mysticallib.util;
 
 
 import epicsquid.mysticallib.MysticalLib;
+import epicsquid.mysticallib.item.tool.IBlacklistingTool;
 import epicsquid.mysticallib.item.tool.ISizedTool;
 import epicsquid.mysticallib.item.tool.ItemPloughBase;
 import net.minecraft.block.Block;
@@ -56,6 +57,8 @@ public class BreakUtil {
       return Collections.emptySet();
     }
 
+    IBlacklistingTool blacklist = (IBlacklistingTool) tool;
+
     final ISizedTool sized = (ISizedTool) tool;
 
     float hardness = state.getPlayerRelativeBlockHardness(player, world, pos);
@@ -103,6 +106,9 @@ public class BreakUtil {
         final IBlockState potentialState = world.getBlockState(potential);
         final Material material = potentialState.getMaterial();
         final Block potentialBlock = potentialState.getBlock();
+        if (blacklist.isBlacklisted(potentialBlock)) {
+          continue;
+        }
         if (plough && ItemPloughBase.EFFECTIVE_BLOCKS.contains(potentialBlock)) {
           result.add(potential);
           continue;

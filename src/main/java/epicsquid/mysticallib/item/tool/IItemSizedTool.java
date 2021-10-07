@@ -2,6 +2,7 @@ package epicsquid.mysticallib.item.tool;
 
 import epicsquid.mysticallib.util.BreakUtil;
 import epicsquid.mysticallib.util.Util;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,9 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Set;
 
-public interface IItemSizedTool extends IEffectiveTool {
+public interface IItemSizedTool extends IEffectiveTool, IBlacklistingTool {
   float getEfficiency();
 
   default float getSizedDestroySpeed(ItemStack stack, IBlockState state) {

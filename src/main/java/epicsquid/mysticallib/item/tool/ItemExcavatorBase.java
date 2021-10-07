@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class ItemExcavatorBase extends ItemShovelBase implements IItemSizedTool {
+public abstract class ItemExcavatorBase extends ItemShovelBase implements IItemSizedTool, IBlacklistingTool {
   private static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(Material.CLAY, Material.SAND, Material.SNOW, Material.GROUND);
 
   public ItemExcavatorBase(String name, int maxDamage, ToolMaterial materialIn, Supplier<Ingredient> repair) {

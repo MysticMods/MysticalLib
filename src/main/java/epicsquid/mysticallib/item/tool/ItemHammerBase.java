@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class ItemHammerBase extends ItemPickaxeBase implements IItemSizedTool {
+public abstract class ItemHammerBase extends ItemPickaxeBase implements IItemSizedTool, IBlacklistingTool {
   private static final Set<Material> EFFECTIVE_MATERIALS = ImmutableSet.of(Material.ROCK, Material.IRON, Material.GLASS, Material.ICE, Material.PACKED_ICE, Material.ANVIL, Material.REDSTONE_LIGHT);
 
   public ItemHammerBase(String name, int maxDamage, ToolMaterial materialIn, Supplier<Ingredient> repair) {
