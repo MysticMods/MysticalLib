@@ -27,7 +27,7 @@ public class ParticleRegistry {
     if (MysticalLib.proxy instanceof ClientProxy) {
       try {
         if (particles.containsKey(particleClass) || particleMultiTextures.containsKey(particleClass)) {
-          System.out.println("WARNING: PARTICLE ALREADY REGISTERED WITH NAME \"" + Util.getLowercaseClassName(particleClass) + "\"!");
+          MysticalLib.logger.error("WARNING: PARTICLE ALREADY REGISTERED WITH NAME \"" + Util.getLowercaseClassName(particleClass) + "\"!");
         } else {
           particles.put(particleClass, particleClass.getConstructor(World.class, double.class, double.class, double.class, double.class, double.class, double.class, double[].class));
           particleMultiTextures.put(particleClass, Arrays.asList(textures));
