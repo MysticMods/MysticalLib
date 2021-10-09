@@ -113,12 +113,11 @@ public class BreakUtil {
           result.add(potential);
           continue;
         }
-        final boolean toolRequired = !material.isToolNotRequired();
-        final String potentialHarvestTool = potentialBlock.getHarvestTool(potentialState);
-        final boolean matchingTool = potentialHarvestTool == null || toolClasses.contains(potentialHarvestTool);
-        final boolean forge = ForgeHooks.canHarvestBlock(potentialState.getBlock(), player, world, potential);
+        if (!ForgeHooks.canToolHarvestBlock(world, potential, itemstack) || !ForgeHooks.canHarvestBlock(potentialState.getBlock(), player, world, potential)) {
+          continue;
+        }
         final float destroySpeed = tool.getDestroySpeed(itemstack, potentialState);
-        if ((toolRequired && !matchingTool && !forge) || destroySpeed == 1.0f) {
+        if (destroySpeed == 1.0f) {
           continue;
         }
 
@@ -137,12 +136,7 @@ public class BreakUtil {
     final ItemStack stack = player.getHeldItemMainhand();
     final IBlockState state = world.getBlockState(pos);
     final Block block = state.getBlock();
-    final Item tool = stack.getItem();
-    final String harvestTool = block.getHarvestTool(state);
-    final Set<String> harvestTools = tool.getToolClasses(stack);
-    final boolean matchingTool = harvestTool == null || harvestTools.contains(harvestTool);
-    final boolean toolRequired = state.getMaterial().isToolNotRequired();
-    if (toolRequired && !matchingTool && !ForgeHooks.canHarvestBlock(state.getBlock(), player, world, pos)) {
+    if (!ForgeHooks.canToolHarvestBlock(world, pos, stack) || !ForgeHooks.canHarvestBlock(state.getBlock(), player, world, pos)) {
       return false;
     }
 
