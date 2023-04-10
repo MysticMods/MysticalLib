@@ -56,6 +56,17 @@ public class BlockTETrapDoorBase extends BlockTrapDoorBase implements ITileEntit
     }
     return false;
   }
+  
+  @Override
+  public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
+    if (state.getValue(OPEN)) {
+      IBlockState down = world.getBlockState(pos.down());
+      if (down.getBlock() instanceof BlockLadder) {
+        return down.getValue(BlockLadder.FACING) == state.getValue(FACING);
+      }
+    }
+    return false;
+  }
 
   @Override
   public void onBlockHarvested(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull EntityPlayer player) {
