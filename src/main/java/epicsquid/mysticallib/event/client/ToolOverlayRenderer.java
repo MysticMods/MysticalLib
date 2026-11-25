@@ -91,13 +91,18 @@ public class ToolOverlayRenderer {
     GlStateManager.pushMatrix();
   }
 
-  private static void postRenderDamagedBlocks() {
+  private static void postRenderDamagedBlocks(boolean blendWasEnabled) {
     GlStateManager.disableAlpha();
     GlStateManager.doPolygonOffset(0.0F, 0.0F);
     GlStateManager.disablePolygonOffset();
     GlStateManager.enableAlpha();
     GlStateManager.depthMask(true);
     GlStateManager.popMatrix();
+    GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+    GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    if (!blendWasEnabled) {
+      GlStateManager.disableBlend();
+    }
   }
 
   public static void drawBlockDamage(World world, Tessellator tessellator, BufferBuilder bufferBuilder, EntityPlayer player, Set<BlockPos> positions, BlockPos origin) {
@@ -121,6 +126,7 @@ public class ToolOverlayRenderer {
     double d2 = player.prevPosZ + (player.posZ - player.prevPosZ) * (double) partialTicks;
 
     Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+    boolean blendWasEnabled = GL11.glIsEnabled(GL11.GL_BLEND);
     preRenderDamagedBlocks();
     bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
     bufferBuilder.setTranslation(-d0, -d1, -d2);
@@ -140,6 +146,6 @@ public class ToolOverlayRenderer {
 
     tessellator.draw();
     bufferBuilder.setTranslation(0.0D, 0.0D, 0.0D);
-    postRenderDamagedBlocks();
+    postRenderDamagedBlocks(blendWasEnabled);
   }
 }
